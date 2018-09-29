@@ -1,0 +1,12 @@
+[Default Applications]
+application/pdf=zathura-pdf-mupdf.desktop;mupdf-usercreated-0.desktop;
+text/x-tex=vim-usercreated-0.desktop;
+application/epub+zip=zathura-usercreated-0.desktop;
+text/markdown=vim-usercreated-1.desktop;
+
+[Added Associations]
+application/pdf=zathura-pdf-mupdf.desktop;mupdf-usercreated-0.desktop;
+text/x-tex=vim-usercreated-0.desktop;
+application/epub+zip=zathura-usercreated-0.desktop;
+text/markdown=vim-usercreated-1.desktop;
+text/plain=mousepad.desktop;
