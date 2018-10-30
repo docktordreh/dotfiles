@@ -1,4 +1,5 @@
 #[valentin@schosswaermer ~]$ xrandr --output VGA1 --off --output LVDS1 --auto 
+export PS1="\[$(tput bold)\][\[$(tput sgr0)\]\[$(tput sgr0)\]\[\033[38;5;2m\]\u@\h\[$(tput sgr0)\]\[\033[38;5;15m\]: \[$(tput sgr0)\]\[\033[38;5;33m\]\w\[$(tput bold)\]\[$(tput sgr0)\]\[\033[38;5;15m\]]\[$(tput sgr0)\]\\$ \[$(tput sgr0)\]"
 #export PATH="${PATH}:${HOME}/.local/bin/"
 # pywal
 neofetch
@@ -8,7 +9,10 @@ cutfloat(){
 	int=${float%.*}
 	echo $int
 }
-
+# passwd gen
+getpass() {
+	openssl rand -base64 "$1"
+}
 #change list: cd and ls
 cl() {
 	local dir="$1"
@@ -37,6 +41,7 @@ function .. ()
     done
     cd $dir >&/dev/null
 }
+
 # goes to par dir with spec. name
 function ... ()
 {
@@ -54,39 +59,12 @@ function ... ()
     done
 }
 
-alias i='sudo pacman -S'
-alias u='sudo pacman -Rns'
-alias upgrade='pacman -Syyu --noconfirm'
-alias upaur='pacaur -Syyu --noconfirm'
-
-# better ls'es
-alias ls='ls -h --group-directories-first --color'
-alias ll='ls -l'
-alias la='ll -A'
-
-#duf shows largest folders
-alias duf='du -sk * | sort -n | perl -ne '\''($s,$f)=split(m{\t});for (qw(K M G)) {if($s<1024) {printf("%.1f",$s);print "$_\t$f"; last};$s=$s/1024}'\'
-
 #start command in bg, redir output to /dev/null
 s(){
   ("$@" & disown ) >/dev/null 2>&1 </dev/null
   which "$1" >/dev/null 2>&1
 }
 
-# bash =!= vim
-alias :wq="echo 'YOU ARE NOT IN VIM , DUDE ! get a coffee !'"
-
-## WIKIPEDIA SEARCH FUNCTION ##
-wikipediaSearch() {
-echo -n -e "\n============================================\n\tWelcome to WikiPedia Search"; echo ""; i=1 ; for line in $(lynx --dump "http://de.wikipedia.org/w/index.php?title=Special%3ASearch&profile=default&search=$1&fulltext=Search" | grep http://en.wikipedia.org/wiki | cut -c7-); do echo $i $line; lines[$i]=$line ;  i=$(($i+1)); done ; echo -n -e "\n============================================\n\tPlease select the link to open - "; read answer; w3m ${lines[$answer]}
-}
-
-## ARCHWIKI SEARCH FUNCTION ##
-archSearch() {
-echo -n -e "\n============================================\n\tWelcome to Arch Wiki Search"; echo ""; i=1 ; for line in $(lynx --dump "https://wiki.archlinux.org/index.php?title=Special%3ASearch&profile=default&search=$1" | grep https://wiki.archlinux.org/ | cut -c7-); do echo $i $line; lines[$i]=$line ; i=$(($i+1)); done ; echo -n -e "\n============================================\n\tPlease select the link to open - "; read answer; w3m ${lines[$answer]}
-}
- 
-## EXTRACT FUNCTION ## | Usage: extract <file>
 extract () {
   if [ -f $1 ] ; then
       case $1 in
@@ -113,20 +91,12 @@ wttr () {
 curl http://wttr.in/$1
 }
 
-#List Realtime Soccer Results | Usage: score
-score() { 
- watch -n10 --no-title "w3m http://www.livescore.com/ |awk '/live [0-9H]+[^ ]/,/red cards/'" ;
-}
-
 #Grep process | Usage: psgrep <process>
 psgrep() { ps axuf | grep -v grep | grep "$@" -i --color=auto; 
 }
 
 alias sudo='sudo '
 
-# remove $(useless)
-alias useless='pacman -Qtdq' 
-alias remove='pacman -Rscn'
 
 loop() {
 icon=$1
@@ -134,3 +104,39 @@ notify-send -i $icon -h int:value:$1 -h string:synchronous:my-progress $3 -t $4
 }
 alias android-connect="mtpfs -o allow_other /media/p20lite"
 alias android-disconnect="fusermount -u /media/p20lite"
+alias ipi='ipconfig getifaddr en0'
+alias ipe='curl ipinfo.io/ip'
+alias brc='vim /$HOME/.bashrc'
+alias i3c='vim /$HOME/.config/i3/config'
+# wget resume
+alias wget='wget -c'
+alias i='sudo pacman -S'
+alias u='sudo pacman -Rns'
+alias upgrade='pacman -Syyu --noconfirm'
+alias upaur='yay -Syyu --noconfirm'
+
+# better ls'es
+alias ls='ls -h --group-directories-first --color'
+alias ll='ls -l'
+alias la='ll -A'
+
+#duf shows largest folders
+alias duf='du -sk * | sort -n | perl -ne '\''($s,$f)=split(m{\t});for (qw(K M G)) {if($s<1024) {printf("%.1f",$s);print "$_\t$f"; last};$s=$s/1024}'\'
+
+# remove $(useless)
+alias useless='pacman -Qtdq' 
+alias remove='pacman -Rscn'
+cnano(){
+  echo "" > $1
+  nano $1
+
+}
+cvim(){
+  echo "" > $1
+  vim $1
+}
+
+bandit(){
+	cat ~/bandit/bandit"$1"
+	ssh bandit"$1"@bandit.labs.overthewire.org -p 2220
+}

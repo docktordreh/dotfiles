@@ -22,7 +22,8 @@ numix-white=#f9f9f9
 numix-grey=#dedede
 numix-dark=#333333
 numix-darker=#2d2d2d
-
+;NOT WORKING:
+; wlan? volume,backlight
 [bar/top]
 ; monitor = 
 monitor-strict = false
@@ -36,12 +37,12 @@ padding = 0
 module-margin-left = 2
 tray-position = right
 tray-padding = 2
-font-1 = "Font Awesome Free 5:size=9;0"
-font-0 = "FuraMono Nerd Font Mono:pixelsize=9;1"
+font-0 = "Font Awesome 5 Free Regular:size=11;0"
+font-1 = "FuraMono Nerd Font Mono:pixelsize=9;1"
 font-2 = "Inconsolate:size=9"
 modules-left = i3
-modules-center = date pbweather 
-modules-right = cpu memory filesystem battery battery2 powermenu
+modules-center = xwindow date pbweather 
+modules-right = wlan eth batterie
 
 ; >> pbweather
 [module/pbweather]
@@ -106,11 +107,11 @@ wrapping-scroll = true
 format = <label-state> <label-mode>
 
 
-ws-icon-0 = F1rst; 
-ws-icon-1 = 2erminal; 
-ws-icon-2 = Brows3r; 
-ws-icon-3 = Edi4or; 
-ws-icon-4 = Mu5ic; ♪
+ws-icon-0 = F1rst;
+ws-icon-1 = 2erminal;
+ws-icon-2 = Brows3r;
+ws-icon-3 = Edi4or; 
+ws-icon-4 = Mu5ic; 
 ws-icon-5 = 6;
 ws-icon-6 = 7;
 ws-icon-7 = H8me; 
@@ -212,35 +213,22 @@ label =  %percentage_used%%
 
 [module/wlan]
 type = internal/network
-interface = wlp3s0
+interface = wlp4s0
 interval = 3.0
 
-format-connected = <ramp-signal> <label-connected>
-format-connected-underline = #9f78e1
-label-connected = %essid%
-
-format-disconnected =
-;format-disconnected = <label-disconnected>
-;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground-alt}
-
-ramp-signal-0 = 
-ramp-signal-1 = 
-ramp-signal-2 = 
-ramp-signal-3 = 
-ramp-signal-4 = 
-ramp-signal-foreground = ${colors.foreground-alt}
+format-connected = <label-connected>
+label-connected =  %essid%
+label-connected-foreground = #ae81ff
 
 [module/eth]
 type = internal/network
-interface = snp0s25
+interface = enp0s25
 interval = 3.0
 
 format-connected-underline = #55aa55
 format-connected-prefix = " "
 format-connected-prefix-foreground = ${colors.foreground-alt}
-label-connected = %local_ip%
+label-connected = %{T3}%local_ip%%{T-}
 
 format-disconnected =
 ;format-disconnected = <label-disconnected>
@@ -255,8 +243,8 @@ interval = 5
 date = 
 date-alt = " %d.%m.%Y"
 
-time = %H:%M
-time-alt = %H:%M:%S
+time = %H-%M
+time-alt = %H-%M-%S
 
 format-prefix = 
 format-foreground = #35bf5c
@@ -283,7 +271,7 @@ ramp-volume-1 = 🔉
 ramp-volume-2 = 🔊
 ramp-headphones-0 = 
 ramp-headphones-1 = 
-
+interval = 2
 [module/battery]
 type = internal/battery
 battery = BAT0
@@ -330,6 +318,28 @@ ramp-1 = 
 ramp-2 = 
 ramp-foreground = ${colors.foreground-alt}
 
+[module/batterie]
+type = internal/battery
+full-at = 99
+battery = BAT0
+adapter = AC0
+poll-interval = 10
+
+format-charging = <label-charging>
+format-discharging = <ramp-capacity><label-discharging>
+label-charging =  CHR  %percentage%%
+label-charging-foreground = #2de0a7
+label-discharging = DEC %percentage%%
+label-discharging-foreground = #2de0a7
+label-full = Full
+ramp-capacity-foreground = #2de0a7
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+interval = 5
 [settings]
 screenchange-reload = true
 ;compositing-background = xor
