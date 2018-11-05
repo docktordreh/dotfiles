@@ -157,10 +157,11 @@ bindsym $mod+r mode "resize"
 
 # startups
 exec_always --no-startup-id /$HOME/.fehbg
-exec_always --no-startup-id flameshot
 exec compton -f
+exec --no-startup-id urxvtd
 exec_always --no-startup-id /$HOME/.config/polybar/launch.sh
-exec_always --no-startup-id dunst
+exec_always --no-startup-id flameshot
+exec_always --no-startup-id nm-applet
 exec_always --no-startup-id xautolock -time 5 -locker "i3lock -d -c 000000"
 exec --no-startup-id dunst --config /$HOME/.config/dunst/dunstrc
 exec_always --no-startup-id amixer set Capture nocap
