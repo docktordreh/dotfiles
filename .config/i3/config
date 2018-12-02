@@ -157,7 +157,7 @@ bindsym $mod+r mode "resize"
 
 # startups
 exec_always --no-startup-id /$HOME/.fehbg
-exec compton -f
+exec compton -f -c ~/.config/compton/.config
 exec --no-startup-id urxvtd
 exec_always --no-startup-id /$HOME/.config/polybar/launch.sh
 exec_always --no-startup-id flameshot
@@ -173,6 +173,7 @@ assign [class="Vivaldi"] $ws3
 exec --no-startup-id telegram-desktop
 exec --no-startup-id thunderbird
 exec --no-startup-id whatsie
+exec_always --no-startup-id conky -c ~/.config/conky/.config
 #gaps
 gaps inner 10
 gaps outer -4
