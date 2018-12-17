@@ -157,7 +157,7 @@ bindsym $mod+r mode "resize"
 
 # startups
 exec_always --no-startup-id /$HOME/.fehbg
-exec compton -f -c ~/.config/compton/.config
+exec_always --no-startup-id compton -cGbf
 exec --no-startup-id urxvtd
 exec_always --no-startup-id /$HOME/.config/polybar/launch.sh
 exec_always --no-startup-id flameshot

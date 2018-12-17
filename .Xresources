@@ -61,9 +61,9 @@ URxvt*foreground: #dedede
 Urxvt*inheritPixmap: true
 Urxvt*transparent: true
 
-URxvt*font: xft:monaco:regular:pixelsize=12
-URxvt*boldFont: xft:Monaco:bold:pixelsize=12
-URxvt*letterSpace: -2
+URxvt*font: xft:monaco:regular:pixelsize=14
+URxvt*boldFont: xft:Monaco:bold:pixelsize=14
+URxvt*letterSpace: -1
 
 URxvt*scrollBar: false
 
