@@ -102,6 +102,7 @@ loop() {
 icon=$1
 notify-send -i $icon -h int:value:$1 -h string:synchronous:my-progress $3 -t $4
 }
+alias v='vim'
 alias android-connect="mtpfs -o allow_other /media/p20lite"
 alias android-disconnect="fusermount -u /media/p20lite"
 alias ipi='ipconfig getifaddr en0'

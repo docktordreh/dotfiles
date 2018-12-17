@@ -158,6 +158,7 @@ bindsym $mod+r mode "resize"
 # startups
 exec_always --no-startup-id /$HOME/.fehbg
 exec compton -f
+exec --no-startup-id /usr/lib/kdeconnectd
 exec --no-startup-id urxvtd
 exec_always --no-startup-id /$HOME/.config/polybar/launch.sh
 exec_always --no-startup-id flameshot
@@ -170,7 +171,6 @@ assign [class="Thunderbird"] $ws5
 assign [class="Whatsie"] $ws5
 assign [class="Firefox"] $ws3
 assign [class="Vivaldi"] $ws3
-exec --no-startup-id telegram-desktop
 exec --no-startup-id thunderbird
 exec --no-startup-id whatsie
 #gaps
@@ -257,4 +257,4 @@ mode "$mode_fastexec" {
         bindsym Escape mode "default" 
 }
 for_window [class="^.*"] border pixel 0
-bindsym $mod+t exec --no-startup-id thunar
+bindsym $mod+t exec --no-startup-id urxvtc -e sh -c "ranger"
