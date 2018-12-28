@@ -156,6 +156,7 @@ bindsym $mod+r mode "resize"
 
 
 # startups
+exec_always --no-startup-id nextcloud
 exec_always --no-startup-id /$HOME/.fehbg
 exec_always --no-startup-id compton -cGbf
 exec --no-startup-id urxvtd

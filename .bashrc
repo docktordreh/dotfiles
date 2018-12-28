@@ -117,6 +117,17 @@ alias u='sudo pacman -Rns'
 alias upgrade='pacman -Syyu --noconfirm'
 alias upaur='yay -Syyu --noconfirm'
 
+alias cdr='cd /'
+alias cdv='cd /var'
+alias cdb='cd /bin'
+alias cdd='cd /dev'
+alias cdo='cd /opt'
+alias cdu='cd /usr'
+alias cdw='cd /windoof'
+alias cdt='cd /tmp'
+alias cde='cd /etc'
+alias cdgc='cd ~/.git/configs'
+alias cdgs='cd ~/.git/scripts'
 # better ls'es
 alias ls='ls -h --group-directories-first --color'
 alias ll='ls -l'
@@ -142,3 +153,5 @@ bandit(){
 	cat ~/bandit/bandit"$1"
 	ssh bandit"$1"@bandit.labs.overthewire.org -p 2220
 }
+
+
