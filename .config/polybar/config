@@ -24,6 +24,7 @@ numix-dark=#333333
 numix-darker=#2d2d2d
 ;NOT WORKING:
 ; wlan? volume,backlight
+
 [bar/top]
 ; monitor = 
 monitor-strict = false
@@ -37,9 +38,10 @@ padding = 0
 module-margin-left = 2
 tray-position = right
 tray-padding = 2
-font-0 = "Font Awesome 5 Free Regular:size=11;0"
-font-1 = "FuraMono Nerd Font Mono:pixelsize=9;1"
-font-2 = "Inconsolate:size=9"
+font-0 = "Weather Icons:size=11"
+font-1 = "Monaco:size=11"
+font-2 = "Material Icons:size=11"
+font-3 = "FantasqueSansMono Nerd Font:size=11"
 modules-left = i3
 modules-center = xwindow date pbweather 
 modules-right = wlan eth batterie
@@ -49,7 +51,7 @@ modules-right = wlan eth batterie
 type = custom/script
 tail = true
 label = %output%
-interval = 3000
+interval = 6000
 exec = /.scripts/pbweather
 
 
@@ -106,15 +108,16 @@ wrapping-scroll = true
 
 format = <label-state> <label-mode>
 
-
-ws-icon-0 = F1rst;
-ws-icon-1 = 2erminal;
-ws-icon-2 = Brows3r;
-ws-icon-3 = Edi4or; 
-ws-icon-4 = Mu5ic; 
-ws-icon-5 = 6;
-ws-icon-6 = 7;
-ws-icon-7 = H8me; 
+ws-icon-0 = label;icon
+ws-icon-1 = Home;
+ws-icon-2 = Terminal;
+ws-icon-3 = Browser;
+ws-icon-4 = IDE; 
+ws-icon-5 = Chat;
+ws-icon-6 = Vorlesungen;
+ws-icon-7 = Aufgaben;
+ws-icon-8 = Music;
+ws-icon-9 = 3 mal und umdrehen dann hat man das Zeichen des Teufels; 666
 ws-icon-default = 
 
 
@@ -217,7 +220,7 @@ interface = wlp4s0
 interval = 3.0
 
 format-connected = <label-connected>
-label-connected =  %essid%
+label-connected = %local_ip% %essid%
 label-connected-foreground = #ae81ff
 
 [module/eth]
@@ -246,7 +249,7 @@ date-alt = " %d.%m.%Y"
 time = %H-%M
 time-alt = %H-%M-%S
 
-format-prefix = 
+format-prefix = 
 format-foreground = #35bf5c
 format-background = #000000
 format-padding = 2
@@ -272,6 +275,7 @@ ramp-volume-2 = 🔊
 ramp-headphones-0 = 
 ramp-headphones-1 = 
 interval = 2
+
 [module/battery]
 type = internal/battery
 battery = BAT0
@@ -325,19 +329,44 @@ battery = BAT0
 adapter = AC0
 poll-interval = 10
 
-format-charging = <label-charging>
-format-discharging = <ramp-capacity><label-discharging>
-label-charging =  CHR  %percentage%%
+format-charging = <animation-charging> <label-charging>
+format-discharging = <ramp-capacity> <label-discharging>
+
+label-charging = CHR  %percentage%%
 label-charging-foreground = #2de0a7
-label-discharging = DEC %percentage%%
+
+label-discharging = DCHR %percentage%%
 label-discharging-foreground = #2de0a7
-label-full = Full
+
+label-full = FULL
+
 ramp-capacity-foreground = #2de0a7
-ramp-capacity-0 = 
+ramp-capacity-0 =  
 ramp-capacity-1 = 
 ramp-capacity-2 = 
 ramp-capacity-3 = 
 ramp-capacity-4 = 
+
+animation-charging-foreground = #2de0a7
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+
+animation-charging-framerate = 750
+
+; Only applies if <animation-discharging> is used
+animation-discharging-foreground = #2de0a7
+animation-discharging-0 = 
+animation-discharging-1 = 
+animation-discharging-2 = 
+animation-discharging-3 = 
+animation-discharging-4 = 
+; Framerate in milliseconds
+animation-discharging-framerate = 500
+
+
 
 interval = 5
 [settings]
