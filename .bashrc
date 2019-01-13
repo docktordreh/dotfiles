@@ -92,6 +92,11 @@ wttr () {
 curl http://wttr.in/$1
 }
 
+addalias () {
+    echo alias "$1"="'$2'" >> ~/.bashrc;
+    source ~/.bashrc
+}
+
 #Grep process | Usage: psgrep <process>
 psgrep() { ps axuf | grep -v grep | grep "$@" -i --color=auto; 
 }
@@ -155,3 +160,4 @@ bandit(){
 }
 
 
+alias cdc='cd ~/.config'
