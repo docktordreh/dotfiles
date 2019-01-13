@@ -220,7 +220,7 @@ interface = wlp4s0
 interval = 3.0
 
 format-connected = <label-connected>
-label-connected = %local_ip% %essid%
+label-connected = %local_ip%@%essid%
 label-connected-foreground = #ae81ff
 
 [module/eth]
@@ -231,7 +231,7 @@ interval = 3.0
 format-connected-underline = #55aa55
 format-connected-prefix = " "
 format-connected-prefix-foreground = ${colors.foreground-alt}
-label-connected = %{T3}%local_ip%%{T-}
+label-connected = %{T3}%local_ip%%{T-}@%essid%
 
 format-disconnected =
 ;format-disconnected = <label-disconnected>
@@ -241,13 +241,13 @@ format-disconnected =
 
 [module/date]
 type = internal/date
-interval = 5
+interval = 1
 
 date = 
 date-alt = " %d.%m.%Y"
 
-time = %H-%M
-time-alt = %H-%M-%S
+time = %H:%M
+time-alt = %H:%M:%S
 
 format-prefix = 
 format-foreground = #35bf5c
