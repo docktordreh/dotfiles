@@ -3,7 +3,7 @@ xset -b
 export PS1="\[$(tput bold)\]\[$(tput sgr0)\]\[$(tput sgr0)\]\[\033[38;5;2m\]\u@\h\[$(tput sgr0)\]\[\033[38;5;15m\]: \[$(tput sgr0)\]\[\033[38;5;33m\]\w\[$(tput bold)\]\[$(tput sgr0)\]\[\033[38;5;15m\]\[$(tput sgr0)\]\\$ \[$(tput sgr0)\]"
 #export PATH="${PATH}:${HOME}/.local/bin/"
 # pywal
-#neofetch
+neofetch
 
 cutfloat(){
 	float=$1
@@ -161,3 +161,4 @@ bandit(){
 
 
 alias cdc='cd ~/.config'
+alias cds='cd /.scripts'
