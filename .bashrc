@@ -1,8 +1,4 @@
 xset -b
-#[valentin@schosswaermer ~]$ xrandr --output VGA1 --off --output LVDS1 --auto 
-export PS1="\[$(tput bold)\]\[$(tput sgr0)\]\[$(tput sgr0)\]\[\033[38;5;2m\]\u@\h\[$(tput sgr0)\]\[\033[38;5;15m\]: \[$(tput sgr0)\]\[\033[38;5;33m\]\w\[$(tput bold)\]\[$(tput sgr0)\]\[\033[38;5;15m\]\[$(tput sgr0)\]\\$ \[$(tput sgr0)\]"
-#export PATH="${PATH}:${HOME}/.local/bin/"
-# pywal
 neofetch
 
 cutfloat(){
