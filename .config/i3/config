@@ -232,6 +232,9 @@ bindsym Print exec flameshot gui -p ~/shots
 #mic
 bindsym XF86AudioMicMute exec --no-startup-id amixer set Capture toggle
 
+# wlan
+bindsym XF86WLAN exec --no-startup-id sh /.scripts/wifi-toggle.sh
+
 #i3lock
 set $mode_i3lock (l)ock (r)estart (p)oweroff
 bindsym $mod+0 mode "$mode_i3lock"
