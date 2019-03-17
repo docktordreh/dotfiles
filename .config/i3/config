@@ -156,15 +156,15 @@ bindsym $mod+r mode "resize"
 
 
 # startups
+exec_always --no-startup-id feh --bg-fill --randomize ~/.wallpaper
 exec_always --no-startup-id nextcloud
-exec_always --no-startup-id /$HOME/.fehbg
 exec_always --no-startup-id compton -cGbf
 exec --no-startup-id urxvtd
-exec_always --no-startup-id /$HOME/.config/polybar/launch.sh
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec_always --no-startup-id flameshot
 exec_always --no-startup-id nm-applet
 exec_always --no-startup-id xautolock -time 5 -locker "i3lock -d -c 000000"
-exec --no-startup-id dunst --config /$HOME/.config/dunst/dunstrc
+exec --no-startup-id dunst --config $HOME/.config/dunst/dunstrc
 exec_always --no-startup-id amixer set Capture nocap
 assign [class="Telegram"] $ws5
 assign [class="Thunderbird"] $ws5
@@ -241,20 +241,20 @@ bindsym $mod+0 mode "$mode_i3lock"
 
 mode "$mode_i3lock" {
         bindsym l exec --no-startup-id i3lock -c 000000 -d; mode "default"
-        bindsym r exec --no-startup-id reboot
-        bindsym p exec --no-startup-id poweroff
+        bindsym r exec --no-startup-id sudo reboot
+        bindsym p exec --no-startup-id sudo poweroff
 
         bindsym Return mode "default"
         bindsym Escape mode "default" 
 }
 
 #fast exec
-set $mode_fastexec (f)irefox (v)ivaldi v(m)ware
+set $mode_fastexec (f)irefox v(m)ware
 bindsym $mod+x mode "$mode_fastexec"
 
 mode "$mode_fastexec" {
         bindsym f exec --no-startup-id firefox; mode "default"
-        bindsym v exec --no-startup-id vivaldi-stable; mode "default"
+        bindsym p exec --no-startup-id firefox --private-window; mode "default"
         bindsym m exec --no-startup-id vmware; mode "default"
 
         bindsym Return mode "default"
