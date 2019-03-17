@@ -19,6 +19,7 @@ Plugin 'WolfgangMehner/bash-support'
 Plugin 'WolfgangMehner/latex-support'
 Plugin 'WolfgangMehner/c-support'
 Plugin 'maelvalais/gmpl.vim'
+Plugin 'gentoo/gentoo-syntax'
 call vundle#end()
 
 syntax enable
