@@ -127,7 +127,7 @@ alias cde='cd /etc'
 alias cdgc='cd ~/.dev/configs'
 alias cdgs='cd ~/.dev/scripts'
 alias cdgf='cd ~/.dev/iptables_firewall'
-alias cdgpi='cd /.dev/rpiled"
+alias cdgpi='cd ~/.dev/rpiled'
 # better ls'es
 alias ls='ls -h --group-directories-first --color'
 alias ll='ls -l'
