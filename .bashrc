@@ -1,3 +1,4 @@
+shopt -s extglob
 xset -b
 neofetch
 
@@ -100,10 +101,6 @@ psgrep() { ps axuf | grep -v grep | grep "$@" -i --color=auto;
 alias sudo='sudo '
 
 
-loop() {
-icon=$1
-notify-send -i $icon -h int:value:$1 -h string:synchronous:my-progress $3 -t $4
-}
 alias v='vim'
 alias android-connect="mtpfs -o allow_other /media/p20lite"
 alias android-disconnect="fusermount -u /media/p20lite"
@@ -127,8 +124,10 @@ alias cdu='cd /usr'
 alias cdw='cd /windoof'
 alias cdt='cd /tmp'
 alias cde='cd /etc'
-alias cdgc='cd ~/.git/configs'
-alias cdgs='cd ~/.git/scripts'
+alias cdgc='cd ~/.dev/configs'
+alias cdgs='cd ~/.dev/scripts'
+alias cdgf='cd ~/.dev/iptables_firewall'
+alias cdgpi='cd /.dev/rpiled"
 # better ls'es
 alias ls='ls -h --group-directories-first --color'
 alias ll='ls -l'
