@@ -28,8 +28,14 @@ bindsym $mod+Return exec urxvtc
 # kill focused window
 bindsym $mod+Shift+q kill
 
+# open rofi - replacement for dmenu
+bindsym $mod+d exec --no-startup-id rofi -show drun
+# run command as gksudo
+# besser gelöst über polkit
+# bindsym $mod+Shift+d exec --no-startup-id rofi -show drun -run-command 'gksudo {cmd}'
 # start dmenu (a program launcher)
-bindsym $mod+d exec dmenu_run
+# bindsym $mod+d exec --no-startup-id dmenu_run
+# bindsym $mod+Shift+d exec --no-startup-id drun -run-command 'gksudo {cmd}' 
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
@@ -160,7 +166,7 @@ exec_always --no-startup-id feh --bg-fill --randomize ~/.wallpaper
 exec_always --no-startup-id nextcloud
 exec_always --no-startup-id compton -cGbf
 exec --no-startup-id urxvtd
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec --no-startup-id $HOME/.config/polybar/launch.sh
 exec_always --no-startup-id flameshot
 exec_always --no-startup-id nm-applet
 exec_always --no-startup-id xautolock -time 5 -locker "i3lock -d -c 000000"
@@ -168,11 +174,12 @@ exec --no-startup-id dunst --config $HOME/.config/dunst/dunstrc
 exec_always --no-startup-id amixer set Capture nocap
 assign [class="Telegram"] $ws5
 assign [class="Thunderbird"] $ws5
-assign [class="Whatsie"] $ws5
+assign [class="Franz"] $ws5
 assign [class="Firefox"] $ws3
 assign [class="Vivaldi"] $ws3
+assign [class="urxvt"] $ws2
 exec --no-startup-id thunderbird
-exec --no-startup-id whatsie
+exec --no-startup-id franz.appimage
 exec_always --no-startup-id conky -c ~/.config/conky/.config
 #gaps
 gaps inner 10
