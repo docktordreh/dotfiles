@@ -1,0 +1,10 @@
+
+# aktuelles projekt
+alias cda='cd ~/.dev/digital-meetingroom'
+
+# aktuelles zweitprojekt
+alias cdzp='cd ~/.dev/rpiled_ssh_optimized'
+# Projekteordner
+alias cdp='cd ~/.dev/'
+
+

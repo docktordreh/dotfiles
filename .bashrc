@@ -15,7 +15,7 @@ neofetch
 #		einlesen der alias'e
 #************************************************
 source ~/.bash_aliases
-
+source ~/.bash_projekte
 
 #************************************************
 #		einlesen der funktionen
