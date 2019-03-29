@@ -1,5 +1,5 @@
 #************************************************
-#               Projekte
+#             Projektordner öffnen 
 #************************************************
 
 # aktuelles projekt
@@ -11,4 +11,11 @@ alias cdzp='cd ~/.dev/rpiled_ssh_optimized'
 # Projekteordner
 alias cdp='cd ~/.dev/'
 
+#************************************************
+#               header ausgeben
+#************************************************
 
+# header fürs sh-Programmieren
+alias header_sh='"echo "#************************************************
+#               header
+#************************************************'
