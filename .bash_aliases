@@ -1,11 +1,15 @@
 #************************************************
 #               editor-kürzel
 #************************************************
+
 # v = vim
 alias v='vim'
 # konfigurationsdateien
-alias brc='vim /$HOME/.bashrc'
-alias i3c='vim /$HOME/.config/i3/config'
+alias brc='vim ~/.bashrc'
+alias i3c='vim ~/.config/i3/config'
+alias ba='vim ~/.bash_aliases'
+alias bp='vim ~/.bash_projekte'
+alias bf='vim ~/.bash_funktionen'
 
 #************************************************
 #               netzwerk verbindung
