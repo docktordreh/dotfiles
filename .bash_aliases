@@ -42,3 +42,4 @@ alias ls='ls -h --group-directories-first --color'
 alias ll='ls -l'
 alias la='ll -A'
 
+alias ali-help='cat ~/.bash_aliases'
