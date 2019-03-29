@@ -1,3 +1,7 @@
+#************************************************
+#               arithmetik
+#************************************************
+
 # schneide float ab -> int
 fk_cutfloat()
 {
@@ -6,6 +10,9 @@ fk_cutfloat()
 	echo $int
 }
 
+#************************************************
+#               utilities
+#************************************************
 
 # openssl password generator
 fk_passwdgen() {
@@ -24,6 +31,19 @@ fk_cl()
 	fi
 }
 
+# nano empty existing file
+fk_cnano()
+{
+	echo "" > $1
+	nano $1
+}
+
+# vim empty file
+fk_cvim()
+{
+	echo "" > $1
+	vim $1
+}
 
 # mkdir -p & cd
 fk_mkcd() 
@@ -31,7 +51,6 @@ fk_mkcd()
   	mkdir -p "$1"
   	cd "$1"
 }
-
 
 # cd .. n times
 .. ()
@@ -45,12 +64,22 @@ fk_mkcd()
     	cd $dir >&/dev/null
 }
 
+#Grep process | Usage: psgrep <process>
+fk_psgrep()
+{ 
+	ps axuf | grep -v grep | grep "$@" -i --color=auto; 
+}
+
 #start command in bg, redir output to /dev/null
 fk_s()
 {
 	("$@" & disown ) >/dev/null 2>&1 </dev/null
   	which "$1" >/dev/null 2>&1
 }
+
+#************************************************
+#               extrahier funktion
+#************************************************
 
 fk_extract() 
 {
@@ -74,35 +103,34 @@ fk_extract()
   	fi
 }
 
+#************************************************
+#               wetter
+#************************************************
+
 # wetter
 fk_wttr() 
 {
 	curl http://wttr.in/$1
 }
 
+#************************************************
+#               alias hinzufügen
+#************************************************
+
 fk_addalias() 
 {
-    	echo alias "$1"="'$2'" >> ~/.bashrc;
+    	echo alias "$1"="'$2'" >> ~/.bash_aliases;
+	source ~/.bashrc
+}
+fk_addpralias()
+{
+	echo alias "$1"="'$2'" >> ~/.bash_projekte;
 	source ~/.bashrc
 }
 
-#Grep process | Usage: psgrep <process>
-fk_psgrep()
-{ 
-	ps axuf | grep -v grep | grep "$@" -i --color=auto; 
-}
-
-fk_cnano()
-{
-	echo "" > $1
-	nano $1
-
-}
-fk_cvim()
-{
-	echo "" > $1
-	vim $1
-}
+#************************************************
+#               bash programmierung www
+#************************************************
 
 fk_bandit()
 {
