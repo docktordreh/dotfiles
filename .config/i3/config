@@ -182,7 +182,7 @@ exec --no-startup-id thunderbird
 exec --no-startup-id franz.appimage
 exec_always --no-startup-id conky -c ~/.config/conky/.config
 #gaps
-gaps inner 10
+gaps inner 40
 gaps outer -4
 smart_gaps on
 
