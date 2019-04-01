@@ -166,7 +166,7 @@ exec_always --no-startup-id feh --bg-fill --randomize ~/.wallpaper
 exec_always --no-startup-id nextcloud
 exec_always --no-startup-id compton -cGbf
 exec --no-startup-id urxvtd
-exec --no-startup-id $HOME/.config/polybar/launch.sh
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec_always --no-startup-id flameshot
 exec_always --no-startup-id nm-applet
 exec_always --no-startup-id xautolock -time 5 -locker "i3lock -d -c 000000"
