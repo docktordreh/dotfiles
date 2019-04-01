@@ -184,7 +184,6 @@ exec_always --no-startup-id conky -c ~/.config/conky/.config
 #gaps
 gaps inner 40
 gaps outer -4
-smart_gaps on
 
 # Press $mod+Shift+g to enter the gap mode. Choose o or i for modifying outer/inner gaps. Press one of + / - (in-/decrement$
 set $mode_gaps Gaps: (o) outer, (i) inner
