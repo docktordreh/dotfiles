@@ -20,11 +20,9 @@ Plugin 'WolfgangMehner/latex-support'
 Plugin 'WolfgangMehner/c-support'
 Plugin 'maelvalais/gmpl.vim'
 Plugin 'gentoo/gentoo-syntax'
+Plugin 'morhetz/gruvbox'
 call vundle#end()
 
 syntax enable
-let g:solarized_contrast="high"
-let g:solarized_termcolors=256
 set background=dark
-colorscheme solarized
-hi Normal guibg=NONE ctermbg=NONE
+colorscheme gruvbox
