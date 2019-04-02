@@ -6,8 +6,8 @@ Xft.hinting:                true
 Xft.hintstyle:              hintslight
 
 
-*background: #002b36
-*foreground: #657b83
+*background: #282828
+*foreground: #fbf1c7
 !!*fading: 40
 *fadeColor: #002b36
 *cursorColor: #93a1a1
@@ -54,8 +54,6 @@ urxvt*lineSpace:            0
 
 URxvt*saveLines: 12000
 urxvt*depth: 32
-urxvt*background: rgba:0000/0000/0200/c800
-URxvt*foreground: #dedede
 
 urxvt*font: xft:Monoid:pixelsize=13
 URxvt*letterSpace: -1
