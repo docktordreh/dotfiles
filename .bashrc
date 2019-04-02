@@ -21,3 +21,5 @@ source ~/.bash_projekte
 #		einlesen der funktionen
 #************************************************
 source ~/.bash_funktionen
+
+eval $(thefuck --alias)
