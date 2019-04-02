@@ -166,7 +166,7 @@ exec_always --no-startup-id feh --bg-fill --randomize ~/.wallpaper
 exec_always --no-startup-id nextcloud
 exec_always --no-startup-id compton -cGbf
 exec --no-startup-id urxvtd
-exec --no-startup-id $HOME/.config/polybar/launch.sh
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec_always --no-startup-id flameshot
 exec_always --no-startup-id nm-applet
 exec_always --no-startup-id xautolock -time 5 -locker "i3lock -d -c 000000"
@@ -182,9 +182,8 @@ exec --no-startup-id thunderbird
 exec --no-startup-id franz.appimage
 exec_always --no-startup-id conky -c ~/.config/conky/.config
 #gaps
-gaps inner 10
+gaps inner 40
 gaps outer -4
-smart_gaps on
 
 # Press $mod+Shift+g to enter the gap mode. Choose o or i for modifying outer/inner gaps. Press one of + / - (in-/decrement$
 set $mode_gaps Gaps: (o) outer, (i) inner

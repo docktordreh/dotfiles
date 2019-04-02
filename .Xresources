@@ -54,12 +54,8 @@ urxvt*lineSpace:            0
 
 URxvt*saveLines: 12000
 urxvt*depth: 32
-!!Urxvt*shading: 15
-URxvt*background: rgba:0020/0200/0200/c800
+urxvt*background: rgba:0000/0000/0200/c800
 URxvt*foreground: #dedede
-
-Urxvt*inheritPixmap: true
-Urxvt*transparent: true
 
 urxvt*font: xft:Monoid:pixelsize=13
 URxvt*letterSpace: -1
