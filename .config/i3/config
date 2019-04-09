@@ -93,15 +93,15 @@ bindsym $mod+a focus parent
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "Home"
-set $ws2 "Terminal"
-set $ws3 "Browser"
-set $ws4 "IDE"
-set $ws5 "Chat"
-set $ws6 "Vorlesungen"
-set $ws7 "Aufgaben"
-set $ws8 "Music"
-set $ws9 "3 mal und umdrehen dann hat man das Zeichen des Teufels"
+set $ws1 "Home "
+set $ws2 "Terminal "
+set $ws3 "Browser "
+set $ws4 "IDE "
+set $ws5 "Chat "
+set $ws6 "Vorlesungen 拾"
+set $ws7 "Aufgaben 華"
+set $ws8 "Music "
+set $ws9 "999 "
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1

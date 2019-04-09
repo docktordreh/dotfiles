@@ -1,411 +1,375 @@
-;=====================================================
-;
-;   To learn more about how to configure Polybar
-;   go to https://github.com/jaagr/polybar
-;
-;   The README contains alot of information
-;
-;=====================================================
+#################################################################################
+#                                                                               #
+#          ██▓███   ▒█████   ██▓   ▓██   ██▓ ▄▄▄▄    ▄▄▄       ██▀███           #
+#         ▓██░  ██▒▒██▒  ██▒▓██▒    ▒██  ██▒▓█████▄ ▒████▄    ▓██ ▒ ██▒         #
+#         ▓██░ ██▓▒▒██░  ██▒▒██░     ▒██ ██░▒██▒ ▄██▒██  ▀█▄  ▓██ ░▄█ ▒         #
+#         ▒██▄█▓▒ ▒▒██   ██░▒██░     ░ ▐██▓░▒██░█▀  ░██▄▄▄▄██ ▒██▀▀█▄           #
+#         ▒██▒ ░  ░░ ████▓▒░░██████▒ ░ ██▒▓░░▓█  ▀█▓ ▓█   ▓██▒░██▓ ▒██▒         #
+#         ▒▓▒░ ░  ░░ ▒░▒░▒░ ░ ▒░▓  ░  ██▒▒▒ ░▒▓███▀▒ ▒▒   ▓▒█░░ ▒▓ ░▒▓░         #
+#         ░▒ ░       ░ ▒ ▒░ ░ ░ ▒  ░▓██ ░▒░ ▒░▒   ░   ▒   ▒▒ ░  ░▒ ░ ▒░         #
+#         ░░       ░ ░ ░ ▒    ░ ░   ▒ ▒ ░░   ░    ░   ░   ▒     ░░   ░          #
+#                      ░ ░      ░  ░░ ░      ░            ░  ░   ░              #
+#                                   ░ ░           ░                             #
+#                                                                               #
+#                                                                               #
+#################################################################################
 
 [colors]
-;background = ${xrdb:color0:#222}
-background = #222
-background-alt = #444
-;foreground = ${xrdb:color7:#222}
-foreground = #dfdfdf
-foreground-alt = #555
-primary = #ffb52a
-secondary = #e60053
-alert = #bd2c40
-numix-red=#35bf5c
-numix-white=#f9f9f9
-numix-grey=#dedede
-numix-dark=#333333
-numix-darker=#2d2d2d
-;NOT WORKING:
-; wlan? volume,backlight
+background             = #000000
+transparent_background = #A0000000
+foreground             = #444444
+primary                = #ffb52a
+secondary              = #e60053
+alert                  = #bd2c40
 
-[bar/top]
-; monitor = 
-monitor-strict = false
-width = 100%
-height = 20
-background = #000000 
-foreground = ${colors.numix-white}
-bottom = false
-radius = 0.0
-padding = 0
-module-margin-left = 2
-tray-position = right
-tray-padding = 2
-font-0 = "Weather Icons:size=11"
-font-1 = "Monaco:size=11"
-font-2 = "Material Icons:size=11"
-font-3 = "FantasqueSansMono Nerd Font:size=11"
-modules-left = i3
-modules-center = xwindow date pbweather 
-modules-right = wlan eth batterie
+[gentoo_cl]
+purple                 = #54487A 
+purple-light           = #61538D
+purple-light2          = #6E56AF
+purple-grey            = #DDDAEC
+green                  = #73D216
+bg                     = #FAFAFA
+fg                     = #E1E1E1
 
-; >> pbweather
-[module/pbweather]
-type = custom/script
-tail = true
-label = %output%
-interval = 6000
-exec = /.scripts/pbweather
+#################################################################################
+[bar/main]
+monitor             = eDP1
+fixed-center        = true
+width               = 60%
+height              = 30
+override-redirect   = true
+offset-x            = 20%
+dim-value           = 0.9
 
+background          = ${colors.transparent_background}
+foreground          = ${colors.foreground}
+font-0              = Fura Code Nerd Font:pixelsize=11;2
+font-2              = Symbola:pixelsize=12;1
+font-3              = Font Awesome 5 Free Solid:pixelsize=10;1
 
-[module/xwindow]
-type = internal/xwindow
-label = %title:0:30:...%
+separator           = " | "
+module-margin       = 1
+modules-center      = memory cpu temperature wlan eth pingrtt pbweather airquality-index date battery
+#click-left          = polybar fullscreen
 
-[module/xkeyboard]
-type = internal/xkeyboard
-blacklist-0 = num lock
+[bar/bottom]
+monitor             = eDP1
+fixed-center        = true
+width               = 100%
+height              = 25
+override-redirect   = true
+bottom              = true
 
-format-prefix = " "
-format-prefix-foreground = ${colors.foreground-alt}
-format-prefix-underline = ${colors.secondary}
+tray-position       = right
+background          = ${colors.transparent_background}
+foreground          = ${colors.foreground}
+font-0              = Monoid:pixelsize=9
 
-label-layout = %layout%
-label-layout-underline = ${colors.secondary}
+modules-left        = i3
+modules-center      = emerge
+seperator           = " | "
 
-label-indicator-padding = 2
-label-indicator-margin = 1
-label-indicator-background = ${colors.secondary}
-label-indicator-underline = ${colors.secondary}
+[bar/fullscreen]
+monitor             = eDP1
+width               = 100%
+height              = 100%
+override-redirect   = true
+dim-value           = 0.5
+click-left          = pkill -f "polybar fullscreen"
 
-[module/filesystem]
-type = internal/fs
-interval = 60
-mount-0 = /
-label-mounted =  %percentage_used%%
-label-unmounted =  [n/a]
-label-unmounted-foreground = ${colors.foreground-alt}
+background          = #000000
+foreground          = ${colors.foreground}
+font-0              = Fira Code:pixelsize=10
+font-1              = Font Awesome 5 Free Solid:pixelsize=9
 
-[module/bspwm]
-type = internal/bspwm
+separator           = "   |   "
+module-margin       = 1
+modules-center      = fmemory fcpu temperature fwlan eth pbweather date fbattery
 
-label-focused = %icon%
-label-unfocused = %icon%
-label-urgent = %icon%
-label-visible = %icon%
+#################################################################################
 
-label-focused-background = ${colors.numix-dark}
-label-focused-underline= ${colors.numix-white}
-label-focused-padding = 2
-
-label-occupied-padding = 2
-
-label-urgent-background = ${colors.numix-red}
-label-urgent-padding = 2
-
-[module/i3]
-type = internal/i3
-pin-workspaces = true
-index-sort = true
-wrapping-scroll = true
-
-format = <label-state> <label-mode>
-
-ws-icon-0 = label;icon
-ws-icon-1 = Home;
-ws-icon-2 = Terminal;
-ws-icon-3 = Browser;
-ws-icon-4 = IDE; 
-ws-icon-5 = Chat;
-ws-icon-6 = Vorlesungen;
-ws-icon-7 = Aufgaben;
-ws-icon-8 = Music;
-ws-icon-9 = 3 mal und umdrehen dann hat man das Zeichen des Teufels; 666
-ws-icon-default = 
-
-
-; Available tokens:
-;   %mode%
-; Default: %mode%
-label-mode = %mode%
-label-mode-padding = 2
-label-mode-background = #000000
-
-; Available tokens:
-;   %name%
-;   %icon%
-;   %index%
-;   %output%
-; Default: %icon%  %name%
-label-focused = %icon%  %name%
-label-focused-foreground = ${colors.numix-red}
-label-focused-background = #000000
-label-focused-padding = 4
-
-; Available tokens:
-;   %name%
-;   %icon%
-;   %index%
-; Default: %icon%  %name%
-label-unfocused = %icon% %name%
-label-unfocused-foreground = ${colors.numix-white}
-label-unfocused-padding = 4
-
-; Available tokens:
-;   %name%
-;   %icon%
-;   %index%
-; Default: %icon%  %name%
-label-visible = %icon%  %name%
-label-visible-underline = ${colors.numix-red}
-label-visible-padding = 4
-
-; Available tokens:
-;   %name%
-;   %icon%
-;   %index%
-; Default: %icon%  %name%
-label-urgent = %icon%  %name%
-label-urgent-foreground = ${colors.numix-white}
-label-urgent-background = ${colors.numix-red}
-label-urgent-padding = 4
-
-[module/mpd]
-type = internal/mpd
-format-online = <label-song>  <icon-prev> <icon-stop> <toggle> <icon-next>
-
-icon-prev = 
-icon-stop = 
-icon-play = 
-icon-pause = 
-icon-next = 
-
-label-song-maxlen = 25
-label-song-ellipsis = true
-
-[module/xbacklight]
-type = internal/xbacklight
-
-format = <label> <bar>
-label = BL
-
-bar-width = 10
-bar-indicator = |
-bar-indicator-foreground = #ff
-bar-indicator-font = 2
-bar-fill = ─
-bar-fill-font = 2
-bar-fill-foreground = #9f78e1
-bar-empty = ─
-bar-empty-font = 2
-bar-empty-foreground = ${colors.foreground-alt}
-
-[module/backlight-acpi]
-inherit = module/xbacklight
-type = internal/backlight
-card = intel_backlight
-
-[module/cpu]
-type = internal/cpu
-interval = 6
-format = <label>
-label =   %percentage%%
+[memory]
+type                          = internal/memory
+format-prefix                 = " mem: "
+format-foreground             = #aaff77
+label                         = %percentage_used%%
 
 [module/memory]
-type = internal/memory
-interval = 6
-format = <label>
-label =  %percentage_used%%
+type                          = ${memory.type}
+format-prefix                 = ${memory.format-prefix}
+format-foreground             = ${memory.format-foreground}
+
+[module/fmemory]
+type                          = ${memory.type}
+format                        = <label> <bar-used>
+format-prefix                 = ${memory.format-prefix}
+format-foreground             = ${memory.format-foreground}
+
+bar-used-width                = 10
+bar-used-foreground-0         = #aaff77
+bar-used-foreground-1         = #aaff77
+bar-used-foreground-2         = #fba922
+bar-used-foreground-3         = #ff5555
+bar-used-empty-foreground     = #aaff77
+
+bar-used-indicator            = ""
+bar-used-fill                 = ""
+bar-used-empty                = "-"
+
+#################################################################################
+
+[cpu]
+type                  = internal/cpu
+format-prefix         = " cpu: "
+format-foreground     = #f1c40f
+label                 = %percentage%%
+
+[module/cpu]
+type                  = ${cpu.type}
+
+format-prefix         = ${cpu.format-prefix}
+format-foreground     = ${cpu.format-foreground}
+label                 = ${cpu.label}
+
+[module/fcpu]
+type                  = ${cpu.type}
+format                = <label> <ramp-coreload>
+format-prefix         = ${cpu.format-prefix}
+format-foreground     = ${cpu.format-foreground}
+label                 = ${cpu.label}
+
+ramp-coreload-spacing = 1
+ramp-coreload-0       = ▁
+ramp-coreload-1       = ▂
+ramp-coreload-2       = ▃
+ramp-coreload-3       = ▄
+ramp-coreload-4       = ▅
+ramp-coreload-5       = ▆
+ramp-coreload-6       = ▇
+ramp-coreload-7       = █
+
+#################################################################################
+
+[wlan]
+type                           = internal/network
+interface                      = wlp4s0
+format-prefix                  = " "
+format-foreground              = #9b5bbb
+label-disconnected             = "OFF THE GRID"
 
 [module/wlan]
-type = internal/network
-interface = wlp4s0
-interval = 3.0
+type                           = ${wlan.type}
+interface                      = ${wlan.interface}
 
-format-connected = <label-connected>
-label-connected = %local_ip%@%essid%
-label-connected-foreground = #ae81ff
+format-connected-prefix        = ${wlan.format-prefix}
+format-connected-foreground    = ${wlan.format-foreground}
+label-connected                = %essid% [%local_ip%]
+
+format-disconnected-prefix     = ${wlan.format-prefix}
+format-disconnected-foreground = ${wlan.format-foreground}
+label-disconnected             = ${wlan.label-disconnected}
+
+[module/fwlan]
+type                           = ${wlan.type}
+interface                      = ${wlan.interface}
+
+format-connected-prefix        = ${wlan.format-prefix}
+format-connected-foreground    = ${wlan.format-foreground}
+label-connected                = %essid% [%local_ip%] [%upspeed%] [%downspeed%]
+
+format-disconnected-prefix     = ${wlan.format-prefix}
+format-disconnected-foreground = ${wlan.format-foreground}
+label-disconnected             = ${wlan.label-disconnected}
+
+#################################################################################
 
 [module/eth]
 type = internal/network
 interface = enp0s25
-interval = 3.0
 
-format-connected-underline = #55aa55
-format-connected-prefix = " "
-format-connected-prefix-foreground = ${colors.foreground-alt}
-label-connected = %local_ip%
-label-connected-foreground = #ae81ff
+format-connected-prefix = ""
+format-connected-prefix-foreground = ${colors.foreground}
+label-connected = ETH | %local-ip%
 
 format-disconnected =
 ;format-disconnected = <label-disconnected>
-;format-disconnected-underline = ${self.format-connected-underline}
 ;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground-alt}
+;label-disconnected-foreground = ${colors.foreground}
 
-[module/date]
-type = internal/date
-interval = 1
+#################################################################################
 
-date = 
-date-alt = " %d.%m.%Y"
-
-time = %H:%M
-time-alt = %H:%M:%S
-
-format-prefix = 
-format-foreground = #35bf5c
-format-background = #000000
-format-padding = 2
- 
-label = %date% %time%
-
-[module/volume]
-type = internal/volume
-master-soundcard = default
-speaker-soundcard = default
-headphone-soundcard = default
-master-mixer = Master
-speaker-mixer = Speaker
-headphone-mixer = Headphone
-headphone-id = 24
-format-volume = <ramp-volume>
-label-volume = VOL
-label-muted = 🔇
-label-muted-foreground = #66
-ramp-volume-0 = 🔈
-ramp-volume-1 = 🔉
-ramp-volume-2 = 🔊
-ramp-headphones-0 = 
-ramp-headphones-1 = 
-interval = 2
+[battery]
+type                          = internal/battery
+battery                       = BAT0
+adapter                       = AC
+full-at                       = 100
+format-foreground             = #e74c3c
 
 [module/battery]
-type = internal/battery
-battery = BAT0
-adapter = AC
-full-at = 94
+type                          = ${battery.type}
+battery                       = ${battery.battery}
+adapter                       = ${battery.adapter}
+full-at                       = ${battery.full-at}
 
-format-charging = <animation-charging>
-format-discharging = <ramp-capacity>
+format-charging               = <animation-charging> <label-charging>
+format-charging-foreground    = ${battery.format-foreground}
+format-discharging            = <animation-discharging> <label-discharging>
+format-discharging-foreground = ${battery.format-foreground}
+format-full-prefix            = "FULLY CHARGED!"
 
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-3 = 
-ramp-capacity-4 = 
+animation-charging-0          = "[] "
+animation-charging-1          = "[] "
+animation-charging-2          = "[] "
+animation-charging-3          = "[] "
+animation-charging-4          = "[] "
 
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
-animation-charging-3 = 
-animation-charging-4 = 
-animation-charging-foreground = ${colors.numix-red}
-animation-charging-framerate = 750
+animation-discharging-0       = ""
+animation-discharging-1       = ""
+animation-discharging-2       = ""
+animation-discharging-3       = ""
+animation-discharging-4       = ""
 
-[module/battery2]
-inherit = module/battery
-battery = BAT1
+[module/fbattery]
+type                          = ${battery.type}
+battery                       = ${battery.battery}
+adapter                       = ${battery.adapter}
+full-at                       = ${battery.full-at}
+
+format-charging               = <animation-charging> <label-charging>
+format-charging-foreground    = ${battery.format-foreground}
+format-discharging            = <animation-discharging> <label-discharging>
+format-discharging-foreground = ${battery.format-foreground}
+format-full-prefix            = "FULLY CHARGED!"
+label-discharging             = %percentage%% [%consumption%W] [%time%]
+
+ramp-capacity-0               = ""
+ramp-capacity-1               = ""
+ramp-capacity-2               = ""
+ramp-capacity-3               = ""
+ramp-capacity-4               = ""
+
+animation-charging-0          = "[] "
+animation-charging-1          = "[] "
+animation-charging-2          = "[] "
+animation-charging-3          = "[] "
+animation-charging-4          = "[] "
+
+animation-discharging-0       = ""
+animation-discharging-1       = ""
+animation-discharging-2       = ""
+animation-discharging-3       = ""
+animation-discharging-4       = ""
+
+#################################################################################
+
+[temperature]
+type                  = internal/temperature
+format-foreground     = #e74c3c
 
 [module/temperature]
-type = internal/temperature
-thermal-zone = 0
-warn-temperature = 60
-
-format = <ramp> <label>
-format-underline = #f50a4d
-format-warn = <ramp> <label-warn>
-format-warn-underline = ${self.format-underline}
-
-label = %temperature%
-label-warn = %temperature%
-label-warn-foreground = ${colors.secondary}
-
-ramp-0 = 
-ramp-1 = 
-ramp-2 = 
-ramp-foreground = ${colors.foreground-alt}
-
-[module/batterie]
-type = internal/battery
-full-at = 99
-battery = BAT0
-adapter = AC0
-poll-interval = 10
-
-format-charging = <animation-charging> <label-charging>
-format-discharging = <ramp-capacity> <label-discharging>
-
-label-charging = CHR  %percentage%%
-label-charging-foreground = #2de0a7
-
-label-discharging = DCHR %percentage%%
-label-discharging-foreground = #2de0a7
-
-label-full = FULL
-
-ramp-capacity-foreground = #2de0a7
-ramp-capacity-0 =  
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-3 = 
-ramp-capacity-4 = 
-
-animation-charging-foreground = #2de0a7
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
-animation-charging-3 = 
-animation-charging-4 = 
-
-animation-charging-framerate = 750
-
-; Only applies if <animation-discharging> is used
-animation-discharging-foreground = #2de0a7
-animation-discharging-0 = 
-animation-discharging-1 = 
-animation-discharging-2 = 
-animation-discharging-3 = 
-animation-discharging-4 = 
-; Framerate in milliseconds
-animation-discharging-framerate = 500
+type                  = ${temperature.type}
+thermal-zone          = 0
+warn-temperature      = 50
+format-foreground     = ${temperature.format-foreground} 
+ramp-0                = 
+ramp-1                = 
+ramp-2                = 
+ramp-3                = 
+ramp-4                = 
+format                = <ramp> <label>
 
 
+#################################################################################
 
-interval = 5
-[settings]
-screenchange-reload = true
-;compositing-background = xor
-;compositing-background = screen
-;compositing-foreground = source
-;compositing-border = over
+[date]
+type               = internal/date
+date               = "%d.%m.%Y"
+time               = "%H:%M:%S"
 
-[global/wm]
-margin-top = 5
-margin-bottom = 5
+[module/date]
+type               = ${date.type}
+date               = ${date.date}
+time               = ${date.time}
 
-[module/powermenu]
-type = custom/menu
+format-prefix = " "
+format-foreground = #B53471
+label = %date% [%time%]
 
-expand-right = true
-format-spacing = 1
+#################################################################################
 
-label-open = 
-label-open-foreground = ${colors.numix-red}
-label-close =  cancel
-label-close-foreground = ${colors.numix-red}
-label-separator = |
-label-separator-foreground = ${colors.numix-red}
+[module/pbweather]
+type               = custom/script
+tail               = true
+label              = %output%
+label-foreground   = #aaff77
+interval           = 3000
+exec               = ~/bin/pbweather
 
-menu-0-0 = reboot
-menu-0-0-exec = menu-open-1
-menu-0-1 = power off
-menu-0-1-exec = menu-open-2
+#################################################################################
 
-menu-1-0 = cancel
-menu-1-0-exec = menu-open-0
-menu-1-1 = reboot
-menu-1-1-exec = sudo reboot
+[module/i3]
+type                       = internal/i3
+pin-workspaces             = true
+index-sort                 = true
+wrapping-scroll            = true
 
-menu-2-0 = power off
-menu-2-0-exec = sudo poweroff
-menu-2-1 = cancel
-menu-2-1-exec = menu-open-0
+format                     = <label-state> <label-mode>
+ws-icon-1                  = Home;
+ws-icon-2                  = Terminal;
+ws-icon-3                  = Browser;
+ws-icon-4                  = IDE;
+ws-icon-5                  = Chat;
+ws-icon-6                  = Vorlesungen;拾
+ws-icon-7                  = Aufgaben;華
+ws-icon-8                  = Music;
+ws-icon-9                  = 999;
+ws-icon-default            = 
 
+label-mode                 = %mode%
+label-mode-padding         = 4
+label-mode-background      = ${colors.background}
+label-mode-foreground      = ${colors.primary}
+
+label-focused              = %icon% %name%
+label-focused-foreground   = ${colors.background}
+label-focused-background   = #8CDC40
+
+label-focused-padding      = 4
+
+label-unfocused            = %icon% %name%
+label-unfocused-foreground = #A7E969
+label-unfocused-background = ${colors.background}
+label-unfocused-padding    = 4
+
+label-urgent               = %icon% %name%
+label-urgent-foreground    = ${colors.background}
+label-urgent-background    = ${colors.alert}
+label-urgent-padding       = 4
+
+#################################################################################
+
+[module/emerge]
+type = custom/script
+exec = tail -n1 /var/log/emerge.log 
+label-foreground = ${colors.alert}
+label = %output%
+tail = true
+
+#################################################################################
+
+[module/airquality-index]
+type = custom/script
+exec = ~/bin/info-airqualityindex
+label = %output%
+interval = 600
+
+[module/hackspeed]
+type = custom/script
+exec = ~/bin/info-hackspeed
+tail = true
+
+[module/pingrtt]
+type = custom/script
+exec = ~/bin/info-pingrtt
+label = %output%
+interval = 600
