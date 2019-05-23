@@ -100,8 +100,8 @@ set $ws4 "IDE "
 set $ws5 "Chat "
 set $ws6 "Vorlesungen 拾"
 set $ws7 "Aufgaben 華"
-set $ws8 "Music "
-set $ws9 "999 "
+set $ws8 "Präsentationen "
+set $ws9 "Secondary_Präs "
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -124,7 +124,6 @@ bindsym $mod+Shift+6 move container to workspace $ws6
 bindsym $mod+Shift+7 move container to workspace $ws7
 bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
-bindsym $mod+Shift+0 move container to workspace $ws10
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -172,12 +171,16 @@ exec_always --no-startup-id nm-applet
 exec_always --no-startup-id xautolock -time 5 -locker "i3lock -d -c 000000"
 exec --no-startup-id dunst --config $HOME/.config/dunst/dunstrc
 exec_always --no-startup-id amixer set Capture nocap
+assign [class="^URxvt$"] $ws2
+assign [class="^URxvt$"instance="^vim"] $ws4
 assign [class="Telegram"] $ws5
 assign [class="Thunderbird"] $ws5
-assign [class="Franz"] $ws5
 assign [class="Firefox"] $ws3
-assign [class="Vivaldi"] $ws3
-assign [class="urxvt"] $ws2
+assign [class="Joplin"] $ws4
+assign [class="Chromium"] $ws5
+assign [class="Signal"] $ws5
+exec --no-startup-id signal-desktop
+exec --no-startup-id chromium web.whatsapp.com
 exec --no-startup-id thunderbird
 exec_always --no-startup-id conky -c ~/.config/conky/.config
 #gaps
@@ -243,24 +246,44 @@ bindsym $mod+0 mode "$mode_i3lock"
 
 mode "$mode_i3lock" {
         bindsym l exec --no-startup-id i3lock -c 000000 -d; mode "default"
-        bindsym r exec --no-startup-id sudo reboot
-        bindsym p exec --no-startup-id sudo poweroff
+        bindsym r exec --no-startup-id reboot
+        bindsym p exec --no-startup-id shutdown -a -h 0
 
         bindsym Return mode "default"
         bindsym Escape mode "default" 
 }
 
 #fast exec
-set $mode_fastexec (f)irefox v(m)ware
+set $mode_fastexec (f)irefox v(m)ware (j)oplin (z)otero (v)irtualbox (w)hatsapp (t)elegram (s)ignal
 bindsym $mod+x mode "$mode_fastexec"
 
 mode "$mode_fastexec" {
         bindsym f exec --no-startup-id firefox; mode "default"
         bindsym p exec --no-startup-id firefox --private-window; mode "default"
         bindsym m exec --no-startup-id vmware; mode "default"
-
+    	bindsym j exec --no-startup-id ~/.local/bin/joplin; mode "default"
+        bindsym z exec --no-startup-id /opt/zotero/zotero; mode "default"
+        bindsym v exec --no-startup-id virtualbox; mode "default"
+        bindsym w exec --no-startup-id chromium web.whatsapp.com; mode "default"
+        bindsym t exec --no-startup-id telegram-desktop; mode "default"
+        bindsym s exec --no-startup-id signal; mode "default"
         bindsym Return mode "default"
         bindsym Escape mode "default" 
 }
-for_window [class="^.*"] border pixel 0
+for_window [class="^.*"] border pixel 3
 bindsym $mod+t exec --no-startup-id urxvtc -e sh -c "ranger"
+
+workspace $ws2 output eDP1
+workspace $ws3 output eDP1
+workspace $ws4 output eDP1
+workspace $ws5 output eDP1
+workspace $ws6 output eDP1
+workspace $ws7 output eDP1
+workspace $ws8 output DP1 DP2 HDMI1 HDMI2 VGA1 VIRTUAL1 eDP1
+workspace $ws9 output DP1 DP2 HDMI1 HDMI2 VGA1 VIRTUAL1 eDP1
+
+# Window colors         border  backgr. text    indicator
+client.focused          #4c7899 #285577 #ffffff #2e9ef4
+client.focused_inactive #333333 #5f676a #ffffff #484e50
+client.unfocused        #333333 #222222 #888888 #292d2e
+client.urgent           #2f343a #900000 #ffffff #900000

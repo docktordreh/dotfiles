@@ -3,7 +3,7 @@
 #************************************************
 
 # aktuelles projekt
-alias cda='cd ~/.dev/digital-meetingroom'
+alias cda='cd ~/.dev && echo $(tput setaf 1) No project specified'
 
 # aktuelles zweitprojekt
 alias cdzp='cd ~/.dev/rpiled_ssh_optimized'

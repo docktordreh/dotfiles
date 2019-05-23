@@ -26,3 +26,10 @@ call vundle#end()
 syntax enable
 set background=dark
 colorscheme gruvbox
+" expandtab: insert space chars instead of tab
+" tabstop: x spaces 1 tab
+" shiftwidth: identation
+" softtabstop: backspace goes back x spaces
+autocmd FileType * set expandtab|set shiftwidth=4|set tabstop=4
+autocmd FileType python set softtabstop=4
+autocmd FileType sh set shiftwidth=3|set tabstop=3|set expandtab

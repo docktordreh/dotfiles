@@ -119,7 +119,7 @@ fk_wttr()
 
 fk_addalias() 
 {
-    	echo alias "$1"="'$2'" >> ~/.bash_aliases;
+	echo alias "$1"="'$2'" >> ~/.bash_aliases;
 	source ~/.bashrc
 }
 fk_addpralias()
@@ -136,4 +136,9 @@ fk_bandit()
 {
 	cat ~/bandit/bandit"$1"
 	ssh bandit"$1"@bandit.labs.overthewire.org -p 2220
+}
+
+fk_addbanditkey()
+{
+    echo "$1" > ~/bandit/bandit"$2"
 }

@@ -35,10 +35,10 @@ fg                     = #E1E1E1
 [bar/main]
 monitor             = eDP1
 fixed-center        = true
-width               = 60%
+width               = 80%
 height              = 30
 override-redirect   = true
-offset-x            = 20%
+offset-x            = 10%
 dim-value           = 0.9
 
 background          = ${colors.transparent_background}
@@ -50,7 +50,7 @@ font-3              = Font Awesome 5 Free Solid:pixelsize=10;1
 separator           = " | "
 module-margin       = 1
 modules-center      = memory cpu temperature wlan eth pingrtt pbweather airquality-index date battery
-#click-left          = polybar fullscreen
+click-left          = polybar fullscreen
 
 [bar/bottom]
 monitor             = eDP1

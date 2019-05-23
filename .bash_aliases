@@ -57,3 +57,4 @@ alias la='ll -A'
 #************************************************
 
 alias ali-help='cat ~/.bash_aliases'
+alias udo='sudo'
