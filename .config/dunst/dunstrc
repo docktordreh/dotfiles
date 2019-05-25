@@ -50,8 +50,6 @@
 
     # Ignore newlines '\n' in notifications.
     ignore_newline = no
-
-
     # The geometry of the window:
     #   [{width}]x{height}[+/-{x}+/-{y}]
     # The geometry of the message window.
@@ -184,6 +182,10 @@
     foreground = "#888888"
     timeout = 5
 
+[Spotify]
+    appname=Spotify
+    format="%iNow Playing\n%s\n%b"
+    timeout=0
 
 # Every section that isn't one of the above is interpreted as a rules to
 # override settings for certain messages.
