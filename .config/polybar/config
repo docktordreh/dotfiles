@@ -33,7 +33,7 @@ fg                     = #E1E1E1
 
 #################################################################################
 [bar/main]
-monitor             = eDP1
+#monitor             = eDP1
 fixed-center        = true
 width               = 80%
 height              = 30
@@ -49,11 +49,11 @@ font-3              = Font Awesome 5 Free Solid:pixelsize=10;1
 
 separator           = " | "
 module-margin       = 1
-modules-center      = memory cpu temperature wlan eth pingrtt pbweather airquality-index date battery
+modules-center      = memory temperature wlan eth pingrtt pbweather airquality-index date battery
 click-left          = polybar fullscreen
 
 [bar/bottom]
-monitor             = eDP1
+#monitor             = eDP1
 fixed-center        = true
 width               = 100%
 height              = 25
@@ -66,7 +66,7 @@ foreground          = ${colors.foreground}
 font-0              = Monoid:pixelsize=9
 
 modules-left        = i3
-modules-center      = emerge
+modules-center      = 
 seperator           = " | "
 
 [bar/fullscreen]
@@ -152,7 +152,7 @@ ramp-coreload-7       = █
 
 [wlan]
 type                           = internal/network
-interface                      = wlp4s0
+interface                      = wlan0
 format-prefix                  = " "
 format-foreground              = #9b5bbb
 label-disconnected             = "OFF THE GRID"

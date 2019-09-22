@@ -48,7 +48,7 @@ alias cdw='cd /windoof'
 #************************************************
 
 # verbesserte ls's
-alias ls='ls -h --group-directories-first --color'
+alias ls='ls -h --color'
 alias ll='ls -l'
 alias la='ll -A'
 
@@ -58,3 +58,4 @@ alias la='ll -A'
 
 alias ali-help='cat ~/.bash_aliases'
 alias udo='sudo'
+alias doas='sudo'

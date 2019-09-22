@@ -93,10 +93,10 @@ fk_extract()
   	if [ -f $1 ] ; then
 	      	case $1 in
         	  	*.tar.bz2)   tar xvjf $1    ;;
-        		*.tar.gz)    tar xvzf $1    ;;
-		        *.bz2)       bunzip2 $1     ;;
-        		*.rar)       rar x $1       ;;
-	        	*.gz)        gunzip $1      ;;
+        		  *.tar.gz)    tar xvzf $1    ;;
+		          *.bz2)       bunzip2 $1     ;;
+        		  *.rar)       rar x $1       ;;
+	        	  *.gz)        gunzip $1      ;;
 	          	*.tar)       tar xvf $1     ;;
         	  	*.tbz2)      tar xvjf $1    ;;
           		*.tgz)       tar xvzf $1    ;;
@@ -129,6 +129,7 @@ fk_addalias()
 	echo alias "$1"="'$2'" >> ~/.bash_aliases;
 	source ~/.bashrc
 }
+
 fk_addpralias()
 {
 	echo alias "$1"="'$2'" >> ~/.bash_projekte;
@@ -148,4 +149,11 @@ fk_bandit()
 fk_addbanditkey()
 {
     echo "$1" > ~/bandit/bandit"$2"
+}
+
+#************************************************
+#               other
+#************************************************
+fk_alarm(){
+    (speaker-test --frequency $1 --test sine)& pid=$!;sleep 0.2;kill -9 $pid
 }
