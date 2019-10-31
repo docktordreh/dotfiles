@@ -57,7 +57,7 @@ urxvt*lineSpace:            0
 URxvt*saveLines: 12000
 urxvt*depth: 32
 
-urxvt*font: xft:Monoid:pixelsize=13
+urxvt*font: xft:Inconsolata:pixelsize=16
 URxvt*letterSpace: -1
 
 URxvt*scrollBar: false
