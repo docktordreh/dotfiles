@@ -4,3 +4,4 @@ rofi.font: Monoid 12
 rofi.show-icons: true
 rofi.display-window: Window
 rofi.display-drun: Search
+rofi.theme: /usr/share/rofi/themes/solarized_alternate.rasi
