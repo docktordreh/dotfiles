@@ -16,7 +16,7 @@ alias bf='vim ~/.bash_funktionen'
 #************************************************
 
 # ip lokal
-alias ipl='ipconfig getifaddr en0'
+alias ipl='ipconfig getifaddr enp0s25'
 
 # ip world
 alias ipw='curl ipinfo.io/ip'
@@ -38,7 +38,7 @@ alias cdu='cd /usr'
 alias cdt='cd /tmp'
 alias cde='cd /etc'
 alias cdc='cd ~/.config'
-alias cds='cd /.scripts'
+alias cds='cd ~/.dev'
 
 # windoof alias
 alias cdw='cd /windoof'
@@ -57,5 +57,6 @@ alias la='ll -A'
 #************************************************
 
 alias ali-help='cat ~/.bash_aliases'
-alias udo='sudo'
-alias doas='sudo'
+alias udo='doas'
+alias doas='doas'
+alias sudo='doas'
