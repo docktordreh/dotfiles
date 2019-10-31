@@ -66,7 +66,7 @@ foreground          = ${colors.foreground}
 font-0              = Monoid:pixelsize=9
 
 modules-left        = i3
-modules-center      = 
+modules-center      = emerge 
 seperator           = " | "
 
 [bar/fullscreen]
@@ -303,7 +303,7 @@ tail               = true
 label              = %output%
 label-foreground   = #aaff77
 interval           = 3000
-exec               = ~/bin/pbweather
+exec               = pbweather
 
 #################################################################################
 
@@ -359,17 +359,17 @@ tail = true
 
 [module/airquality-index]
 type = custom/script
-exec = ~/bin/info-airqualityindex
+exec = aqi
 label = %output%
 interval = 600
 
 [module/hackspeed]
 type = custom/script
-exec = ~/bin/info-hackspeed
+exec = hackspeed
 tail = true
 
 [module/pingrtt]
 type = custom/script
-exec = ~/bin/info-pingrtt
+exec = pingrtt
 label = %output%
 interval = 600
