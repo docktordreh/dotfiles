@@ -244,27 +244,24 @@ assign [class="Texmaker"] $ws6
 #************************************************ 
 
 # audio
-bindsym XF86AudioRaiseVolume exec --no-startup-id sh volumeControl up
-bindsym XF86AudioLowerVolume exec --no-startup-id sh volumeControl down
-bindsym XF86AudioMute exec --no-startup-id sh volumeControl mute
+bindsym XF86AudioRaiseVolume    exec --no-startup-id sh soundctl up
+bindsym XF86AudioLowerVolume    exec --no-startup-id sh soundctl down
+bindsym XF86AudioMute           exec --no-startup-id sh soundctl mute
 
 #brightness
-bindsym XF86MonBrightnessUp exec --no-startup-id sh brightnessControl up
-bindsym XF86MonBrightnessDown exec --no-startup-id sh brightnessControl down
+bindsym XF86MonBrightnessUp     exec --no-startup-id sh blightctl up
+bindsym XF86MonBrightnessDown   exec --no-startup-id sh blightctl down
 
 # screenshot
-bindsym Print exec flameshot gui -p ~/shots
+bindsym Print                   exec                    flameshot gui -p ~/shots
 
 # mic
-bindsym XF86AudioMicMute exec --no-startup-id amixer set Capture toggle
-
-# lockscreen
-exec_always --no-startup-id xautolock -time 5 -locker "i3lock -d -c 000000"
-# aufnahme des mikros abstellen - automatisch
-exec_always --no-startup-id amixer set Capture nocap
+bindsym XF86AudioMicMute        exec --no-startup-id    amixer set Capture toggle
 
 
 bindsym $mod+t exec --no-startup-id urxvtc -e sh -c "ranger"
+
+
 #************************************************
 # Lockscreen & Powerstatus
 #************************************************ 
@@ -291,10 +288,10 @@ set $mode_fastexec (f)irefox v(m)ware (j)oplin (z)otero (v)irtualbox
 bindsym $mod+x mode "$mode_fastexec"
 
 mode "$mode_fastexec" {
-        bindsym f exec --no-startup-id firefox; mode "default"
+        bindsym f exec --no-startup-id firefox;                  mode "default"
         bindsym p exec --no-startup-id firefox --private-window; mode "default"
-        bindsym Return mode "default"
-        bindsym Escape mode "default" 
+        bindsym Return                                           mode "default"
+        bindsym Escape                                           mode "default" 
 }
 
 #************************************************
@@ -306,10 +303,10 @@ bindsym $mod+c mode "$mode_chat"
 
 mode "$mode_chat" {
         bindsym w exec --no-startup-id chromium web.whatsapp.com; mode "default"
-        bindsym t exec --no-startup-id telegram-desktop; mode "default"
-        bindsym s exec --no-startup-id signal; mode "default"
-        bindsym Return mode "default"
-        bindsym Escape mode "default" 
+        bindsym t exec --no-startup-id telegram-desktop;          mode "default"
+        bindsym s exec --no-startup-id signal;                    mode "default"
+        bindsym Return                                            mode "default"
+        bindsym Escape                                            mode "default" 
 }
 
 
@@ -321,12 +318,12 @@ set $mode_prod (j)oplin (l)ibreoffice v(m)ware (s)pacemacs (v)irtualbox (z)otero
 bindsym $mod+p mode "$mode_prod"
 
 mode "$mode_prod" {
-        bindsym s exec --no-startup-id emacs; mode "default"
-        bindsym l exec --no-startup-id libreoffice; mode "default"
-        bindsym m exec --no-startup-id vmware; mode "default"
-    	bindsym j exec --no-startup-id ~/.local/bin/joplin; mode "default"
-        bindsym z exec --no-startup-id /opt/zotero/zotero; mode "default"
-        bindsym v exec --no-startup-id virtualbox; mode "default"
+        bindsym s exec --no-startup-id emacs;                     mode "default"
+        bindsym l exec --no-startup-id libreoffice;               mode "default"
+        bindsym m exec --no-startup-id vmware;                    mode "default"
+        bindsym j exec --no-startup-id ~/.joplin/Joplin.AppImage; mode "default"
+        bindsym z exec --no-startup-id /opt/zotero/zotero;        mode "default"
+        bindsym v exec --no-startup-id virtualbox;                mode "default"
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
@@ -334,26 +331,50 @@ mode "$mode_prod" {
 # Autostart Programme
 #************************************************ 
 
-# zufälliges wallpaper - jedesmal wenn i3 neugestartet wird
-exec_always --no-startup-id feh --bg-fill --randomize ~/.wallpaper
-# Starten nextcloud - Synchronisation in bg
-exec --no-startup-id nextcloud
+exec_always                                         "setxkbmap de"
+
 # compton as composer manager
-exec_always --no-startup-id compton -cGbf
-# urxvtd ist ein daemon von urxvt; wenn gestartet können clients des daemons gestartet werden - benötigt weniger RAM
-exec --no-startup-id urxvtd
+exec_always                         --no-startup-id compton -cGbf
+
+# zufälliges wallpaper - jedesmal wenn i3 neugestartet wird
+exec_always                         --no-startup-id feh --bg-fill --randomize ~/.wallpaper
+
 # polybar statusbar
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+
 # screenshotting tool
 exec_always --no-startup-id flameshot
+
 # networkmanager
 exec_always --no-startup-id nm-applet
+
+# clipboard
+exec_always --no-startup-id parcellite
+
+# lockscreen
+exec_always                         --no-startup-id xautolock -time 5 -locker "i3lock -d -c 000000"
+
+# aufnahme des mikros abstellen - automatisch
+exec_always                          --no-startup-id    amixer set Capture nocap
+
+exec                                --no-startup-id caffeine
+exec                                --no-startup-id networkmgr
+
+# Starten nextcloud - Synchronisation in bg
+exec                                --no-startup-id nextcloud
+
+
+# urxvtd ist ein daemon von urxvt; wenn gestartet können clients des daemons gestartet werden - benötigt weniger RAM
+exec                                --no-startup-id urxvtd
+
+
 # notification daemon
-exec --no-startup-id dunst --config $HOME/.config/dunst/dunstrc
+exec                                --no-startup-id dunst --config $HOME/.config/dunst/dunstrc
+
 # chat programme
-exec --no-startup-id signal-desktop
-exec --no-startup-id chromium web.whatsapp.com
-exec --no-startup-id thunderbird
-exec --no-startup-id caffeine
-exec --no-startup-id networkmgr
-exec_always "setxkbmap de"
+exec                                --no-startup-id signal-desktop
+exec                                --no-startup-id chromium web.whatsapp.com
+exec                                --no-startup-id thunderbird
+
+
+
