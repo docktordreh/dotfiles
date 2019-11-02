@@ -1,6 +1,12 @@
-Xcursor.theme: Breeze_Snow
+!#************************************************
+!#               Cursor
+!#************************************************
+Xcursor.theme: gentoo
 Xcursor.size: 16
 
+!#************************************************
+!#               Font
+!#************************************************
 Xft.dpi:                    96
 Xft.antialias:              true
 Xft.rgba:                   rgb
@@ -8,14 +14,19 @@ Xft.hinting:                true
 Xft.hintstyle:              hintslight
 
 
+!#************************************************
+!#               
+!#************************************************
 *background: #282828
 *foreground: #fbf1c7
-!!*fading: 40
 *fadeColor: #002b36
 *cursorColor: #93a1a1
 *pointerColorBackground: #586e75
 *pointerColorForeground: #93a1a1
 
+!#************************************************
+!#              Terminal Colors 
+!#************************************************
 ! black
 *.color0:       #292f34
 *.color8:       #0a6355
@@ -49,17 +60,21 @@ Xft.hintstyle:              hintslight
 *.color15:      #f8f8f8
 
 
+!#************************************************
+!#              URxvt Settings
+!#************************************************
 urxvt*geometry:             90x30
 urxvt*loginShell:           true
 urxvt*internalBorder:       0
 urxvt*lineSpace:            0
+URxvt*saveLines:            12000
+!# transparency
+urxvt*depth:                32
+URxvt*background:           [30]#000000
 
-URxvt*saveLines: 12000
-urxvt*depth: 32
+urxvt*font:                 xft:Inconsolata:pixelsize=16
+URxvt*letterSpace:          -1
 
-urxvt*font: xft:Inconsolata:pixelsize=16
-URxvt*letterSpace: -1
+URxvt*scrollBar:            false
 
-URxvt*scrollBar: false
-
-URxvt*scrollstyle: plain
+URxvt*scrollstyle:          plain
