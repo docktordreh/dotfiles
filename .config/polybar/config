@@ -33,12 +33,11 @@ fg                     = #E1E1E1
 
 #################################################################################
 [bar/main]
-#monitor             = eDP1
 fixed-center        = true
-width               = 80%
-height              = 30
+width               = 90%
+height              = 25
 override-redirect   = true
-offset-x            = 10%
+offset-x            = 5%
 dim-value           = 0.9
 
 background          = ${colors.transparent_background}
@@ -46,51 +45,44 @@ foreground          = ${colors.foreground}
 font-0              = Fura Code Nerd Font:pixelsize=11;2
 font-2              = Symbola:pixelsize=12;1
 font-3              = Font Awesome 5 Free Solid:pixelsize=10;1
+radius              = 10.0
 
 separator           = " | "
+padding-left        = 2
+padding-right       = 2
 module-margin       = 1
-modules-center      = memory temperature wlan eth pingrtt pbweather airquality-index date battery
-click-left          = polybar fullscreen
+modules-left        = temperature fcpu memory
+modules-center      = pingrtt pbweather airquality-index 
+modules-right       = date fbattery
 
 [bar/bottom]
-#monitor             = eDP1
 fixed-center        = true
-width               = 100%
 height              = 25
+tray-position       = right
 override-redirect   = true
 bottom              = true
-
-tray-position       = right
+tray-offset-x       = 1
+tray-background     = ${colors.transparent_background}
+offset-x            = 0%
+padding-right       = 2
+width               = 100%
+radius              = 10.0
 background          = ${colors.transparent_background}
 foreground          = ${colors.foreground}
-font-0              = Monoid:pixelsize=9
+font-0              = Fura Code Nerd Font:pixelsize=11;2
+font-2              = Symbola:pixelsize=12;1
+font-3              = Font Awesome 5 Free Solid:pixelsize=10;1
 
 modules-left        = i3
 modules-center      = emerge 
+modules-right       = eth fwlan
 seperator           = " | "
-
-[bar/fullscreen]
-monitor             = eDP1
-width               = 100%
-height              = 100%
-override-redirect   = true
-dim-value           = 0.5
-click-left          = pkill -f "polybar fullscreen"
-
-background          = #000000
-foreground          = ${colors.foreground}
-font-0              = Fira Code:pixelsize=10
-font-1              = Font Awesome 5 Free Solid:pixelsize=9
-
-separator           = "   |   "
-module-margin       = 1
-modules-center      = fmemory fcpu temperature fwlan eth pbweather date fbattery
 
 #################################################################################
 
 [memory]
 type                          = internal/memory
-format-prefix                 = " mem: "
+format-prefix                 = " RAM Usage: "
 format-foreground             = #aaff77
 label                         = %percentage_used%%
 
@@ -120,7 +112,7 @@ bar-used-empty                = "-"
 
 [cpu]
 type                  = internal/cpu
-format-prefix         = " cpu: "
+format-prefix         = " CPU Usage: "
 format-foreground     = #f1c40f
 label                 = %percentage%%
 
@@ -152,7 +144,7 @@ ramp-coreload-7       = █
 
 [wlan]
 type                           = internal/network
-interface                      = wlan0
+interface                      = wlp4s0
 format-prefix                  = " "
 format-foreground              = #9b5bbb
 label-disconnected             = "OFF THE GRID"
@@ -175,7 +167,7 @@ interface                      = ${wlan.interface}
 
 format-connected-prefix        = ${wlan.format-prefix}
 format-connected-foreground    = ${wlan.format-foreground}
-label-connected                = %essid% [%local_ip%] [%upspeed%] [%downspeed%]
+label-connected                = %essid% IP: %local_ip% |  %upspeed% |  %downspeed%
 
 format-disconnected-prefix     = ${wlan.format-prefix}
 format-disconnected-foreground = ${wlan.format-foreground}
@@ -371,5 +363,11 @@ tail = true
 [module/pingrtt]
 type = custom/script
 exec = pingrtt
+label = %output%
+interval = 600
+
+[module/dummy]
+type = custom/script
+exec = echo " "
 label = %output%
 interval = 600
