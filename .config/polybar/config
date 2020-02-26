@@ -33,6 +33,7 @@ fg                     = #E1E1E1
 
 #################################################################################
 [bar/main]
+wm-restack          = i3
 fixed-center        = true
 width               = 90%
 height              = 25
@@ -56,6 +57,7 @@ modules-center      = pingrtt pbweather airquality-index
 modules-right       = date fbattery
 
 [bar/bottom]
+wm-restack          = i3
 fixed-center        = true
 height              = 25
 tray-position       = right
