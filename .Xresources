@@ -63,6 +63,8 @@ Xft.hintstyle:              hintslight
 !#************************************************
 !#              URxvt Settings
 !#************************************************
+
+
 urxvt*geometry:             90x30
 urxvt*loginShell:           true
 urxvt*internalBorder:       0
@@ -72,9 +74,39 @@ URxvt*saveLines:            12000
 urxvt*depth:                32
 URxvt*background:           [30]#000000
 
-urxvt*font:                 xft:Inconsolata:pixelsize=16
+urxvt*font:                 xft:Inconsolata:pixelsize=22
 URxvt*letterSpace:          -1
 
 URxvt*scrollBar:            false
 
 URxvt*scrollstyle:          plain
+
+!#************************************************
+!#              perls
+!#************************************************
+URxvt.perl-ext-common:      default,resize-font,selection-to-clipboard,pasta,matcher,keyboard-select
+
+!#************************************************
+!#              fontsize
+!#************************************************
+URxvt.keysym.C-Up:          font-size:increase
+URxvt.keysym.C-Down:        font-size:decrease
+URxvt.keysym.C-S-Up:        font-size:incglobal
+URxvt.keysym.C-S-Down:      font-size:decglobal
+URxvt.keysym.C-equal:       font-size:reset
+URxvt.keysym.C-slash:       font-size:show
+
+!#************************************************
+!#              change ui
+!#************************************************
+! change to default ui
+URxvt.keysym.C-1: command:\033]11;#282828\007\033]10;#fbf1c7\007
+
+! change to white-black ui 
+URxvt.keysym.C-7: command:\033]11;#ffffff\007\033]10;#000000\007
+
+! change to white-green ui
+URxvt.keysym.C-8: command:\033]11;#ffffff\007\033]10;#008000\007
+
+! change to black-green  ui
+URxvt.keysym.C-9: command:\033]11;#000000\007\033]10;#008000\007
