@@ -2,7 +2,7 @@
 !#               Cursor
 !#************************************************
 Xcursor.theme: gentoo
-Xcursor.size: 16
+Xcursor.size: 35
 
 !#************************************************
 !#               Font
@@ -74,7 +74,7 @@ URxvt*saveLines:            12000
 urxvt*depth:                32
 URxvt*background:           [30]#000000
 
-urxvt*font:                 xft:Inconsolata:pixelsize=22
+urxvt*font:                 xft:EffectsEighty:size=16:antialias=true
 URxvt*letterSpace:          -1
 
 URxvt*scrollBar:            false
