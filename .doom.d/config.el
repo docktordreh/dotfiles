@@ -50,10 +50,3 @@
 ;;
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
-
-(add-hook! 'Latex-mode-hook
-           (add-to-list 'TeX-command-list
-                        '("LuaLaTeX"
-                          "lualatex -shell-escape --interaction=nonstopmode %s"
-                          TeX-run-TeX nil (latex-mode :help "Run LuaLaTeX"))))
-
