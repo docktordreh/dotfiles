@@ -25,6 +25,7 @@
 (package! highlight-indent-guides)
 (package! all-the-icons)
 (package! mpc)
+(package! groovy-mode)
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
 ;(package! some-package)
 
