@@ -239,7 +239,7 @@ assign [class="Firefox"] $ws3
 assign [class="Eclipse"] $ws4
 assign [class="Joplin"] $ws4
 assign [class="Emacs"] $ws4
-assign [class="Texmaker"] $ws6
+assign [class="android-studio"] $ws4
 #************************************************
 # Multimediabuttons & Basissystemfunktionalitäten
 #************************************************ 
