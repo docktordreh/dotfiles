@@ -286,7 +286,7 @@ date               = ${date.date}
 time               = ${date.time}
 
 format-prefix = " "
-format-foreground = #B53471
+format-foreground = ${gentoo_cl.green}
 label = %date% [%time%]
 
 #################################################################################
