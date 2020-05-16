@@ -2,7 +2,7 @@
 !#               Cursor
 !#************************************************
 Xcursor.theme: gentoo
-Xcursor.size: 16
+Xcursor.size: 35
 
 !#************************************************
 !#               Font
@@ -15,7 +15,7 @@ Xft.hintstyle:              hintslight
 
 
 !#************************************************
-!#               
+!#              Terminal Colors 
 !#************************************************
 *background: #282828
 *foreground: #fbf1c7
@@ -23,29 +23,25 @@ Xft.hintstyle:              hintslight
 *cursorColor: #93a1a1
 *pointerColorBackground: #586e75
 *pointerColorForeground: #93a1a1
-
-!#************************************************
-!#              Terminal Colors 
-!#************************************************
 ! black
 *.color0:       #292f34
-*.color8:       #0a6355
+*.color8:       #49545d
 
 ! red
 *.color1:       #ab4642
 *.color9:       #ab4642
 
 ! green
-*.color2:       #34BE5B
-*.color10:      #34BE5B
+*.color2:       #34be5b
+*.color10:      #34be5b
 
 ! yellow
-*.color3:       #f7ca88
-*.color11:      #f7ca88
+*.color3:       #c3a91b
+*.color11:      #ffdd23
 
 ! blue
-*.color4:       #006a78
-*.color12:      #006a78
+*.color4:       #003394
+*.color12:      #00aec5
 
 ! magenta
 *.color5:       #85678f
@@ -58,7 +54,6 @@ Xft.hintstyle:              hintslight
 ! white
 *.color7:       #d8d8d8
 *.color15:      #f8f8f8
-
 
 !#************************************************
 !#              URxvt Settings
@@ -74,8 +69,10 @@ URxvt*saveLines:            12000
 urxvt*depth:                32
 URxvt*background:           [30]#000000
 
-urxvt*font:                 xft:EffectsEighty:size=16:antialias=true
-URxvt*letterSpace:          -1
+urxvt*font:                 xft:Fira Mono:size=16:antialias=true,xft:Inconsolata for Powerline:size=16
+urxvt*boldFont:             xft:Fira Mono:bold:size=16:antialias=true,xft:Inconsolata for Powerline:bold:size=16
+
+URxvt*cursorBlink:          true
 
 URxvt*scrollBar:            false
 
