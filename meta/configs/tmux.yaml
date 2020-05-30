@@ -1,0 +1,4 @@
+- link:
+    "~/.tmux.conf": .tmux.conf
+- shell:
+    - echo "tmux" >> ~/.to_install

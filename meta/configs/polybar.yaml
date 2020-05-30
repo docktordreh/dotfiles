@@ -1,0 +1,4 @@
+- link:
+    "~/.config/polybar": .config/polybar
+- shell:
+    - echo "polybar personal_scripts" >> ~/.to_install

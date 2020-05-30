@@ -1,0 +1,4 @@
+- link:
+    "~/.config/thefuck": .config/thefuck
+- shell:
+    - echo 'thefuck' >> ~/.to_install

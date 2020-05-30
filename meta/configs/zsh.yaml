@@ -1,0 +1,4 @@
+- link:
+    "~/.zshrc": .zshrc
+    "~/.zprofile": .zprofile
+    "~/.zshenv": .zshenv

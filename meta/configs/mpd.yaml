@@ -1,0 +1,5 @@
+- link:
+    "~/.config/mpd": .config/mpd
+- shell:
+    - "echo mpd >> ~/.to_install"
+    

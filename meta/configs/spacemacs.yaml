@@ -1,0 +1,4 @@
+- link:
+    "~/.spacemacs": .spacemacs
+- shell:
+    echo "emacs" >> ~/.to_install
