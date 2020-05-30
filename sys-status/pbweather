@@ -1,0 +1,273 @@
+#!/usr/bin/env bash
+#*******************************************************************************
+#
+#          FILE: pbweather
+#
+#         USAGE: ./pbweather
+#
+#   DESCRIPTION: Loads weather for specified place over the openweathermap.org API
+#
+#       OPTIONS:
+#  REQUIREMENTS: API Key for OpenWeathermap
+#          BUGS:
+#         NOTES: Initial Openweathermap Connection taken from <unknown> - if you recognize some of your code please contact me
+#        AUTHOR: valentin_lechner
+#  ORGANIZATION:
+#       CREATED: 21.02.2019 16:47:21
+#      REVISION: 0.5
+#*******************************************************************************
+
+# Treat unset Vars as error
+set -o nounset
+
+
+
+# Based on http://openweathermap.org/current
+
+# weatherinfo file should contain these variables, city ID and API key
+# can be aquired at: http://openweathermap.org/find
+
+#***  Scriptinfo  ***************************************************************
+NAME="pbweather"
+VERSION="0.5"
+AUTHOR="valentin_lechner"
+CREATED="2017-12-19"
+UPDATED="2018-08-30"
+#*******************************************************************************
+
+#***  GlobVars  ****************************************************************
+
+# if bsd then... else if linux...
+PBWEATHER_GLOBAL_CONFIG="/etc/pbweather/pbweather.conf"
+PBWEATHER_USER_CONFIG="$HOME/.config/pbweather/pbweather.conf"
+
+# TODO: Change to def values, make it configurable in conf -> check if set else default
+
+ICON_SUNNY=""
+ICON_CLOUDY=""
+ICON_RAINY="殺"
+ICON_STORM=""
+ICON_SNOW=""
+ICON_FOG=""
+
+URGENT_LOWER=0
+URGENT_HIGHER=30
+
+
+SYMBOL_CELSIUS="°C"
+
+about="
+pbweather - Prints weather information
+
+SYNOPSIS
+--------
+
+pbweather [-v|-h]
+
+OPTIONS
+-------
+
+-v
+  Show version and exit.
+
+-h
+  Show help and exit.
+"
+
+#*******************************************************************************
+
+#***  FUNCTION  ****************************************************************
+#          NAME:  wait_network
+#   DESCRIPTION:  waits for network connection: 10 attempts with 2 sec sleep betw.
+#    PARAMETERS:  
+#       RETURNS:  
+#*******************************************************************************
+
+wait_network(){
+
+  max_attempts=10
+  count=0
+  resp=2
+
+  while [ ! "$resp" -eq 0 ]; do
+
+     if [ "$count" -eq "$max_attempts" ]; then
+
+        echo "no conn to openweathermap.org"
+	     notify-send -u critical "pbweather: Keine Verbindung zum openweathermap Server!"
+	     return 2;
+
+     fi
+
+     ping -q -c 1 -W 1 openweathermap.org &> /dev/null
+     resp="$?"
+
+     # could not reach openweathermap.org
+     if [ ! "$resp" -eq 0 ]; then
+
+        count=$((count+1))
+        sleep 2;
+
+     fi
+
+  done
+  return 0
+}
+
+
+
+#***  FUNCTION  ****************************************************************
+#          NAME:  loadWeather
+#   DESCRIPTION:  loads Weather Response from openweathermap
+#    PARAMETERS:
+#       RETURNS:
+#*******************************************************************************
+
+loadWeather(){
+
+  wait_network
+  if [ "$?" -eq 2 ]; then
+      exit 2;
+  fi
+
+  WEATHER_URL="http://api.openweathermap.org/data/2.5/weather?id=${CITY_ID}&appid=${API_KEY}&units=metric"
+  WEATHER_INFO=$(wget -qO- "${WEATHER_URL}")
+
+  WEATHER_MAIN=$(echo "${WEATHER_INFO}" | grep -o -e '\"main\":\"[a-zA-Z]*\"' | awk -F ':' '{print $2}' | tr -d '"')
+  WEATHER_TEMP=$(echo "${WEATHER_INFO}" | grep -o -e '\"temp\":\-\?[0-9]*' | awk -F ':' '{print $2}' | tr -d '"')
+
+
+  parseOpenWeathermapResponse "$WEATHER_MAIN" "$WEATHER_TEMP"
+
+}
+
+#***  FUNCTION  ****************************************************************
+#          NAME:  parseOpenWeathermapResponse
+#   DESCRIPTION:  parses an Openweathermap Response and evaluates the output
+#    PARAMETERS:
+#       RETURNS:
+#*******************************************************************************
+
+parseOpenWeathermapResponse(){
+
+  WEATHER_MAIN="$1"
+  WEATHER_TEMP="$2"
+
+  if [[ "${WEATHER_MAIN}" = *Snow* ]]; then
+
+    echo "${ICON_SNOW} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
+
+  elif [[ "${WEATHER_MAIN}" = *Rain* ]] || [[ "${WEATHER_MAIN}" = *Drizzle* ]]; then
+
+    echo "${ICON_RAINY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
+
+  elif [[ "${WEATHER_MAIN}" = *Cloud* ]]; then
+
+    echo "${ICON_CLOUDY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
+
+  elif [[ "${WEATHER_MAIN}" = *Clear* ]]; then
+
+    echo "${ICON_SUNNY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
+
+  elif [[ "${WEATHER_MAIN}" = *Fog* ]] || [[ "${WEATHER_MAIN}" = *Mist* ]]; then
+
+    echo "${ICON_FOG} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
+
+  elif [[ "${WEATHER_MAIN}" = *Storm* ]]; then
+
+   echo "${ICON_STORM} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
+
+  else
+
+    echo ""
+    notify-send -u critical "Konnte Wetterdaten nicht parsen!"
+
+  fi
+
+  if [[ "${WEATHER_TEMP}" -lt "${URGENT_LOWER}" ]] || [[ "${WEATHER_TEMP}" -gt "${URGENT_HIGHER}" ]]; then
+
+    exit 33
+
+  fi
+
+}
+#***  FUNCTION  ****************************************************************
+#          NAME:  printInfo
+#   DESCRIPTION:  prints info about Script, prints certain characters in bold
+#    PARAMETERS:
+#       RETURNS:
+#*******************************************************************************
+
+printInfo(){
+
+  printf '%s' "${about}" | awk 'BEGIN{ind=0}
+                                $0~/^```/{
+                                   if(ind!="1"){ind="1"}
+                                   else{ind="0"}
+                                   print ""
+                                }
+                                $0!~/^```/{
+                                   gsub("[`*]","",$0)
+                                   if(ind=="1"){$0="   " $0}
+                                   print $0
+                                }'
+
+}
+
+#***  FUNCTION  ****************************************************************
+#          NAME:  sourceConfigfile
+#   DESCRIPTION:  sources either a global config file or the user specific local file
+#    PARAMETERS:
+#       RETURNS:
+#*******************************************************************************
+
+sourceConfigfile(){
+
+   if [ -f "$PBWEATHER_USER_CONFIG" ]; then
+      source "$PBWEATHER_USER_CONFIG"
+      return $?
+   elif [ -f "$PBWEATHER_GLOBAL_CONFIG" ]; then
+      source "$PBWEATHER_GLOBAL_CONFIG"
+      return $?
+   else
+      echo ""
+      echo "No config File found"
+      echo ""
+      exit 1
+   fi
+
+}
+
+#***  FUNCTION  ****************************************************************
+#          NAME:  main
+#   DESCRIPTION:
+#    PARAMETERS:
+#       RETURNS:
+#*******************************************************************************
+
+main(){
+   sourceConfigfile
+   if [ "$?" -eq 2 ]; then
+      echo "Could not load settings from config files!"
+      echo "Check that either ""$PBWEATHER_USER_CONFIG"" or ""$PBWEATHER_GLOBAL_CONFIG"" exists."
+   fi
+   loadWeather
+}
+
+
+
+#*******************************************************************************
+#            getopts
+#*******************************************************************************
+
+while getopts :vh option; do
+   case "${option}" in
+      v) printf '%s\n' \
+           "$NAME - version: $VERSION" \
+           "updated: $UPDATED by $AUTHOR"
+         exit ;;
+      h|*) printInfo && exit ;;
+    esac
+  done
+
+main

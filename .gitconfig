@@ -1,0 +1,6 @@
+[user]
+	email = valentin_lechner@dismail.de
+	name = valentin_lechner
+	signingkey = 9C489382
+[commit]
+	gpgsign = true

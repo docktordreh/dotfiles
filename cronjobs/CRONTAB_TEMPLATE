@@ -1,0 +1,13 @@
+SHELL=/bin/sh
+MAILTO=vlr
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+# every minute
+* * * * * /.scripts/batterystate.sh
+
+
+
+
+
+
+

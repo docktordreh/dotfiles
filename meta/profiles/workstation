@@ -1,4 +1,5 @@
 zsh
+git
 doom
 X
 vim
@@ -9,3 +10,4 @@ mpd
 ranger
 rofi
 thefuck
+control

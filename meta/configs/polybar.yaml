@@ -1,4 +1,8 @@
 - link:
     "~/.config/polybar": .config/polybar
+    "~/.local/bin/aqi": sys-status/info-airqualityindex.sh
+    "~/.local/bin/pingrtt": sys-status/info-pingrtt.sh
+    "~/.local/bin/pbweather": sys-status/pbweather
+    
 - shell:
     - echo "polybar personal_scripts" >> ~/.to_install
