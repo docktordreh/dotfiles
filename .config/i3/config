@@ -3,6 +3,7 @@
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 bindsym $mod+Shift+BackSpace move scratchpad
 bindsym $mod+Tab scratchpad show
+bindsym $mod+F9 exec st -e 'pulsemixer'
 set $mod Mod1
 set $mod_alt Mod4
 # Font for window titles. Will also be used by the bar unless a different font
@@ -170,7 +171,7 @@ bindsym XF86AudioMicMute        exec --no-startup-id    amixer set Capture toggl
 
 
 # gaps
-for_window [class="^.*"] border pixel 0
+for_window [class="^.*"] border pixel 5
 smart_gaps on
 smart_borders on
 gaps inner 10
@@ -203,6 +204,7 @@ assign [class="Signal"] $ws9
 # ws3 ist inet oberfläche
 assign [class="Firefox"] $ws3
 for_window [class="ffplay"] floating enable
+for_window [title="pulsemixer"] floating enable
 for_window [class="ffplay"] move position 0 0
 # ws4 ist Arbeitsoberfläche
 assign [class="Joplin"] $ws4
@@ -217,7 +219,5 @@ exec_always                         --no-startup-id $HOME/.config/polybar/launch
 exec_always                         --no-startup-id flameshot
 exec_always                         --no-startup-id nm-applet
 exec_always                         --no-startup-id xautolock -time 5 -locker slock -notify 30 -notifier "notify-send -u critical -t 10000 -- 'LOCKING screen in 30 sec'" -nowlocker slock -corners +00-
-# urxvtd ist ein daemon von urxvt; wenn gestartet können clients des daemons gestartet werden - benötigt weniger RAM
-#exec                                --no-startup-id urxvtd
 exec                                --no-startup-id dunst --config $HOME/.config/dunst/dunstrc
 exec                                --no-startup-id keepassxc
