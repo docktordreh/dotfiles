@@ -48,7 +48,8 @@ OPTIONS
 -h
   Show help and exit.
 "
-
+export DISPLAY=:0
+export XAUTHORITY="${HOME}/.Xauthority"
 
 #***  Commands  *****************************************************************
 
@@ -66,13 +67,13 @@ bar=$(seq --separator="─" 0 "$((power / 5))" | sed 's/[0-9]//g')
 
 
 send_notification(){
-    sudo -u "$uname" DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/"$uid"/bus notify-send -u critical -i "$icon" "    $bar"
-    sudo -u "$uname" DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/"$uid"/bus echo -en "\007"
+  sudo -u "$uname" notify-send -u critical $bar
+    
 }
 
 
 write_batterystatus_tofile(){
-    sudo -u "$uname" DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/"$uid"/bus echo "LAST_BATINFO=$power" | tee "$HOME/tmp/batteryinfo"
+    sudo -u "$uname" echo "LAST_BATINFO=$power" | tee "$HOME/tmp/batteryinfo"
 }
 
 
@@ -126,15 +127,15 @@ main(){
 
         # power so low u need notification?
           if [ "$power" -le 33 ] ; then
-
+echo "sending notif"
             # is variable set?
-                if [ -z ${LAST_BATINFO+x} ]; then
+          #      if [ -z ${LAST_BATINFO+x} ]; then
                       send_notification
                       write_batterystatus_tofile
-                elif [ "$power" -le $("$LAST_BATINFO" -5) ]; then
-                      send_notification
-                      write_batterystatus_tofile
-                fi
+           #     elif [ "$power" -le "$("$LAST_BATINFO" -5)" ]; then
+            #          send_notification
+             #         write_batterystatus_tofile
+              #  fi
 
           fi
 

@@ -3,3 +3,4 @@ xcompmgr &
 dunst &
 xset r rate 300 50 &
 unclutter &
+emacs --daemon &
