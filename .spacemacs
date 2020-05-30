@@ -39,7 +39,6 @@ This function should only modify configuration layer settings."
      better-defaults
      react
      prettier
-     asm
      csv
      graphviz
      (c-c++ :variables
@@ -52,7 +51,7 @@ This function should only modify configuration layer settings."
           c-c++-enable-organize-includes-on-save t
           c-c++-enable-clang-format-on-save t
           c-c++-enable-google-style t
-          c-c++-enable-google-newline
+          c-c++-enable-google-newline t
           c-c++-enable-auto-newline t)
      (python :variables
              python-backend 'lsp python-lsp-server 'pyls
@@ -76,7 +75,6 @@ This function should only modify configuration layer settings."
             shell-default-shell 'eshell
             shell-default-term-shell "/bin/zsh"
             shell-enable-smart-eshell t)
-     ranger
      emacs-lisp
      ivy
      markdown
@@ -90,24 +88,28 @@ This function should only modify configuration layer settings."
          go-use-gometalinter t
          go-tab-width 4)
      git
-     (plantuml :variables
-               plantuml-jar-path "~/.local/bin/plantuml.jar"
-               plantuml-default-exec-mode 'jar
-               org-plantuml-jar-path "~/.local/bin/plantuml.jar")
+     plantuml
      (org :variables
+          org-directory "~/org"
+          org-default-notes-file "~/org/notes.org"
+          org-use-fast-todo-selection t
+          org-src-fontify-natively t
+          org-src-tab-acts-natively t
           org-enable-reveal-js-support t
           org-projectile-file "TODOs.org"
-          org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "SOMEDAY(s)" "DONE(d)")))
+          ;; ! => insert timestamp
+          ;; @ => insert note
+          ;; / => enter state
+          ;; (x) => shortcut (after C-c C-t)
+          ;; after the |: close todo
+          org-todo-keywords '((sequence  "DELEGATED(l@/!)" "SOMEDAY(f)" "IDEA(i@/!)" "TODO(t@/!)" "STARTED(s@/!)" "NEXT(n@/!)" "WAITING(w@/!)" "|" "DONE(d@/!)" "CANCELED(c@/!)")))
      (shell :variables
              shell-default-height 30
              shell-default-position 'bottom)
-     spell-checking
-     syntax-checking
-     (deft :variables
-       deft-zetteldeft t)
      lsp
      groovy
      bibtex
+     treemacs
      )
 
    ;; List of additional packages that will be installed without being
@@ -122,17 +124,14 @@ This function should only modify configuration layer settings."
                                       org-noter
                                       minimal-theme
                                       org-tree-slide
-                                      zetteldeft
                                       nov
                                       evil-smartparens
                                       synosaurus)
-
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
-
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '()
 
+   dotspacemacs-excluded-packages '(company-tern)
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and deletes any unused
@@ -265,7 +264,7 @@ It should only modify the values of Spacemacs settings."
    ;; refer to the DOCUMENTATION.org for more info on how to create your own
    ;; spaceline theme. Value can be a symbol or list with additional properties.
    ;; (default '(spacemacs :separator wave :separator-scale 1.5))
-   dotspacemacs-mode-line-theme '(spacemacs :separator wave :separator-scale 1.5)
+   dotspacemacs-mode-line-theme '(spacemacs :separator-scale 1.0)
 
    ;; If non-nil the cursor color matches the state color in GUI Emacs.
    ;; (default t)
@@ -449,7 +448,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil, start an Emacs server if one is not already running.
    ;; (default nil)
-   dotspacemacs-enable-server t
+   dotspacemacs-enable-server nil
 
    ;; Set the emacs server socket location.
    ;; If nil, uses whatever the Emacs default is, otherwise a directory path
@@ -527,7 +526,6 @@ This function is called immediately after `dotspacemacs/init', before layer
 configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
-
   )
 
 (defun dotspacemacs/user-load ()
@@ -546,14 +544,22 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
   (set-language-environment "utf-8")
+
   (setq org-latex-pdf-process
         '("lualatex -interaction nonstopmode -output-directory %o %f"
           "biber %b"
           "lualatex -interaction nonstopmode -output-directory %o %f"
           "lualatex -interaction nonstopmode -output-directory %o %f"))
+  ;; sets sorting strategy for agenda
+  (setq org-agenda-sorting-strategy
+        (quote ((agenda time-up priority-down category-up)
+                (todo todo-state-up priority-up)
+                (tags priority-down))))
+
+  ;; pushes the org-projectile-todo files to the agenda
   (with-eval-after-load 'org-agenda
     (require 'org-projectile)
-    (mapcar '(lambda (file)
+    (mapcar #'(lambda (file)
                (when (file-exists-p file)
                  (push file org-agenda-files)))
             (org-projectile-todo-files)))
@@ -561,7 +567,10 @@ before packages are loaded."
   (org-babel-do-load-languages 'org-babel-load-languages
                                '(
                                  (latex . t)
+                                 (org . t)
+                                 (shell . t)
                                  (ditaa . t)
+                                 (plantuml . t)
                                  (python . t)
                                  )
                                )
@@ -587,15 +596,67 @@ before packages are loaded."
   (setq org-ref-open-pdf-function
         (lambda (fpath)
           (start-process "zathura" "*ivy-bibtex-zathura*" "/usr/bin/zathura" fpath)))
-  ;; organize org agenda
-  (setq org-default-notes-file "~/organizer.org")
   (ido-mode)
   (setq org-completion-use-ido t)
   (setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
   ;; auto open todo.org
-  (find-file "~/todo.org")
-  ;; open agenda at C-c a
-  (global-set-key (kbd "C-c a") 'org-agenda)
+  (setq org-todo-keyword-faces
+      '(("IDEA" . (:foreground "GoldenRod" :weight bold))
+        ("NEXT" . (:foreground "IndianRed1" :weight bold))
+        ("TODO" . (:foreground "Yellow1" :weight bold))
+        ("STARTED" . (:foreground "OrangeRed" :weight bold))
+        ("WAITING" . (:foreground "coral" :weight bold))
+        ("CANCELED" . (:foreground "IndianRed2" :weight bold))
+        ("DELEGATED" . (:foreground "ForestGreen" :weight bold))
+        ("SOMEDAY" . (:foreground "YellowGreen" :weight bold))
+        ))
+
+  (setq org-tag-persistent-alist
+      '((:startgroup . nil)
+        ("HOME" . ?h)
+        ("RESEARCH" . ?r)
+        ("TEACHING" . ?t)
+        ("STUDYING" . ?s)
+        (:endgroup . nil)
+        (:startgroup . nil)
+        ("MGMT" . ?m)
+        ("OS" . ?o)
+        ("DEV" . ?d)
+        ("WWW" . ?w)
+        (:endgroup . nil)
+        (:startgroup . nil)
+        ("EASY" . ?e)
+        ("MEDIUM" . ?m)
+        ("HARD" . ?a)
+        (:endgroup . nil)
+        ("URGENT" . ?u)
+        ("KEY" . ?k)
+        ("BONUS" . ?b)
+        ("noexport" . ?x)
+        )
+      )
+
+  (setq org-tag-faces
+      '(
+        ("HOME" . (:foreground "AquaMarine4" :weight bold))
+        ("RESEARCH" . (:foreground "Seagreen4" :weight bold))
+        ("TEACHING" . (:foreground "Green4" :weight bold))
+        ("STUDYING" . (:foreground "Springgreen4" :weight bold))
+        ("OS" . (:foreground "coral4" :weight bold))
+        ("DEV" . (:foreground "tomato1" :weight bold))
+        ("MGMT" . (:foreground "yellow1" :weight bold))
+        ("WWW" . (:foreground "gray0" :weight bold))
+        ("URGENT" . (:foreground "Red" :weight bold))
+        ("KEY" . (:foreground "Red" :weight bold))
+        ("EASY" . (:foreground "Green1" :weight bold))
+        ("MEDIUM" . (:foreground "Yellow1" :weight bold))
+        ("HARD" . (:foreground "Red1" :weight bold))
+        ("BONUS" . (:foreground "GoldenRod" :weight bold))
+        ("noexport" . (:foreground "YellowGreen" :weight bold))
+        )
+      )
+  (setq org-fast-tag-selection-single-key t)
+  (setq org-use-fast-todo-selection t)
   ;; UI
   ;; Add Transparency
   (add-to-list 'default-frame-alist '(alpha 85 85))
@@ -603,6 +664,17 @@ before packages are loaded."
   (setq org-bullets-bullet-list '("■" "◆" "▲" "▶"))
   ;; Set global visual line mode (word wrap)
   (global-visual-line-mode t)
+  (setq olivetti-body-width 100)
+  ;; Clocking configuration
+  (setq spaceline-org-clock-p t)
+  (setq org-export-with-smart-quotes t)
+  (setq org-clock-idle-time 15)
+  (setq org-time-clocksum-format (quote (:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t)))
+
+
+  ;; localization
+  ;; the week starts with Monday in GER, not with Sunday
+  (setq calendar-week-start-day 1)
   ;; TS
   (add-to-list 'auto-mode-alist '("\\.tsx$" . typescript-mode))
   (add-to-list 'auto-mode-alist '("\\.js$" . typescript-mode))
@@ -611,7 +683,8 @@ before packages are loaded."
   ;; Bind clang-format-region to C-M-tab in all modes:
   (global-set-key [C-M-tab] 'clang-format-region)
   ;; Bind clang-format-buffer to tab on the c++-mode only:
-  (add-hook 'c++-mode-hook 'clang-format-bindings)
+  (add-hook 'c++-mode-hook #'clang-format-bindings)
+  (add-hook 'org-mode-hook #'org-bullets-mode)
   (defun clang-format-bindings ()
     (define-key c-mode-map [tab] 'clang-format-buffer))
   ;; KEY MAP
@@ -619,34 +692,48 @@ before packages are loaded."
   (define-key evil-normal-state-map (kbd "M-s") #'avy-goto-char-timer)
   (define-key evil-normal-state-map (kbd "M-w") #'avy-goto-word-1)
   (define-key evil-motion-state-map (kbd "M-w") #'avy-goto-word-1)
+  (define-key global-map (kbd "C-+") 'text-scale-increase)
+  (define-key global-map (kbd "C--") 'text-scale-decrease)
   (global-set-key (kbd "C-c o")
-                  (lambda () (interactive) (find-file "~/organizer.org")))
-  (module/misc/smartparens)
-  (module/misc/yasnippet)
+                  (lambda () (interactive) (find-file "~/org/refile.org")))
+  ;; open agenda at C-c a
+  (global-set-key (kbd "C-c a") 'org-agenda)
+  ;; org-agenda list
+  (global-set-key (kbd "<f12>") 'org-agenda-list)
+  ;; org-capture
+  (global-set-key (kbd "C-c r") 'org-capture)
+  ;; show todo items for this subtree
+  (global-set-key (kbd "<f5>") 'bh/org-todo)
+  ;; widen subtree
+  (global-set-key (kbd "C-<f5>") 'bh/widen)
+
+  (find-file "~/org/todo.org")
   )
 
-;;;; Yasnippet
-(defun module/misc/yasnippet ()
-  "Yassnippet bindings and config."
-  (use-package yasnippet-snippet
-    :defer t
-    :config
-    (push 'yas-installed-snippets-dir yas-snippet-dirs)
-    )
-  )
-;;;; Smart Parentheses
-(defun module/misc/smartparens ()
-  (use-package smartparens
-    :defer t
-    :diminish ""
-    :bind (("C-)" . sp-forward-slurp-sexp)
-           ("C-}" . sp-forward-barf-sexp)
-           ("C-(" . sp-splice-sexp))
-    :config
-    (progn
-      (add-hook 'smartparens-enabled-hook #'evil-smartparens-mode)
-      (push 'yas-installed-snippets-dir yas-snippet-dirs))
-    ))
+(defun bh/widen ()
+  (interactive)
+  (if (equal major-mode 'org-agenda-mode)
+      (progn
+        (org-agenda-remove-restriction-lock)
+        (when org-agenda-sticky
+          (org-agenda-redo)))
+    (widen)))
+
+(defun bh/org-todo (arg)
+  (interactive "p")
+  (if (equal arg 4)
+      (save-restriction
+        (bh/narrow-to-org-subtree)
+        (org-show-todo-tree nil))
+    (bh/narrow-to-org-subtree)
+    (org-show-todo-tree nil)))
+
+(defun bh/narrow-to-org-subtree ()
+  (widen)
+  (org-narrow-to-subtree)
+  (save-restriction
+    (org-agenda-set-restriction-lock)))
+
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -663,12 +750,13 @@ This function is called at the very end of Spacemacs initialization."
  '(company-quickhelp-color-background "#4F4F4F")
  '(company-quickhelp-color-foreground "#DCDCCC")
  '(custom-safe-themes
-   '("76bfa9318742342233d8b0b42e824130b3a50dcc732866ff8e47366aed69de11" "c83c095dd01cde64b631fb0fe5980587deec3834dc55144a6e78ff91ebc80b19" "89536596ee5bdc5ef9ea3d3d5b515ea616285fa9274c836263024f1993f6b3dd" "fad9c3dbfd4a889499f6921f54f68de8857e6846a0398e89887dbe5f26b591c0" "621595cbf6c622556432e881945dda779528e48bb57107b65d428e61a8bb7955" "cd7ffd461946d2a644af8013d529870ea0761dccec33ac5c51a7aaeadec861c2" "9efb2d10bfb38fe7cd4586afb3e644d082cbcdb7435f3d1e8dd9413cbe5e61fc" "9f15d03580b08dae41a1e5c1f00d1f1aa99fea121ca32c28e2abec9563c6e32c" "76c5b2592c62f6b48923c00f97f74bcb7ddb741618283bdb2be35f3c0e1030e3" "e1ecb0536abec692b5a5e845067d75273fe36f24d01210bf0aa5842f2a7e029f" "fd1dd4d022ece05400c7bd1efc2ae5cca5cd64a53f3670da49d0c8f0ef41f4e3" "dde8c620311ea241c0b490af8e6f570fdd3b941d7bc209e55cd87884eb733b0e" "2a3ffb7775b2fe3643b179f2046493891b0d1153e57ec74bbe69580b951699ca" default))
+   '("2f1518e906a8b60fac943d02ad415f1d8b3933a5a7f75e307e6e9a26ef5bf570" "76bfa9318742342233d8b0b42e824130b3a50dcc732866ff8e47366aed69de11" "c83c095dd01cde64b631fb0fe5980587deec3834dc55144a6e78ff91ebc80b19" "89536596ee5bdc5ef9ea3d3d5b515ea616285fa9274c836263024f1993f6b3dd" "fad9c3dbfd4a889499f6921f54f68de8857e6846a0398e89887dbe5f26b591c0" "621595cbf6c622556432e881945dda779528e48bb57107b65d428e61a8bb7955" "cd7ffd461946d2a644af8013d529870ea0761dccec33ac5c51a7aaeadec861c2" "9efb2d10bfb38fe7cd4586afb3e644d082cbcdb7435f3d1e8dd9413cbe5e61fc" "9f15d03580b08dae41a1e5c1f00d1f1aa99fea121ca32c28e2abec9563c6e32c" "76c5b2592c62f6b48923c00f97f74bcb7ddb741618283bdb2be35f3c0e1030e3" "e1ecb0536abec692b5a5e845067d75273fe36f24d01210bf0aa5842f2a7e029f" "fd1dd4d022ece05400c7bd1efc2ae5cca5cd64a53f3670da49d0c8f0ef41f4e3" "dde8c620311ea241c0b490af8e6f570fdd3b941d7bc209e55cd87884eb733b0e" "2a3ffb7775b2fe3643b179f2046493891b0d1153e57ec74bbe69580b951699ca" default))
  '(evil-want-Y-yank-to-eol nil)
  '(nil nil t)
  '(nrepl-message-colors
    '("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3"))
- '(org-agenda-files '("~/todo.org" "~/organizer.org"))
+ '(org-agenda-files
+   '("~/org/refile.org"  "~/org/todo.org" "~/.dev/fido-analysis/TODOs.org" ))
  '(package-selected-packages
    '(rudel doom colorless-themes gitlab-ci-mode-flycheck gitlab-ci-mode ivy-gitlab ocodo-svg-modelines simple-modeline ert-modeline sml-modeline mini-modeline lsp-pascal org-beautify-theme info-beamer ebib mmm-jinja2 company-nginx nginx-mode emacsql-sqlite emacsql seeing-is-believing rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocopfmt rubocop rspec-mode robe rbenv rake minitest helm-gtags helm helm-core ggtags enh-ruby-mode dap-mode bui counsel-gtags chruby bundler inf-ruby org-roam org-ref groovy-mode groovy-imports pcache evil-smartparens company-statistics lsp-ui lsp-treemacs lsp-python-ms lsp-ivy lsp-mode orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download org-cliplink org-brain gnuplot evil-org zetteldeft deft synosaurus org-noter olivetti nov esxml flymake-easy doom-modeline shrink-path flymake-eslint ivy-yasnippet ivy-xref ivy-purpose flyspell-correct-ivy counsel-css zenburn-theme zen-and-art-theme yapfify xterm-color xkcd white-sand-theme vterm underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme toxi-theme tide typescript-mode terminal-here tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme shell-pop seti-theme rjsx-mode reverse-theme rebecca-theme ranger rainbow-mode rainbow-identifiers railscasts-theme pytest pyenv-mode py-isort purple-haze-theme professional-theme planet-theme pippel pipenv pyvenv pip-requirements phoenix-dark-pink-theme phoenix-dark-mono-theme organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme naquadah-theme mustang-theme multi-term monokai-theme monochrome-theme molokai-theme moe-theme modus-vivendi-theme modus-operandi-theme minimal-theme material-theme majapahit-theme madhat2r-theme lush-theme live-py-mode light-soap-theme kaolin-themes jbeans-theme jazz-theme ir-black-theme inkpot-theme importmagic epc ctable concurrent deferred heroku-theme hemisu-theme helm-pydoc hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gandalf-theme flatui-theme flatland-theme farmhouse-theme eziam-theme exotica-theme espresso-theme eshell-z eshell-prompt-extras esh-help dracula-theme doom-themes dockerfile-mode docker tablist docker-tramp django-theme darktooth-theme darkokai-theme darkmine-theme darkburn-theme dakrone-theme cython-mode cyberpunk-theme company-anaconda color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized color-identifiers-mode clues-theme chocolate-theme autothemer cherry-blossom-theme busybee-theme bubbleberry-theme blacken birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme anaconda-mode pythonic ample-zen-theme ample-theme alect-themes afternoon-theme yasnippet-snippets yaml-mode web-mode web-beautify unfill treemacs-magit tagedit smeargle slim-mode scss-mode sass-mode pug-mode prettier-js nodejs-repl mwim mmm-mode markdown-toc markdown-mode magit-svn magit-section magit-gitflow magit-popup livid-mode skewer-mode json-navigator hierarchy json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc jinja2-mode insert-shebang impatient-mode htmlize simple-httpd helm-gitignore helm-git-grep helm-css-scss helm-company helm-c-yasnippet haml-mode gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck-bashate fish-mode evil-magit magit git-commit with-editor transient emmet-mode company-web web-completion-data dash-functional tern company-shell company-reftex company-auctex company-ansible company auto-yasnippet yasnippet auto-dictionary auctex-latexmk auctex ansible-doc ansible ac-ispell auto-complete smartparens paredit evil-args evil-anzu anzu undo-tree eval-sexp-fu editorconfig dumb-jump devdocs define-word column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol aggressive-indent ace-link ace-jump-helm-line org-plus-contrib font-lock+ which-key wgrep use-package smex pcre2el macrostep ivy-hydra hydra lv helm-make flx exec-path-from-shell evil-escape goto-chg elisp-slime-nav diminish counsel-projectile projectile pkg-info epl counsel swiper ivy bind-map bind-key auto-compile packed async ace-window avy)))
 (custom-set-faces
@@ -678,3 +766,17 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  )
 )
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (markdown-toc zenburn-theme zen-and-art-theme yapfify yaml-mode xterm-color x86-lookup ws-butler winum white-sand-theme which-key wgrep web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme toxi-theme toc-org tide typescript-mode flycheck tao-theme tangotango-theme tango-plus-theme tango-2-theme tagedit synosaurus sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spaceline powerline spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme smex smeargle slim-mode shell-pop seti-theme scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe reverse-theme restart-emacs request rebecca-theme rbenv rake rainbow-delimiters railscasts-theme pyvenv pytest pyenv-mode py-isort purple-haze-theme pug-mode professional-theme popwin plantuml-mode planet-theme pip-requirements phoenix-dark-pink-theme phoenix-dark-mono-theme persp-mode pcre2el paradox spinner ox-reveal orgit organic-green-theme org-tree-slide org-ref pdf-tools key-chord org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-noter org-mime org-download org-bullets open-junk-file omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme nov esxml noctilux-theme neotree nasm-mode naquadah-theme mwim mustang-theme multi-term move-text monokai-theme monochrome-theme molokai-theme moe-theme mmm-mode minitest minimal-theme material-theme markdown-mode majapahit-theme magit-gitflow magit-popup madhat2r-theme macrostep lush-theme lua-mode lorem-ipsum livid-mode skewer-mode simple-httpd live-py-mode linum-relative link-hint light-soap-theme js2-refactor multiple-cursors js2-mode js-doc jinja2-mode jbeans-theme jazz-theme ivy-hydra ir-black-theme insert-shebang inkpot-theme indent-guide hydra lv hy-mode dash-functional hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation heroku-theme hemisu-theme helm-make helm-bibtex helm bibtex-completion parsebib helm-core hc-zenburn-theme haml-mode gruvbox-theme gruber-darker-theme graphviz-dot-mode grandshell-theme gotham-theme google-translate golden-ratio go-guru go-eldoc gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md gandalf-theme fuzzy flyspell-correct-ivy flyspell-correct flymake-eslint flymake-easy flx-ido flx flatui-theme flatland-theme fish-mode fill-column-indicator farmhouse-theme fancy-battery eyebrowse expand-region exotica-theme exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-smartparens evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu espresso-theme eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav dumb-jump dracula-theme dockerfile-mode docker transient tablist json-mode docker-tramp json-snatcher json-reformat django-theme disaster diminish define-word darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cython-mode cyberpunk-theme csv-mode counsel-projectile projectile pkg-info epl counsel swiper ivy company-web web-completion-data company-statistics company-shell company-go go-mode company-emacs-eclim eclim company-c-headers company-auctex company-ansible company-anaconda company column-enforce-mode color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized coffee-mode cmake-mode clues-theme clean-aindent-mode clang-format chruby cherry-blossom-theme busybee-theme bundler inf-ruby bubbleberry-theme birds-of-paradise-plus-theme bind-map bind-key biblio biblio-core badwolf-theme auto-yasnippet yasnippet auto-highlight-symbol auto-dictionary auto-compile packed auctex async apropospriate-theme anti-zenburn-theme ansible-doc ansible anaconda-mode pythonic f dash s ample-zen-theme ample-theme alect-themes aggressive-indent afternoon-theme adaptive-wrap ace-window ace-link avy ac-ispell auto-complete popup doom-moonlight-theme))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:background nil)))))
