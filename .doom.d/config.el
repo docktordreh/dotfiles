@@ -6,7 +6,7 @@
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
 (setq user-full-name "Valentin Lechner"
-      user-mail-address "valentin_lechssssner@dismail.de")
+      user-mail-address "valentin_lechner@dismail.de")
 
 
 ;; don't keep message buffers around
@@ -268,5 +268,8 @@ explicit-shell-file-name "/bin/zsh"
              ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
              ("\\paragraph{%s}" . "\\paragraph*{%s}")
              ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+;; note: not a clean solution. just telling emacs to load the colors from xterm
+(add-to-list 'term-file-aliases
+    '("st-256color" . "xterm-256color"))
 
 (find-file "~/org/todo.org")
