@@ -70,7 +70,7 @@ lfcd () {
 }
 bindkey -s '^o' 'lfcd\n'
 
-bindkey -s '^a' 'bc -l\n'
+bindkey -s '^b' 'bc -l\n'
 
 bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'
 
@@ -83,7 +83,7 @@ alias doas='sudo'
 
 eval $(thefuck --alias)
 case $- in *i* )
-	[ -z "$TMUX" ] && tmux ;;
+	[ -z "$TMUX" ] && ~/tmux-setup.sh ;;
 esac
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
