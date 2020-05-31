@@ -123,7 +123,6 @@ org-latex-default-packages-alist '(
                            (#1# "csquotes" nil)
                            )
 org-export-with-smart-quotes t
-
 org-clock-idle-time 15
 
 ;; aligns company annotations to the right side
@@ -132,7 +131,8 @@ company-tooltip-align-annotations t
 ;; localization
 calendar-week-start-day 1
 explicit-shell-file-name "/bin/zsh"
-
+tramp-chunksize 8192
+tramp-default-method "ssh"
 )
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -271,5 +271,6 @@ explicit-shell-file-name "/bin/zsh"
 ;; note: not a clean solution. just telling emacs to load the colors from xterm
 (add-to-list 'term-file-aliases
     '("st-256color" . "xterm-256color"))
+(add-to-list 'backup-directory-alist (cons tramp-file-name-regexp nil))
 
 (find-file "~/org/todo.org")

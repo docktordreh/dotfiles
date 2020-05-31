@@ -93,10 +93,6 @@ bindsym $mod+Shift+7 move container to workspace $ws7
 bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
 
-bindsym $mod+t exec --no-startup-id st -e sh -c "ranger"
-
-# reload the configuration file
-bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
@@ -104,18 +100,10 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
-
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
         bindsym j resize shrink width 10 px or 10 ppt
         bindsym k resize grow height 10 px or 10 ppt
         bindsym l resize shrink height 10 px or 10 ppt
         bindsym odiaeresis resize grow width 10 px or 10 ppt
-
-        # back to normal: Enter or Escape or $mod+r
         bindsym Return mode "default"
         bindsym Escape mode "default"
         bindsym $mod+r mode "default"
@@ -135,13 +123,11 @@ mode "$mode_lock" {
 }
 
 set $mode_fastexec (c)hromium (f)irefox (t)orbrowser-launcher
-bindsym $mod+x mode "$mode_fastexec"
+bindsym $mod+p mode "$mode_fastexec"
 
 mode "$mode_fastexec" {
-        bindsym t exec --no-startup-id torbrowser-launcher;      mode "default"
         bindsym f exec --no-startup-id firefox;                  mode "default"
         bindsym p exec --no-startup-id firefox --private-window; mode "default"
-        bindsym c exec --no-startup-id chromium;                 mode "default"
         bindsym Return                                           mode "default"
         bindsym Escape                                           mode "default"
 }
@@ -204,6 +190,7 @@ assign [class="Signal"] $ws9
 # ws3 ist inet oberfläche
 assign [class="Firefox"] $ws3
 for_window [class="ffplay"] floating enable
+for_window [class="st-256color"] $ws2
 for_window [title="pulsemixer"] floating enable
 for_window [class="ffplay"] move position 0 0
 # ws4 ist Arbeitsoberfläche
@@ -221,3 +208,4 @@ exec_always                         --no-startup-id nm-applet
 exec_always                         --no-startup-id xautolock -time 5 -locker slock -notify 30 -notifier "notify-send -u critical -t 10000 -- 'LOCKING screen in 30 sec'" -nowlocker slock -corners +00-
 exec                                --no-startup-id dunst --config $HOME/.config/dunst/dunstrc
 exec                                --no-startup-id keepassxc
+exec                                --no-startup-id st

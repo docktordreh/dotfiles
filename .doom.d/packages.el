@@ -13,6 +13,10 @@
 (package! evil-smartparens)
 (package! synosaurus)
 (package! typescript-mode)
+(package! jinja2-mode)
+(package! flx-ido)
+(package! lsp-ui)
+
 ;; Doom's packages are pinned to a specific commit and updated from release to
 ;; release. The `unpin!' macro allows you to unpin single packages...
 ;(unpin! pinned-package)
