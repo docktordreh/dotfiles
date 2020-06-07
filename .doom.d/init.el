@@ -40,7 +40,7 @@
        ophints           ; highlight the region an operation acts on
        (popup +defaults)   ; tame sudden yet inevitable temporary windows
        ;;pretty-code       ; ligatures or substitute text with pretty symbols
-       ;;tabs              ; an tab bar for Emacs
+       tabs              ; an tab bar for Emacs
        ;;treemacs          ; a project drawer, like neotree but cooler
        ;;unicode           ; extended unicode support for various languages
        vc-gutter         ; vcs diff in the fringe
@@ -95,7 +95,7 @@
        (eval +overlay)     ; run code, run (also, repls)
        ;;gist              ; interacting with github gists
        (lookup              ; navigate your code and its documentation
-	 +dictionary)      ; enable word def and thesaurus lookup fct
+        +dictionary)      ; enable word def and thesaurus lookup fct
        lsp
        ;;macos             ; MacOS-specific commands
        magit             ; a git porcelain for Emacs
@@ -111,8 +111,8 @@
 
        :lang
        ;;agda              ; types of types of types of types...
-       (cc                ; C/C++/Obj-C madness
-          +lsp)                ; uses lsp instead of irony
+       ;;(cc                ; C/C++/Obj-C madness
+       ;;   +lsp)                ; uses lsp instead of irony
        ;;clojure           ; java with a lisp
        ;;common-lisp       ; if you've seen one lisp, you've seen them all
        ;;coq               ; proofs-as-programs
@@ -128,16 +128,16 @@
        ;;faust             ; dsp, but you get to keep your soul
        ;;fsharp           ; ML stands for Microsoft's Language
        ;;fstar             ; (dependent) types and (monadic) effects and Z3
-       (go +lsp)         ; the hipster dialect
-       (haskell          ; a language that's lazier than I am
-        +dante          ; +dante Enables dante; a fork of intero aimed at lightweightedness. It doesn’t depend on stack, supports both cabal-only and stack projects, but lacks eldoc support.
-        +ghcide
-        +lsp)
+       ;;(go +lsp)         ; the hipster dialect
+       ;;(haskell          ; a language that's lazier than I am
+       ;; +dante          ; +dante Enables dante; a fork of intero aimed at lightweightedness. It doesn’t depend on stack, supports both cabal-only and stack projects, but lacks eldoc support.
+       ;; +ghcide
+       ;; +lsp)
         ;;hy                ; readability of scheme w/ speed of python
        ;;idris             ;
        json              ; At least it ain't XML
-       (java              ; the poster child for carpal tunnel syndrome
-        +meghanada)       ; meghanada and lsp are mutually exclusive!
+       ;;(java              ; the poster child for carpal tunnel syndrome
+       ;; +meghanada)       ; meghanada and lsp are mutually exclusive!
        (javascript +lsp)        ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia             ; a better, faster MATLAB
        ;;kotlin            ; a better, slicker Java(Script)
@@ -157,10 +157,10 @@
         +brain
         +noter
         +pandoc
-        +pomodoro
         +present
-        +journal
+        +pomodoro
         +roam
+        +journal
         +gnuplot)
        ;;perl              ; write code no one else can comprehend
        ;;php               ; perl's insecure younger brother
@@ -186,7 +186,7 @@
 
        :email
        ;; mu4e
-       ;notmuch
+       notmuch
        ;;(wanderlust +gmail)
 
        :app

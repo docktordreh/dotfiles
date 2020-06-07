@@ -4,19 +4,10 @@
 ;; To install a package with Doom you must declare them here, run 'doom sync' on
 ;; the command line, then restart Emacs for the changes to take effect.
 ;; Alternatively, use M-x doom/reload.
-
-(package! flymake-eslint)
-(package! flymake-easy)
-(package! org-noter)
-(package! org-tree-slide)
-(package! nov)
+(package! pkgbuild-mode)
 (package! evil-smartparens)
-(package! synosaurus)
-(package! typescript-mode)
 (package! jinja2-mode)
-(package! flx-ido)
-(package! lsp-ui)
-
+(package! prettier-js)
 ;; Doom's packages are pinned to a specific commit and updated from release to
 ;; release. The `unpin!' macro allows you to unpin single packages...
 ;(unpin! pinned-package)
