@@ -15,8 +15,9 @@ plugins=(git
 
 source $ZSH/oh-my-zsh.sh
 
-# added doom to the path
-export PATH=$PATH:$HOME/.local/bin:$HOME/git-progs/voidrice/.local/bin:$HOME/git-progs/voidrice/.local/bin/statusbar:$HOME/.emacs.d/bin:$HOME/go/bin:$HOME/Projekte/scripts/
+
+export ANDROID_HOME=$HOME/Android/Sdk
+export PATH=$PATH:$HOME/.local/bin:$HOME/git-progs/voidrice/.local/bin:$HOME/git-progs/voidrice/.local/bin/statusbar:$HOME/.emacs.d/bin:$HOME/go/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
 
 setopt autocd
 bindkey -v
