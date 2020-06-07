@@ -123,22 +123,24 @@ mode "$mode_lock" {
 }
 
 set $mode_fastexec (c)hromium (f)irefox (t)orbrowser-launcher
-bindsym $mod+p mode "$mode_fastexec"
+set $mode_brightness_display_audio brig(h)tness down (j)am down (k)rank it up en(l)ighten me (m)ute audio m(i)c toggle
+bindsym $mod+- mode "$mode_brightness_display_audio"
 
-mode "$mode_fastexec" {
-        bindsym f exec --no-startup-id firefox;                  mode "default"
-        bindsym p exec --no-startup-id firefox --private-window; mode "default"
-        bindsym Return                                           mode "default"
-        bindsym Escape                                           mode "default"
-}
-set $mode_chat (s)ignal (t)elegram (w)hatsapp
-bindsym $mod+c mode "$mode_chat"
+mode "$mode_brightness_display_audio" {
 
-mode "$mode_chat" {
-        bindsym t exec --no-startup-id telegram-desktop;         mode "default"
-        bindsym s exec --no-startup-id signal-desktop;           mode "default"
-        bindsym Return                                           mode "default"
-        bindsym Escape                                           mode "default"
+     # audio
+     bindsym k    exec --no-startup-id sh soundctl up
+     bindsym j    exec --no-startup-id sh soundctl down
+     bindsym m    exec --no-startup-id sh soundctl mute
+
+     #brightness
+    bindsym l     exec --no-startup-id sh blightctl up
+    bindsym h     exec --no-startup-id sh blightctl down
+
+    # mic
+    bindsym i        exec --no-startup-id    amixer set Capture toggle
+    bindsym Return                                           mode "default"
+    bindsym Escape                                           mode "default"
 }
 # audio
 bindsym XF86AudioRaiseVolume    exec --no-startup-id sh soundctl up
