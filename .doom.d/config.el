@@ -21,6 +21,7 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
+(add-to-list 'default-frame-alist '(alpha 90 90))
 (setq
  doom-font (font-spec :family "Fira Mono" :size 22)
  doom-big-font (font-spec :family "Fira Mono" :size 28)
@@ -43,12 +44,12 @@ projectile-project-search-path '("~/Projekte")
 
 indent-tabs-mode nil
 
-org-ref-default-bibliography "~/Papers/references.bib"
+org-ref-default-bibliography "~/Daten/cloud/tlaloc/org/Papers/references.bib"
 
-org-ref-pdf-directory "~/Papers/bibtex-pdfs"
+org-ref-pdf-directory "~/Daten/cloud/tlaloc/org/Papers/bibtex-pdfs"
 
-org-ref-bibliography-notes "~/Papers/notes.org"
-
+org-ref-bibliography-notes "~/Daten/cloud/tlaloc/org/Papers/notes.org"
+org-latex-prefer-user-labels t
 org-ref-open-pdf-function
 (lambda (fpath)
   (start-process "zathura" "*ivy-bibtex-zathura*" "/usr/bin/zathura" fpath))
@@ -56,6 +57,12 @@ org-ref-open-pdf-function
 org-completion-use-ido t
 org-ref-default-citation-link "footcite"
 org-refile-targets '((org-agenda-files . (:maxlevel . 6)))
+          ;; ! => insert timestamp
+          ;; @ => insert note
+          ;; / => enter state
+          ;; (x) => shortcut (after C-c C-t)
+          ;; after the |: close todo
+org-todo-keywords '((sequence  "DELEGATED(l@/!)" "SOMEDAY(f)" "IDEA(i@/!)" "TODO(t@/!)" "STARTED(s@/!)" "NEXT(n@/!)" "WAITING(w@/!)" "|" "DONE(d@/!)" "CANCELED(c@/!)"))
 org-todo-keyword-faces
       '(("IDEA" . (:foreground "GoldenRod" :weight bold))
         ("NEXT" . (:foreground "IndianRed1" :weight bold))
@@ -124,24 +131,23 @@ org-latex-default-packages-alist '(
                            )
 org-export-with-smart-quotes t
 org-clock-idle-time 15
-
 ;; aligns company annotations to the right side
 company-tooltip-align-annotations t
-
-;; localization
 calendar-week-start-day 1
+;; localization
 explicit-shell-file-name "/bin/zsh"
 tramp-chunksize 8192
 tramp-default-method "ssh"
+tramp-shell-prompt-pattern "^[^$>\n]*[#$%>] *\\(\[[0-9;]*[a-zA-Z] *\\)*"
 )
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-dark+)
+(setq doom-theme 'doom-snazzy)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
+(setq org-directory "~/Daten/cloud/tlaloc/org/")
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -163,58 +169,8 @@ tramp-default-method "ssh"
 ;;
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
-(defun setup-tide-mode ()
-  (interactive)
-  (tide-setup)
-  (flycheck-mode +1)
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (eldoc-mode +1)
-  (tide-hl-identifier-mode +1)
-  ;; company is an optional dependency. You have to
-  ;; install it separately via package-install
-  ;; `M-x package-install [ret] company`
-  (company-mode +1))
-
-(require 'web-mode)
-(add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
-(add-hook 'web-mode-hook
-          (lambda ()
-            (when (string-equal "tsx" (file-name-extension buffer-file-name))
-              (setup-tide-mode))))
-;; enable typescript-tslint checker
-;;(flycheck-add-mode 'typescript-tslint 'web-mode)
-
-(after! 'typescript-mode #'setup-tide-mode)
-(after! 'before-save-hook 'tide-format-before-save)
-(after! 'c++-mode-hook #'clang-format-bindings)
-(add-to-list 'auto-mode-alist '("\\.tsx$" . typescript-mode))
-(add-to-list 'auto-mode-alist '("\\.js$" . typescript-mode))
-(add-to-list 'default-frame-alist '(alpha 85 85))
-(after! 'org-mode-hook #'org-bullets-mode)
-(global-visual-line-mode t)
-(org-babel-do-load-languages 'org-babel-load-languages
-                             '(
-                               (latex . t)
-                               (org . t)
-                               (shell . t)
-                               (ditaa . t)
-                               (plantuml . t)
-                               (python . t)
-                               )
-                             )
-
-;; KEY MAP
-;; Avy Jump
-(define-key evil-normal-state-map (kbd "M-s") #'avy-goto-char-timer)
-(define-key evil-normal-state-map (kbd "M-w") #'avy-goto-word-1)
-(define-key evil-motion-state-map (kbd "M-w") #'avy-goto-word-1)
-
-
-(define-key global-map (kbd "C-+") 'text-scale-increase)
-(define-key global-map (kbd "C--") 'text-scale-decrease)
-
 (global-set-key (kbd "C-c o")
-                (lambda () (interactive) (find-file "~/org/refile.org")))
+                (lambda () (interactive) (find-file "~/Daten/cloud/tlaloc/org/refile.org")))
 
 ;; open agenda at C-c a
 (global-set-key (kbd "C-c a") 'org-agenda)
@@ -252,25 +208,83 @@ tramp-default-method "ssh"
   (org-narrow-to-subtree)
   (save-restriction
     (org-agenda-set-restriction-lock)))
-(add-to-list 'bibtex-BibTeX-entry-alist
-              '("TechReport" "Technical Report"
-               (("author")
-               ("title" "Title of the technical report (BibTeX converts it to lowercase)")
-               ("institution" "Sponsoring institution of the report")
-               ("year"))
-               )
-              )
-(add-to-list 'org-latex-classes
+
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  ;; company is an optional dependency. You have to
+  ;; install it separately via package-install
+  ;; `M-x package-install [ret] company`
+  (company-mode +1))
+
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+(add-hook 'web-mode-hook
+          (lambda ()
+            (when (string-equal "tsx" (file-name-extension buffer-file-name))
+              (setup-tide-mode))))
+
+
+;; note: not a clean solution. just telling emacs to load the colors from xterm
+(add-to-list 'term-file-aliases
+    '("st-256color" . "xterm-256color"))
+(add-to-list 'backup-directory-alist (cons tramp-file-name-regexp nil))
+
+
+
+(org-babel-do-load-languages 'org-babel-load-languages
+                             '(
+                               (latex . t)
+                               (org . t)
+                               (shell . t)
+                               (ditaa . t)
+                               (plantuml . t)
+                               (python . t)
+                               )
+                             )
+
+;; KEY MAP
+;; Avy Jump
+(define-key evil-normal-state-map (kbd "M-s") #'avy-goto-char-timer)
+(define-key evil-normal-state-map (kbd "M-w") #'avy-goto-word-1)
+(define-key evil-motion-state-map (kbd "M-w") #'avy-goto-word-1)
+
+
+(define-key global-map (kbd "C-+") 'text-scale-increase)
+(define-key global-map (kbd "C--") 'text-scale-decrease)
+
+
+(after! ox-latex
+  (add-to-list 'org-latex-classes
           '("koma-article"
             "\\documentclass[ngerman,12pt]{scrartcl}"
              ("\\section{%s}" . "\\section*{%s}")
              ("\\subsection{%s}" . "\\subsection*{%s}")
              ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
              ("\\paragraph{%s}" . "\\paragraph*{%s}")
-             ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-;; note: not a clean solution. just telling emacs to load the colors from xterm
-(add-to-list 'term-file-aliases
-    '("st-256color" . "xterm-256color"))
-(add-to-list 'backup-directory-alist (cons tramp-file-name-regexp nil))
+             ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 
-(find-file "~/org/todo.org")
+
+(add-to-list 'auto-mode-alist '("\\.js$" . typescript-mode))
+(add-to-list 'auto-mode-alist '("\\.tsx$" . typescript-mode))
+(after! typescript-mode
+  (add-hook 'typescript-mode-hook #'tide-mode)
+  (add-hook 'typescript-mode-hook #'prettier-js-mode)
+  (add-hook 'typescript-mode-hook #'flycheck-mode)
+  (setup-tide-mode)
+  (setq typescript-indent-level 3))
+(after! 'before-save-hook 'tide-format-before-save)
+
+(after! web-mode
+  (add-hook 'web-mode-hook #'flycheck-mode))
+
+(after! yasnippet
+  (push (expand-file-name "snippets/" doom-private-dir) yas-snippet-dirs))
+(yas-global-mode 1)
+
+(global-visual-line-mode t)
+(find-file "~/Daten/cloud/tlaloc/org/todo.org")
