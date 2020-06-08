@@ -1,3 +1,6 @@
 *.swo
 bookmarks
 *.swp
+*.svg
+*.png
+.doom.d/misc

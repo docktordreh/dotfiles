@@ -22,15 +22,18 @@
        (company          ; the ultimate code completion backend
         +childframe)     ; nicer UI. Emacs +26.1 only, incompatible with tng
        ;;helm            ; the *other* search engine for love and life
-       ido               ; the other *other* search engine...
-       (ivy +fuzzy)      ; a search engine for love and life
+       ;;ido               ; the other *other* search engine...
+       (ivy
+        +prescient
+        +fuzzy
+        +icons)      ; a search engine for love and life
        :ui
        ;;deft              ; notational velocity for Emacs
        doom              ; what makes DOOM look the way it does
        doom-dashboard    ; a nifty splash screen for Emacs
-       ;;doom-quit         ; DOOM quit-message prompts when you quit Emacs
+       doom-quit         ; DOOM quit-message prompts when you quit Emacs
        ;;fill-column       ; a `fill-column' indicator
-       ;;hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
+       hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        ;;hydra
        ;;indent-guides     ; highlighted indent columns
        minimap           ; show a map of the code on the side
@@ -38,14 +41,17 @@
        nav-flash         ; blink cursor line after big motions
        ;;neotree           ; a project drawer, like NERDTree for vim
        ophints           ; highlight the region an operation acts on
-       (popup +defaults)   ; tame sudden yet inevitable temporary windows
-       ;;pretty-code       ; ligatures or substitute text with pretty symbols
+       (popup; tame sudden yet inevitable temporary windows
+        +all ;; Enables fallback rules to ensure all temporary/special buffers
+             ;; (whose name begins with a space or asterix) are treated as popups.
+        +defaults) ; Enables reasonable default popup rules for a variety of buffers.
+       ;;(pretty-code +fira)   ; ligatures or substitute text with pretty symbols
        tabs              ; an tab bar for Emacs
-       ;;treemacs          ; a project drawer, like neotree but cooler
+       treemacs          ; a project drawer, like neotree but cooler
        ;;unicode           ; extended unicode support for various languages
        vc-gutter         ; vcs diff in the fringe
        vi-tilde-fringe   ; fringe tildes to mark beyond EOB
-       window-select     ; visually switch windows
+       (window-select +numbers)     ; visually switch windows
        workspaces        ; tab emulation, persistence & separate workspaces
        zen               ; distraction-free coding or writing
 
@@ -59,7 +65,7 @@
        multiple-cursors  ; editing in many places at once
        ;;objed             ; text object editing for the innocent
        ;;parinfer          ; turn lisp into python, sort of
-       ;;rotate-text       ; cycle region at point between text candidates
+       rotate-text       ; cycle region at point between text candidates
        snippets          ; my elves. They type so I don't have to
        word-wrap         ; soft wrapping with language-aware indent
 
@@ -70,7 +76,7 @@
        electric          ; smarter, keyword-based electric-indent
        (ibuffer          ; interactive buffer management. adds project based buffer grouping
         +icons)          ; support for file-type icons
-       undo              ; persistent, smarter undo for your inevitable mistakes
+       (undo +tree)              ; persistent, smarter undo for your inevitable mistakes
        vc                ; version-control and Emacs, sitting in a tree
 
        :term
@@ -95,13 +101,14 @@
        (eval +overlay)     ; run code, run (also, repls)
        ;;gist              ; interacting with github gists
        (lookup              ; navigate your code and its documentation
-        +dictionary)      ; enable word def and thesaurus lookup fct
+        +docsets  ;;Enable integration with Dash.app docsets.
+        +dictionary);; Enable word definition and thesaurus lookup functionality.
        lsp
        ;;macos             ; MacOS-specific commands
-       magit             ; a git porcelain for Emacs
+       (magit)             ; a git porcelain for Emacs
        make              ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
-       ;;pdf               ; pdf enhancements
+       pdf               ; pdf enhancements
        ;;prodigy           ; FIXME managing external services & code builders
        rgb               ; creating color strings
        ;;taskrunner        ; taskrunner for all your projects
@@ -124,7 +131,7 @@
        ;;elm               ; care for a cup of TEA?
        emacs-lisp        ; drown in parentheses
        ;;erlang            ; an elegant language for a more civilized age
-       ;;ess               ; emacs speaks statistics
+       ess               ; emacs speaks statistics
        ;;faust             ; dsp, but you get to keep your soul
        ;;fsharp           ; ML stands for Microsoft's Language
        ;;fstar             ; (dependent) types and (monadic) effects and Z3
@@ -144,6 +151,7 @@
        (latex ; writing papers in Emacs has never been so fun
         +fold ; uses tex-fold to fold latex macros to unicode and make folding hook based
         +cdlatex ; enable cdlatex for fast math insertionm
+        +latexmk
         +lsp)     ; start lsp in tex-mode-hook
        ;;lean
        ;;factor
@@ -156,6 +164,7 @@
        (org               ; organize your plain life in plain text
         +brain
         +noter
+        +dragndrop
         +pandoc
         +present
         +pomodoro

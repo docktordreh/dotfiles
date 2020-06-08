@@ -8,27 +8,79 @@
 (setq user-full-name "Valentin Lechner"
       user-mail-address "valentin_lechner@dismail.de")
 
+(setq doom-fallback-buffer-name "► Doom"
+      +doom-dashboard-name "► Doom")
+;; changes modified buffers to be orange in modeline
+;; since red looks like an error occured
+(custom-set-faces!
+  '(doom-modeline-buffer-modified :foreground "orange"))
+(defun doom-modeline-conditional-buffer-encoding ()
+  "We expect the encoding to be LF UTF-8, so only show the modeline when this is not the case"
+  (setq-local doom-modeline-buffer-encoding
+              (unless (or (eq buffer-file-coding-system 'utf-8-unix)
+                          (eq buffer-file-coding-system 'utf-8)))))
 
-;; don't keep message buffers around
-(setq message-kill-buffer-on-exit t)
-;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
-;; are the three important ones:
-;;
-;; + `doom-font'
-;; + `doom-variable-pitch-font'
-;; + `doom-big-font' -- used for `doom-big-font-mode'; use this for
-;;   presentations or streaming.
-;;
-;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
-;; font string. You generally only need these two:
-(add-to-list 'default-frame-alist '(alpha 90 90))
+(add-hook 'after-change-major-mode-hook #'doom-modeline-conditional-buffer-encoding)
+;; add transparency to emacs. only works with a composition manager
+(add-to-list 'default-frame-alist '(alpha 92 92))
 (setq
- doom-font (font-spec :family "Fira Mono" :size 22)
- doom-big-font (font-spec :family "Fira Mono" :size 28)
+ ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
+ ;; are the three important ones:
+ ;;
+ ;; + `doom-font'
+ ;; + `doom-variable-pitch-font'
+ ;; + `doom-big-font' -- used for `doom-big-font-mode'; use this for
+ ;;   presentations or streaming.
+ ;;
+ ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
+ ;; font string. You generally only need these two:
+ doom-font (font-spec :family "Fira Mono" :size 24)
+ doom-big-font (font-spec :family "Fira Mono" :size 36)
+ doom-variable-pitch-font (font-spec :family "Overpass" :size 24)
+ doom-serif-font (font-spec :family "Overpass" :weight 'light)
+ ;; There are two ways to load a theme. Both assume the theme is installed and
+ ;; available. You can either set `doom-theme' or manually load a theme with the
+ ;; `load-theme' function. This is the default:
+ doom-theme 'doom-snazzy
+ ;; This determines the style of line numbers in effect. If set to `nil', line
+ ;; numbers are disabled. For relative line numbers, set this to `relative'.
+ display-line-numbers-type 'relative
+ )
 
- doom-format-on-save t
+(setq
+ projectile-project-search-path '("~/Projekte")
+ ;; don't keep message buffers around
+ message-kill-buffer-on-exit t
 
- ; since the default org export does not compile bibliography
+ indent-tabs-mode nil
+ ;; aligns company annotations to the right side
+ company-tooltip-align-annotations t
+ ;; localization
+ calendar-week-start-day 1
+ explicit-shell-file-name "/bin/zsh"
+ tramp-chunksize 8192
+ tramp-default-method "ssh"
+ tramp-shell-prompt-pattern "^[^$>\n]*[#$%>] *\\(\[[0-9;]*[a-zA-Z] *\\)*"
+ ; uniquify buffer names
+ uniquify-buffer-name-style 'forward
+ ; take new window space from all windows not just the active one
+ window-combination-resize t
+ ; limit undo to 80Mb (default: 400000)
+ undo-limit 80000000
+ ; by default while in insert changes are one big blob
+ ; makes changes more granular and improves undo experience
+ evil-want-fine-undo t
+ ; non nil = save
+ auto-save-default t
+ ; keep glyphs in cache when there are a lot
+ inhibit-compacting-font-caches t
+ ;; Unicode ellispis are nicer than "...", and also save /precious/ space
+ truncate-string-ellipsis "…"
+ +ivy-buffer-preview t
+ )
+(setq
+ org-export-in-background t
+ org-export-async-init-file (concat doom-private-dir "init-org-async.el")
  org-latex-pdf-process
    '("lualatex -interaction nonstopmode -output-directory %o %f"
      "biber %b"
@@ -40,138 +92,100 @@ org-agenda-sorting-strategy
           (todo todo-state-up priority-up)
           (tags priority-down)))
 
-projectile-project-search-path '("~/Projekte")
+  org-ref-default-bibliography "~/Daten/cloud/tlaloc/org/Papers/references.bib"
 
-indent-tabs-mode nil
+  org-ref-pdf-directory "~/Daten/cloud/tlaloc/org/Papers/bibtex-pdfs"
 
-org-ref-default-bibliography "~/Daten/cloud/tlaloc/org/Papers/references.bib"
+  org-ref-bibliography-notes "~/Daten/cloud/tlaloc/org/Papers/notes.org"
+  org-ref-open-pdf-function
+  (lambda (fpath)
+    (start-process "zathura" "*ivy-bibtex-zathura*" "/usr/bin/zathura" fpath))
 
-org-ref-pdf-directory "~/Daten/cloud/tlaloc/org/Papers/bibtex-pdfs"
+  org-latex-prefer-user-labels t
+  org-ref-default-citation-link "footcite"
+  org-ref-note-title-format "* TODO %y - %t\n :PROPERTIES:\n  :Custom_ID: %k\n  :NOTER_DOCUMENT: %F\n :ROAM_KEY: cite:%k\n  :AUTHOR: %9a\n  :JOURNAL: %j\n  :YEAR: %y\n  :VOLUME: %v\n  :PAGES: %p\n  :DOI: %D\n  :URL: %U\n :END:\n\n"
+  org-refile-targets '((org-agenda-files . (:maxlevel . 6)))
+  ;; ! => insert timestamp
+  ;; @ => insert note
+  ;; / => enter state
+  ;; (x) => shortcut (after C-c C-t)
+  ;; after the |: close todo
+  org-todo-keywords '((sequence  "DELEGATED(l@/!)" "SOMEDAY(f)" "IDEA(i@/!)" "TODO(t@/!)" "STARTED(s@/!)" "NEXT(n@/!)" "WAITING(w@/!)" "|" "DONE(d@/!)" "CANCELED(c@/!)"))
+  org-todo-keyword-faces
+  '(("IDEA" . (:foreground "GoldenRod" :weight bold))
+    ("NEXT" . (:foreground "IndianRed1" :weight bold))
+    ("TODO" . (:foreground "Yellow1" :weight bold))
+    ("STARTED" . (:foreground "OrangeRed" :weight bold))
+    ("WAITING" . (:foreground "coral" :weight bold))
+    ("CANCELED" . (:foreground "IndianRed2" :weight bold))
+    ("DELEGATED" . (:foreground "ForestGreen" :weight bold))
+    ("SOMEDAY" . (:foreground "YellowGreen" :weight bold))
+    )
+  org-tag-persistent-alist
+  '((:startgroup . nil)
+    ("HOME" . ?h)
+    ("RESEARCH" . ?r)
+    ("TEACHING" . ?t)
+    ("STUDYING" . ?s)
+    (:endgroup . nil)
+    (:startgroup . nil)
+    ("MGMT" . ?m)
+    ("OS" . ?o)
+    ("DEV" . ?d)
+    ("WWW" . ?w)
+    (:endgroup . nil)
+    (:startgroup . nil)
+    ("EASY" . ?e)
+    ("MEDIUM" . ?m)
+    ("HARD" . ?a)
+    (:endgroup . nil)
+    ("URGENT" . ?u)
+    ("KEY" . ?k)
+    ("BONUS" . ?b)
+    ("noexport" . ?x)
+    )
+  org-tag-faces
+  '(
+    ("HOME" . (:foreground "AquaMarine4" :weight bold))
+    ("RESEARCH" . (:foreground "Seagreen4" :weight bold))
+    ("TEACHING" . (:foreground "Green4" :weight bold))
+    ("STUDYING" . (:foreground "Springgreen4" :weight bold))
+    ("OS" . (:foreground "coral4" :weight bold))
+    ("DEV" . (:foreground "tomato1" :weight bold))
+    ("MGMT" . (:foreground "yellow1" :weight bold))
+    ("WWW" . (:foreground "gray0" :weight bold))
+    ("URGENT" . (:foreground "Red" :weight bold))
+    ("KEY" . (:foreground "Red" :weight bold))
+    ("EASY" . (:foreground "Green1" :weight bold))
+    ("MEDIUM" . (:foreground "Yellow1" :weight bold))
+    ("HARD" . (:foreground "Red1" :weight bold))
+    ("BONUS" . (:foreground "GoldenRod" :weight bold))
+    ("noexport" . (:foreground "YellowGreen" :weight bold))
+    )
+  org-fast-tag-selection-single-key t
+  org-use-fast-todo-selection t
+  org-latex-default-packages-alist '(
+                                     (#1="" "graphicx" t)
+                                     (#1# "longtable" t)
+                                     (#1# "wrapfig" nil)
+                                     (#1# "rotating" nil)
+                                     ("normalem" "ulem" t)
+                                     (#1# "amsmath" t)
+                                     (#1# "textcomp" t)
+                                     (#1# "amssymb" t)
+                                     (#1# "capt-of" nil)
+                                     (#1# "hyperref" nil)
+                                     (#1# "csquotes" nil)
+                                     )
+  org-export-with-smart-quotes t
+  org-directory "~/Daten/cloud/tlaloc/org/"
+  )
 
-org-ref-bibliography-notes "~/Daten/cloud/tlaloc/org/Papers/notes.org"
-org-latex-prefer-user-labels t
-org-ref-open-pdf-function
-(lambda (fpath)
-  (start-process "zathura" "*ivy-bibtex-zathura*" "/usr/bin/zathura" fpath))
 
-org-completion-use-ido t
-org-ref-default-citation-link "footcite"
-org-refile-targets '((org-agenda-files . (:maxlevel . 6)))
-          ;; ! => insert timestamp
-          ;; @ => insert note
-          ;; / => enter state
-          ;; (x) => shortcut (after C-c C-t)
-          ;; after the |: close todo
-org-todo-keywords '((sequence  "DELEGATED(l@/!)" "SOMEDAY(f)" "IDEA(i@/!)" "TODO(t@/!)" "STARTED(s@/!)" "NEXT(n@/!)" "WAITING(w@/!)" "|" "DONE(d@/!)" "CANCELED(c@/!)"))
-org-todo-keyword-faces
-      '(("IDEA" . (:foreground "GoldenRod" :weight bold))
-        ("NEXT" . (:foreground "IndianRed1" :weight bold))
-        ("TODO" . (:foreground "Yellow1" :weight bold))
-        ("STARTED" . (:foreground "OrangeRed" :weight bold))
-        ("WAITING" . (:foreground "coral" :weight bold))
-        ("CANCELED" . (:foreground "IndianRed2" :weight bold))
-        ("DELEGATED" . (:foreground "ForestGreen" :weight bold))
-        ("SOMEDAY" . (:foreground "YellowGreen" :weight bold))
-        )
-org-tag-persistent-alist
-      '((:startgroup . nil)
-        ("HOME" . ?h)
-        ("RESEARCH" . ?r)
-        ("TEACHING" . ?t)
-        ("STUDYING" . ?s)
-        (:endgroup . nil)
-        (:startgroup . nil)
-        ("MGMT" . ?m)
-        ("OS" . ?o)
-        ("DEV" . ?d)
-        ("WWW" . ?w)
-        (:endgroup . nil)
-        (:startgroup . nil)
-        ("EASY" . ?e)
-        ("MEDIUM" . ?m)
-        ("HARD" . ?a)
-        (:endgroup . nil)
-        ("URGENT" . ?u)
-        ("KEY" . ?k)
-        ("BONUS" . ?b)
-        ("noexport" . ?x)
-        )
-org-tag-faces
-      '(
-        ("HOME" . (:foreground "AquaMarine4" :weight bold))
-        ("RESEARCH" . (:foreground "Seagreen4" :weight bold))
-        ("TEACHING" . (:foreground "Green4" :weight bold))
-        ("STUDYING" . (:foreground "Springgreen4" :weight bold))
-        ("OS" . (:foreground "coral4" :weight bold))
-        ("DEV" . (:foreground "tomato1" :weight bold))
-        ("MGMT" . (:foreground "yellow1" :weight bold))
-        ("WWW" . (:foreground "gray0" :weight bold))
-        ("URGENT" . (:foreground "Red" :weight bold))
-        ("KEY" . (:foreground "Red" :weight bold))
-        ("EASY" . (:foreground "Green1" :weight bold))
-        ("MEDIUM" . (:foreground "Yellow1" :weight bold))
-        ("HARD" . (:foreground "Red1" :weight bold))
-        ("BONUS" . (:foreground "GoldenRod" :weight bold))
-        ("noexport" . (:foreground "YellowGreen" :weight bold))
-        )
-org-fast-tag-selection-single-key t
-org-use-fast-todo-selection t
-org-latex-default-packages-alist '(
-                           (#1="" "graphicx" t)
-                           (#1# "longtable" t)
-                           (#1# "wrapfig" nil)
-                           (#1# "rotating" nil)
-                           ("normalem" "ulem" t)
-                           (#1# "amsmath" t)
-                           (#1# "textcomp" t)
-                           (#1# "amssymb" t)
-                           (#1# "capt-of" nil)
-                           (#1# "hyperref" nil)
-                           (#1# "csquotes" nil)
-                           )
-org-export-with-smart-quotes t
-org-clock-idle-time 15
-;; aligns company annotations to the right side
-company-tooltip-align-annotations t
-calendar-week-start-day 1
-;; localization
-explicit-shell-file-name "/bin/zsh"
-tramp-chunksize 8192
-tramp-default-method "ssh"
-tramp-shell-prompt-pattern "^[^$>\n]*[#$%>] *\\(\[[0-9;]*[a-zA-Z] *\\)*"
-)
-;; There are two ways to load a theme. Both assume the theme is installed and
-;; available. You can either set `doom-theme' or manually load a theme with the
-;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-snazzy)
-
-;; If you use `org' and don't want your org files in the default location below,
-;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/Daten/cloud/tlaloc/org/")
-
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type 'relative)
-
-;; Here are some additional functions/macros that could help you configure Doom:
-;;
-;; - `load!' for loading external *.el files relative to this one
-;; - `use-package' for configuring packages
-;; - `after!' for running code after a package has loaded
-;; - `add-load-path!' for adding directories to the `load-path', relative to
-;;   this file. Emacs searches the `load-path' when you load packages with
-;;   `require' or `use-package'.
-;; - `map!' for binding new keys
-;;
-;; To get information about any of these functions/macros, move the cursor over
-;; the highlighted symbol at press 'K' (non-evil users must press 'C-c g k').
-;; This will open documentation for it, including demos of how they are used.
-;;
-;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
-;; they are implemented.
 (global-set-key (kbd "C-c o")
                 (lambda () (interactive) (find-file "~/Daten/cloud/tlaloc/org/refile.org")))
-
+(map! :map evil-window-map
+      "SPC" #'rotate-layout)
 ;; open agenda at C-c a
 (global-set-key (kbd "C-c a") 'org-agenda)
 ;; org-agenda list
@@ -231,7 +245,7 @@ tramp-shell-prompt-pattern "^[^$>\n]*[#$%>] *\\(\[[0-9;]*[a-zA-Z] *\\)*"
 
 ;; note: not a clean solution. just telling emacs to load the colors from xterm
 (add-to-list 'term-file-aliases
-    '("st-256color" . "xterm-256color"))
+             '("st-256color" . "xterm-256color"))
 (add-to-list 'backup-directory-alist (cons tramp-file-name-regexp nil))
 
 
@@ -246,7 +260,10 @@ tramp-shell-prompt-pattern "^[^$>\n]*[#$%>] *\\(\[[0-9;]*[a-zA-Z] *\\)*"
                                (python . t)
                                )
                              )
-
+;; opens up switch buffer after splitting
+(defadvice! prompt-for-buffer (&rest _)
+  :after '(evil-window-split evil-window-vsplit)
+  (+ivy/switch-buffer))
 ;; KEY MAP
 ;; Avy Jump
 (define-key evil-normal-state-map (kbd "M-s") #'avy-goto-char-timer)
@@ -260,13 +277,13 @@ tramp-shell-prompt-pattern "^[^$>\n]*[#$%>] *\\(\[[0-9;]*[a-zA-Z] *\\)*"
 
 (after! ox-latex
   (add-to-list 'org-latex-classes
-          '("koma-article"
-            "\\documentclass[ngerman,12pt]{scrartcl}"
-             ("\\section{%s}" . "\\section*{%s}")
-             ("\\subsection{%s}" . "\\subsection*{%s}")
-             ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-             ("\\paragraph{%s}" . "\\paragraph*{%s}")
-             ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+               '("koma-article"
+                 "\\documentclass[ngerman,12pt]{scrartcl}"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 
 
 (add-to-list 'auto-mode-alist '("\\.js$" . typescript-mode))
@@ -276,15 +293,162 @@ tramp-shell-prompt-pattern "^[^$>\n]*[#$%>] *\\(\[[0-9;]*[a-zA-Z] *\\)*"
   (add-hook 'typescript-mode-hook #'prettier-js-mode)
   (add-hook 'typescript-mode-hook #'flycheck-mode)
   (setup-tide-mode)
-  (setq typescript-indent-level 3))
+  (setq typescript-indent-level 4))
 (after! 'before-save-hook 'tide-format-before-save)
 
 (after! web-mode
   (add-hook 'web-mode-hook #'flycheck-mode))
 
+'(org-preview-latex-process-alist
+       (quote
+       ((dvipng :programs
+         ("lualatex" "dvipng")
+         :description "dvi > png" :message "you need to install the programs: latex and dvipng." :image-input-type "dvi" :image-output-type "png" :image-size-adjust
+         (1.0 . 1.0)
+         :latex-compiler
+         ("lualatex -output-format dvi -interaction nonstopmode -output-directory %o %f")
+         :image-converter
+         ("dvipng -fg %F -bg %B -D %D -T tight -o %O %f"))
+ (dvisvgm :programs
+          ("latex" "dvisvgm")
+          :description "dvi > svg" :message "you need to install the programs: latex and dvisvgm." :use-xcolor t :image-input-type "xdv" :image-output-type "svg" :image-size-adjust
+          (1.7 . 1.5)
+          :latex-compiler
+          ("xelatex -no-pdf -interaction nonstopmode -output-directory %o %f")
+          :image-converter
+          ("dvisvgm %f -n -b min -c %S -o %O"))
+ (imagemagick :programs
+              ("latex" "convert")
+              :description "pdf > png" :message "you need to install the programs: latex and imagemagick." :use-xcolor t :image-input-type "pdf" :image-output-type "png" :image-size-adjust
+              (1.0 . 1.0)
+              :latex-compiler
+              ("xelatex -no-pdf -interaction nonstopmode -output-directory %o %f")
+              :image-converter
+              ("convert -density %D -trim -antialias %f -quality 100 %O")))))
+
+(after! centaur-tabs
+  (setq centaur-tabs-style "wave")
+  (setq centaur-tabs-set-bar 'under)
+  ;; Note: If you're not using Spacmeacs, in order for the underline to display
+  ;; correctly you must add the following line:
+  (setq x-underline-at-descent-line t))
 (after! yasnippet
   (push (expand-file-name "snippets/" doom-private-dir) yas-snippet-dirs))
 (yas-global-mode 1)
 
+(setenv "PATH" (concat (getenv "PATH") ":/opt/texlive/2020/bin/x86_64-linux"))
+(setq exec-path (append exec-path '("/opt/texlive/2020/bin/x86_64-linux")))
+(setenv "PATH" (concat (getenv "PATH") ":/home/valentin/.cargo/bin"))
+(setq exec-path (append exec-path '("/home/valentin/.cargo/bin")))
+(custom-set-faces! '(doom-modeline-evil-insert-state :weight bold :foreground "#339CDB"))
+(display-time-mode 1)
+(display-battery-mode 1)
+(global-whitespace-mode +1)
 (global-visual-line-mode t)
 (find-file "~/Daten/cloud/tlaloc/org/todo.org")
+
+
+
+;; emacs style e
+(defvar fancy-splash-image-template
+  (expand-file-name "misc/splash-images/blackhole-lines-template.svg" doom-private-dir)
+  "Default template svg used for the splash image, with substitutions from ")
+(defvar fancy-splash-image-nil
+  (expand-file-name "misc/splash-images/transparent-pixel.png" doom-private-dir)
+  "An image to use at minimum size, usually a transparent pixel")
+
+(setq fancy-splash-sizes
+  `((:height 500 :min-height 50 :padding (0 . 4) :template ,(expand-file-name "misc/splash-images/blackhole-lines-0.svg" doom-private-dir))
+    (:height 440 :min-height 42 :padding (1 . 4) :template ,(expand-file-name "misc/splash-images/blackhole-lines-0.svg" doom-private-dir))
+    (:height 400 :min-height 38 :padding (1 . 4) :template ,(expand-file-name "misc/splash-images/blackhole-lines-1.svg" doom-private-dir))
+    (:height 350 :min-height 36 :padding (1 . 3) :template ,(expand-file-name "misc/splash-images/blackhole-lines-2.svg" doom-private-dir))
+    (:height 300 :min-height 34 :padding (1 . 3) :template ,(expand-file-name "misc/splash-images/blackhole-lines-3.svg" doom-private-dir))
+    (:height 250 :min-height 32 :padding (1 . 2) :template ,(expand-file-name "misc/splash-images/blackhole-lines-4.svg" doom-private-dir))
+    (:height 200 :min-height 30 :padding (1 . 2) :template ,(expand-file-name "misc/splash-images/blackhole-lines-5.svg" doom-private-dir))
+    (:height 100 :min-height 24 :padding (1 . 2) :template ,(expand-file-name "misc/splash-images/emacs-e-template.svg" doom-private-dir))
+    (:height 0   :min-height 0  :padding (0 . 0) :file ,fancy-splash-image-nil)))
+
+(defvar fancy-splash-sizes
+  `((:height 500 :min-height 50 :padding (0 . 2))
+    (:height 440 :min-height 42 :padding (1 . 4))
+    (:height 330 :min-height 35 :padding (1 . 3))
+    (:height 200 :min-height 30 :padding (1 . 2))
+    (:height 0   :min-height 0  :padding (0 . 0) :file ,fancy-splash-image-nil))
+  "list of plists with the following properties
+  :height the height of the image
+  :min-height minimum `frame-height' for image
+  :padding `+doom-dashboard-banner-padding' to apply
+  :template non-default template file
+  :file file to use instead of template")
+
+(defvar fancy-splash-template-colours
+  '(("$colour1" . keywords) ("$colour2" . type) ("$colour3" . base5) ("$colour4" . base8))
+  "list of colour-replacement alists of the form (\"$placeholder\" . 'theme-colour) which applied the template")
+
+(unless (file-exists-p (expand-file-name "theme-splashes" doom-cache-dir))
+  (make-directory (expand-file-name "theme-splashes" doom-cache-dir) t))
+
+(defun fancy-splash-filename (theme-name height)
+  (expand-file-name (concat (file-name-as-directory "theme-splashes")
+                            (symbol-name doom-theme)
+                            "-" (number-to-string height) ".svg")
+                    doom-cache-dir))
+
+(defun fancy-splash-clear-cache ()
+  "Delete all cached fancy splash images"
+  (interactive)
+  (delete-directory (expand-file-name "theme-splashes" doom-cache-dir) t)
+  (message "Cache cleared!"))
+
+(defun fancy-splash-generate-image (template height)
+  "Read TEMPLATE and create an image if HEIGHT with colour substitutions as  ;described by `fancy-splash-template-colours' for the current theme"
+    (with-temp-buffer
+      (insert-file-contents template)
+      (re-search-forward "$height" nil t)
+      (replace-match (number-to-string height) nil nil)
+      (dolist (substitution fancy-splash-template-colours)
+        (beginning-of-buffer)
+        (while (re-search-forward (car substitution) nil t)
+          (replace-match (doom-color (cdr substitution)) nil nil)))
+      (write-region nil nil
+                    (fancy-splash-filename (symbol-name doom-theme) height) nil nil)))
+
+(defun fancy-splash-generate-images ()
+  "Perform `fancy-splash-generate-image' in bulk"
+  (dolist (size fancy-splash-sizes)
+    (unless (plist-get size :file)
+      (fancy-splash-generate-image (or (plist-get size :file)
+                                       (plist-get size :template)
+                                       fancy-splash-image-template)
+                                   (plist-get size :height)))))
+
+(defun ensure-theme-splash-images-exist (&optional height)
+  (unless (file-exists-p (fancy-splash-filename
+                          (symbol-name doom-theme)
+                          (or height
+                              (plist-get (car fancy-splash-sizes) :height))))
+    (fancy-splash-generate-images)))
+
+(defun get-appropriate-splash ()
+  (let ((height (frame-height)))
+    (cl-some (lambda (size) (when (>= height (plist-get size :min-height)) size))
+             fancy-splash-sizes)))
+
+(setq fancy-splash-last-size nil)
+(setq fancy-splash-last-theme nil)
+(defun set-appropriate-splash (&optional frame)
+  (let ((appropriate-image (get-appropriate-splash)))
+    (unless (and (equal appropriate-image fancy-splash-last-size)
+                 (equal doom-theme fancy-splash-last-theme)))
+    (unless (plist-get appropriate-image :file)
+      (ensure-theme-splash-images-exist (plist-get appropriate-image :height)))
+    (setq fancy-splash-image
+          (or (plist-get appropriate-image :file)
+              (fancy-splash-filename (symbol-name doom-theme) (plist-get appropriate-image :height))))
+    (setq +doom-dashboard-banner-padding (plist-get appropriate-image :padding))
+    (setq fancy-splash-last-size appropriate-image)
+    (setq fancy-splash-last-theme doom-theme)
+    (+doom-dashboard-reload)))
+
+(add-hook 'window-size-change-functions #'set-appropriate-splash)
+(add-hook 'doom-load-theme-hook #'set-appropriate-splash)
