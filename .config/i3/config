@@ -18,7 +18,7 @@ bindsym $mod+Shift+Return exec urxvt
 bindsym $mod+Return exec st
 # kill focused window
 bindsym $mod+Shift+q kill
-bindsym $mod+d exec --no-startup-id rofi -show drun
+bindsym $mod+Shift+p exec --no-startup-id rofi -show drun
 # change focus
 bindsym $mod+j focus left
 bindsym $mod+k focus down
@@ -45,9 +45,9 @@ bindsym $mod+v split v
 bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
+bindsym $mod+Shift+s layout stacking
+bindsym $mod+Shift+w layout tabbed
+bindsym $mod+Shift+e layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -95,9 +95,7 @@ bindsym $mod+Shift+9 move container to workspace $ws9
 
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-
+bindsym $mod+e exec emacsclient -c
 # resize window (you can also use the mouse for that)
 mode "resize" {
         bindsym j resize shrink width 10 px or 10 ppt
@@ -122,18 +120,17 @@ mode "$mode_lock" {
         bindsym Escape mode "default"
 }
 
-set $mode_fastexec (c)hromium (f)irefox (t)orbrowser-launcher
 set $mode_brightness_display_audio brig(h)tness down (j)am down (k)rank it up en(l)ighten me (m)ute audio m(i)c toggle
-bindsym $mod+- mode "$mode_brightness_display_audio"
+bindsym $mod_alt+p mode "$mode_brightness_display_audio"
 
 mode "$mode_brightness_display_audio" {
 
-     # audio
-     bindsym k    exec --no-startup-id sh soundctl up
-     bindsym j    exec --no-startup-id sh soundctl down
-     bindsym m    exec --no-startup-id sh soundctl mute
+    # audio
+    bindsym k    exec --no-startup-id sh soundctl up
+    bindsym j    exec --no-startup-id sh soundctl down
+    bindsym m    exec --no-startup-id sh soundctl mute
 
-     #brightness
+    #brightness
     bindsym l     exec --no-startup-id sh blightctl up
     bindsym h     exec --no-startup-id sh blightctl down
 
@@ -189,9 +186,11 @@ client.urgent           #2f343a #900000 #ffffff #900000
 # ws9 ist chat oberfläche
 assign [class="Telegram"] $ws9
 assign [class="Signal"] $ws9
+assign [class="scrcpy"] $ws4
 # ws3 ist inet oberfläche
 assign [class="Firefox"] $ws3
 for_window [class="ffplay"] floating enable
+for_window [class="scrcpy"] floating enable
 for_window [class="st-256color"] $ws2
 for_window [title="pulsemixer"] floating enable
 for_window [class="ffplay"] move position 0 0
