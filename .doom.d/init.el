@@ -28,11 +28,11 @@
         +fuzzy
         +icons)      ; a search engine for love and life
        :ui
-       ;;deft              ; notational velocity for Emacs
+       deft              ; notational velocity for Emacs
        doom              ; what makes DOOM look the way it does
        doom-dashboard    ; a nifty splash screen for Emacs
        doom-quit         ; DOOM quit-message prompts when you quit Emacs
-       ;;fill-column       ; a `fill-column' indicator
+       fill-column       ; a `fill-column' indicator
        hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        ;;hydra
        ;;indent-guides     ; highlighted indent columns
@@ -45,15 +45,15 @@
         +all ;; Enables fallback rules to ensure all temporary/special buffers
              ;; (whose name begins with a space or asterix) are treated as popups.
         +defaults) ; Enables reasonable default popup rules for a variety of buffers.
-       ;;(pretty-code +fira)   ; ligatures or substitute text with pretty symbols
+       pretty-code   ; ligatures or substitute text with pretty symbols
        tabs              ; an tab bar for Emacs
        treemacs          ; a project drawer, like neotree but cooler
-       ;;unicode           ; extended unicode support for various languages
+       unicode           ; extended unicode support for various languages
        vc-gutter         ; vcs diff in the fringe
        vi-tilde-fringe   ; fringe tildes to mark beyond EOB
        (window-select +numbers)     ; visually switch windows
        workspaces        ; tab emulation, persistence & separate workspaces
-       zen               ; distraction-free coding or writing
+       ;;zen               ; distraction-free coding or writing
 
        :editor
        (evil +everywhere); come to the dark side, we have cookies
@@ -83,7 +83,7 @@
        eshell            ; the elisp shell that works everywhere
        ;;shell             ; simple shell REPL for Emacs
        ;;term              ; basic terminal emulator for Emacs
-       vterm             ; the best terminal emulation in Emacs
+       ;;vterm             ; the best terminal emulation in Emacs
 
        :checkers
        syntax              ; tasing you for every semicolon you forget
@@ -105,7 +105,7 @@
         +dictionary);; Enable word definition and thesaurus lookup functionality.
        lsp
        ;;macos             ; MacOS-specific commands
-       (magit)             ; a git porcelain for Emacs
+       (magit +forge)            ; a git porcelain for Emacs
        make              ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
        pdf               ; pdf enhancements
@@ -118,8 +118,8 @@
 
        :lang
        ;;agda              ; types of types of types of types...
-       ;;(cc                ; C/C++/Obj-C madness
-       ;;   +lsp)                ; uses lsp instead of irony
+       (cc                ; C/C++/Obj-C madness
+          +lsp)                ; uses lsp instead of irony
        ;;clojure           ; java with a lisp
        ;;common-lisp       ; if you've seen one lisp, you've seen them all
        ;;coq               ; proofs-as-programs
@@ -136,8 +136,8 @@
        ;;fsharp           ; ML stands for Microsoft's Language
        ;;fstar             ; (dependent) types and (monadic) effects and Z3
        ;;(go +lsp)         ; the hipster dialect
-       ;;(haskell          ; a language that's lazier than I am
-       ;; +dante          ; +dante Enables dante; a fork of intero aimed at lightweightedness. It doesn’t depend on stack, supports both cabal-only and stack projects, but lacks eldoc support.
+       (haskell          ; a language that's lazier than I am
+        +dante)          ; +dante Enables dante; a fork of intero aimed at lightweightedness. It doesn’t depend on stack, supports both cabal-only and stack projects, but lacks eldoc support.
        ;; +ghcide
        ;; +lsp)
         ;;hy                ; readability of scheme w/ speed of python
@@ -159,7 +159,7 @@
        lua               ; one-based indices? one-based indices
        markdown          ; writing docs for people to ignore
        ;;nim               ; python + lisp at the speed of c
-       ;;nix               ; I hereby declare "nix geht mehr!"
+       nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
        (org               ; organize your plain life in plain text
         +brain
