@@ -247,7 +247,8 @@ org-agenda-sorting-strategy
 
 ;; note: not a clean solution. just telling emacs to load the colors from xterm
 (add-to-list 'term-file-aliases
-             '("st-256color" . "xterm-256color"))
+             '("st-256color" . "xterm-256color")
+             '("alacritty" . "xterm-256color"))
 (add-to-list 'backup-directory-alist (cons tramp-file-name-regexp nil))
 
 

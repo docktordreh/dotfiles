@@ -45,7 +45,7 @@
         +all ;; Enables fallback rules to ensure all temporary/special buffers
              ;; (whose name begins with a space or asterix) are treated as popups.
         +defaults) ; Enables reasonable default popup rules for a variety of buffers.
-       pretty-code   ; ligatures or substitute text with pretty symbols
+       ;;pretty-code   ; ligatures or substitute text with pretty symbols
        tabs              ; an tab bar for Emacs
        treemacs          ; a project drawer, like neotree but cooler
        unicode           ; extended unicode support for various languages
