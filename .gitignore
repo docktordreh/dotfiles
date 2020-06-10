@@ -4,3 +4,4 @@ bookmarks
 *.svg
 *.png
 .doom.d/misc
+cronjobs/.croninfo/batteryinfo
