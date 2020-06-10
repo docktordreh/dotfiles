@@ -5,14 +5,14 @@ if [[ ! "$SSH_AUTH_SOCK" ]]; then
 	    { eval "$(<"$XDG_RUNTIME_DIR/ssh-agent.env")" } &>/dev/null
 fi
 
-export ZSH="/home/valentin/.oh-my-zsh"
-ZSH_THEME="typewritten"
+export ZSH="$HOME/.oh-my-zsh"
+
 plugins=(git
 	adb
 	ansible
 	tmux
 	)
-
+ZSH_THEME="typewritten"
 source $ZSH/oh-my-zsh.sh
 
 
@@ -91,4 +91,4 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 fi
-source ~/.local/bin/zsh-custom/fast-syntax-highlighting.plugin.zsh
+source "$ZSH/custom/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"

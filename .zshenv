@@ -1,5 +1,4 @@
 export EDITOR='emacs -nw'
-export TERM='st-256color'
 
 # ~/ Clean-up
 #export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
