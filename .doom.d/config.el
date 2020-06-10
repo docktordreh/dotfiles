@@ -22,7 +22,7 @@
 
 (add-hook 'after-change-major-mode-hook #'doom-modeline-conditional-buffer-encoding)
 ;; add transparency to emacs. only works with a composition manager
-(add-to-list 'default-frame-alist '(alpha 96 96))
+(add-to-list 'default-frame-alist '(alpha 90 90))
 (setq
  ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
  ;; are the three important ones:
@@ -84,6 +84,7 @@
  org-latex-pdf-process
    '("lualatex -interaction nonstopmode -output-directory %o %f"
      "biber %b"
+     "makeglossaries %f"
      "lualatex -interaction nonstopmode -output-directory %o %f"
      "lualatex -interaction nonstopmode -output-directory %o %f")
 
@@ -183,7 +184,8 @@ org-agenda-sorting-strategy
   org-ellipsis " ▼ "
   org-superstar-headline-bullets-list '("#")
   )
-
+(add-hook 'org-mode-hook '(lambda () (setq fill-column 80)))
+(add-hook 'org-mode-hook 'auto-fill-mode)
 (global-set-key (kbd "C-c o")
                 (lambda () (interactive) (find-file "~/Daten/cloud/tlaloc/org/refile.org")))
 (map! :map evil-window-map
