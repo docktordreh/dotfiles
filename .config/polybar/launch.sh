@@ -8,15 +8,13 @@ while pgrep -x polybar >/dev/null; do sleep 1; done
 
 # Launch bar
 # Bar is the name set in the polybar config, so if you change it, you haveto change it here too.
-polybar top &
-polybar bottom &
 if type "xrandr"; then
   for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-    MONITOR=$m polybar --reload main &
+    MONITOR=$m polybar --reload top &
     MONITOR=$m polybar --reload bottom &
   done
 else
-  polybar --reload main &
+  polybar --reload top &
   polybar --reload bottom &
 fi
 
