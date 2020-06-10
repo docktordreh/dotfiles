@@ -1,5 +1,5 @@
-export EDITOR='emacs -nw'
-
+export EDITOR='emacsclient -c'
+export VISUAL='emacsclient -c'
 # ~/ Clean-up
 #export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 #export LESSHISTFILE="-"
