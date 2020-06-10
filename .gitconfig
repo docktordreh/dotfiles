@@ -4,3 +4,5 @@
 	signingkey = 9C489382
 [commit]
 	gpgsign = true
+[gitlab]
+	user = valentin_lechner
