@@ -94,7 +94,7 @@ bindsym $mod+Shift+9 move container to workspace $ws9
 
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-bindsym $mod+e exec emacsclient -c
+bindsym $mod_alt+e exec emacsclient -c
 # resize window (you can also use the mouse for that)
 mode "resize" {
         bindsym j resize shrink width 10 px or 10 ppt
@@ -155,31 +155,16 @@ bindsym XF86AudioMicMute        exec --no-startup-id    amixer set Capture toggl
 
 
 # gaps
-for_window [class="^.*"] border pixel 5
+for_window [class="^.*"] border pixel 2
 smart_gaps on
 smart_borders on
 gaps inner 10
 
-bar {
-    tray_output none
-    workspace_buttons no
-    height 25
-    mode dock
-    position top
-    i3bar_command i3bar -t
-}
-bar {
-    height 25
-    mode dock
-    position bottom
-    i3bar_command i3bar -t
-}
-
 # Window colors         border  backgr. text    indicator
-client.focused          #4c7899 #285577 #ffffff #2e9ef4
-client.focused_inactive #333333 #5f676a #ffffff #484e50
-client.unfocused        #333333 #222222 #888888 #292d2e
-client.urgent           #2f343a #900000 #ffffff #900000
+client.focused          #f1f1f0 #285577 #ffffff #2e9ef4
+client.focused_inactive #282a36 #5f676a #ffffff #484e50
+client.unfocused        #282a36 #222222 #888888 #292d2e
+client.urgent           #ff5c57 #900000 #ffffff #900000
 
 
 # ws9 ist chat oberfläche
