@@ -1,0 +1,4 @@
+- link:
+    "~/.config/alacritty": .config/alacritty
+- shell:
+    - "echo 'pip install --user alacritty-colorscheme' >> ~/.to_install"
