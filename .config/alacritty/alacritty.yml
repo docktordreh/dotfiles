@@ -44,17 +44,17 @@ colors:
     white: '0x828282'
 font:
   normal:
-    family: Fira Mono
+    family: FiraCode Nerd Font Mono
     style: Regular
   size: 18.0
 
   bold:
-    family: Fira Mono
+    family: FiraCode Nerd Font Mono
     style: Bold
   size: 18.0
 
   italic:
-    family: Fira Mono
+    family: FiraCode Nerd Font Mono
     style: Italic
   size: 18.0
   
