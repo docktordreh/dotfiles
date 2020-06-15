@@ -1,19 +1,76 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-;; Place your private configuration here! Remember, you do not need to run 'doom
-;; sync' after modifying this file!
-
-;; Some functionality uses this to identify you, e.g. GPG configuration, email
-;; clients, file templates and snippets.
 (setq user-full-name "Valentin Lechner"
       user-mail-address "valentin_lechner@dismail.de")
 
+(add-to-list 'auto-mode-alist '("'" . org-mode) t)
+
+(setq locale-coding-system 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+
+(add-hook 'emacs-startup-hook 'delete-other-windows t)
+
+(setq  indent-tabs-mode nil)
+
+(setq message-kill-buffer-on-exit t)
+
+(setq calendar-week-start-day 1)
+
+(setq company-tooltip-align-annotations t)
+
+(setq explicit-shell-file-name "/bin/zsh")
+
+(setq  uniquify-buffer-name-style 'forward)
+
+(setq window-combination-resize t)
+
+(setq undo-limit 80000000)
+
+(setq evil-want-fine-undo t)
+
+(setq auto-save-default t)
+
+(beacon-mode)
+
+(setq inhibit-compacting-font-caches t)
+
+(setq truncate-string-ellipsis "…")
+
+(setq +ivy-buffer-preview t)
+
+(setq company-idle-delay nil)
+
+(setq require-final-newline nil)
+
+(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
+
+(global-whitespace-mode +1)
+
+(global-visual-line-mode +1)
+
+(display-time-mode +1)
+(display-battery-mode +1)
+
+(setq fancy-splash-image (concat doom-private-dir "splash.png"))
+
+(setq-default large-file-warning-threshold 100000000)
+
+(setq mouse-yank-at-point t)
+
+(setenv "PATH" (concat (getenv "PATH") ":/opt/texlive/2020/bin/x86_64-linux"))
+(setq exec-path (append exec-path '("/opt/texlive/2020/bin/x86_64-linux")))
+
+(setenv "PATH" (concat (getenv "PATH") ":/home/valentin/.cargo/bin"))
+(setq exec-path (append exec-path '("/home/valentin/.cargo/bin")))
+
 (setq doom-fallback-buffer-name "► Doom"
       +doom-dashboard-name "► Doom")
-;; changes modified buffers to be orange in modeline
-;; since red looks like an error occured
+
 (custom-set-faces!
-  '(doom-modeline-buffer-modified :foreground "orange"))
+  '(doom-modeline-buffer-modified :foreground "#57c7ff"))
+
 (defun doom-modeline-conditional-buffer-encoding ()
   "We expect the encoding to be LF UTF-8, so only show the modeline when this is not the case"
   (setq-local doom-modeline-buffer-encoding
@@ -21,98 +78,260 @@
                           (eq buffer-file-coding-system 'utf-8)))))
 
 (add-hook 'after-change-major-mode-hook #'doom-modeline-conditional-buffer-encoding)
-;; add transparency to emacs. only works with a composition manager
+
 (add-to-list 'default-frame-alist '(alpha 90 90))
-(setq
- ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
- ;; are the three important ones:
- ;;
- ;; + `doom-font'
- ;; + `doom-variable-pitch-font'
- ;; + `doom-big-font' -- used for `doom-big-font-mode'; use this for
- ;;   presentations or streaming.
- ;;
- ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
- ;; font string. You generally only need these two:
- doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 24)
- doom-big-font (font-spec :family "FiraCode Nerd Font Mono" :size 36)
- doom-variable-pitch-font (font-spec :family "FiraCode Nerd Font Mono" :size 24)
- doom-serif-font (font-spec :family "FiraCode Nerd Font Mono" :weight 'light)
- ;; There are two ways to load a theme. Both assume the theme is installed and
- ;; available. You can either set `doom-theme' or manually load a theme with the
- ;; `load-theme' function. This is the default:
- doom-theme 'doom-snazzy
- ;; This determines the style of line numbers in effect. If set to `nil', line
- ;; numbers are disabled. For relative line numbers, set this to `relative'.
- display-line-numbers-type 'relative
- )
 
 (setq
- projectile-project-search-path '("~/Projekte")
- ;; don't keep message buffers around
- message-kill-buffer-on-exit t
+ doom-font                          (font-spec :family "FiraCode Nerd Font Mono" :size 24)
+ doom-big-font                   (font-spec :family "FiraCode Nerd Font Mono" :size 36)
+ doom-variable-pitch-font (font-spec :family "ETBembo" :size 36)
+ doom-serif-font                (font-spec :family "Liberation Serif" :weight 'light))
 
- indent-tabs-mode nil
- ;; aligns company annotations to the right side
- company-tooltip-align-annotations t
- ;; localization
- calendar-week-start-day 1
- explicit-shell-file-name "/bin/zsh"
- tramp-chunksize 8192
- tramp-default-method "ssh"
- tramp-shell-prompt-pattern "^[^$>\n]*[#$%>] *\\(\[[0-9;]*[a-zA-Z] *\\)*"
- ; uniquify buffer names
- uniquify-buffer-name-style 'forward
- ; take new window space from all windows not just the active one
- window-combination-resize t
- ; limit undo to 80Mb (default: 400000)
- undo-limit 80000000
- ; by default while in insert changes are one big blob
- ; makes changes more granular and improves undo experience
- evil-want-fine-undo t
- ; non nil = save
- auto-save-default t
- ; keep glyphs in cache when there are a lot
- inhibit-compacting-font-caches t
- ;; Unicode ellispis are nicer than "...", and also save /precious/ space
- truncate-string-ellipsis "…"
- +ivy-buffer-preview t
- )
+(setq doom-theme 'doom-snazzy)
+
+(setq display-line-numbers-type 'relative)
+
+(custom-set-faces! '(doom-modeline-evil-insert-state
+                     :weight bold
+                     :foreground "#339CDB"))
+
+(map! :map evil-window-map "SPC" #'rotate-layout)
+
 (setq
- org-export-in-background t
- org-export-async-init-file (concat doom-private-dir "init-org-async.el")
- org-latex-pdf-process
-   '("lualatex -interaction nonstopmode -output-directory %o %f"
-     "biber %b"
-     "makeglossaries %f"
-     "lualatex -interaction nonstopmode -output-directory %o %f"
-     "lualatex -interaction nonstopmode -output-directory %o %f")
+ projectile-project-search-path '("~/Projekte"))
 
-org-agenda-sorting-strategy
+(setq
+ org-directory "~/Daten/cloud/tlaloc/org/"
+ org-archive-location (concat org-directory ".archive/$s::")
+)
+
+(after! org
+  (require 'ox-extra)
+  (ox-extras-activate '(ignore-headlines))
+  (ox-extras-activate '(latex-header-blocks ignore-headlines)))
+
+(setq
+  org-ellipsis " ▼ "
+  org-superstar-headline-bullets-list '("■" "◆" "▲" "▶")
+)
+
+ (custom-theme-set-faces
+  'user
+  '(variable-pitch ((t (:family "ETBembo" :height 180 :weight thin))))
+  '(fixed-pitch ((t ( :family "Fira Code Retina" :height 160)))))
+
+ (custom-theme-set-faces
+  'user
+  '(org-block ((t (:inherit fixed-pitch))))
+  '(org-code ((t (:inherit (shadow fixed-pitch)))))
+  '(org-document-info ((t (:foreground "dark orange"))))
+  '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
+  '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
+  '(org-link ((t (:foreground "royal blue" :underline t))))
+  '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+  '(org-property-value ((t (:inherit fixed-pitch))) t)
+  '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+  '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
+  '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
+  '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
+
+(setq org-hide-emphasis-markers t)
+
+(font-lock-add-keywords 'org-mode
+                        '(("^ *\\([-]\\) "
+                           (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+
+(setq org-hide-leading-stars t)
+
+(setq org-src-fontify-natively t)
+
+(setq org-pretty-entities t)
+(add-hook 'org-mode-hook 'variable-pitch-mode)
+
+(add-hook 'org-mode-hook 'variable-pitch-mode)
+
+(let* ((variable-tuple
+        (cond ((x-list-fonts "ETBembo")         '(:font "ETBembo"))
+              ((x-list-fonts "Source Sans Pro") '(:font "Source Sans Pro"))
+              ((x-list-fonts "Lucida Grande")   '(:font "Lucida Grande"))
+              ((x-list-fonts "Verdana")         '(:font "Verdana"))
+              ((x-family-fonts "Sans Serif")    '(:family "Sans Serif"))
+              (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
+       (base-font-color     (face-foreground 'default nil 'default))
+       (headline           `(:inherit default :weight bold :foreground ,base-font-color)))
+
+  (custom-theme-set-faces
+   'user
+   `(org-level-8 ((t (,@headline ,@variable-tuple))))
+   `(org-level-7 ((t (,@headline ,@variable-tuple))))
+   `(org-level-6 ((t (,@headline ,@variable-tuple))))
+   `(org-level-5 ((t (,@headline ,@variable-tuple))))
+   `(org-level-4 ((t (,@headline ,@variable-tuple :height 1.1))))
+   `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.25))))
+   `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.5))))
+   `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.75))))
+   `(org-document-title ((t (,@headline ,@variable-tuple :height 2.0 :underline nil))))))
+
+(setq
+ org-fontify-whole-heading-line t
+ org-fontify-done-headline t
+ org-fontify-quote-and-verse-blocks t)
+
+(add-hook 'org-mode-hook '(lambda () (setq fill-column 80)))
+(add-hook 'org-mode-hook 'auto-fill-mode)
+
+(setq org-enforce-todo-dependencies t)
+(setq org-insert-heading-respect-content nil)
+(setq org-reverse-note-order nil)
+(setq org-deadline-warning-days 7)
+(setq org-blank-before-new-entry (quote ((heading . t)
+                                         (plain-list-item . nil))))
+
+(require 'org-inlinetask)
+
+(defun scimax/org-return (&optional ignore)
+  "Add new list item, heading or table row with RET.
+A double return on an empty element deletes it.
+Use a prefix arg to get regular RET. "
+  (interactive "P")
+  (if ignore
+      (org-return)
+    (cond
+     ((eq 'line-break (car (org-element-context)))
+      (org-return-indent))
+     ;; Open links like usual
+     ((eq 'link (car (org-element-context)))
+      (org-open-at-point-global))
+     ;; It doesn't make sense to add headings in inline tasks. Thanks Anders
+     ;; Johansson!
+     ((org-inlinetask-in-task-p)
+      (org-return))
+     ;; add checkboxes
+     ((org-at-item-checkbox-p)
+      (org-insert-todo-heading nil))
+     ;; lists end with two blank lines, so we need to make sure we are also not
+     ;; at the beginning of a line to avoid a loop where a new entry gets
+     ;; created with only one blank line.
+     ((and (org-in-item-p) (not (bolp)))
+      (if (org-element-property :contents-begin (org-element-context))
+          (org-insert-heading)
+        (beginning-of-line)
+        (setf (buffer-substring
+               (line-beginning-position) (line-end-position)) "")
+        (org-return)))
+     ;;disabled;; ((org-at-heading-p)
+     ;;disabled;;  (if (not (string= "" (org-element-property :title (org-element-context))))
+     ;;disabled;;      (progn (org-end-of-meta-data)
+     ;;disabled;;             (org-insert-heading))
+     ;;disabled;;    (beginning-of-line)
+     ;;disabled;;    (setf (buffer-substring
+     ;;disabled;;           (line-beginning-position) (line-end-position)) "")))
+     ((org-at-table-p)
+      (if (-any?
+           (lambda (x) (not (string= "" x)))
+           (nth
+            (- (org-table-current-dline) 1)
+            (org-table-to-lisp)))
+          (org-return)
+        ;; empty row
+        (beginning-of-line)
+        (setf (buffer-substring
+               (line-beginning-position) (line-end-position)) "")
+        (org-return)))
+     (t
+      (org-return)))))
+
+
+(define-key org-mode-map (kbd "RET")
+  'scimax/org-return)
+
+(global-set-key (kbd "<f5>") 'bh/org-todo)
+(global-set-key (kbd "C-<f5>") 'bh/widen)
+
+(defun bh/widen ()
+  "This here widens a restricted subtree"
+  (interactive)
+  (if (equal major-mode 'org-agenda-mode)
+      (progn
+        (org-agenda-remove-restriction-lock)
+        (when org-agenda-sticky
+          (org-agenda-redo)))
+    (widen)))
+
+
+
+(defun bh/org-todo (arg)
+  "This filters a subtree by todos"
+  (interactive "p")
+  (if (equal arg 4)
+      (save-restriction
+        (bh/narrow-to-org-subtree)
+        (org-show-todo-tree nil))
+    (bh/narrow-to-org-subtree)
+    (org-show-todo-tree nil)))
+
+(defun bh/narrow-to-org-subtree ()
+  (widen)
+  (org-narrow-to-subtree)
+  (save-restriction
+    (org-agenda-set-restriction-lock)))
+
+(setq deft-extensions '("org"))
+(setq deft-directory "~/Daten/cloud/tlaloc/org")
+
+(setq
+ org-capture-templates
+ '(("i" "Send to inbox" entry (file+headline "~/Daten/cloud/tlaloc/org/inbox.org" "Inbox")
+    "* TODO %?\n")))
+
+(global-set-key (kbd "C-c o")
+  (lambda () (interactive) (find-file (concat org-directory "refile.org"))))
+
+(setq org-agenda-files (list org-directory))
+
+(defun org-summary-todo (n-done n-not-done)
+  "Switch entry to DONE when all subentries are done, to TODO otherwise."
+  (let (org-log-done org-log-states)   ; turn off logging
+    (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
+
+(add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
+(setq org-hierarchical-todo-statistics t)
+
+(add-hook 'org-mode-hook
+          (lambda ()
+            (push '("TODO"  . ?▲) prettify-symbols-alist)
+            (push '("DONE"  . ?✓) prettify-symbols-alist)
+            (push '("CANCELLED"  . ?✘) prettify-symbols-alist)
+            (push '("WAITING"  . ?…) prettify-symbols-alist)
+            (push '("SOMEDAY"  . ??) prettify-symbols-alist)))
+
+(setq org-fontify-done-headline t)
+(custom-set-faces
+ '(org-done ((t (:foreground "PaleGreen"
+                 :weight normal
+                 :strike-through t))))
+ '(org-headline-done
+   ((((class color) (min-colors 16) (background dark))
+     (:foreground "LightSalmon" :strike-through t)))))
+
+(global-set-key (kbd "C-c a") 'org-agenda)
+(global-set-key (kbd "<f12>") 'org-agenda-list)
+
+(setq org-agenda-sorting-strategy
   (quote ((agenda time-up priority-down category-up)
           (todo todo-state-up priority-up)
-          (tags priority-down)))
+          (tags priority-down))))
 
-  org-ref-default-bibliography "~/Daten/cloud/tlaloc/org/Papers/references.bib"
-
-  org-ref-pdf-directory "~/Daten/cloud/tlaloc/org/Papers/bibtex-pdfs"
-
-  org-ref-bibliography-notes "~/Daten/cloud/tlaloc/org/Papers/notes.org"
-  org-ref-open-pdf-function
-  (lambda (fpath)
-    (start-process "zathura" "*ivy-bibtex-zathura*" "/usr/bin/zathura" fpath))
-
-  org-latex-prefer-user-labels t
-  org-ref-default-citation-link "footcite"
-  org-ref-note-title-format "* TODO %y - %t\n :PROPERTIES:\n  :Custom_ID: %k\n  :NOTER_DOCUMENT: %F\n :ROAM_KEY: cite:%k\n  :AUTHOR: %9a\n  :JOURNAL: %j\n  :YEAR: %y\n  :VOLUME: %v\n  :PAGES: %p\n  :DOI: %D\n  :URL: %U\n :END:\n\n"
-  org-refile-targets '((org-agenda-files . (:maxlevel . 6)))
   ;; ! => insert timestamp
   ;; @ => insert note
   ;; / => enter state
   ;; (x) => shortcut (after C-c C-t)
   ;; after the |: close todo
-  org-todo-keywords '((sequence  "DELEGATED(l@/!)" "SOMEDAY(f)" "IDEA(i@/!)" "TODO(t@/!)" "STARTED(s@/!)" "NEXT(n@/!)" "WAITING(w@/!)" "|" "DONE(d@/!)" "CANCELED(c@/!)"))
-  org-todo-keyword-faces
+(setq  org-todo-keywords '((sequence  "DELEGATED(l@/!)" "SOMEDAY(f)" "IDEA(i@/!)"
+  "TODO(t@/!)" "STARTED(s@/!)" "NEXT(n@/!)" "WAITING(w@/!)" "|" "DONE(d@/!)"
+  "CANCELED(c@/!)")))
+
+(setq  org-todo-keyword-faces
   '(("IDEA" . (:foreground "GoldenRod" :weight bold))
     ("NEXT" . (:foreground "IndianRed1" :weight bold))
     ("TODO" . (:foreground "Yellow1" :weight bold))
@@ -122,6 +341,9 @@ org-agenda-sorting-strategy
     ("DELEGATED" . (:foreground "ForestGreen" :weight bold))
     ("SOMEDAY" . (:foreground "YellowGreen" :weight bold))
     )
+)
+
+(setq
   org-tag-persistent-alist
   '((:startgroup . nil)
     ("HOME" . ?h)
@@ -145,6 +367,9 @@ org-agenda-sorting-strategy
     ("BONUS" . ?b)
     ("noexport" . ?x)
     )
+)
+
+(setq
   org-tag-faces
   '(
     ("HOME" . (:foreground "AquaMarine4" :weight bold))
@@ -163,122 +388,80 @@ org-agenda-sorting-strategy
     ("BONUS" . (:foreground "GoldenRod" :weight bold))
     ("noexport" . (:foreground "YellowGreen" :weight bold))
     )
+  )
+
+(setq org-todo-repeat-to-state "NEXT")
+
+(setq
   org-fast-tag-selection-single-key t
   org-use-fast-todo-selection t
-  org-latex-default-packages-alist '(
-                                     (#1="" "graphicx" t)
-                                     (#1# "longtable" t)
-                                     (#1# "wrapfig" nil)
-                                     (#1# "rotating" nil)
-                                     ("normalem" "ulem" t)
-                                     (#1# "amsmath" t)
-                                     (#1# "textcomp" t)
-                                     (#1# "amssymb" t)
-                                     (#1# "capt-of" nil)
-                                     (#1# "hyperref" nil)
-                                     (#1# "csquotes" nil)
-                                     )
-  org-export-with-smart-quotes t
-  org-directory "~/Daten/cloud/tlaloc/org/"
-  org-archive-location (concat org-directory ".archive/%s::")
-  org-ellipsis " ▼ "
-  org-superstar-headline-bullets-list '("#")
-  )
-(add-hook 'org-mode-hook '(lambda () (setq fill-column 80)))
-(add-hook 'org-mode-hook 'auto-fill-mode)
-(global-set-key (kbd "C-c o")
-                (lambda () (interactive) (find-file "~/Daten/cloud/tlaloc/org/refile.org")))
-(map! :map evil-window-map
-      "SPC" #'rotate-layout)
-;; open agenda at C-c a
-(global-set-key (kbd "C-c a") 'org-agenda)
-;; org-agenda list
-(global-set-key (kbd "<f12>") 'org-agenda-list)
-;; org-capture
-(global-set-key (kbd "C-c r") 'org-capture)
-;; show todo items for this subtree
-(global-set-key (kbd "<f5>") 'bh/org-todo)
-;; widen subtree
-(global-set-key (kbd "C-<f5>") 'bh/widen)
+)
 
-(defun bh/widen ()
-  (interactive)
-  (if (equal major-mode 'org-agenda-mode)
-      (progn
-        (org-agenda-remove-restriction-lock)
-        (when org-agenda-sticky
-          (org-agenda-redo)))
-    (widen)))
+(setq
+ org-ref-default-bibliography "~/Daten/cloud/tlaloc/org/Papers/references.bib"
 
+ org-ref-pdf-directory "~/Daten/cloud/tlaloc/org/Papers/bibtex-pdfs"
 
+ org-ref-bibliography-notes "~/Daten/cloud/tlaloc/org/Papers/notes.org"
+ org-ref-open-pdf-function
+ (lambda (fpath)
+   (start-process "zathura" "*ivy-bibtex-zathura*" "/usr/bin/zathura" fpath))
+)
 
-(defun bh/org-todo (arg)
-  (interactive "p")
-  (if (equal arg 4)
-      (save-restriction
-        (bh/narrow-to-org-subtree)
-        (org-show-todo-tree nil))
-    (bh/narrow-to-org-subtree)
-    (org-show-todo-tree nil)))
+(setq org-ref-default-citation-link "footcite")
 
-(defun bh/narrow-to-org-subtree ()
-  (widen)
-  (org-narrow-to-subtree)
-  (save-restriction
-    (org-agenda-set-restriction-lock)))
+(setq org-latex-prefer-user-labels t)
 
-(defun setup-tide-mode ()
-  (interactive)
-  (tide-setup)
-  (flycheck-mode +1)
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (eldoc-mode +1)
-  (tide-hl-identifier-mode +1)
-  ;; company is an optional dependency. You have to
-  ;; install it separately via package-install
-  ;; `M-x package-install [ret] company`
-  (company-mode +1))
+(setq org-export-with-smart-quotes t)
 
-(require 'web-mode)
-(add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
-(add-hook 'web-mode-hook
-          (lambda ()
-            (when (string-equal "tsx" (file-name-extension buffer-file-name))
-              (setup-tide-mode))))
+(setq
+ org-latex-pdf-process
+ '("lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+   "biber %b"
+   "makeglossaries %f"
+   "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+   "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 
-
-;; note: not a clean solution. just telling emacs to load the colors from xterm
-(add-to-list 'term-file-aliases
-             '("st-256color" . "xterm-256color")
-             '("alacritty" . "xterm-256color"))
-(add-to-list 'backup-directory-alist (cons tramp-file-name-regexp nil))
-
-
-
-(org-babel-do-load-languages 'org-babel-load-languages
-                             '(
-                               (latex . t)
-                               (org . t)
-                               (shell . t)
-                               (ditaa . t)
-                               (plantuml . t)
-                               (python . t)
-                               )
-                             )
-;; opens up switch buffer after splitting
-(defadvice! prompt-for-buffer (&rest _)
-  :after '(evil-window-split evil-window-vsplit)
-  (+ivy/switch-buffer))
-;; KEY MAP
-;; Avy Jump
-(define-key evil-normal-state-map (kbd "M-s") #'avy-goto-char-timer)
-(define-key evil-normal-state-map (kbd "M-w") #'avy-goto-word-1)
-(define-key evil-motion-state-map (kbd "M-w") #'avy-goto-word-1)
-
-
-(define-key global-map (kbd "C-+") 'text-scale-increase)
-(define-key global-map (kbd "C--") 'text-scale-decrease)
-
+'(org-preview-latex-process-alist
+  (quote
+   ((dvipng :programs
+            ("lualatex" "dvipng")
+            :description "dvi > png"
+            :message "you need to install the programs: latex and dvipng."
+            :image-input-type "dvi"
+            :image-output-type "png"
+            :image-size-adjust
+            (1.0 . 1.0)
+            :latex-compiler
+            ("lualatex -output-format dvi -interaction nonstopmode -output-directory %o %f")
+            :image-converter
+            ("dvipng -fg %F -bg %B -D %D -T tight -o %O %f"))
+    (dvisvgm :programs
+             ("latex" "dvisvgm")
+             :description "dvi > svg"
+             :message "you need to install the programs: latex and dvisvgm."
+             :use-xcolor t
+             :image-input-type "xdv"
+             :image-output-type "svg"
+             :image-size-adjust
+             (1.7 . 1.5)
+             :latex-compiler
+             ("xelatex -no-pdf -interaction nonstopmode -output-directory %o %f")
+             :image-converter
+             ("dvisvgm %f -n -b min -c %S -o %O"))
+    (imagemagick :programs
+                 ("latex" "convert")
+                 :description "pdf > png"
+                 :message "you need to install the programs: latex and imagemagick."
+                 :use-xcolor t
+                 :image-input-type "pdf"
+                 :image-output-type "png"
+                 :image-size-adjust
+                 (1.0 . 1.0)
+                 :latex-compiler
+                 ("xelatex -no-pdf -interaction nonstopmode -output-directory %o %f")
+                 :image-converter
+                 ("convert -density %D -trim -antialias %f -quality 100 %O")))))
 
 (after! ox-latex
   (add-to-list 'org-latex-classes
@@ -290,89 +473,112 @@ org-agenda-sorting-strategy
                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 
+(add-to-list 'org-latex-classes
+             '("mimosis"
+               "\\documentclass{mimosis}
+ [NO-DEFAULT-PACKAGES]
+ [PACKAGES]
+ [EXTRA]
+\\newcommand{\\mboxparagraph}[1]{\\paragraph{#1}\\mbox{}\\\\}
+\\newcommand{\\mboxsubparagraph}[1]{\\subparagraph{#1}\\mbox{}\\\\}"
+               ("\\chapter{%s}" . "\\chapter*{%s}")
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\mboxparagraph{%s}" . "\\mboxparagraph*{%s}")
+               ("\\mboxsubparagraph{%s}" . "\\mboxsubparagraph*{%s}")))
 
-(add-to-list 'auto-mode-alist '("\\.js$" . typescript-mode))
-(add-to-list 'auto-mode-alist '("\\.tsx$" . typescript-mode))
-(after! typescript-mode
-  (add-hook 'typescript-mode-hook #'tide-mode)
-  (add-hook 'typescript-mode-hook #'prettier-js-mode)
-  (add-hook 'typescript-mode-hook #'flycheck-mode)
-  (setup-tide-mode)
-  (setq typescript-indent-level 4))
-(after! 'before-save-hook 'tide-format-before-save)
+;; Elsarticle is Elsevier class for publications.
+(add-to-list 'org-latex-classes
+             '("elsarticle"
+               "\\documentclass{elsarticle}
+ [NO-DEFAULT-PACKAGES]
+ [PACKAGES]
+ [EXTRA]"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+(setq org-latex-default-packages-alist
+      '(
+        ("" "float" nil)
+        ("" "booktabs" nil)
+        ("" "lscape" nil)
+        ("" "hyphenat" nil)
+        ;; drawing
+        ("" "microtype" nil)
+        ("" "tikz" nil)
+        ;; this is for having good fonts
+        ("" "lmodern" nil)
+        ;; This makes standard margins
+        ("left=3.0cm, right=3.0cm,top=2.5cm,bottom=3cm" "geometry" nil)
+        ("" "graphicx" t)
+        ("" "longtable" nil)
+        ("" "float" nil)
+        ("" "wrapfig" nil)      ;makes it possible to wrap text around figures
+        ("" "rotating" nil)
+        ("normalem" "ulem" t)
+        ;; These provide math symbols
+        ("" "amsmath" t)
+        ("" "textcomp" t)
+        ("" "marvosym" t)
+        ("" "wasysym" t)
+        ("" "amssymb" t)
+        ("" "amsmath" t)
+        ("theorems, skins" "tcolorbox" t)
+        ;; used for marking up chemical formulars
+        ("version=3" "mhchem" t)
+        ("numbers,super,sort&compress" "natbib" nil)
+        ("" "natmove" nil)
+        ("" "url" nil)
+        ;; this is used for syntax highlighting of code
+        ("cache=false" "minted" nil)
+        ("" "listings" nil)
+        ("linktocpage,pdfstartview=FitH,colorlinks,
+linkcolor=blue,anchorcolor=blue,
+citecolor=blue,filecolor=blue,menucolor=blue,urlcolor=blue"
+         "hyperref" nil)
+        ("onehalfspacing" "setspace" nil)
+        ;; enables you to embed files in pdfs
+        ("" "attachfile" nil)
+    ))
 
 (setq
-      ;; IMO, modern editors have trained a bad habit into us all: a burning
-      ;; need for completion all the time -- as we type, as we breathe, as we
-      ;; pray to the ancient ones -- but how often do you *really* need that
-      ;; information? I say rarely. So opt for manual completion:
-      ;; can be invoked using C-SPC
- company-idle-delay nil
-      )
+ org-export-in-background t
+ org-export-async-init-file (concat doom-private-dir "init-org-async.el"))
 
-(setq magit-repository-directories '(("~/Projekte" . 2))
-      magit-save-repository-buffers nil
-      ;; Don't restore the wconf after quitting magit, it's jarring
-      magit-inhibit-save-previous-winconf t)
-
-(setq require-final-newline nil)
 (after! org
   (add-to-list 'org-modules 'org-habit t))
 
-;; I don't need the menu. I know all the shortcuts.
-(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
-(after! web-mode
-  (add-hook 'web-mode-hook #'flycheck-mode))
+(setq magit-repository-directories '(("~/Projekte" . 2)))
 
-'(org-preview-latex-process-alist
-       (quote
-       ((dvipng :programs
-         ("lualatex" "dvipng")
-         :description "dvi > png" :message "you need to install the programs: latex and dvipng." :image-input-type "dvi" :image-output-type "png" :image-size-adjust
-         (1.0 . 1.0)
-         :latex-compiler
-         ("lualatex -output-format dvi -interaction nonstopmode -output-directory %o %f")
-         :image-converter
-         ("dvipng -fg %F -bg %B -D %D -T tight -o %O %f"))
- (dvisvgm :programs
-          ("latex" "dvisvgm")
-          :description "dvi > svg" :message "you need to install the programs: latex and dvisvgm." :use-xcolor t :image-input-type "xdv" :image-output-type "svg" :image-size-adjust
-          (1.7 . 1.5)
-          :latex-compiler
-          ("xelatex -no-pdf -interaction nonstopmode -output-directory %o %f")
-          :image-converter
-          ("dvisvgm %f -n -b min -c %S -o %O"))
- (imagemagick :programs
-              ("latex" "convert")
-              :description "pdf > png" :message "you need to install the programs: latex and imagemagick." :use-xcolor t :image-input-type "pdf" :image-output-type "png" :image-size-adjust
-              (1.0 . 1.0)
-              :latex-compiler
-              ("xelatex -no-pdf -interaction nonstopmode -output-directory %o %f")
-              :image-converter
-              ("convert -density %D -trim -antialias %f -quality 100 %O")))))
+(setq
+ magit-save-repository-buffers nil
+ magit-inhibit-save-previous-winfconf t)
 
-(after! centaur-tabs
-  (setq centaur-tabs-set-bar 'under)
-  ;; Note: If you're not using Spacmeacs, in order for the underline to display
-  ;; correctly you must add the following line:
-  (setq x-underline-at-descent-line t))
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (eldoc-mode)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  (company-mode +1))
+
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+(add-hook 'web-mode-hook
+          (lambda ()
+            (when (string-equal "tsx" (file-name-extension buffer-file-name))
+              (setup-tide-mode))))
+(flycheck-add-mode 'javascript-eslint 'web-mode)
+
+(add-hook 'web-mode-hook 'company-mode)
+(add-hook 'web-mode-hook 'prettier-js-mode)
 
 (after! yasnippet
   (push (expand-file-name "snippets/" doom-private-dir) yas-snippet-dirs))
 (yas-global-mode 1)
-
-(setenv "PATH" (concat (getenv "PATH") ":/opt/texlive/2020/bin/x86_64-linux"))
-(setq exec-path (append exec-path '("/opt/texlive/2020/bin/x86_64-linux")))
-
-(setenv "PATH" (concat (getenv "PATH") ":/home/valentin/.cargo/bin"))
-(setq exec-path (append exec-path '("/home/valentin/.cargo/bin")))
-
-(custom-set-faces! '(doom-modeline-evil-insert-state
-                     :weight bold
-                     :foreground "#339CDB"))
-(display-time-mode 1)
-(display-battery-mode 1)
-(global-whitespace-mode +1)
-(global-visual-line-mode t)
-(find-file "~/Daten/cloud/tlaloc/org/todo.org")
-(setq fancy-splash-image (concat doom-private-dir "splash.png"))

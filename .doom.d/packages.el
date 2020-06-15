@@ -8,6 +8,9 @@
 (package! evil-smartparens)
 (package! jinja2-mode)
 (package! prettier-js)
+(package! org-plus-contrib)
+(package! beacon)
+(package! typo)
 ;; Doom's packages are pinned to a specific commit and updated from release to
 ;; release. The `unpin!' macro allows you to unpin single packages...
 ;(unpin! pinned-package)

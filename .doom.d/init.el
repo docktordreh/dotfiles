@@ -108,7 +108,7 @@
        (magit +forge)            ; a git porcelain for Emacs
        make              ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
-       pdf               ; pdf enhancements
+       ;;pdf               ; pdf enhancements
        ;;prodigy           ; FIXME managing external services & code builders
        rgb               ; creating color strings
        ;;taskrunner        ; taskrunner for all your projects
@@ -150,9 +150,7 @@
        ;;kotlin            ; a better, slicker Java(Script)
        (latex ; writing papers in Emacs has never been so fun
         +fold ; uses tex-fold to fold latex macros to unicode and make folding hook based
-        +cdlatex ; enable cdlatex for fast math insertionm
-        +latexmk
-        +lsp)     ; start lsp in tex-mode-hook
+        )     ; start lsp in tex-mode-hook
        ;;lean
        ;;factor
        ;;ledger            ; an accounting system in Emacs
@@ -205,5 +203,5 @@
        ;;twitter           ; twitter client https://twitter.com/vnought
 
        :config
-       ;;literate
+       literate
        (default +bindings +smartparens))
