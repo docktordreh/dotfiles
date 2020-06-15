@@ -1,0 +1,866 @@
+#+TITLE: Doom Emacs Configuration
+#+AUTHOR: valentin_lechner
+
+* Introduction
+#+BEGIN_QUOTE
+Let us change our traditional attitude to the construction of programs:
+Instead of imagining that our main task is to instruct a computer what to do,
+let us concentrate rather on explaining to human beings what we want a
+computer to do. --- Donald Knuth
+#+END_QUOTE
+
+* Configuration
+#+BEGIN_SRC emacs-lisp :comments no
+;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+#+END_SRC
+** Personal Information
+#+BEGIN_SRC emacs-lisp
+(setq user-full-name "Valentin Lechner"
+      user-mail-address "valentin_lechner@dismail.de")
+#+END_SRC
+These informations get used to identify you, e.g. ~GPG~ configuration,
+email clients, file templates and snippets
+** My defaults
+Files without an alist entry get opened in org-mode
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'auto-mode-alist '("'" . org-mode) t)
+#+END_SRC
+full utf-8
+#+BEGIN_SRC emacs-lisp
+(setq locale-coding-system 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+#+END_SRC
+Only open one window on startup
+#+BEGIN_SRC emacs-lisp
+(add-hook 'emacs-startup-hook 'delete-other-windows t)
+#+END_SRC
+Please, don't indent using tabs.
+Just specify tabs to be 4 whitespaces
+#+BEGIN_SRC emacs-lisp
+(setq  indent-tabs-mode nil)
+#+END_SRC
+Delete message buffers on exiting
+#+BEGIN_SRC emacs-lisp
+(setq message-kill-buffer-on-exit t)
+#+END_SRC
+Since I live in Germany, my week starts on monday.
+#+BEGIN_SRC emacs-lisp
+(setq calendar-week-start-day 1)
+#+END_SRC
+Move company tooltips to the right side
+#+BEGIN_SRC emacs-lisp
+(setq company-tooltip-align-annotations t)
+#+END_SRC
+I like zsh
+#+BEGIN_SRC emacs-lisp
+(setq explicit-shell-file-name "/bin/zsh")
+#+END_SRC
+Uniquify buffer names
+#+BEGIN_SRC emacs-lisp
+(setq  uniquify-buffer-name-style 'forward)
+#+END_SRC
+Take new window space from all windows, not just the active one
+#+BEGIN_SRC emacs-lisp
+(setq window-combination-resize t)
+#+END_SRC
+Increasing undo limit, I have enough space
+This takes up max 80mb
+#+BEGIN_SRC emacs-lisp
+(setq undo-limit 80000000)
+#+END_SRC
+Making changes more granular for undo
+#+BEGIN_SRC emacs-lisp
+(setq evil-want-fine-undo t)
+#+END_SRC
+Autosaving
+#+BEGIN_SRC emacs-lisp
+(setq auto-save-default t)
+#+END_SRC
+show me the cursor when scrolling
+#+BEGIN_SRC emacs-lisp
+(beacon-mode)
+#+END_SRC
+Keep glyphs in cache when there are a lot
+#+BEGIN_SRC emacs-lisp
+(setq inhibit-compacting-font-caches t)
+#+END_SRC
+Use unicode ellipsis instead of ... - it saves a lot of space
+#+BEGIN_SRC emacs-lisp
+(setq truncate-string-ellipsis "…")
+#+END_SRC
+Set ivy buffer preview to on, since its nice
+#+BEGIN_SRC emacs-lisp
+(setq +ivy-buffer-preview t)
+#+END_SRC
+Ensure, company only helps when needed.
+The author of doom, hlissner says to this on his personal config:
+#+BEGIN_QUOTE
+IMO, modern editors have trained a bad habit into us all: a burning
+need for completion all the time -- as we type, as we breathe, as we
+pray to the ancient ones -- but how often do you *really* need that
+information? I say rarely. So opt for manual completion:
+can be invoked using C-SPC
+   --- hlissner
+#+END_QUOTE
+After working on a few large projects where you would SMASH the ESC-key to
+cancel loading suggestions, I appreciate that opinion.
+#+BEGIN_SRC emacs-lisp
+(setq company-idle-delay nil)
+#+END_SRC
+Since the final newline did mess with my ~~/.authinfo.gpg~ for forge quite a lot
+(it doesn't allow a final newline) I decided why not deactivate it.
+#+BEGIN_SRC emacs-lisp
+(setq require-final-newline nil)
+#+END_SRC
+I don't need the menu dashboard
+#+BEGIN_SRC emacs-lisp
+(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
+#+END_SRC
+I like displaying whitespaces, returns and so on
+A positive value activates it, negative turns it off
+#+BEGIN_SRC emacs-lisp
+(global-whitespace-mode +1)
+#+END_SRC
+I like the visual line mode
+#+BEGIN_SRC emacs-lisp
+(global-visual-line-mode +1)
+#+END_SRC
+Show battery and time in modeline
+#+BEGIN_SRC emacs-lisp
+(display-time-mode +1)
+(display-battery-mode +1)
+#+END_SRC
+Add a splash image
+#+BEGIN_SRC emacs-lisp
+(setq fancy-splash-image (concat doom-private-dir "splash.png"))
+#+END_SRC
+warn me when opening a file larger than 100mb
+#+BEGIN_SRC emacs-lisp
+(setq-default large-file-warning-threshold 100000000)
+#+END_SRC
+set mouse to yank where i click: http://sachachua.com/blog/2017/04/emacs-pasting-with-the-mouse-without-moving-the-point-mouse-yank-at-point/
+#+BEGIN_SRC emacs-lisp
+(setq mouse-yank-at-point t)
+#+END_SRC
+** PATH
+Setup path for cargo and texlive
+#+BEGIN_SRC emacs-lisp
+(setenv "PATH" (concat (getenv "PATH") ":/opt/texlive/2020/bin/x86_64-linux"))
+(setq exec-path (append exec-path '("/opt/texlive/2020/bin/x86_64-linux")))
+
+(setenv "PATH" (concat (getenv "PATH") ":/home/valentin/.cargo/bin"))
+(setq exec-path (append exec-path '("/home/valentin/.cargo/bin")))
+#+END_SRC
+** UI Improvements
+Changes the name of the dashboard to something recognisable
+#+BEGIN_SRC emacs-lisp
+(setq doom-fallback-buffer-name "► Doom"
+      +doom-dashboard-name "► Doom")
+#+END_SRC
+this right here changes the foreground of not saved programs to something
+not-red - no error happened, you can keep calm, its yellow and not red.
+#+BEGIN_SRC emacs-lisp
+(custom-set-faces!
+  '(doom-modeline-buffer-modified :foreground "#57c7ff"))
+#+END_SRC
+
+We expect the encoding to be LF UTF-8, so only show the modeline when this is not the case
+#+BEGIN_SRC emacs-lisp
+(defun doom-modeline-conditional-buffer-encoding ()
+  "We expect the encoding to be LF UTF-8, so only show the modeline when this is not the case"
+  (setq-local doom-modeline-buffer-encoding
+              (unless (or (eq buffer-file-coding-system 'utf-8-unix)
+                          (eq buffer-file-coding-system 'utf-8)))))
+
+(add-hook 'after-change-major-mode-hook #'doom-modeline-conditional-buffer-encoding)
+#+END_SRC
+
+add transparency to emacs. only works with a composition manager
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'default-frame-alist '(alpha 90 90))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(setq
+ doom-font                          (font-spec :family "FiraCode Nerd Font Mono" :size 24)
+ doom-big-font                   (font-spec :family "FiraCode Nerd Font Mono" :size 36)
+ doom-variable-pitch-font (font-spec :family "ETBembo" :size 36)
+ doom-serif-font                (font-spec :family "Liberation Serif" :weight 'light))
+#+END_SRC
+Theme settings
+#+BEGIN_SRC emacs-lisp
+(setq doom-theme 'doom-snazzy)
+#+END_SRC
+Have I stated yet that i like the relative numbering of lines?
+it allows you to easily see how many lines up you have to go, then press that
+number and the up key
+#+BEGIN_SRC emacs-lisp
+(setq display-line-numbers-type 'relative)
+#+END_SRC
+Change color of insert state to blue
+#+BEGIN_SRC emacs-lisp
+(custom-set-faces! '(doom-modeline-evil-insert-state
+                     :weight bold
+                     :foreground "#339CDB"))
+#+END_SRC
+** General keymaps
+#+BEGIN_SRC emacs-lisp
+(map! :map evil-window-map "SPC" #'rotate-layout)
+#+END_SRC
+** Projects
+My Projects are under ~/Projekte. This tells projectile to index them:
+#+BEGIN_SRC emacs-lisp
+(setq
+ projectile-project-search-path '("~/Projekte"))
+#+END_SRC
+** Org Mode
+my default directory for org files
+#+BEGIN_SRC emacs-lisp
+(setq
+ org-directory "~/Daten/cloud/tlaloc/org/"
+ org-archive-location (concat org-directory ".archive/$s::")
+)
+#+END_SRC
+This right here tells org to ignore ':ignore' tags, but to include the content
+of them which i use for writing my thesis
+#+BEGIN_SRC emacs-lisp
+(after! org
+  (require 'ox-extra)
+  (ox-extras-activate '(ignore-headlines))
+  (ox-extras-activate '(latex-header-blocks ignore-headlines)))
+#+END_SRC
+*** Look and feel
+I like those as characters
+#+BEGIN_SRC emacs-lisp
+(setq
+  org-ellipsis " ▼ "
+  org-superstar-headline-bullets-list '("■" "◆" "▲" "▶")
+)
+#+END_SRC
+#+BEGIN_SRC emacs-lisp
+ (custom-theme-set-faces
+  'user
+  '(variable-pitch ((t (:family "ETBembo" :height 180 :weight thin))))
+  '(fixed-pitch ((t ( :family "Fira Code Retina" :height 160)))))
+
+ (custom-theme-set-faces
+  'user
+  '(org-block ((t (:inherit fixed-pitch))))
+  '(org-code ((t (:inherit (shadow fixed-pitch)))))
+  '(org-document-info ((t (:foreground "dark orange"))))
+  '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
+  '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
+  '(org-link ((t (:foreground "royal blue" :underline t))))
+  '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+  '(org-property-value ((t (:inherit fixed-pitch))) t)
+  '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+  '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
+  '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
+  '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
+
+#+END_SRC
+Hide emphasis markers
+#+BEGIN_SRC emacs-lisp
+(setq org-hide-emphasis-markers t)
+#+END_SRC
+Prettify my lists
+Views a • instead of a -
+#+BEGIN_SRC emacs-lisp
+(font-lock-add-keywords 'org-mode
+                        '(("^ *\\([-]\\) "
+                           (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+#+END_SRC
+Also, I only ever need the last chapters asterisk
+#+BEGIN_SRC emacs-lisp
+(setq org-hide-leading-stars t)
+#+END_SRC
+Syntax highlighting in code
+#+BEGIN_SRC emacs-lisp
+(setq org-src-fontify-natively t)
+#+END_SRC
+Show pretty stuff in org mode
+#+BEGIN_SRC emacs-lisp
+(setq org-pretty-entities t)
+(add-hook 'org-mode-hook 'variable-pitch-mode)
+#+END_SRC
+Enable variable pitch mode for changing font
+#+BEGIN_SRC emacs-lisp
+(add-hook 'org-mode-hook 'variable-pitch-mode)
+#+END_SRC
+set up proportional font for org mode
+variable tuple gets filled with the first font found and is used
+in the block beneath as scaling font
+#+BEGIN_SRC emacs-lisp
+(let* ((variable-tuple
+        (cond ((x-list-fonts "ETBembo")         '(:font "ETBembo"))
+              ((x-list-fonts "Source Sans Pro") '(:font "Source Sans Pro"))
+              ((x-list-fonts "Lucida Grande")   '(:font "Lucida Grande"))
+              ((x-list-fonts "Verdana")         '(:font "Verdana"))
+              ((x-family-fonts "Sans Serif")    '(:family "Sans Serif"))
+              (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
+       (base-font-color     (face-foreground 'default nil 'default))
+       (headline           `(:inherit default :weight bold :foreground ,base-font-color)))
+
+  (custom-theme-set-faces
+   'user
+   `(org-level-8 ((t (,@headline ,@variable-tuple))))
+   `(org-level-7 ((t (,@headline ,@variable-tuple))))
+   `(org-level-6 ((t (,@headline ,@variable-tuple))))
+   `(org-level-5 ((t (,@headline ,@variable-tuple))))
+   `(org-level-4 ((t (,@headline ,@variable-tuple :height 1.1))))
+   `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.25))))
+   `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.5))))
+   `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.75))))
+   `(org-document-title ((t (,@headline ,@variable-tuple :height 2.0 :underline nil))))))
+#+END_SRC
+#+BEGIN_SRC  emacs-lisp
+(setq
+ org-fontify-whole-heading-line t
+ org-fontify-done-headline t
+ org-fontify-quote-and-verse-blocks t)
+#+END_SRC
+
+I don't like long columns. They are hard to parse - and even harder to navigate
+using vim. I tend to do stuff like linebreaks after every
+sentence and don't export linebreaks (org), but this is more solid as
+it automatically adds a smart linebreak after 80 characters (smart meaning,
+don't break my words or my code)
+#+BEGIN_SRC emacs-lisp
+(add-hook 'org-mode-hook '(lambda () (setq fill-column 80)))
+(add-hook 'org-mode-hook 'auto-fill-mode)
+#+END_SRC
+#+BEGIN_SRC emacs-lisp
+(setq org-enforce-todo-dependencies t)
+(setq org-insert-heading-respect-content nil)
+(setq org-reverse-note-order nil)
+(setq org-deadline-warning-days 7)
+(setq org-blank-before-new-entry (quote ((heading . t)
+                                         (plain-list-item . nil))))
+#+END_SRC
+Smart return does add new list item, … if appropriate
+note: if you're on a link, it opens the link
+- http://irreal.org/blog/?p=6131
+- http://kitchingroup.cheme.cmu.edu/blog/2017/04/09/A-better-return-in-org-mode/
+
+
+#+BEGIN_SRC emacs-lisp
+(require 'org-inlinetask)
+
+(defun scimax/org-return (&optional ignore)
+  "Add new list item, heading or table row with RET.
+A double return on an empty element deletes it.
+Use a prefix arg to get regular RET. "
+  (interactive "P")
+  (if ignore
+      (org-return)
+    (cond
+     ((eq 'line-break (car (org-element-context)))
+      (org-return-indent))
+     ;; Open links like usual
+     ((eq 'link (car (org-element-context)))
+      (org-open-at-point-global))
+     ;; It doesn't make sense to add headings in inline tasks. Thanks Anders
+     ;; Johansson!
+     ((org-inlinetask-in-task-p)
+      (org-return))
+     ;; add checkboxes
+     ((org-at-item-checkbox-p)
+      (org-insert-todo-heading nil))
+     ;; lists end with two blank lines, so we need to make sure we are also not
+     ;; at the beginning of a line to avoid a loop where a new entry gets
+     ;; created with only one blank line.
+     ((and (org-in-item-p) (not (bolp)))
+      (if (org-element-property :contents-begin (org-element-context))
+          (org-insert-heading)
+        (beginning-of-line)
+        (setf (buffer-substring
+               (line-beginning-position) (line-end-position)) "")
+        (org-return)))
+     ;;disabled;; ((org-at-heading-p)
+     ;;disabled;;  (if (not (string= "" (org-element-property :title (org-element-context))))
+     ;;disabled;;      (progn (org-end-of-meta-data)
+     ;;disabled;;             (org-insert-heading))
+     ;;disabled;;    (beginning-of-line)
+     ;;disabled;;    (setf (buffer-substring
+     ;;disabled;;           (line-beginning-position) (line-end-position)) "")))
+     ((org-at-table-p)
+      (if (-any?
+           (lambda (x) (not (string= "" x)))
+           (nth
+            (- (org-table-current-dline) 1)
+            (org-table-to-lisp)))
+          (org-return)
+        ;; empty row
+        (beginning-of-line)
+        (setf (buffer-substring
+               (line-beginning-position) (line-end-position)) "")
+        (org-return)))
+     (t
+      (org-return)))))
+
+
+(define-key org-mode-map (kbd "RET")
+  'scimax/org-return)
+#+END_SRC
+There's some functions I got from http://doc.norang.ca/org-mode.html, I just
+ modified it to use C-f5 instead of S-f5:
+ f5 and C-f5 are bound the functions for narrowing and widening the emacs buffer as defined below.
+
+We now use:
+
+    T (tasks) for C-c / t on the current buffer
+    N (narrow) narrows to this task subtree
+    U (up) narrows to the immediate parent task subtree without moving
+    P (project) narrows to the parent project subtree without moving
+    F (file) narrows to the current file or file of the existing restriction
+
+The agenda keeps widening the org buffer so this gives a convenient way to focus on what we are doing.
+#+BEGIN_SRC emacs-lisp
+
+(global-set-key (kbd "<f5>") 'bh/org-todo)
+(global-set-key (kbd "C-<f5>") 'bh/widen)
+
+(defun bh/widen ()
+  "This here widens a restricted subtree"
+  (interactive)
+  (if (equal major-mode 'org-agenda-mode)
+      (progn
+        (org-agenda-remove-restriction-lock)
+        (when org-agenda-sticky
+          (org-agenda-redo)))
+    (widen)))
+
+
+
+(defun bh/org-todo (arg)
+  "This filters a subtree by todos"
+  (interactive "p")
+  (if (equal arg 4)
+      (save-restriction
+        (bh/narrow-to-org-subtree)
+        (org-show-todo-tree nil))
+    (bh/narrow-to-org-subtree)
+    (org-show-todo-tree nil)))
+
+(defun bh/narrow-to-org-subtree ()
+  (widen)
+  (org-narrow-to-subtree)
+  (save-restriction
+    (org-agenda-set-restriction-lock)))
+#+END_SRC
+*** Deft
+#+BEGIN_SRC emacs-lisp
+(setq deft-extensions '("org"))
+(setq deft-directory "~/Daten/cloud/tlaloc/org")
+#+END_SRC
+*** Capture
+#+BEGIN_SRC emacs-lisp
+(setq
+ org-capture-templates
+ '(("i" "Send to inbox" entry (file+headline "~/Daten/cloud/tlaloc/org/inbox.org" "Inbox")
+    "* TODO %?\n")))
+#+END_SRC
+*** Refile
+Global keybinding to open my refile-file
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-c o")
+  (lambda () (interactive) (find-file (concat org-directory "refile.org"))))
+#+END_SRC
+*** Agenda
+Add all files in org dir to agenda
+#+BEGIN_SRC emacs-lisp
+(setq org-agenda-files (list org-directory))
+#+END_SRC
+
+when all children are done change parent todo entry to done
+ see here: https://orgmode.org/org.html#Breaking-Down-Tasks
+#+BEGIN_SRC emacs-lisp
+(defun org-summary-todo (n-done n-not-done)
+  "Switch entry to DONE when all subentries are done, to TODO otherwise."
+  (let (org-log-done org-log-states)   ; turn off logging
+    (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
+
+(add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
+(setq org-hierarchical-todo-statistics t)
+#+END_SRC
+pretty-print states
+#+BEGIN_SRC emacs-lisp
+(add-hook 'org-mode-hook
+          (lambda ()
+            (push '("TODO"  . ?▲) prettify-symbols-alist)
+            (push '("DONE"  . ?✓) prettify-symbols-alist)
+            (push '("CANCELLED"  . ?✘) prettify-symbols-alist)
+            (push '("WAITING"  . ?…) prettify-symbols-alist)
+            (push '("SOMEDAY"  . ??) prettify-symbols-alist)))
+#+END_SRC
+Change font for done tasks
+#+BEGIN_SRC emacs-lisp
+(setq org-fontify-done-headline t)
+(custom-set-faces
+ '(org-done ((t (:foreground "PaleGreen"
+                 :weight normal
+                 :strike-through t))))
+ '(org-headline-done
+   ((((class color) (min-colors 16) (background dark))
+     (:foreground "LightSalmon" :strike-through t)))))
+#+END_SRC
+Use C-c a to open the agenda, f12 to open the agenda as list
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-c a") 'org-agenda)
+(global-set-key (kbd "<f12>") 'org-agenda-list)
+#+END_SRC
+Sorting by time up, prio down and category up in agenda
+Sorting by todo up, state up in todo
+Sorting tags by priority downwards
+#+BEGIN_SRC emacs-lisp
+(setq org-agenda-sorting-strategy
+  (quote ((agenda time-up priority-down category-up)
+          (todo todo-state-up priority-up)
+          (tags priority-down))))
+#+END_SRC
+Keywords for todos
+#+BEGIN_SRC emacs-lisp
+  ;; ! => insert timestamp
+  ;; @ => insert note
+  ;; / => enter state
+  ;; (x) => shortcut (after C-c C-t)
+  ;; after the |: close todo
+(setq  org-todo-keywords '((sequence  "DELEGATED(l@/!)" "SOMEDAY(f)" "IDEA(i@/!)"
+  "TODO(t@/!)" "STARTED(s@/!)" "NEXT(n@/!)" "WAITING(w@/!)" "|" "DONE(d@/!)"
+  "CANCELED(c@/!)")))
+#+END_SRC
+Colorizing the todo keywords
+#+BEGIN_SRC emacs-lisp
+(setq  org-todo-keyword-faces
+  '(("IDEA" . (:foreground "GoldenRod" :weight bold))
+    ("NEXT" . (:foreground "IndianRed1" :weight bold))
+    ("TODO" . (:foreground "Yellow1" :weight bold))
+    ("STARTED" . (:foreground "OrangeRed" :weight bold))
+    ("WAITING" . (:foreground "coral" :weight bold))
+    ("CANCELED" . (:foreground "IndianRed2" :weight bold))
+    ("DELEGATED" . (:foreground "ForestGreen" :weight bold))
+    ("SOMEDAY" . (:foreground "YellowGreen" :weight bold))
+    )
+)
+#+END_SRC
+org tags
+#+BEGIN_SRC emacs-lisp
+(setq
+  org-tag-persistent-alist
+  '((:startgroup . nil)
+    ("HOME" . ?h)
+    ("RESEARCH" . ?r)
+    ("TEACHING" . ?t)
+    ("STUDYING" . ?s)
+    (:endgroup . nil)
+    (:startgroup . nil)
+    ("MGMT" . ?m)
+    ("OS" . ?o)
+    ("DEV" . ?d)
+    ("WWW" . ?w)
+    (:endgroup . nil)
+    (:startgroup . nil)
+    ("EASY" . ?e)
+    ("MEDIUM" . ?m)
+    ("HARD" . ?a)
+    (:endgroup . nil)
+    ("URGENT" . ?u)
+    ("KEY" . ?k)
+    ("BONUS" . ?b)
+    ("noexport" . ?x)
+    )
+)
+#+END_SRC
+coloring tags
+#+BEGIN_SRC emacs-lisp
+(setq
+  org-tag-faces
+  '(
+    ("HOME" . (:foreground "AquaMarine4" :weight bold))
+    ("RESEARCH" . (:foreground "Seagreen4" :weight bold))
+    ("TEACHING" . (:foreground "Green4" :weight bold))
+    ("STUDYING" . (:foreground "Springgreen4" :weight bold))
+    ("OS" . (:foreground "coral4" :weight bold))
+    ("DEV" . (:foreground "tomato1" :weight bold))
+    ("MGMT" . (:foreground "yellow1" :weight bold))
+    ("WWW" . (:foreground "gray0" :weight bold))
+    ("URGENT" . (:foreground "Red" :weight bold))
+    ("KEY" . (:foreground "Red" :weight bold))
+    ("EASY" . (:foreground "Green1" :weight bold))
+    ("MEDIUM" . (:foreground "Yellow1" :weight bold))
+    ("HARD" . (:foreground "Red1" :weight bold))
+    ("BONUS" . (:foreground "GoldenRod" :weight bold))
+    ("noexport" . (:foreground "YellowGreen" :weight bold))
+    )
+  )
+#+END_SRC
+Set recurring tasks to state next
+#+BEGIN_SRC emacs-lisp
+(setq org-todo-repeat-to-state "NEXT")
+#+END_SRC
+Use fast tag and todo selection
+#+BEGIN_SRC emacs-lisp
+(setq
+  org-fast-tag-selection-single-key t
+  org-use-fast-todo-selection t
+)
+#+END_SRC
+*** Org Ref
+Setting default files for org ref.
+Mine are synced via nextcloud
+#+BEGIN_SRC emacs-lisp
+(setq
+ org-ref-default-bibliography "~/Daten/cloud/tlaloc/org/Papers/references.bib"
+
+ org-ref-pdf-directory "~/Daten/cloud/tlaloc/org/Papers/bibtex-pdfs"
+
+ org-ref-bibliography-notes "~/Daten/cloud/tlaloc/org/Papers/notes.org"
+ org-ref-open-pdf-function
+ (lambda (fpath)
+   (start-process "zathura" "*ivy-bibtex-zathura*" "/usr/bin/zathura" fpath))
+)
+#+END_SRC
+use footcite as default cite
+#+BEGIN_SRC emacs-lisp
+(setq org-ref-default-citation-link "footcite")
+#+END_SRC
+*** Export
+Prefer user labels instead of internal labels
+#+BEGIN_SRC emacs-lisp
+(setq org-latex-prefer-user-labels t)
+#+END_SRC
+Use smart quotes
+smart quotes means converting hyphens to m-dashes and
+straight quotes to curly quotes
+#+BEGIN_SRC emacs-lisp
+(setq org-export-with-smart-quotes t)
+#+END_SRC
+**** Languages
+**** LaTeX
+Using this latex command ensures your bibliography to be set up as well as your glossaries
+#+BEGIN_SRC emacs-lisp
+(setq
+ org-latex-pdf-process
+ '("lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+   "biber %b"
+   "makeglossaries %f"
+   "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+   "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+#+END_SRC
+Setup preview commands
+#+BEGIN_SRC emacs-lisp
+'(org-preview-latex-process-alist
+  (quote
+   ((dvipng :programs
+            ("lualatex" "dvipng")
+            :description "dvi > png"
+            :message "you need to install the programs: latex and dvipng."
+            :image-input-type "dvi"
+            :image-output-type "png"
+            :image-size-adjust
+            (1.0 . 1.0)
+            :latex-compiler
+            ("lualatex -output-format dvi -interaction nonstopmode -output-directory %o %f")
+            :image-converter
+            ("dvipng -fg %F -bg %B -D %D -T tight -o %O %f"))
+    (dvisvgm :programs
+             ("latex" "dvisvgm")
+             :description "dvi > svg"
+             :message "you need to install the programs: latex and dvisvgm."
+             :use-xcolor t
+             :image-input-type "xdv"
+             :image-output-type "svg"
+             :image-size-adjust
+             (1.7 . 1.5)
+             :latex-compiler
+             ("xelatex -no-pdf -interaction nonstopmode -output-directory %o %f")
+             :image-converter
+             ("dvisvgm %f -n -b min -c %S -o %O"))
+    (imagemagick :programs
+                 ("latex" "convert")
+                 :description "pdf > png"
+                 :message "you need to install the programs: latex and imagemagick."
+                 :use-xcolor t
+                 :image-input-type "pdf"
+                 :image-output-type "png"
+                 :image-size-adjust
+                 (1.0 . 1.0)
+                 :latex-compiler
+                 ("xelatex -no-pdf -interaction nonstopmode -output-directory %o %f")
+                 :image-converter
+                 ("convert -density %D -trim -antialias %f -quality 100 %O")))))
+#+END_SRC
+My latex classes
+First off, the classic koma-article
+#+BEGIN_SRC emacs-lisp
+(after! ox-latex
+  (add-to-list 'org-latex-classes
+               '("koma-article"
+                 "\\documentclass[ngerman,12pt]{scrartcl}"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+#+END_SRC
+Secondary, mimosis.
+Mimosis is a class for writing books.
+I modified it to my needs since I didn't need the chapters to begin on the right
+hand side.
+Also I'm loading ngerman as last by babel.
+But its basically still mimosis
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'org-latex-classes
+             '("mimosis"
+               "\\documentclass{mimosis}
+ [NO-DEFAULT-PACKAGES]
+ [PACKAGES]
+ [EXTRA]
+\\newcommand{\\mboxparagraph}[1]{\\paragraph{#1}\\mbox{}\\\\}
+\\newcommand{\\mboxsubparagraph}[1]{\\subparagraph{#1}\\mbox{}\\\\}"
+               ("\\chapter{%s}" . "\\chapter*{%s}")
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\mboxparagraph{%s}" . "\\mboxparagraph*{%s}")
+               ("\\mboxsubparagraph{%s}" . "\\mboxsubparagraph*{%s}")))
+#+END_SRC
+I dont use this one (yet).
+The third one's a class for publications
+#+BEGIN_SRC emacs-lisp
+;; Elsarticle is Elsevier class for publications.
+(add-to-list 'org-latex-classes
+             '("elsarticle"
+               "\\documentclass{elsarticle}
+ [NO-DEFAULT-PACKAGES]
+ [PACKAGES]
+ [EXTRA]"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+#+END_SRC
+My default packages for latex
+#+BEGIN_SRC emacs-lisp :comments no
+(setq org-latex-default-packages-alist
+      '(
+        ("" "float" nil)
+        ("" "booktabs" nil)
+        ("" "lscape" nil)
+        ("" "hyphenat" nil)
+        ;; drawing
+        ("" "microtype" nil)
+        ("" "tikz" nil)
+        ;; this is for having good fonts
+        ("" "lmodern" nil)
+        ;; This makes standard margins
+        ("left=3.0cm, right=3.0cm,top=2.5cm,bottom=3cm" "geometry" nil)
+        ("" "graphicx" t)
+        ("" "longtable" nil)
+        ("" "float" nil)
+        ("" "wrapfig" nil)      ;makes it possible to wrap text around figures
+        ("" "rotating" nil)
+        ("normalem" "ulem" t)
+        ;; These provide math symbols
+        ("" "amsmath" t)
+        ("" "textcomp" t)
+        ("" "marvosym" t)
+        ("" "wasysym" t)
+        ("" "amssymb" t)
+        ("" "amsmath" t)
+        ("theorems, skins" "tcolorbox" t)
+        ;; used for marking up chemical formulars
+        ("version=3" "mhchem" t)
+        ("numbers,super,sort&compress" "natbib" nil)
+        ("" "natmove" nil)
+        ("" "url" nil)
+        ;; this is used for syntax highlighting of code
+        ("cache=false" "minted" nil)
+        ("" "listings" nil)
+        ("linktocpage,pdfstartview=FitH,colorlinks,
+linkcolor=blue,anchorcolor=blue,
+citecolor=blue,filecolor=blue,menucolor=blue,urlcolor=blue"
+         "hyperref" nil)
+        ("onehalfspacing" "setspace" nil)
+        ;; enables you to embed files in pdfs
+        ("" "attachfile" nil)
+    ))
+#+END_SRC
+***** Org Async Export
+For having exports as an async process, which doesnt hang up emacs, you also
+need a file like file:./init-org-async.el
+#+BEGIN_SRC emacs-lisp
+(setq
+ org-export-in-background t
+ org-export-async-init-file (concat doom-private-dir "init-org-async.el"))
+#+END_SRC
+
+*** Org Habit
+Still need to get used of how to use this.
+For now, I'll just leave that commented out
+#+BEGIN_SRC emacs-lisp
+(after! org
+  (add-to-list 'org-modules 'org-habit t))
+#+END_SRC
+** Magit
+cli git is great and all. But have you tried Magit?
+With the forges?
+
+This sets the path for git repos to be searched by magit and get listed in
+~magit-list-repositories~ It also affects ~magit-status~.
+#+BEGIN_SRC emacs-lisp
+(setq magit-repository-directories '(("~/Projekte" . 2)))
+#+END_SRC
+
+This trashes the buffers and don't restore the winconf after leaving.
+Who needs that? I don't
+#+BEGIN_SRC emacs-lisp
+(setq
+ magit-save-repository-buffers nil
+ magit-inhibit-save-previous-winfconf t)
+#+END_SRC
+
+** Programming
+*** Typescript
+This function sets up tide-mode, as described on the
+https://github.com/ananthakumaran/tide/
+#+BEGIN_SRC emacs-lisp
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (eldoc-mode)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  (company-mode +1))
+#+END_SRC
+**** React Native
+For developing in tsx, the tide git suggests the following:
+I just changed the last line since we decided to use eslint due to the fact that
+tslint is deprecated. Eslint offers enough typescript stuff to use.
+#+BEGIN_SRC emacs-lisp
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+(add-hook 'web-mode-hook
+          (lambda ()
+            (when (string-equal "tsx" (file-name-extension buffer-file-name))
+              (setup-tide-mode))))
+(flycheck-add-mode 'javascript-eslint 'web-mode)
+#+END_SRC
+Some additional react tsx settings:
+#+BEGIN_SRC emacs-lisp
+(add-hook 'web-mode-hook 'company-mode)
+(add-hook 'web-mode-hook 'prettier-js-mode)
+#+END_SRC
+
+** Snippets
+Add private snippet dir to yasnippet
+#+BEGIN_SRC emacs-lisp
+(after! yasnippet
+  (push (expand-file-name "snippets/" doom-private-dir) yas-snippet-dirs))
+(yas-global-mode 1)
+#+END_SRC
