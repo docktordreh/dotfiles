@@ -6,3 +6,5 @@
 	gpgsign = true
 [gitlab]
 	user = valentin_lechner
+[pull]
+	rebase = false
