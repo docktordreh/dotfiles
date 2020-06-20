@@ -3,6 +3,11 @@
 (setq user-full-name "Valentin Lechner"
       user-mail-address "valentin_lechner@dismail.de")
 
+(server-start)
+(require 'org-protocol)
+
+(add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
+
 (add-to-list 'auto-mode-alist '("'" . org-mode) t)
 
 (setq locale-coding-system 'utf-8)
@@ -35,6 +40,13 @@
 (beacon-mode)
 
 (setq inhibit-compacting-font-caches t)
+
+(define-globalized-minor-mode my-global-rainbow-mode rainbow-mode
+  (lambda () (rainbow-mode 1)))
+
+(my-global-rainbow-mode 1)
+
+(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 
 (setq truncate-string-ellipsis "…")
 
@@ -82,10 +94,10 @@
 (add-to-list 'default-frame-alist '(alpha 90 90))
 
 (setq
- doom-font                          (font-spec :family "FiraCode Nerd Font Mono" :size 24)
- doom-big-font                   (font-spec :family "FiraCode Nerd Font Mono" :size 36)
- doom-variable-pitch-font (font-spec :family "ETBembo" :size 36)
- doom-serif-font                (font-spec :family "Liberation Serif" :weight 'light))
+ doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 24)
+ doom-big-font (font-spec :family "FiraCode Nerd Font Mono" :size 36)
+ doom-variable-pitch-font (font-spec :family "Vollkorn" :size 36)
+ doom-serif-font (font-spec :family "Liberation Serif" :weight 'light))
 
 (setq doom-theme 'doom-snazzy)
 
@@ -112,26 +124,28 @@
 
 (setq
   org-ellipsis " ▼ "
-  org-superstar-headline-bullets-list '("■" "◆" "▲" "▶")
+  org-superstar-headline-bullets-list '("#" "■" "◆" "▲" "▶")
+  ;; org-superstar-headline-bullets-list '("✡" "⎈" "✽" "✲" "✱" "✻" "✼" "✽" "✾" "✿" "❀" "❁" "❂" "❃" "❄" "❅" "❆" "❇")
+  ;;org-superstar-headline-bullets-list '("#" "◉" "○" "✜" "✿""■" "◆" "▲" "▶" )
 )
 
  (custom-theme-set-faces
   'user
-  '(variable-pitch ((t (:family "ETBembo" :height 180 :weight thin))))
+  '(variable-pitch ((t (:family "Vollkorn" :height 180 :weight thin))))
   '(fixed-pitch ((t ( :family "Fira Code Retina" :height 160)))))
 
  (custom-theme-set-faces
   'user
   '(org-block ((t (:inherit fixed-pitch))))
   '(org-code ((t (:inherit (shadow fixed-pitch)))))
-  '(org-document-info ((t (:foreground "dark orange"))))
+  '(org-document-info ((t (:foreground "dark violet"))))
   '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
   '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
   '(org-link ((t (:foreground "royal blue" :underline t))))
   '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
   '(org-property-value ((t (:inherit fixed-pitch))) t)
   '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
-  '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
+  '(org-table ((t (:inherit fixed-pitch :foreground "#f1f1f0"))))
   '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
   '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
 
@@ -140,6 +154,9 @@
 (font-lock-add-keywords 'org-mode
                         '(("^ *\\([-]\\) "
                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+(font-lock-add-keywords 'org-mode
+                        '(("^ *\\([+]\\) "
+                           (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "◦"))))))
 
 (setq org-hide-leading-stars t)
 
@@ -150,27 +167,71 @@
 
 (add-hook 'org-mode-hook 'variable-pitch-mode)
 
-(let* ((variable-tuple
-        (cond ((x-list-fonts "ETBembo")         '(:font "ETBembo"))
+(let* (
+       (variable-tuple
+        (cond (
+               (x-list-fonts "ETBembo") '(:font "ETBembo"))
               ((x-list-fonts "Source Sans Pro") '(:font "Source Sans Pro"))
-              ((x-list-fonts "Lucida Grande")   '(:font "Lucida Grande"))
-              ((x-list-fonts "Verdana")         '(:font "Verdana"))
-              ((x-family-fonts "Sans Serif")    '(:family "Sans Serif"))
-              (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
-       (base-font-color     (face-foreground 'default nil 'default))
-       (headline           `(:inherit default :weight bold :foreground ,base-font-color)))
+              (nil
+               (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))
+              )
+        )
+       (headline `(:inherit default :weight bold :foreground "#5af78e"))
+       )
 
   (custom-theme-set-faces
    'user
-   `(org-level-8 ((t (,@headline ,@variable-tuple))))
-   `(org-level-7 ((t (,@headline ,@variable-tuple))))
-   `(org-level-6 ((t (,@headline ,@variable-tuple))))
-   `(org-level-5 ((t (,@headline ,@variable-tuple))))
-   `(org-level-4 ((t (,@headline ,@variable-tuple :height 1.1))))
-   `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.25))))
-   `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.5))))
-   `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.75))))
-   `(org-document-title ((t (,@headline ,@variable-tuple :height 2.0 :underline nil))))))
+   `(org-level-8 ((t (
+                      :inherit default
+                      :weight bold
+                      :foreground "#ff6ac1"
+                      ,@variable-tuple))))
+   `(org-level-7 ((t (
+                      :inherit default
+                      :weight bold
+                      :foreground "#5af78e"
+                      ,@variable-tuple))))
+   `(org-level-6 ((t (
+                      :inherit default
+                      :weight bold
+                      :foreground "#57c7ff"
+                      ,@variable-tuple))))
+   `(org-level-5 ((t (
+                      :inherit default
+                      :weight bold
+                      :foreground "#ff5c57"
+                      ,@variable-tuple))))
+   `(org-level-4 ((t (
+                      :inherit default
+                      :weight bold
+                      :foreground "#9aeedf"
+                      ,@variable-tuple
+                      :height 1.1))))
+   `(org-level-3 ((t (
+                      :inherit default
+                      :weight bold
+                      :foreground "#f3f99d"
+                      ,@variable-tuple
+                      :height 1.25))))
+   `(org-level-2 ((t (
+                      :inherit default
+                      :weight bold
+                      :foreground "#ff6ac1"
+                      ,@variable-tuple
+                      :height 1.5))))
+   `(org-level-1 ((t (
+                      :inherit default
+                      :weight bold
+                      :foreground "#5af78e"
+                      ,@variable-tuple
+                      :height 1.75))))
+   `(org-document-title ((t (
+                             :inherit default
+                             :weight bold
+                             :foreground "#57c7ff"
+                             ,@variable-tuple
+                             :height 2.0
+                             :underline nil))))))
 
 (setq
  org-fontify-whole-heading-line t
@@ -199,33 +260,43 @@ Use a prefix arg to get regular RET. "
     (cond
      ((eq 'line-break (car (org-element-context)))
       (org-return-indent))
-     ;; Open links like usual
-     ((eq 'link (car (org-element-context)))
-      (org-open-at-point-global))
+
+     ;; Open links like usual, unless point is at the end of a line.
+     ;; and if at beginning of line, just press enter.
+     ((or (and (eq 'link (car (org-element-context))) (not (eolp)))
+          (bolp))
+      (org-return))
+
      ;; It doesn't make sense to add headings in inline tasks. Thanks Anders
      ;; Johansson!
      ((org-inlinetask-in-task-p)
       (org-return))
-     ;; add checkboxes
+
+     ;; checkboxes too
      ((org-at-item-checkbox-p)
       (org-insert-todo-heading nil))
+
      ;; lists end with two blank lines, so we need to make sure we are also not
      ;; at the beginning of a line to avoid a loop where a new entry gets
      ;; created with only one blank line.
-     ((and (org-in-item-p) (not (bolp)))
-      (if (org-element-property :contents-begin (org-element-context))
+     ((org-in-item-p)
+      (if (save-excursion (beginning-of-line) (org-element-property :contents-begin (org-element-context)))
           (org-insert-heading)
         (beginning-of-line)
-        (setf (buffer-substring
-               (line-beginning-position) (line-end-position)) "")
+        (delete-region (line-beginning-position) (line-end-position))
         (org-return)))
-     ;;disabled;; ((org-at-heading-p)
-     ;;disabled;;  (if (not (string= "" (org-element-property :title (org-element-context))))
-     ;;disabled;;      (progn (org-end-of-meta-data)
-     ;;disabled;;             (org-insert-heading))
-     ;;disabled;;    (beginning-of-line)
-     ;;disabled;;    (setf (buffer-substring
-     ;;disabled;;           (line-beginning-position) (line-end-position)) "")))
+
+     ;; org-heading
+     ((org-at-heading-p)
+      (if (not (string= "" (org-element-property :title (org-element-context))))
+          (progn (org-end-of-meta-data)
+                 (org-insert-heading-respect-content)
+                 (outline-show-entry))
+        (beginning-of-line)
+        (setf (buffer-substring
+               (line-beginning-position) (line-end-position)) "")))
+
+     ;; tables
      ((org-at-table-p)
       (if (-any?
            (lambda (x) (not (string= "" x)))
@@ -238,6 +309,8 @@ Use a prefix arg to get regular RET. "
         (setf (buffer-substring
                (line-beginning-position) (line-end-position)) "")
         (org-return)))
+
+     ;; fall-through case
      (t
       (org-return)))))
 
@@ -279,10 +352,191 @@ Use a prefix arg to get regular RET. "
 (setq deft-extensions '("org"))
 (setq deft-directory "~/Daten/cloud/tlaloc/org")
 
-(setq
- org-capture-templates
- '(("i" "Send to inbox" entry (file+headline "~/Daten/cloud/tlaloc/org/inbox.org" "Inbox")
-    "* TODO %?\n")))
+(require 'org-roam-protocol)
+
+(setq org-capture-templates `(
+    ("p" "Protocol" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
+        "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
+    ("L" "Protocol Link" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
+        "* %? [[%:link][%:description]] \nCaptured On: %U")
+))
+;;(setq org-capture-templates
+;;      (doct `(("Personal todo" :keys "t"
+;;               :icon ("checklist" :set "octicon" :color "green")
+;;               :file +org-capture-todo-file
+;;               :prepend t
+;;               :headline "Inbox"
+;;               :type entry
+;;               :template ("* TODO %?"
+;;                          "%i %a")
+;;               )
+;;              ("Personal note" :keys "n"
+;;               :icon ("sticky-note-o" :set "faicon" :color "green")
+;;               :file +org-capture-todo-file
+;;               :prepend t
+;;               :headline "Inbox"
+;;               :type entry
+;;               :template ("* %?"
+;;                          "%i %a")
+;;               )
+;;              ("University" :keys "u"
+;;               :icon ("graduation-cap" :set "faicon" :color "purple")
+;;               :file +org-capture-todo-file
+;;                   :headline "University"
+;;                   :unit-prompt ,(format "%%^{Unit|%s}" (string-join +org-capture-uni-units "|"))
+;;                   :prepend t
+;;                   :type entry
+;;                   :children (("Test" :keys "t"
+;;                               :icon ("timer" :set "material" :color "red")
+;;                               :template ("* TODO [#C] %{unit-prompt} %? :uni:tests:"
+;;                                          "SCHEDULED: %^{Test date:}T"
+;;                                          "%i %a"))
+;;                              ("Assignment" :keys "a"
+;;                               :icon ("library_books" :set "material" :color "orange")
+;;                               :template ("* TODO [#B] %{unit-prompt} %? :uni:assignments:"
+;;                                          "DEADLINE: %^{Due date:}T"
+;;                                          "%i %a"))
+;;                              ("Lecture" :keys "l"
+;;                               :icon ("keynote" :set "fileicon" :color "orange")
+;;                               :template ("* TODO [#C] %{unit-prompt} %? :uni:lecture:"
+;;                                          "%i %a"))
+;;                              ("Miscellaneous task" :keys "u"
+;;                               :icon ("list" :set "faicon" :color "yellow")
+;;                               :template ("* TODO [#D] %{unit-prompt} %? :uni:"
+;;                                          "%i %a"))))
+;;                  ("Email" :keys "e"
+;;                   :icon ("envelope" :set "faicon" :color "blue")
+;;                   :file +org-capture-todo-file
+;;                   :prepend t
+;;                   :headline "Inbox"
+;;                   :type entry
+;;                   :template ("* TODO %^{type|reply to|contact} %\\3 %? :email:"
+;;                              "Send an email %^{urgancy|soon|ASAP|anon|at some point|eventually} to %^{recipiant}"
+;;                              "about %^{topic}"
+;;                              "%U %i %a"))
+;;                  ("Interesting" :keys "i"
+;;                   :icon ("eye" :set "faicon" :color "lcyan")
+;;                   :file +(or )g-capture-todo-file
+;;                   :prepend t
+;;                   :headline "Interesting"
+;;                   :type entry
+;;                   :template ("* [ ] %{desc}%? :%{i-type}:"
+;;                              "%i %a")
+;;                   :children (("Webpage" :keys "w"
+;;                               :icon ("globe" :set "faicon" :color "green")
+;;                               :desc "%(org-cliplink-capture) "
+;;                               :i-type "read:web"
+;;                               )
+;;                              ("Article" :keys "a"
+;;                               :icon ("file-text" :set "octicon" :color "yellow")
+;;                               :desc ""
+;;                               :i-type "read:reaserch"
+;;                               )
+;;                              ("\tRecipie" :keys "r"
+;;                               :icon ("spoon" :set "faicon" :color "dorange")
+;;                               :file +org-capture-recipies
+;;                               :headline "Unsorted"
+;;                               :template "%(org-chef-get-recipe-from-url)"
+;;                               )
+;;                              ("Information" :keys "i"
+;;                               :icon ("info-circle" :set "faicon" :color "blue")
+;;                               :desc ""
+;;                               :i-type "read:info"
+;;                               )
+;;                              ("Idea" :keys "I"
+;;                               :icon ("bubble_chart" :set "material" :color "silver")
+;;                               :desc ""
+;;                               :i-type "idea"
+;;                               )))
+;;                  ("Tasks" :keys "k"
+;;                   :icon ("inbox" :set "octicon" :color "yellow")
+;;                   :file +org-capture-todo-file
+;;                   :prepend t
+;;                   :headline "Tasks"
+;;                   :type entry
+;;                   :template ("* TODO %? %^G%{extra}"
+;;                              "%i %a")
+;;                   :children (("General Task" :keys "k"
+;;                               :icon ("inbox" :set "octicon" :color "yellow")
+;;                               :extra ""
+;;                               )
+;;                              ("Task with deadline" :keys "d"
+;;                               :icon ("timer" :set "material" :color "orange" :v-adjust -0.1)
+;;                               :extra "\nDEADLINE: %^{Deadline:}t"
+;;                               )
+;;                              ("Scheduled Task" :keys "s"
+;;                               :icon ("calendar" :set "octicon" :color "orange")
+;;                               :extra "\nSCHEDULED: %^{Start time:}t"
+;;                               )
+;;                              ))
+;;                  ("Project" :keys "p"
+;;                   :icon ("repo" :set "octicon" :color "silver")
+;;                   :prepend t
+;;                   :type entry
+;;                   :headline "Inbox"
+;;                   :template ("* %{time-or-todo} %?"
+;;                              "%i"
+;;                              "%a")
+;;                   :file ""
+;;                   :custom (:time-or-todo "")
+;;                   :children (("Project-local todo" :keys "t"
+;;                               :icon ("checklist" :set "octicon" :color "green")
+;;                               :time-or-todo "TODO"
+;;                               :file +org-capture-project-todo-file)
+;;                              ("Project-local note" :keys "n"
+;;                               :icon ("sticky-note" :set "faicon" :color "yellow")
+;;                               :time-or-todo "%U"
+;;                               :file +org-capture-project-notes-file)
+;;                              ("Project-local changelog" :keys "c"
+;;                               :icon ("list" :set "faicon" :color "blue")
+;;                               :time-or-todo "%U"
+;;                               :heading "Unreleased"
+;;                               :file +org-capture-project-changelog-file))
+;;                   )
+;;                  ("\tCentralised project templates"
+;;                   :keys "o"
+;;                   :type entry
+;;                   :prepend t
+;;                   :template ("* %{time-or-todo} %?"
+;;                              "%i"
+;;                              "%a")
+;;                   :children (("Project todo"
+;;                               :keys "t"
+;;                               :prepend nil
+;;                               :time-or-todo "TODO"
+;;                               :heading "Tasks"
+;;                               :file +org-capture-central-project-todo-file)
+;;                              ("Project note"
+;;                               :keys "n"
+;;                               :time-or-todo "%U"
+;;                               :heading "Notes"
+;;                               :file +org-capture-central-project-notes-file)
+;;                              ("Project changelog"
+;;                               :keys "c"
+;;                               :time-or-todo "%U"
+;;                               :heading "Unreleased"
+;;                               :file +org-capture-central-project-changelog-file
+;;                               )
+;;                              )
+;;                   )
+;;                  )
+;;            )
+;;#+END_SRC
+;;#+BEGIN_SRC emacs-lisp
+;;(setq org-capture-templates
+;;      (quote
+;;       (("w"
+;;         "Default template"
+;;         entry
+;;         (file+headline (concat org-directory "capture.org") "Notes")
+;;         "* %^{Title}\n\n  Source: %u, %c\n\n  %i"
+;;         :empty-lines 1)
+;;        ;; ... more templates here ...
+;;        )))
+
+(setq org-roam-directory (concat org-directory "roam"))
+
+(setq org-protocol-default-template-key "w")
 
 (global-set-key (kbd "C-c o")
   (lambda () (interactive) (find-file (concat org-directory "refile.org"))))
@@ -322,24 +576,52 @@ Use a prefix arg to get regular RET. "
           (todo todo-state-up priority-up)
           (tags priority-down))))
 
-  ;; ! => insert timestamp
-  ;; @ => insert note
-  ;; / => enter state
-  ;; (x) => shortcut (after C-c C-t)
+  ;; ! = insert timestamp
+  ;; @ = insert note
+  ;; / = enter state
+  ;; (x) = shortcut (after C-c C-t)
   ;; after the |: close todo
-(setq  org-todo-keywords '((sequence  "DELEGATED(l@/!)" "SOMEDAY(f)" "IDEA(i@/!)"
-  "TODO(t@/!)" "STARTED(s@/!)" "NEXT(n@/!)" "WAITING(w@/!)" "|" "DONE(d@/!)"
-  "CANCELED(c@/!)")))
+(setq
+ org-todo-keywords '(
+                     (sequence
+                      "DELEGATED(l@/!)"
+                      "SOMEDAY(f)"
+                      "IDEA(i@/!)"
+                      "TODO(t@/!)"
+                      "STARTED(s@/!)"
+                      "NEXT(n@/!)"
+                      "WAITING(w@/!)"
+                      "|"
+                      "DONE(d@/!)"
+                      "CANCELED(c@/!)")
+                     )
+ )
 
 (setq  org-todo-keyword-faces
-  '(("IDEA" . (:foreground "GoldenRod" :weight bold))
-    ("NEXT" . (:foreground "IndianRed1" :weight bold))
-    ("TODO" . (:foreground "Yellow1" :weight bold))
-    ("STARTED" . (:foreground "OrangeRed" :weight bold))
-    ("WAITING" . (:foreground "coral" :weight bold))
-    ("CANCELED" . (:foreground "IndianRed2" :weight bold))
-    ("DELEGATED" . (:foreground "ForestGreen" :weight bold))
-    ("SOMEDAY" . (:foreground "YellowGreen" :weight bold))
+  '(("IDEA" . (
+               :foreground "light green"
+               :weight bold))
+    ("NEXT" . (
+               :foreground "orange"
+               :weight bold))
+    ("TODO" . (
+               :foreground "yellow"
+               :weight bold))
+    ("STARTED" . (
+                  :foreground "green"
+                  :weight bold))
+    ("WAITING" . (
+                  :foreground "maroon"
+                  :weight bold))
+    ("CANCELED" . (
+                   :foreground "red"
+                   :weight bold))
+    ("DELEGATED" . (
+                    :foreground "sea green"
+                    :weight bold))
+    ("SOMEDAY" . (
+                  :foreground "seashell"
+                  :weight bold))
     )
 )
 
@@ -372,21 +654,51 @@ Use a prefix arg to get regular RET. "
 (setq
   org-tag-faces
   '(
-    ("HOME" . (:foreground "AquaMarine4" :weight bold))
-    ("RESEARCH" . (:foreground "Seagreen4" :weight bold))
-    ("TEACHING" . (:foreground "Green4" :weight bold))
-    ("STUDYING" . (:foreground "Springgreen4" :weight bold))
-    ("OS" . (:foreground "coral4" :weight bold))
-    ("DEV" . (:foreground "tomato1" :weight bold))
-    ("MGMT" . (:foreground "yellow1" :weight bold))
-    ("WWW" . (:foreground "gray0" :weight bold))
-    ("URGENT" . (:foreground "Red" :weight bold))
-    ("KEY" . (:foreground "Red" :weight bold))
-    ("EASY" . (:foreground "Green1" :weight bold))
-    ("MEDIUM" . (:foreground "Yellow1" :weight bold))
-    ("HARD" . (:foreground "Red1" :weight bold))
-    ("BONUS" . (:foreground "GoldenRod" :weight bold))
-    ("noexport" . (:foreground "YellowGreen" :weight bold))
+    ("HOME" . (
+               :foreground "aquamarine"
+               :weight bold))
+    ("RESEARCH" . (
+                   :foreground "SeaGreen4"
+                   :weight bold))
+    ("TEACHING" . (
+                   :foreground "SpringGreen1"
+                   :weight bold))
+    ("STUDYING" . (
+                   :foreground "SpringGreen4"
+                   :weight bold))
+    ("OS" . (
+             :foreground "coral4"
+             :weight bold))
+    ("DEV" . (
+              :foreground "tomato1"
+              :weight bold))
+    ("MGMT" . (
+               :foreground "yellow1"
+               :weight bold))
+    ("WWW" . (
+              :foreground "gray0"
+              :weight bold))
+    ("URGENT" . (
+                 :foreground "red"
+                 :weight bold))
+    ("KEY" . (
+              :foreground "red"
+              :weight bold))
+    ("EASY" . (
+               :foreground "SeaGreen1"
+               :weight bold))
+    ("MEDIUM" . (
+                 :foreground "yellow"
+                 :weight bold))
+    ("HARD" . (
+               :foreground "red"
+               :weight bold))
+    ("BONUS" . (
+                :foreground "goldenrod1"
+                :weight bold))
+    ("noexport" .(
+                  :foreground "DarkBlue"
+                  :weight bold))
     )
   )
 
@@ -552,11 +864,18 @@ citecolor=blue,filecolor=blue,menucolor=blue,urlcolor=blue"
 (after! org
   (add-to-list 'org-modules 'org-habit t))
 
+(eval-after-load "tex"
+  '(add-to-list 'TeX-command-list
+                '("LuaLatex + Biber" "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+   "biber %b"
+   "makeglossaries %f"
+   "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+   "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f") t))
+(setq TeX-command-default "LuaLatex + Biber")
+
 (setq magit-repository-directories '(("~/Projekte" . 2)))
 
-(setq
- magit-save-repository-buffers nil
- magit-inhibit-save-previous-winfconf t)
+(setq magit-save-repository-buffers nil)
 
 (defun setup-tide-mode ()
   (interactive)
@@ -574,7 +893,6 @@ citecolor=blue,filecolor=blue,menucolor=blue,urlcolor=blue"
           (lambda ()
             (when (string-equal "tsx" (file-name-extension buffer-file-name))
               (setup-tide-mode))))
-(flycheck-add-mode 'javascript-eslint 'web-mode)
 
 (add-hook 'web-mode-hook 'company-mode)
 (add-hook 'web-mode-hook 'prettier-js-mode)
