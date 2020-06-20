@@ -1,2 +1,1 @@
-
-[ -n "$DESKTOP_SESSION" ] && eval "$(gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)" && export SSH_AUTH_SOCK
+keychain --quiet --eval --noask --agents ssh,gpg id_rsa | source /dev/stdin
