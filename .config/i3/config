@@ -1,6 +1,12 @@
 # i3 config file (v4)
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
+
+# Set screensaver to 10 minutes (xss-lock will start lock)
+exec --no-startup-id xset s 600
+# Setup system to lock when suspended/screensaver
+exec --no-startup-id exec xss-lock -- slock
+
 bindsym $mod+Shift+BackSpace move scratchpad
 bindsym $mod+Tab scratchpad show
 bindsym $mod+F9 exec alacritty -e 'pulsemixer'
@@ -94,7 +100,7 @@ bindsym $mod+Shift+9 move container to workspace $ws9
 
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-bindsym $mod+e exec emacsclient -c
+bindsym $mod+e exec emacsclient -nc
 # resize window (you can also use the mouse for that)
 mode "resize" {
         bindsym j resize shrink width 10 px or 10 ppt
@@ -112,9 +118,9 @@ set $mode_lock (l)ock (r)eboot (p)oweroff
 bindsym $mod+0 mode "$mode_lock"
 
 mode "$mode_lock" {
-        bindsym l exec --no-startup-id xautolock -locknow; mode "default"
-        bindsym r exec --no-startup-id doas reboot
-        bindsym p exec --no-startup-id doas poweroff
+        bindsym l exec --no-startup-id xset s activate; mode "default"
+        bindsym r exec --no-startup-id sudo reboot
+        bindsym p exec --no-startup-id sudo poweroff
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
@@ -189,11 +195,10 @@ exec_always --no-startup-id ~/.local/bin/autotiling
 exec_always --no-startup-id feh --bg-fill --randomize ~/.wallpaper
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec_always --no-startup-id flameshot
-exec_always --no-startup-id nm-applet
-exec_always --no-startup-id xautolock -time 5 -locker slock -notify 30 -notifier "notify-send -u critical -t 10000 -- 'LOCKING screen in 30 sec'" -nowlocker slock -corners +00-
 
 exec --no-startup-id dunst --config $HOME/.config/dunst/dunstrc
 exec --no-startup-id keepassxc
 exec --no-startup-id alacritty
 exec --no-sec/pam_kwallet_init
 exec --no-startup-id nextcloud
+exec --no-startup-id nm-applet
