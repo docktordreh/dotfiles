@@ -5,4 +5,3 @@ xset r rate 300 50 &
 unclutter &
 mpd &
 mpc pause &
-emacs --daemon &
