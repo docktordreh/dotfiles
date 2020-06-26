@@ -1,6 +1,6 @@
 #!/bin/bash
 
-HOST=1.1.1.1
+HOST=9.9.9.9
 
 if ! resp=$(ping -n -c 1 -W 1 $HOST); then
     echo "轢 ping failed"

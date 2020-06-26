@@ -20,7 +20,7 @@ include-file = ~/.config/polybar/modules.d/pingrtt.conf
 inherit             = bar/base
 top                 = true
 modules-left        = temperature cpu memory pingrtt
-modules-center      = mpd
+modules-center      = 
 modules-right       = pbweather airquality-index date fbattery
 
 [bar/bottom]

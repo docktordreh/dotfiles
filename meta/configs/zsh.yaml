@@ -1,4 +1,3 @@
 - link:
-    "~/.zshrc": .zshrc
+    "~/.config/zsh": .config/zsh
     "~/.zprofile": .zprofile
-    "~/.zshenv": .zshenv

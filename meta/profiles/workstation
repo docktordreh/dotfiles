@@ -5,7 +5,8 @@ doom
 X
 vim
 tmux
-i3
+xmobar
+xmonad
 polybar
 mpd
 vifm

@@ -3,7 +3,7 @@
 	name = valentin_lechner
 	signingkey = 9C489382
 [commit]
-	gpgsign = true
+#	gpgsign = true
 [gitlab]
 	user = valentin_lechner
 [pull]

@@ -1,9 +1,12 @@
-export EDITOR='emacsclient -cn'
-export VISUAL='emacsclient -cn'
-# ~/ Clean-up
-#export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
-#export LESSHISTFILE="-"
-#export XDG_CONFIG_HOME="$HOME/.config/"
-#export XDG_DATA_HOME="$HOME/.local/share"
-#export GNUPGHOME="$XDG_DATA_HOME/gnupg"
-#export ZDOTDIR="$HOME/.config/zsh"
+export EDITOR='emacs -nw'
+export VISUAL='emacs -nw'
+
+export XDG_DATA_HOME="$HOME/.local/share"
+
+export HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/history"
+
+export HISTSIZE=100000
+
+export SAVEHIST=$HISTSIZE
+
+export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"

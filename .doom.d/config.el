@@ -3,7 +3,7 @@
 (setq user-full-name "Valentin Lechner"
       user-mail-address "valentin_lechner@dismail.de")
 
-(server-start)
+;;(server-start)
 (require 'org-protocol)
 
 (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
@@ -94,9 +94,9 @@
 (add-to-list 'default-frame-alist '(alpha 90 90))
 
 (setq
- doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 24)
- doom-big-font (font-spec :family "FiraCode Nerd Font Mono" :size 36)
- doom-variable-pitch-font (font-spec :family "Vollkorn" :size 36)
+ doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 18)
+ doom-big-font (font-spec :family "FiraCode Nerd Font Mono" :size 24)
+ doom-variable-pitch-font (font-spec :family "ETBembo" :size 24)
  doom-serif-font (font-spec :family "Liberation Serif" :weight 'light))
 
 (setq doom-theme 'doom-snazzy)
@@ -111,6 +111,15 @@
 
 (setq
  projectile-project-search-path '("~/Projekte"))
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '(
+   (sh . t)
+   (plantuml . t)
+   (python . t)
+ )
+)
 
 (setq
  org-directory "~/Daten/cloud/tlaloc/org/"
@@ -129,25 +138,25 @@
   ;;org-superstar-headline-bullets-list '("#" "◉" "○" "✜" "✿""■" "◆" "▲" "▶" )
 )
 
- (custom-theme-set-faces
-  'user
-  '(variable-pitch ((t (:family "Vollkorn" :height 180 :weight thin))))
-  '(fixed-pitch ((t ( :family "Fira Code Retina" :height 160)))))
-
- (custom-theme-set-faces
-  'user
-  '(org-block ((t (:inherit fixed-pitch))))
-  '(org-code ((t (:inherit (shadow fixed-pitch)))))
-  '(org-document-info ((t (:foreground "dark violet"))))
-  '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
-  '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
-  '(org-link ((t (:foreground "royal blue" :underline t))))
-  '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
-  '(org-property-value ((t (:inherit fixed-pitch))) t)
-  '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
-  '(org-table ((t (:inherit fixed-pitch :foreground "#f1f1f0"))))
-  '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
-  '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
+;; (custom-theme-set-faces
+;;  'user
+;;  '(variable-pitch ((t (:family "Vollkorn" :height 180 :weight thin))))
+;;  '(fixed-pitch ((t ( :family "Fira Code Retina" :height 160)))))
+;;
+;; (custom-theme-set-faces
+;;  'user
+;;  '(org-block ((t (:inherit fixed-pitch))))
+;;  '(org-code ((t (:inherit (shadow fixed-pitch)))))
+;;  '(org-document-info ((t (:foreground "dark violet"))))
+;;  '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
+;;  '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
+;;  '(org-link ((t (:foreground "royal blue" :underline t))))
+;;  '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+;;  '(org-property-value ((t (:inherit fixed-pitch))) t)
+;;  '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+;;  '(org-table ((t (:inherit fixed-pitch :foreground "#f1f1f0"))))
+;;  '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
+;;  '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
 
 (setq org-hide-emphasis-markers t)
 
@@ -167,71 +176,71 @@
 
 (add-hook 'org-mode-hook 'variable-pitch-mode)
 
-(let* (
-       (variable-tuple
-        (cond (
-               (x-list-fonts "ETBembo") '(:font "ETBembo"))
-              ((x-list-fonts "Source Sans Pro") '(:font "Source Sans Pro"))
-              (nil
-               (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))
-              )
-        )
-       (headline `(:inherit default :weight bold :foreground "#5af78e"))
-       )
-
-  (custom-theme-set-faces
-   'user
-   `(org-level-8 ((t (
-                      :inherit default
-                      :weight bold
-                      :foreground "#ff6ac1"
-                      ,@variable-tuple))))
-   `(org-level-7 ((t (
-                      :inherit default
-                      :weight bold
-                      :foreground "#5af78e"
-                      ,@variable-tuple))))
-   `(org-level-6 ((t (
-                      :inherit default
-                      :weight bold
-                      :foreground "#57c7ff"
-                      ,@variable-tuple))))
-   `(org-level-5 ((t (
-                      :inherit default
-                      :weight bold
-                      :foreground "#ff5c57"
-                      ,@variable-tuple))))
-   `(org-level-4 ((t (
-                      :inherit default
-                      :weight bold
-                      :foreground "#9aeedf"
-                      ,@variable-tuple
-                      :height 1.1))))
-   `(org-level-3 ((t (
-                      :inherit default
-                      :weight bold
-                      :foreground "#f3f99d"
-                      ,@variable-tuple
-                      :height 1.25))))
-   `(org-level-2 ((t (
-                      :inherit default
-                      :weight bold
-                      :foreground "#ff6ac1"
-                      ,@variable-tuple
-                      :height 1.5))))
-   `(org-level-1 ((t (
-                      :inherit default
-                      :weight bold
-                      :foreground "#5af78e"
-                      ,@variable-tuple
-                      :height 1.75))))
-   `(org-document-title ((t (
-                             :inherit default
-                             :weight bold
-                             :foreground "#57c7ff"
-                             ,@variable-tuple
-                             :height 2.0
-                             :underline nil))))))
+;;(let* (
+;;       (variable-tuple
+;;        (cond (
+;;               (x-list-fonts "ETBembo") '(:font "ETBembo"))
+;;              ((x-list-fonts "Source Sans Pro") '(:font "Source Sans Pro"))
+;;              (nil
+;;               (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))
+;;              )
+;;        )
+;;       (headline `(:inherit default :weight bold :foreground "#5af78e"))
+;;       )
+;;
+;;  (custom-theme-set-faces
+;;   'user
+;;   `(org-level-8 ((t (
+;;                      :inherit default
+;;                      :weight bold
+;;                      :foreground "#ff6ac1"
+;;                      ,@variable-tuple))))
+;;   `(org-level-7 ((t (
+;;                      :inherit default
+;;                      :weight bold
+;;                      :foreground "#5af78e"
+;;                      ,@variable-tuple))))
+;;   `(org-level-6 ((t (
+;;                      :inherit default
+;;                      :weight bold
+;;                      :foreground "#57c7ff"
+;;                      ,@variable-tuple))))
+;;   `(org-level-5 ((t (
+;;                      :inherit default
+;;                      :weight bold
+;;                      :foreground "#ff5c57"
+;;                      ,@variable-tuple))))
+;;   `(org-level-4 ((t (
+;;                      :inherit default
+;;                      :weight bold
+;;                      :foreground "#9aeedf"
+;;                      ,@variable-tuple
+;;                      :height 1.1))))
+;;   `(org-level-3 ((t (
+;;                      :inherit default
+;;                      :weight bold
+;;                      :foreground "#f3f99d"
+;;                      ,@variable-tuple
+;;                      :height 1.25))))
+;;   `(org-level-2 ((t (
+;;                      :inherit default
+;;                      :weight bold
+;;                      :foreground "#ff6ac1"
+;;                      ,@variable-tuple
+;;                      :height 1.5))))
+;;   `(org-level-1 ((t (
+;;                      :inherit default
+;;                      :weight bold
+;;                      :foreground "#5af78e"
+;;                      ,@variable-tuple
+;;                      :height 1.75))))
+;;   `(org-document-title ((t (
+;;                             :inherit default
+;;                             :weight bold
+;;                             :foreground "#57c7ff"
+;;                             ,@variable-tuple
+;;                             :height 2.0
+;;                             :underline nil))))))
 
 (setq
  org-fontify-whole-heading-line t
@@ -561,12 +570,14 @@ Use a prefix arg to get regular RET. "
 
 (setq org-fontify-done-headline t)
 (custom-set-faces
- '(org-done ((t (:foreground "PaleGreen"
-                 :weight normal
-                 :strike-through t))))
- '(org-headline-done
-   ((((class color) (min-colors 16) (background dark))
-     (:foreground "LightSalmon" :strike-through t)))))
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(doom-modeline-buffer-modified ((t (:foreground "#57c7ff"))))
+ '(doom-modeline-evil-insert-state ((t (:weight bold :foreground "#339CDB"))))
+ '(org-done ((t (:foreground "PaleGreen" :weight normal :strike-through t))))
+ '(org-headline-done ((((class color) (min-colors 16) (background dark)) (:foreground "LightSalmon" :strike-through t)))))
 
 (global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key (kbd "<f12>") 'org-agenda-list)
@@ -726,11 +737,13 @@ Use a prefix arg to get regular RET. "
 
 (setq org-export-with-smart-quotes t)
 
+(setq org-export-default-language "de")
+
 (setq
  org-latex-pdf-process
  '("lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
    "biber %b"
-   "makeglossaries %f"
+   "makeglossaries $(echo %b | cut -f 1 -d '.')"
    "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
    "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 
@@ -813,6 +826,21 @@ Use a prefix arg to get regular RET. "
                ("\\paragraph{%s}" . "\\paragraph*{%s}")
                ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
+(add-to-list 'org-latex-classes
+             '("koma-book"
+               "\\documentclass{scrbook}
+ [NO-DEFAULT-PACKAGES]
+ [PACKAGES]
+ [EXTRA]
+\\newcommand{\\mboxparagraph}[1]{\\paragraph{#1}\\mbox{}\\\\}
+\\newcommand{\\mboxsubparagraph}[1]{\\subparagraph{#1}\\mbox{}\\\\}"
+               ("\\chapter{%s}" . "\\chapter*{%s}")
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\mboxparagraph{%s}" . "\\mboxparagraph*{%s}")
+               ("\\mboxsubparagraph{%s}" . "\\mboxsubparagraph*{%s}")))
+
 (setq org-latex-default-packages-alist
       '(
         ("" "float" nil)
@@ -857,9 +885,9 @@ citecolor=blue,filecolor=blue,menucolor=blue,urlcolor=blue"
         ("" "attachfile" nil)
     ))
 
-(setq
- org-export-in-background t
- org-export-async-init-file (concat doom-private-dir "init-org-async.el"))
+;;(setq
+;; org-export-in-background t
+;; org-export-async-init-file (concat doom-private-dir "init-org-async.el"))
 
 (after! org
   (add-to-list 'org-modules 'org-habit t))
@@ -900,3 +928,81 @@ citecolor=blue,filecolor=blue,menucolor=blue,urlcolor=blue"
 (after! yasnippet
   (push (expand-file-name "snippets/" doom-private-dir) yas-snippet-dirs))
 (yas-global-mode 1)
+
+(after! elfeed
+  (setq elfeed-search-filter "@1-month-ago +unread"))
+(setq elfeed-feeds
+  '("
+www.heise.de/rss/heise-top-atom.xml"
+    "
+www.heise.de/developer/rss/news-atom.xml"))
+
+(defun org-latex-publish-to-pdf (plist filename pub-dir)
+  "Publish an Org file to PDF (via LaTeX).
+
+FILENAME is the filename of the Org file to be published.  PLIST
+is the property list for the given project.  PUB-DIR is the
+publishing directory.
+
+Return output file name."
+  ;; Unlike to `org-latex-publish-to-latex', PDF file is generated
+  ;; in working directory and then moved to publishing directory.
+  (org-publish-attachment
+   plist
+   ;; Default directory could be anywhere when this function is
+   ;; called.  We ensure it is set to source file directory during
+   ;; compilation so as to not break links to external documents.
+   (let ((default-directory (file-name-directory filename)))
+     (org-latex-compile
+      (org-publish-org-to
+       'latex filename ".tex" plist (file-name-directory filename))))
+   pub-dir))
+(setq org-publish-timestamp-directory "/tmp/org-timestamps")
+(add-to-list 'org-publish-project-alist
+             '("publish-bachelorarbeit"
+               :base-directory "~/Daten/cloud/highq/thesis-bachelor/"
+               :base-extension "org"
+               :include ("thesis/thesis.org")
+               :exclude "\\.org$"
+               :publishing-directory "~/Daten/cloud/highq/AktuellerStand"
+               :publishing-function org-latex-publish-to-pdf))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ansi-color-names-vector
+   ["#fafafa" "#e45649" "#50a14f" "#986801" "#4078f2" "#a626a4" "#0184bc" "#383a42"])
+ '(custom-safe-themes
+   (quote
+    ("2f1518e906a8b60fac943d02ad415f1d8b3933a5a7f75e307e6e9a26ef5bf570" "99ea831ca79a916f1bd789de366b639d09811501e8c092c85b2cb7d697777f93" default)))
+ '(fci-rule-color "#383a42")
+ '(jdee-db-active-breakpoint-face-colors (cons "#f0f0f0" "#4078f2"))
+ '(jdee-db-requested-breakpoint-face-colors (cons "#f0f0f0" "#50a14f"))
+ '(jdee-db-spec-breakpoint-face-colors (cons "#f0f0f0" "#9ca0a4"))
+ '(objed-cursor-color "#e45649")
+ '(pdf-view-midnight-colors (cons "#383a42" "#fafafa"))
+ '(rustic-ansi-faces
+   ["#fafafa" "#e45649" "#50a14f" "#986801" "#4078f2" "#a626a4" "#0184bc" "#383a42"])
+ '(vc-annotate-background "#fafafa")
+ '(vc-annotate-color-map
+   (list
+    (cons 20 "#50a14f")
+    (cons 40 "#688e35")
+    (cons 60 "#807b1b")
+    (cons 80 "#986801")
+    (cons 100 "#ae7118")
+    (cons 120 "#c37b30")
+    (cons 140 "#da8548")
+    (cons 160 "#c86566")
+    (cons 180 "#b74585")
+    (cons 200 "#a626a4")
+    (cons 220 "#ba3685")
+    (cons 240 "#cf4667")
+    (cons 260 "#e45649")
+    (cons 280 "#d2685f")
+    (cons 300 "#c07b76")
+    (cons 320 "#ae8d8d")
+    (cons 340 "#383a42")
+    (cons 360 "#383a42")))
+ '(vc-annotate-very-old-color nil))
