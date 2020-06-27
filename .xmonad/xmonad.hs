@@ -5,7 +5,6 @@
 import XMonad
 import System.IO (hPutStrLn)
 import System.Exit (exitSuccess)
-import qualified XMonad.StackSet as W
 
     -- Actions
 import XMonad.Actions.CopyWindow (kill1, killAllOtherCopies)
@@ -27,7 +26,6 @@ import Data.Tree
 import Data.List (sortBy)
 import Data.Function (on)
 import Control.Monad (forM_, join)
-import XMonad.Util.Run (safeSpawn)
 import XMonad.Util.NamedWindows (getName)
 import qualified XMonad.StackSet as W
 import qualified Data.Tuple.Extra as TE
@@ -594,15 +592,15 @@ myManageHook = composeAll
      -- I'm doing it this way because otherwise I would have to write out
      -- the full name of my clickable workspaces, which would look like:
      -- doShift "<action xdotool super+8>gfx</action>"
-     [ className =? "obs"     --> doShift ( "video.obs" )
-     , title =? "firefox"     --> doShift ( "web.browser" )
-     , title =? "qutebrowser" --> doShift ( "web.browser" )
-     , className =? "mpv"     --> doShift ( "video.movie player" )
-     , className =? "vlc"     --> doShift ( "video.movie player" )
-     , className =? "Gimp"    --> doShift ( "graphics.gimp")
+     [ className =? "obs"     --> doShift  "video.obs" 
+     , title =? "firefox"     --> doShift  "web.browser" 
+     , title =? "qutebrowser" --> doShift  "web.browser"
+     , className =? "mpv"     --> doShift  "video.movie player"
+     , className =? "vlc"     --> doShift  "video.movie player"
+     , className =? "Gimp"    --> doShift  "graphics.gimp"
      , className =? "Gimp"    --> doFloat
      , title =? "Oracle VM VirtualBox Manager"     --> doFloat
-     , className =? "VirtualBox Manager" --> doShift  ( "dev.virtualization" )
+     , className =? "VirtualBox Manager" --> doShift   "dev.virtualization"
      , (className =? "firefox" <&&> resource =? "Dialog") --> doFloat
      ] <+> namedScratchpadManageHook myScratchPads
 
@@ -745,7 +743,6 @@ myScratchPads = [ NS "terminal" spawnTerm findTerm manageTerm
                  w = 0.9
                  t = 0.95 -h
                  l = 0.95 -w
-
 ------------------------------------------------------------------------
 -- KEYBINDINGS
 ------------------------------------------------------------------------
@@ -890,7 +887,7 @@ myKeys =
 -- MAIN
 ------------------------------------------------------------------------
 main :: IO ()
-main = do
+main =
     forM_ [".xmonad-workspace-log", ".xmonad-title-log"] $ \file -> do
     safeSpawn "mkfifo" ["/tmp/" ++ file]
     -- the xmonad, ya know...what the WM is named after!
