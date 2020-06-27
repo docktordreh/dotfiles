@@ -3,14 +3,20 @@ eval $(thefuck --alias)
 bindkey -v
 export KEYTIMEOUT=1
 
+
 # Enable autocompletions
-autoload -Uz compinit
+autoload -Uz compinit promptinit
+promptinit
+
 typeset -i updated_at=$(date +'%j' -r ~/.zcompdump 2>/dev/null || stat -f '%Sm' -t '%j' ~/.zcompdump 2>/dev/null)
+
 if [ $(date +'%j') != $updated_at ]; then
   compinit -i
 else
   compinit -C -i
 fi
+
+
 zmodload -i zsh/complist
 # Options
 setopt auto_cd # cd by typing directory name if it's not a command
@@ -91,11 +97,39 @@ esac
 # Load antibody plugin manager
 source <(antibody init)
 # Plugins
+antibody bundle mafredri/zsh-async
+antibody bundle sindresorhus/pure
 antibody bundle zsh-users/zsh-autosuggestions
 antibody bundle zsh-users/zsh-history-substring-search
 antibody bundle zsh-users/zsh-completions
 antibody bundle marzocchi/zsh-notify
 antibody bundle denysdovhan/spaceship-prompt
+SPACESHIP_PROMPT_ORDER=(
+  time          # Time stamps section
+  user          # Username section
+  dir           # Current directory section
+  host          # Hostname section
+  git           # Git section (git_branch + git_status)
+  package       # Package version
+  node          # Node.js section
+  ruby          # Ruby section
+  elixir        # Elixir section
+  swift         # Swift section
+  golang        # Go section
+  haskell       # Haskell Stack section
+  docker        # Docker section
+  venv          # virtualenv section
+  conda         # conda virtualenv section
+  pyenv         # Pyenv section
+  kubectl       # Kubectl context section
+  exec_time     # Execution time
+  line_sep      # Line break
+  battery       # Battery level and status
+  vi_mode       # Vi-mode indicator
+  jobs          # Background jobs indicator
+  exit_code     # Exit code section
+  char          # Prompt character
+)
 # Keybindings
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
