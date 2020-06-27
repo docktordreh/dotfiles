@@ -5,3 +5,5 @@ bookmarks
 *.png
 .doom.d/misc
 cronjobs/.croninfo/batteryinfo
+.zcompdump
+batteryinfo

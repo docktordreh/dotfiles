@@ -1,7 +1,7 @@
 #!/bin/sh
 
 TOKEN="0e0e18127e62d2f28481071712d7eb45b99c4dda"
-CITY=""
+CITY="freiburg"
 
 API="https://api.waqi.info/feed"
 
@@ -23,19 +23,19 @@ if [ -n "$aqi" ]; then
         aqi=$(echo "$aqi" | jq '.data.aqi')
 
         if [ "$aqi" -lt 50 ]; then
-            aqi_cl="%{F009966}滑 ""$aqi""%{F444444}"
+            aqi_cl="%{F009966}滑 ""$aqi""%{Ff1f1f1}"
         elif [ "$aqi" -lt 100 ]; then
-	    aqi_cl="%{Fffde33}滑 ""$aqi""%{F444444}"            
+        aqi_cl="%{Fffde33}滑 ""$aqi""%{Ff1f1f1}"
         elif [ "$aqi" -lt 150 ]; then
-	    aqi_cl="%{Fff9933}滑 ""$aqi""%{F444444}"
+        aqi_cl="%{Fff9933}滑 ""$aqi""%{Ff1f1f1}"
         elif [ "$aqi" -lt 200 ]; then
-	    aqi_cl="%{Fcc0033}滑 ""$aqi""%{F444444}"
+        aqi_cl="%{Fcc0033}滑 ""$aqi""%{Ff1f1f1}"
         elif [ "$aqi" -lt 300 ]; then
-	    aqi_cl="%{F660099}滑 ""$aqi""%{F444444}"
+        aqi_cl="%{F660099}滑 ""$aqi""%{Ff1f1f1}"
         else
-	    aqi_cl="%{F7e0023}滑 ""$aqi""%{F444444}"
+        aqi_cl="%{F7e0023}滑 ""$aqi""%{Ff1f1f1}"
         fi
-	echo "$aqi_cl"
+    echo "$aqi_cl"
     else
         echo "$aqi" | jq -r '.data'
     fi

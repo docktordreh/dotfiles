@@ -2,12 +2,15 @@ resolver: lts-16.2
 
 packages:
 - extra-git
-- xmobar-git
 - xmonad-git
 - xmonad-contrib-git
 - xmonad-extras-git
 extra-deps: 
-- Cabal-3.0.2.0
+- Cabal-3.2.0.0
+- text-1.2.4.0
+- binary-0.8.8.0
+- deepseq-1.4.4.0
+- hint-0.9.0.3
 - ghc-boot-8.8.3
 - time-1.9.3
 - netlink-1.1.1.0
@@ -35,7 +38,7 @@ extra-deps:
 - libmpd-0.9.1.0
 - http-conduit-2.3.7.3
 - http-types-0.12.3
-- dbus-1.2.1
+- dbus-1.2.7
 - dbus-hslogger-0.1.0.1
 - gi-dbusmenu-0.4.1
 - gi-dbusmenugtk3-0.4.1
@@ -60,14 +63,14 @@ extra-deps:
 - time-units-1.0.0
 - xml-helpers-1.0.0
 # Override default flag values for local packages and extra-deps
-flags: 
-  xmobar:
-    with_weather: true
-    with_utf8: true
-    with_xft: true
-    with_inotify: true
-    with_mpd: true
-
+flags:  {}
+#  xmobar:
+#    with_weather: true
+#    with_utf8: true
+#    with_xft: true
+#    with_inotify: true
+#    with_mpd: true
+#
 # Extra package databases containing global packages
 # extra-package-dbs: []
 

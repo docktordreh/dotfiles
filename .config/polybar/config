@@ -15,19 +15,19 @@ include-file = ~/.config/polybar/modules.d/i3.conf
 include-file = ~/.config/polybar/modules.d/pbweather.conf
 include-file = ~/.config/polybar/modules.d/wlan.conf
 include-file = ~/.config/polybar/modules.d/pingrtt.conf
+include-file = ~/.config/polybar/modules.d/xmonad.conf
 
 [bar/top]
 inherit             = bar/base
 top                 = true
 modules-left        = temperature cpu memory pingrtt
-modules-center      = 
+modules-center      = mpd
 modules-right       = pbweather airquality-index date fbattery
 
 [bar/bottom]
 inherit             = bar/base
 tray-position       = right
 bottom              = true
-modules-left        = 
-modules-center      = i3
+modules-left        =
+modules-center      = workspaces-xmonad title-xmonad
 modules-right       = eth fwlan
-
