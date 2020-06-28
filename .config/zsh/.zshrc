@@ -8,8 +8,7 @@ export KEYTIMEOUT=1
 
 
 # Enable autocompletions
-autoload -Uz compinit promptinit
-promptinit
+autoload -Uz compinit
 
 typeset -i updated_at=$(date +'%j' -r ~/.zcompdump 2>/dev/null || stat -f '%Sm' -t '%j' ~/.zcompdump 2>/dev/null)
 
@@ -130,6 +129,8 @@ antibody bundle sindresorhus/pure
 PURE_PROMPT_SYMBOL="λ"
 zstyle ':prompt:pure:prompt:error' color red
 zstyle ':prompt:pure:prompt:success' color green
+autoload -U promptinit
+promptinit
 prompt pure
 # antibody bundle denysdovhan/spaceship-prompt
 # SPACESHIP_PROMPT_ORDER=(

@@ -7,3 +7,4 @@ bookmarks
 cronjobs/.croninfo/batteryinfo
 .zcompdump
 batteryinfo
+.config/zsh/.zcompdump
