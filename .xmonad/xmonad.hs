@@ -150,8 +150,9 @@ myStartupHook = do
           spawnOnce "/usr/bin/emacs --daemon &"
           setWMName "LG3D"
           spawnOnce "nextcloud &"
-          spawnOnce "flameshot"
-          spawnOnce "$HOME/.config/polybar/launch.sh"
+          spawnOnce "flameshot &"
+          spawnOnce "$HOME/.config/polybar/launch.sh &"
+          spawnOnce "dunst &"
 
 ------------------------------------------------------------------------
 -- GRID SELECT
