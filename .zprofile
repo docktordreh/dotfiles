@@ -1,5 +1,7 @@
 keychain --quiet --eval --noask --agents ssh,gpg id_rsa | source /dev/stdin
 
+export PYENV_ROOT=$HOME/.pyenv
+
 # Android SDK etc
 [ -d "$HOME/Android/Sdk" ]  && export ANDROID_HOME="$HOME/Android/Sdk"
 
@@ -14,6 +16,7 @@ keychain --quiet --eval --noask --agents ssh,gpg id_rsa | source /dev/stdin
 [ -d "$HOME/.local/bin" ]   && PATH="$HOME/.local/bin:$PATH"
 # cabal
 [ -d "$HOME/.cabal/bin" ]   && PATH="$HOME/.cabal/bin:$PATH"
+[ -d "$PYENV_ROOT/bin"  ]   && PATH="$PYENV_ROOT/bin:$PATH"
 export PATH
 
 export EDITOR='emacs -nw'
@@ -24,3 +27,4 @@ export HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/history"
 export HISTSIZE=100000
 export SAVEHIST=$HISTSIZE
 export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
+
