@@ -145,7 +145,6 @@ windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace
 ------------------------------------------------------------------------
 myStartupHook :: X ()
 myStartupHook = do
-          spawnOnce "xcompmgr &"
           spawnOnce "nm-applet &"
           spawnOnce "/usr/bin/emacs --daemon &"
           setWMName "LG3D"
@@ -153,6 +152,7 @@ myStartupHook = do
           spawnOnce "flameshot &"
           spawnOnce "$HOME/.config/polybar/launch.sh &"
           spawnOnce "dunst &"
+	  spawnOnce "keepassxc &"
 
 ------------------------------------------------------------------------
 -- GRID SELECT
@@ -611,7 +611,7 @@ myManageHook = composeAll
 -- Sets opacity for inactive (unfocused) windows.
 myLogHook :: X ()
 myLogHook = fadeInactiveLogHook fadeAmount
-  where fadeAmount = 0.8
+  where fadeAmount = 1.0
 
 
 ------------------------------------------------------------------------
