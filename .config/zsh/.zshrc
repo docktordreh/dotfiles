@@ -37,8 +37,6 @@ setopt hist_reduce_blanks
 setopt inc_append_history
 # shares hist between instances
 setopt share_history
-# autocorrect commands
-setopt correct_all 
 # allow comments in interactive shells
 setopt interactive_comments 
 
@@ -132,33 +130,6 @@ zstyle ':prompt:pure:prompt:success' color green
 autoload -U promptinit
 promptinit
 prompt pure
-# antibody bundle denysdovhan/spaceship-prompt
-# SPACESHIP_PROMPT_ORDER=(
-#   time          # Time stamps section
-#   user          # Username section
-#   dir           # Current directory section
-#   host          # Hostname section
-#   git           # Git section (git_branch + git_status)
-#   package       # Package version
-#   node          # Node.js section
-#   ruby          # Ruby section
-#   elixir        # Elixir section
-#   swift         # Swift section
-#   golang        # Go section
-#   haskell       # Haskell Stack section
-#   docker        # Docker section
-#   venv          # virtualenv section
-#   conda         # conda virtualenv section
-#   pyenv         # Pyenv section
-#   kubectl       # Kubectl context section
-#   exec_time     # Execution time
-#   line_sep      # Line break
-#   battery       # Battery level and status
-#   vi_mode       # Vi-mode indicator
-#   jobs          # Background jobs indicator
-#   exit_code     # Exit code section
-#   char          # Prompt character
-# )
 # # Keybindings
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
