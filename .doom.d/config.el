@@ -3,9 +3,6 @@
 (setq user-full-name "Valentin Lechner"
       user-mail-address "valentin_lechner@dismail.de")
 
-;;(server-start)
-(require 'org-protocol)
-
 (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
 
 (add-to-list 'auto-mode-alist '("'" . org-mode) t)
@@ -77,6 +74,9 @@
 (setenv "PATH" (concat (getenv "PATH") ":/home/valentin/.cargo/bin"))
 (setq exec-path (append exec-path '("/home/valentin/.cargo/bin")))
 
+(setenv "PATH" (concat (getenv "PATH") ":/home/valentin/.pyenv/bin"))
+(setq exec-path (append exec-path '("/home/valentin/.pyenv/bin")))
+
 (setq doom-fallback-buffer-name "► Doom"
       +doom-dashboard-name "► Doom")
 
@@ -96,7 +96,7 @@
 (setq
  doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 18)
  doom-big-font (font-spec :family "FiraCode Nerd Font Mono" :size 24)
- doom-variable-pitch-font (font-spec :family "ETBembo" :size 24)
+ doom-variable-pitch-font (font-spec :family "GaramondNo8" :size 24)
  doom-serif-font (font-spec :family "Liberation Serif" :weight 'light))
 
 (setq doom-theme 'doom-snazzy)
@@ -106,6 +106,8 @@
 (custom-set-faces! '(doom-modeline-evil-insert-state
                      :weight bold
                      :foreground "#339CDB"))
+
+(global-set-key (kbd "C-c e") 'org-latex-export-to-pdf)
 
 (map! :map evil-window-map "SPC" #'rotate-layout)
 
@@ -133,30 +135,93 @@
 
 (setq
   org-ellipsis " ▼ "
-  org-superstar-headline-bullets-list '("#" "■" "◆" "▲" "▶")
+  org-superstar-headline-bullets-list '("✿" "■" "◆" "▲" "#")
   ;; org-superstar-headline-bullets-list '("✡" "⎈" "✽" "✲" "✱" "✻" "✼" "✽" "✾" "✿" "❀" "❁" "❂" "❃" "❄" "❅" "❆" "❇")
   ;;org-superstar-headline-bullets-list '("#" "◉" "○" "✜" "✿""■" "◆" "▲" "▶" )
 )
 
-;; (custom-theme-set-faces
-;;  'user
-;;  '(variable-pitch ((t (:family "Vollkorn" :height 180 :weight thin))))
-;;  '(fixed-pitch ((t ( :family "Fira Code Retina" :height 160)))))
-;;
-;; (custom-theme-set-faces
-;;  'user
-;;  '(org-block ((t (:inherit fixed-pitch))))
-;;  '(org-code ((t (:inherit (shadow fixed-pitch)))))
-;;  '(org-document-info ((t (:foreground "dark violet"))))
-;;  '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
-;;  '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
-;;  '(org-link ((t (:foreground "royal blue" :underline t))))
-;;  '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
-;;  '(org-property-value ((t (:inherit fixed-pitch))) t)
-;;  '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
-;;  '(org-table ((t (:inherit fixed-pitch :foreground "#f1f1f0"))))
-;;  '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
-;;  '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
+ (custom-set-faces
+  '(org-block
+    ((t (:inherit fixed-pitch)))
+    )
+  '(org-code
+    ((t (:inherit (shadow fixed-pitch))))
+    )
+  '(org-document-info
+    ((t (:foreground "dark violet")))
+    )
+  '(org-document-info-keyword
+    ((t (:inherit (shadow fixed-pitch))))
+    )
+  '(org-indent
+    ((t (:inherit (org-hide fixed-pitch))))
+    )
+  '(org-link
+    ((t (:foreground "royal blue" :underline t)))
+    )
+  '(org-meta-line
+    ((t (:inherit (font-lock-comment-face fixed-pitch))))
+    )
+  '(org-property-value
+    ((t (:inherit fixed-pitch)))
+    t)
+  '(org-special-keyword
+    ((t (:inherit (font-lock-comment-face fixed-pitch))))
+    )
+  '(org-table
+    ((t (:inherit fixed-pitch :foreground "#f1f1f0")))
+              )
+  '(org-tag
+    ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8)))
+    )
+  '(org-verbatim
+    ((t (:inherit (shadow fixed-pitch))))
+    )
+  `(org-level-8 ((t (
+                      :inherit default
+                      :weight bold
+                      :foreground "#ff6ac1"
+                      ))))
+  `(org-level-7 ((t (
+                     :inherit default
+                     :weight bold
+                     :foreground "#5af78e"))))
+  `(org-level-6 ((t (
+                     :inherit default
+                     :weight bold
+                     :foreground "#57c7ff"
+                     ))))
+  `(org-level-5 ((t (
+                     :inherit default
+                     :weight bold
+                     :foreground "#ff5c57"
+                     ))))
+  `(org-level-4 ((t (
+                     :inherit default
+                     :weight bold
+                     :foreground "#9aeedf"
+                     :height 1.1))))
+   `(org-level-3 ((t (
+                      :inherit default
+                      :weight bold
+                      :foreground "#f3f99d"
+                      :height 1.25))))
+   `(org-level-2 ((t (
+                      :inherit default
+                      :weight bold
+                      :foreground "#ff6ac1"
+                      :height 1.5))))
+   `(org-level-1 ((t (
+                      :inherit default
+                      :weight bold
+                      :foreground "#5af78e"
+                      :height 1.75))))
+   `(org-document-title ((t (
+                             :inherit default
+                             :weight bold
+                             :foreground "#57c7ff"
+                             :height 2.0
+                             :underline nil)))))
 
 (setq org-hide-emphasis-markers t)
 
@@ -175,72 +240,6 @@
 (add-hook 'org-mode-hook 'variable-pitch-mode)
 
 (add-hook 'org-mode-hook 'variable-pitch-mode)
-
-;;(let* (
-;;       (variable-tuple
-;;        (cond (
-;;               (x-list-fonts "ETBembo") '(:font "ETBembo"))
-;;              ((x-list-fonts "Source Sans Pro") '(:font "Source Sans Pro"))
-;;              (nil
-;;               (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))
-;;              )
-;;        )
-;;       (headline `(:inherit default :weight bold :foreground "#5af78e"))
-;;       )
-;;
-;;  (custom-theme-set-faces
-;;   'user
-;;   `(org-level-8 ((t (
-;;                      :inherit default
-;;                      :weight bold
-;;                      :foreground "#ff6ac1"
-;;                      ,@variable-tuple))))
-;;   `(org-level-7 ((t (
-;;                      :inherit default
-;;                      :weight bold
-;;                      :foreground "#5af78e"
-;;                      ,@variable-tuple))))
-;;   `(org-level-6 ((t (
-;;                      :inherit default
-;;                      :weight bold
-;;                      :foreground "#57c7ff"
-;;                      ,@variable-tuple))))
-;;   `(org-level-5 ((t (
-;;                      :inherit default
-;;                      :weight bold
-;;                      :foreground "#ff5c57"
-;;                      ,@variable-tuple))))
-;;   `(org-level-4 ((t (
-;;                      :inherit default
-;;                      :weight bold
-;;                      :foreground "#9aeedf"
-;;                      ,@variable-tuple
-;;                      :height 1.1))))
-;;   `(org-level-3 ((t (
-;;                      :inherit default
-;;                      :weight bold
-;;                      :foreground "#f3f99d"
-;;                      ,@variable-tuple
-;;                      :height 1.25))))
-;;   `(org-level-2 ((t (
-;;                      :inherit default
-;;                      :weight bold
-;;                      :foreground "#ff6ac1"
-;;                      ,@variable-tuple
-;;                      :height 1.5))))
-;;   `(org-level-1 ((t (
-;;                      :inherit default
-;;                      :weight bold
-;;                      :foreground "#5af78e"
-;;                      ,@variable-tuple
-;;                      :height 1.75))))
-;;   `(org-document-title ((t (
-;;                             :inherit default
-;;                             :weight bold
-;;                             :foreground "#57c7ff"
-;;                             ,@variable-tuple
-;;                             :height 2.0
-;;                             :underline nil))))))
 
 (setq
  org-fontify-whole-heading-line t
@@ -550,7 +549,9 @@ Use a prefix arg to get regular RET. "
 (global-set-key (kbd "C-c o")
   (lambda () (interactive) (find-file (concat org-directory "refile.org"))))
 
-(setq org-agenda-files (list org-directory))
+(setq org-agenda-files (list
+                        org-directory
+                        "~/Daten/cloud/highq/thesis-bachelor/org"))
 
 (defun org-summary-todo (n-done n-not-done)
   "Switch entry to DONE when all subentries are done, to TODO otherwise."
@@ -570,14 +571,12 @@ Use a prefix arg to get regular RET. "
 
 (setq org-fontify-done-headline t)
 (custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(doom-modeline-buffer-modified ((t (:foreground "#57c7ff"))))
- '(doom-modeline-evil-insert-state ((t (:weight bold :foreground "#339CDB"))))
- '(org-done ((t (:foreground "PaleGreen" :weight normal :strike-through t))))
- '(org-headline-done ((((class color) (min-colors 16) (background dark)) (:foreground "LightSalmon" :strike-through t)))))
+ '(org-done ((t (:foreground "PaleGreen"
+                 :weight normal
+                 :strike-through t))))
+ '(org-headline-done
+   ((((class color) (min-colors 16) (background dark))
+     (:foreground "LightSalmon" :strike-through t)))))
 
 (global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key (kbd "<f12>") 'org-agenda-list)
@@ -743,7 +742,6 @@ Use a prefix arg to get regular RET. "
  org-latex-pdf-process
  '("lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
    "biber %b"
-   "makeglossaries $(echo %b | cut -f 1 -d '.')"
    "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
    "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 
@@ -841,64 +839,68 @@ Use a prefix arg to get regular RET. "
                ("\\mboxparagraph{%s}" . "\\mboxparagraph*{%s}")
                ("\\mboxsubparagraph{%s}" . "\\mboxsubparagraph*{%s}")))
 
-(setq org-latex-default-packages-alist
-      '(
-        ("" "float" nil)
-        ("" "booktabs" nil)
-        ("" "lscape" nil)
-        ("" "hyphenat" nil)
-        ;; drawing
-        ("" "microtype" nil)
-        ("" "tikz" nil)
-        ;; this is for having good fonts
-        ("" "lmodern" nil)
-        ;; This makes standard margins
-        ("left=3.0cm, right=3.0cm,top=2.5cm,bottom=3cm" "geometry" nil)
-        ("" "graphicx" t)
-        ("" "longtable" nil)
-        ("" "float" nil)
-        ("" "wrapfig" nil)      ;makes it possible to wrap text around figures
-        ("" "rotating" nil)
-        ("normalem" "ulem" t)
-        ;; These provide math symbols
-        ("" "amsmath" t)
-        ("" "textcomp" t)
-        ("" "marvosym" t)
-        ("" "wasysym" t)
-        ("" "amssymb" t)
-        ("" "amsmath" t)
-        ("theorems, skins" "tcolorbox" t)
-        ;; used for marking up chemical formulars
-        ("version=3" "mhchem" t)
-        ("numbers,super,sort&compress" "natbib" nil)
-        ("" "natmove" nil)
-        ("" "url" nil)
-        ;; this is used for syntax highlighting of code
-        ("cache=false" "minted" nil)
-        ("" "listings" nil)
-        ("linktocpage,pdfstartview=FitH,colorlinks,
-linkcolor=blue,anchorcolor=blue,
-citecolor=blue,filecolor=blue,menucolor=blue,urlcolor=blue"
-         "hyperref" nil)
-        ("onehalfspacing" "setspace" nil)
-        ;; enables you to embed files in pdfs
-        ("" "attachfile" nil)
-    ))
+;;(setq org-latex-default-packages-alist
+;;      '(
+;;        ("" "float" nil)
+;;        ("" "booktabs" nil)
+;;        ("" "lscape" nil)
+;;        ("" "hyphenat" nil)
+;;        ;; drawing
+;;        ("" "microtype" nil)
+;;        ("" "tikz" nil)
+;;        ;; this is for having good fonts
+;;        ("" "lmodern" nil)
+;;        ;; This makes standard margins
+;;        ("left=3.0cm, right=3.0cm,top=2.5cm,bottom=3cm" "geometry" nil)
+;;        ("" "graphicx" t)
+;;        ("" "longtable" nil)
+;;        ("" "float" nil)
+;;        ("" "wrapfig" nil)      ;makes it possible to wrap text around figures
+;;        ("" "rotating" nil)
+;;        ("normalem" "ulem" t)
+;;        ;; These provide math symbols
+;;        ("" "amsmath" t)
+;;        ("" "textcomp" t)
+;;        ("" "marvosym" t)
+;;        ("" "wasysym" t)
+;;        ("" "amssymb" t)
+;;        ("" "amsmath" t)
+;;        ("theorems, skins" "tcolorbox" t)
+;;        ;; used for marking up chemical formulars
+;;        ("version=3" "mhchem" t)
+;;        ("numbers,super,sort&compress" "natbib" nil)
+;;        ("" "natmove" nil)
+;;        ("" "url" nil)
+;;        ;; this is used for syntax highlighting of code
+;;        ("cache=false" "minted" nil)
+;;        ("" "listings" nil)
+;;        ("linktocpage,pdfstartview=FitH,colorlinks,
+;;linkcolor=RoyalBlue,anchorcolor=RoyalBlue,
+;;citecolor=RoyalBlue,filecolor=RoyalBlue,menucolor=RoyalBlue,urlcolor=RoyalBlue"
+;;         "hyperref" nil)
+;;        ("onehalfspacing" "setspace" nil)
+;;        ;; enables you to embed files in pdfs
+;;        ("" "attachfile" nil)
+;;    ))
 
-;;(setq
-;; org-export-in-background t
-;; org-export-async-init-file (concat doom-private-dir "init-org-async.el"))
+(setq org-latex-listings 'minted)
+
+(setq
+ org-export-in-background t
+ org-export-async-init-file (concat doom-private-dir "init-org-async.el"))
 
 (after! org
   (add-to-list 'org-modules 'org-habit t))
 
 (eval-after-load "tex"
   '(add-to-list 'TeX-command-list
-                '("LuaLatex + Biber" "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-   "biber %b"
-   "makeglossaries %f"
-   "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-   "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f") t))
+                '("LuaLatex + Biber"
+                  "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+                  "biber %b"
+                  "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+                  "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f")
+                t)
+  )
 (setq TeX-command-default "LuaLatex + Biber")
 
 (setq magit-repository-directories '(("~/Projekte" . 2)))
@@ -966,43 +968,226 @@ Return output file name."
                :exclude "\\.org$"
                :publishing-directory "~/Daten/cloud/highq/AktuellerStand"
                :publishing-function org-latex-publish-to-pdf))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-names-vector
-   ["#fafafa" "#e45649" "#50a14f" "#986801" "#4078f2" "#a626a4" "#0184bc" "#383a42"])
- '(custom-safe-themes
+ '(safe-local-variable-values
    (quote
-    ("2f1518e906a8b60fac943d02ad415f1d8b3933a5a7f75e307e6e9a26ef5bf570" "99ea831ca79a916f1bd789de366b639d09811501e8c092c85b2cb7d697777f93" default)))
- '(fci-rule-color "#383a42")
- '(jdee-db-active-breakpoint-face-colors (cons "#f0f0f0" "#4078f2"))
- '(jdee-db-requested-breakpoint-face-colors (cons "#f0f0f0" "#50a14f"))
- '(jdee-db-spec-breakpoint-face-colors (cons "#f0f0f0" "#9ca0a4"))
- '(objed-cursor-color "#e45649")
- '(pdf-view-midnight-colors (cons "#383a42" "#fafafa"))
- '(rustic-ansi-faces
-   ["#fafafa" "#e45649" "#50a14f" "#986801" "#4078f2" "#a626a4" "#0184bc" "#383a42"])
- '(vc-annotate-background "#fafafa")
- '(vc-annotate-color-map
-   (list
-    (cons 20 "#50a14f")
-    (cons 40 "#688e35")
-    (cons 60 "#807b1b")
-    (cons 80 "#986801")
-    (cons 100 "#ae7118")
-    (cons 120 "#c37b30")
-    (cons 140 "#da8548")
-    (cons 160 "#c86566")
-    (cons 180 "#b74585")
-    (cons 200 "#a626a4")
-    (cons 220 "#ba3685")
-    (cons 240 "#cf4667")
-    (cons 260 "#e45649")
-    (cons 280 "#d2685f")
-    (cons 300 "#c07b76")
-    (cons 320 "#ae8d8d")
-    (cons 340 "#383a42")
-    (cons 360 "#383a42")))
- '(vc-annotate-very-old-color nil))
+    ((eval ap/org-call-src-block "configure-fitness-buffer")
+     (eval setq-local org-confirm-babel-evaluate
+           (lambda
+             (lang body)
+             (not
+              (or
+               (string= lang "python")
+               (string= lang "emacs-lisp")))))
+     (org-export-allow-bind-keywords . t)))))
+
+(require 'org-ref)
+
+(defcustom ox-word-pandoc-executable "pandoc"
+  "Path to the pandoc executable.")
+
+
+(defun ox-export-get-pandoc-version ()
+  "Returns the major version of pandoc.
+Assumes the version command returns something like \"pandoc
+2.7.8\" and extracts the substring."
+  (string-to-number
+   (substring (shell-command-to-string (format "%s --version" ox-word-pandoc-executable)) 7 8)))
+
+
+(defun ox-export-call-pandoc-tex-to-docx (biboption csl tex-file docx-file)
+  "Run pandoc to convert the exported tex file to docx."
+  (let* ((pandoc-version (ox-export-get-pandoc-version))
+         (pandoc-command-template
+          (if (>= pandoc-version 2)
+              "%s -F pandoc-crossref -s %s%s\"%s\" --to=docx -o \"%s\""
+            "%s -s -S %s%s\"%s\" -o \"%s\""))
+     (pandoc-command (format pandoc-command-template ox-word-pandoc-executable biboption csl tex-file docx-file)))
+    (message "Running %S" pandoc-command)
+    (shell-command pandoc-command)))
+
+
+(defun ox-export-call-pandoc-tex-to-html (biboption csl tex-file html-file)
+  "Run pandoc to convert the exported tex file to html."
+  (let* ((pandoc-version (ox-export-get-pandoc-version))
+         (pandoc-command-template
+          (if (>= pandoc-version 2)
+              "%s -s %s%s\"%s\" --to=html+smart -o \"%s\""
+            "%s -s -S %s%s\"%s\" -o \"%s\""))
+     (pandoc-command (format pandoc-command-template ox-word-pandoc-executable biboption csl tex-file html-file)))
+    (message "running %s" pandoc-command)
+    (shell-command pandoc-command)))
+
+
+(defun ox-export-via-latex-pandoc-to-docx-and-open (&optional async subtreep visible-only body-only options)
+  "Export the current org file as a docx via LaTeX."
+  (interactive)
+  (let* ((bibfiles (mapcar 'expand-file-name (org-ref-find-bibliography)))
+     (temp-bib)
+     (bibtex-entries)
+     biboption
+     csl
+     ;; this is probably a full path
+     (current-file (buffer-file-name))
+     (basename (file-name-sans-extension current-file))
+     (tex-file (concat basename ".tex"))
+     (docx-file (concat basename ".docx")))
+
+    (save-buffer)
+
+    ;; I make a temp bibfile because my big one causes pandoc to choke. This
+    ;; should only create a file with the required entries.
+    (when bibfiles
+      (setq bibtex-entries (let* ((bibtex-files bibfiles)
+                  (keys (reverse (org-ref-get-bibtex-keys)))
+                  (bibtex-entry-kill-ring-max (length keys))
+                  (bibtex-entry-kill-ring '()))
+
+                 (save-window-excursion
+                   (cl-loop for key in keys
+                    do
+                    (bibtex-search-entry key t)
+                    (bibtex-kill-entry t)))
+                 (mapconcat
+                  'identity
+                  bibtex-entry-kill-ring
+                  "\n\n"))
+        temp-bib (make-temp-file "ox-word-" nil ".bib")
+        biboption (format " --bibliography=%s " temp-bib))
+      (with-temp-file temp-bib
+    (insert bibtex-entries)))
+
+    (setq csl (cdr (assoc "PANDOC-CSL"
+              (org-element-map (org-element-parse-buffer) 'keyword
+                (lambda (key) (cons
+                       (org-element-property :key key)
+                       (org-element-property :value key)))))))
+    (if csl (setq csl (format " --csl=%s " csl))
+      (setq csl " "))
+
+    (org-latex-export-to-latex async subtreep visible-only body-only options)
+    ;; Now we do some post-processing on the tex-file. pandoc does not seem to
+    ;; put numbers on tables and figures. Here we do it manually. If there is a
+    ;; better way to get pandoc to do this, I prefer to remove this code! Tables
+    ;; first.
+    (let* ((table-regex "\\\\begin{table}.*
+\\\\caption{\\(?1:\\(?2:.*\\)\\\\label{\\(?3:.*\\)}\\)}")
+           (buf (find-file-noselect tex-file))
+           (i 0)
+           labels)
+      (with-current-buffer buf
+        (goto-char (point-min))
+        (while (re-search-forward table-regex nil t)
+          (incf i)
+          (push (cons (match-string 3) i) labels)
+          (replace-match (format "Table %d. \\2" i) nil nil nil 1))
+    ;; Now replace the refs.
+    (goto-char (point-min))
+    (while (re-search-forward "\\\\ref{\\(?1:.*?\\)}" nil t)
+      (when (cdr (assoc (match-string 1) labels))
+        (replace-match (format "%d" (cdr (assoc (match-string 1) labels))))))
+        (save-buffer))
+      (message "done with tables."))
+
+    ;; Now figures. We want to find the labels, and then replace the ref links.
+    (let* ((fig-regex "includegraphics.*
+\\\\caption{\\(?1:.*\\)\\(?2:\\\\label{\\(?3:.*\\)}\\)"
+              ;; "\\includegraphics.*
+              ;; \\\\caption{\\(?3:\\(?1:.*\\)\\\\label{\\(?2:.*\\)}\\)}"
+              )
+       (buf (find-file-noselect tex-file))
+       (i 0)
+       labels)
+      (with-current-buffer buf
+    (goto-char (point-min))
+    (while (re-search-forward fig-regex nil t)
+      (incf i)
+      (push (cons (match-string 3) i) labels)
+      (replace-match (format "Figure %d. \\1" i) nil nil nil 3))
+        ;; Now replace the refs.
+        (goto-char (point-min))
+        (while (re-search-forward "\\\\ref{\\(?1:.*?\\)}" nil t)
+          (when (cdr (assoc (match-string 1) labels))
+            (replace-match (format "%d" (cdr (assoc (match-string 1) labels))))))
+    (save-buffer)
+    (kill-buffer buf)))
+
+
+    (when (file-exists-p docx-file) (delete-file docx-file))
+    (ox-export-call-pandoc-tex-to-docx biboption csl tex-file docx-file)
+    (when (file-exists-p temp-bib)
+      (delete-file temp-bib))
+    (org-open-file docx-file '(16))))
+
+
+(defun ox-export-via-latex-pandoc-to-html-and-open (&optional async subtreep visible-only body-only options)
+  "Export the current org file as a html via LaTeX."
+  (interactive)
+  (let* ((bibfile (expand-file-name (car (org-ref-find-bibliography))))
+     (temp-bib)
+     (bibtex-entries)
+     biboption
+     csl
+     ;; this is probably a full path
+     (current-file (buffer-file-name))
+     (basename (file-name-sans-extension current-file))
+     (tex-file (concat basename ".tex"))
+     (html-file (concat basename ".html")))
+
+    (save-buffer)
+
+    ;; I make a temp bibfile because my big one causes pandoc to choke. This
+    ;; should only create a file with the required entries.
+    (when bibfile
+      (setq bibtex-entries (let* ((bibtex-files (org-ref-find-bibliography))
+                  (keys (reverse (org-ref-get-bibtex-keys)))
+                  (bibtex-entry-kill-ring-max (length keys))
+                  (bibtex-entry-kill-ring '()))
+
+                 (save-window-excursion
+                   (cl-loop for key in keys
+                    do
+                    (bibtex-search-entry key t)
+                    (bibtex-kill-entry t)))
+                 (mapconcat
+                  'identity
+                  bibtex-entry-kill-ring
+                  "\n\n"))
+        temp-bib (make-temp-file "ox-html-" nil ".bib")
+        biboption (format " --bibliography=%s " temp-bib))
+      (with-temp-file temp-bib
+    (insert bibtex-entries)))
+
+    (setq csl (cdr (assoc "PANDOC-CSL"
+              (org-element-map (org-element-parse-buffer) 'keyword
+                (lambda (key) (cons
+                       (org-element-property :key key)
+                       (org-element-property :value key)))))))
+    (if csl (setq csl (format " --csl=%s " csl))
+      (setq csl " "))
+
+    (org-latex-export-to-latex async subtreep visible-only body-only options)
+
+    (when (file-exists-p html-file) (delete-file html-file))
+    (ox-export-call-pandoc-tex-to-html biboption csl tex-file html-file)
+
+    (when (file-exists-p temp-bib)
+      (delete-file temp-bib))
+    (browse-url html-file)))
+
+
+(org-export-define-derived-backend 'MSWord 'latex
+  :menu-entry
+  '(?w "Export to MS Word"
+       ((?p "via Pandoc/LaTeX" ox-export-via-latex-pandoc-to-docx-and-open))))
+
+
+(org-export-define-derived-backend 'pandoc-html 'latex
+  :menu-entry
+  '(?h "Export to HTML"
+       ((?p "via Pandoc/LaTeX" ox-export-via-latex-pandoc-to-html-and-open))))
