@@ -14,11 +14,7 @@
 ;;      Alternatively, press 'gd' (or 'C-c g d') on a module to browse its
 ;;      directory (for easy access to its source code).
 
-(doom! :input
-       ;;chinese
-       ;;japanese
-
-       :completion
+(doom! :completion
        (company          ; the ultimate code completion backend
         +childframe)     ; nicer UI. Emacs +26.1 only, incompatible with tng
        ;;helm            ; the *other* search engine for love and life
@@ -36,7 +32,7 @@
        hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        ;;hydra
        ;;indent-guides     ; highlighted indent columns
-       minimap           ; show a map of the code on the side
+       ;;minimap           ; show a map of the code on the side
        modeline          ; snazzy, Atom-inspired modeline, plus API
        nav-flash         ; blink cursor line after big motions
        ;;neotree           ; a project drawer, like NERDTree for vim
@@ -45,7 +41,7 @@
         +all ;; Enables fallback rules to ensure all temporary/special buffers
              ;; (whose name begins with a space or asterix) are treated as popups.
         +defaults) ; Enables reasonable default popup rules for a variety of buffers.
-       ;;pretty-code   ; ligatures or substitute text with pretty symbols
+       pretty-code   ; ligatures or substitute text with pretty symbols
        ;;tabs              ; an tab bar for Emacs
        treemacs          ; a project drawer, like neotree but cooler
        unicode           ; extended unicode support for various languages
@@ -83,7 +79,7 @@
        eshell            ; the elisp shell that works everywhere
        ;;shell             ; simple shell REPL for Emacs
        ;;term              ; basic terminal emulator for Emacs
-       ;;vterm             ; the best terminal emulation in Emacs
+       vterm             ; the best terminal emulation in Emacs
 
        :checkers
        syntax              ; tasing you for every semicolon you forget
@@ -173,7 +169,7 @@
        ;;php               ; perl's insecure younger brother
        plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
-       (python +lsp +pyenv)           ; beautiful is better than ugly
+       (python +lsp)           ; beautiful is better than ugly
        ;;qt                ; the 'cutest' gui framework ever
        ;;racket            ; a DSL for DSLs
        ;;rest              ; Emacs as a REST client
@@ -193,13 +189,13 @@
 
        :email
        ;; mu4e
-       notmuch
+       ;;notmuch
        ;;(wanderlust +gmail)
 
        :app
        ;;calendar
        ;;irc               ; how neckbeards socialize
-       rss ;;+org)        ; emacs as an RSS reader
+       ;;rss ;;+org)        ; emacs as an RSS reader
        ;;twitter           ; twitter client https://twitter.com/vnought
 
        :config
