@@ -1,7 +1,7 @@
 [section/config]
 include-file = ~/.config/polybar/conf.d/colors.conf
 include-file = ~/.config/polybar/conf.d/mainbar.conf
-
+  
 [section/modules]
 include-file = ~/.config/polybar/modules.d/aqi.conf
 include-file = ~/.config/polybar/modules.d/battery.conf
@@ -13,6 +13,7 @@ include-file = ~/.config/polybar/modules.d/mpd.conf
 include-file = ~/.config/polybar/modules.d/eth.conf
 include-file = ~/.config/polybar/modules.d/i3.conf
 include-file = ~/.config/polybar/modules.d/pbweather.conf
+include-file = ~/.config/polybar/modules.d/tor.conf
 include-file = ~/.config/polybar/modules.d/wlan.conf
 include-file = ~/.config/polybar/modules.d/pingrtt.conf
 include-file = ~/.config/polybar/modules.d/xmonad.conf
@@ -21,7 +22,7 @@ include-file = ~/.config/polybar/modules.d/xmonad.conf
 inherit             = bar/base
 top                 = true
 modules-left        = temperature cpu memory pingrtt
-modules-center      = mpd
+modules-center      = tor-status
 modules-right       = pbweather airquality-index date fbattery
 
 [bar/bottom]
@@ -31,3 +32,4 @@ bottom              = true
 modules-left        =
 modules-center      = workspaces-xmonad title-xmonad
 modules-right       = eth fwlan
+

@@ -643,6 +643,29 @@ nord: &nord
       cyan:    '0x4fb8cc'
       white:   '0xf1f1f1'
 
+  moonlight: &moonlight
+    primary:
+      foreground: '0xC7D2F4'
+      background: '0x202236'
+    normal:
+      black:   '0x202236'
+      red:     '0xFE747E'
+      green:   '0x7987CE'
+      yellow:  '0xFEC676'
+      blue:    '0xBF98FE'
+      magenta: '0xC2E78C'
+      cyan:    '0x91A9FE'
+      white:   '0xC7D2F4'
+    bright:
+      black:   '0x202236'
+      red:     '0xFE747E'
+      green:   '0x7987CE'
+      yellow:  '0xFEC676'
+      blue:    '0xBF98FE'
+      magenta: '0xC2E78C'
+      cyan:    '0x91A9FE'
+      white:   '0xC7D2F4'
+      
   snazzy: &snazzy
     primary:
       background: '0x282a36'
