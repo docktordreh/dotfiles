@@ -1,4 +1,4 @@
-#!/bin/bash -
+#!/bin/sh -
 #===============================================================================
 #
 #          FILE: batterystate.sh
@@ -23,10 +23,9 @@ set -o nounset
 
 #***  Scriptinfo  ***************************************************************
 NAME="batterystate.sh"
-VERSION="0.4"
+VERSION="0.5"
 AUTHOR="valentin_lechner"
-CREATED="2018-10-30"
-UPDATED="2019-09-15"
+UPDATED="2020-07-07"
 #*******************************************************************************
 
 #***  GlobVars  ****************************************************************
@@ -53,29 +52,13 @@ export XAUTHORITY="${HOME}/.Xauthority"
 
 #***  Commands  *****************************************************************
 
-bat='upower -i $(upower -e | grep 'BAT') | grep -E "state|to\ full|percentage"'
-
-power=$(eval "$bat" | grep 'percentage' | awk '{print $2}' | awk -F '%' '{print $1}')
-
-state=$(eval "$bat" |  grep 'state' | awk '{print $2}')
-
-uid=$(id -u)
-
-uname=$(whoami)
-
-bar=$(seq --separator="─" 0 "$((power / 5))" | sed 's/[0-9]//g')
 
 
 send_notification(){
-  sudo -u "$uname" notify-send -u critical $bar
-    
+  power=$(eval "$bat" | grep 'percentage' | awk '{print $2}' | awk -F '%' '{print $1}')
+  bar=$(seq --separator="─" 0 "$((power / 5))" | sed 's/[0-9]//g')
+  /usr/bin/sudo -u "$(whoami)" notify-send -u critical "$bar"
 }
-
-
-write_batterystatus_tofile(){
-    sudo -u "$uname" echo "LAST_BATINFO=$power" | tee "$HOME/tmp/batteryinfo"
-}
-
 
 
 
@@ -105,15 +88,6 @@ printInfo(){
                                   }'
 }
 
-sourceBatteryStatusFile(){
-    if [ -f "$HOME/tmp/batteryinfo" ]; then
-          source "$HOME/tmp/batteryinfo"
-    else
-          mkdir -p "$HOME/tmp"
-          touch "$HOME/batteryinfo"
-    fi
-}
-
 #***  FUNCTION  ****************************************************************
 #          NAME:  main
 #   DESCRIPTION:
@@ -122,25 +96,11 @@ sourceBatteryStatusFile(){
 #*******************************************************************************
 
 main(){
-    sourceBatteryStatusFile
-    if [ "$state" = "discharging" ] ; then
+  bat="upower -i $(upower -e | grep BAT) | grep -E \"state|to\ full|percentage\""
 
-        # power so low u need notification?
-          if [ "$power" -le 33 ] ; then
-echo "sending notif"
-            # is variable set?
-          #      if [ -z ${LAST_BATINFO+x} ]; then
-                      send_notification
-                      write_batterystatus_tofile
-           #     elif [ "$power" -le "$("$LAST_BATINFO" -5)" ]; then
-            #          send_notification
-             #         write_batterystatus_tofile
-              #  fi
+  state=$(eval "$bat" |  grep 'state' | awk '{print $2}')
 
-          fi
-
-    fi
-    echo "battery at $power"
+  [ "$state" = "discharging" ] && [ "$power" -le 33 ] && send_notification || exit 0
 }
 
 

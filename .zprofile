@@ -2,6 +2,8 @@ keychain --quiet --eval --noask --agents ssh,gpg id_rsa | source /dev/stdin
 
 export PYENV_ROOT=$HOME/.pyenv
 
+[ -d "$HOME/.config/proxychains" ] && export PROXYCHAINS_CONF_FILE="$HOME/.config/proxychains/proxychains.conf"
+
 # Android SDK etc
 [ -d "$HOME/Android/Sdk" ]  && export ANDROID_HOME="$HOME/Android/Sdk"
 

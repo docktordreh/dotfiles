@@ -1,0 +1,21 @@
+#!/usr/bin/sxhkd
+super + shift + q
+               bspc quit
+
+ctrl + alt + {Home,End,Delete}
+                poweroptionsmenu
+
+super + Return
+               alacritty -e bash -c "(tmux ls | grep -qEv 'attached|scratch' && tmux at) || tmux"
+
+super + shift + Return
+               alacritty
+
+super + shift + e
+                emacs
+
+super + e
+                emacsclient -c
+
+super + f
+                firefox

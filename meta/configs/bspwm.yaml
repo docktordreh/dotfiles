@@ -1,0 +1,3 @@
+- link:
+    "~/.config/bspwm": .config/bspwm
+    "~/.config/sxhkd": .config/sxhkd

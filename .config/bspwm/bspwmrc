@@ -1,0 +1,16 @@
+#!/bin/bash
+sxhkd &
+
+~/.config/polybar/launch.sh
+
+feh --bg-scale --randomize ~/.wallpaper
+
+export MONITOR=$(xrandr -q | grep primary | cut -d' ' -f1)
+export MONITORS=($(xrandr -q | grep ' connected' | cut -d' ' -f1) )
+MONITOR=${MONITOR:-${MONITORS[0]}}
+
+bspc monitor $MONITOR -d {1,2,3,4,5}
+bspc config remove_disabled_monitors true
+bspc config remove_unplugged_monitors true
+
+bspc rule -a Emacs state=tiled

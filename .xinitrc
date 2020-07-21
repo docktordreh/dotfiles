@@ -4,14 +4,8 @@
 #
 # Executed by startx (run your window manager from here)
 
-xrandr --setprovideroutputsource modesetting NVIDIA-0
 xrandr --auto
 # load additional configs
-if [ "$2" = "nvidia" ]; then
-	XINIT_D="/etc/X11/nvidia/xinit/xinitrc.d"
-else
-	XINIT_D="/etc/X11/xinit/xinitrc.d"
-fi
 
 if [ -d "$XINIT_D" ]; then
   for f in "$XINIT_D"/*; do
@@ -22,7 +16,7 @@ fi
 eval "$(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)"
 export "$(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)"
 . "$HOME/.xprofile"
-
+sxhkd &
 case $session in
     i3|i3wm           ) exec i3;;
     kde               ) exec startplasma-x11;;

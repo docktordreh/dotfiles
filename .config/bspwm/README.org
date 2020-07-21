@@ -1,0 +1,41 @@
+#+TITLE:BSPWM Configuration
+#+PROPERTY: header-args :tangle bspwmrc :shebang "#!/bin/bash"
+
+* Startup Programs
+
+Launch simple x hotkey daemon
+#+BEGIN_SRC bash
+sxhkd &
+#+END_SRC
+Launch Polybar
+#+BEGIN_SRC bash
+~/.config/polybar/launch.sh
+#+END_SRC
+Set wallpaper to sth random
+#+BEGIN_SRC bash
+feh --bg-scale --randomize ~/.wallpaper
+#+END_SRC
+# Launch hideit for systray bar
+# #+BEGIN_SRC bash
+# hideit.sh --name "polybar-systray_eDP1" --region 0x1080+10+-40
+# #+END_SRC
+* Monitors
+Get connected monitors
+#+BEGIN_SRC bash
+export MONITOR=$(xrandr -q | grep primary | cut -d' ' -f1)
+export MONITORS=($(xrandr -q | grep ' connected' | cut -d' ' -f1) )
+MONITOR=${MONITOR:-${MONITORS[0]}}
+#+END_SRC
+Only have workspaces for primary monitor
+#+BEGIN_SRC bash
+bspc monitor $MONITOR -d {1,2,3,4,5}
+bspc config remove_disabled_monitors true
+bspc config remove_unplugged_monitors true
+#+END_SRC
+* Rules
+
+** Emacs
+
+#+BEGIN_SRC bash
+bspc rule -a Emacs state=tiled
+#+END_SRC

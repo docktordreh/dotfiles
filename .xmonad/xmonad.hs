@@ -7,15 +7,22 @@ import System.IO (hPutStrLn)
 import System.Exit (exitSuccess)
 
     -- Actions
-import XMonad.Actions.CopyWindow (kill1, killAllOtherCopies)
-import XMonad.Actions.CycleWS (moveTo, shiftTo, WSType(..), nextScreen, prevScreen)
+import XMonad.Actions.CopyWindow (kill1,
+                                  killAllOtherCopies)
+import XMonad.Actions.CycleWS (moveTo,
+                               shiftTo,
+                               WSType(..),
+                               nextScreen,
+                               prevScreen)
 import XMonad.Actions.GridSelect
 import XMonad.Actions.MouseResize
 import XMonad.Actions.Promote
-import XMonad.Actions.RotSlaves (rotSlavesDown, rotAllDown)
+import XMonad.Actions.RotSlaves (rotSlavesDown,
+                                 rotAllDown)
 import qualified XMonad.Actions.TreeSelect as TS
 import XMonad.Actions.WindowGo (runOrRaise)
-import XMonad.Actions.WithAll (sinkAll, killAll)
+import XMonad.Actions.WithAll (sinkAll,
+                               killAll)
 import qualified XMonad.Actions.Search as S
 
     -- Data
@@ -25,7 +32,8 @@ import Data.Maybe (isJust)
 import Data.Tree
 import Data.List (sortBy)
 import Data.Function (on)
-import Control.Monad (forM_, join)
+import Control.Monad (forM_,
+                      join)
 import XMonad.Util.NamedWindows (getName)
 import qualified XMonad.StackSet as W
 import qualified Data.Tuple.Extra as TE
@@ -37,7 +45,7 @@ import XMonad.Hooks.DynamicLog (dynamicLogWithPP,
                                 shorten,
                                 PP(..))
 -- for some fullscreen events, also for xcomposite in obs.
-import XMonad.Hooks.EwmhDesktops  
+import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.ManageDocks (avoidStruts,
                                  docksEventHook,
@@ -145,14 +153,15 @@ windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace
 ------------------------------------------------------------------------
 myStartupHook :: X ()
 myStartupHook = do
-          spawnOnce "nm-applet &"
-          spawnOnce "/usr/bin/emacs --daemon &"
-          setWMName "LG3D"
-          spawnOnce "nextcloud &"
-          spawnOnce "flameshot &"
-          spawnOnce "$HOME/.config/polybar/launch.sh &"
+          spawnOnce "feh --bg-fill --random ~/.wallpaper &"
           spawnOnce "dunst &"
-	  spawnOnce "keepassxc &"
+          spawnOnce "$HOME/.config/polybar/launch.sh &"
+          spawnOnce "nm-applet &"
+          spawnOnce "keepassxc &"
+          spawnOnce "flameshot &"
+          spawnOnce "nextcloud &"
+          setWMName "LG3D"
+          spawnOnce "/usr/bin/emacs --daemon &"
 
 ------------------------------------------------------------------------
 -- GRID SELECT
@@ -781,11 +790,11 @@ myKeys =
 
     -- Tree Select/
         -- tree select actions menu
-        , ("C-t a", treeselectAction tsDefaultConfig)
+        , ("C-y a", treeselectAction tsDefaultConfig)
         -- tree select workspaces menu
-        , ("C-t t", TS.treeselectWorkspace tsDefaultConfig myWorkspaces W.greedyView)
+        , ("C-y t", TS.treeselectWorkspace tsDefaultConfig myWorkspaces W.greedyView)
         -- tree select choose workspace to send window
-        , ("C-t g", TS.treeselectWorkspace tsDefaultConfig myWorkspaces W.shift)
+        , ("C-y g", TS.treeselectWorkspace tsDefaultConfig myWorkspaces W.shift)
 
     -- Windows navigation
         , ("M-m", windows W.focusMaster)

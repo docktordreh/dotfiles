@@ -1,0 +1,44 @@
+#+TITLE: SXHKD Configuration
+#+AUTHOR: valentinlechner
+#+PROPERTY: header-args :tangle sxhkdrc :shebang "#!/usr/bin/sxhkd"
+* Basics
+Quit bspc
+#+BEGIN_SRC sxkhdrc
+super + shift + q
+               bspc quit
+#+END_SRC
+Open powermenu
+#+BEGIN_SRC sxkhdrc
+ctrl + alt + {Home,End,Delete}
+                poweroptionsmenu
+#+END_SRC
+* Terminal
+Open terminal and attach to existing tmux session
+#+BEGIN_SRC sxkhdrc
+super + Return
+               alacritty -e bash -c "(tmux ls | grep -qEv 'attached|scratch' && tmux at) || tmux"
+#+END_SRC
+Open terminal without attaching to tmux session
+#+BEGIN_SRC sxkhdrc
+super + shift + Return
+               alacritty
+#+END_SRC
+* Emacs
+
+Open Emacs
+#+BEGIN_SRC sxkhdrc
+super + shift + e
+                emacs
+#+END_SRC
+Open Emacsclient
+#+BEGIN_SRC sxkhdrc
+super + e
+                emacsclient -c
+#+END_SRC
+* Internet
+
+Open firefox
+#+BEGIN_SRC sxkhdrc
+super + f
+                firefox
+#+END_SRC
