@@ -2877,10 +2877,10 @@ The following is just taken from my config.el after working for a bit
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
-   ["#242631" "#ff5c57" "#5af78e" "#f3f99d" "#57c7ff" "#ff6ac1" "#9aedfe" "#f9f9f9"])
+   ["#191a2a" "#ff5c57" "#5af78e" "#f3f99d" "#57c7ff" "#ff6ac1" "#9aedfe" "#f9f9f9"])
  '(custom-safe-themes
    (quote
-    ("dde8c620311ea241c0b490af8e6f570fdd3b941d7bc209e55cd87884eb733b0e" default)))
+    ("bf387180109d222aee6bb089db48ed38403a1e330c9ec69fe1f52460a8936b66" "dde8c620311ea241c0b490af8e6f570fdd3b941d7bc209e55cd87884eb733b0e" default)))
  '(fci-rule-color "#e2e4e5")
  '(jdee-db-active-breakpoint-face-colors (cons "#282a36" "#57c7ff"))
  '(jdee-db-requested-breakpoint-face-colors (cons "#282a36" "#5af78e"))
@@ -2888,10 +2888,18 @@ The following is just taken from my config.el after working for a bit
  '(objed-cursor-color "#ff5c57")
  '(package-selected-packages
    (quote
-    (counsel-tramp sos org-super-agenda org-chef org-bullets beacon avy)))
+    (org-ref auto-dim-other-buffers counsel-tramp sos org-super-agenda org-chef org-bullets beacon avy)))
  '(pdf-view-midnight-colors (cons "#f9f9f9" "#282a36"))
  '(rustic-ansi-faces
    ["#282a36" "#ff5c57" "#5af78e" "#f3f99d" "#57c7ff" "#ff6ac1" "#9aedfe" "#f9f9f9"])
+ '(safe-local-variable-values
+   (quote
+    ((eval add-hook
+           (quote after-save-hook)
+           (lambda nil
+             (org-babel-tangle))
+           nil t)
+     (org-export-allow-bind-keywords . t))))
  '(vc-annotate-background "#282a36")
  '(vc-annotate-color-map
    (list

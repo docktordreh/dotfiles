@@ -371,35 +371,87 @@
 
 ;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:6]]
 (custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(doom-modeline-buffer-modified ((t (:foreground "#57c7ff"))))
- '(doom-modeline-evil-insert-state ((t (:weight bold :foreground "#339CDB"))))
- '(org-block ((t (:inherit fixed-pitch))))
- '(org-code ((t (:inherit (shadow fixed-pitch)))))
- '(org-document-info ((t (:foreground "dark violet"))))
- '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
- '(org-document-title ((t (:inherit default :weight bold :foreground "#57c7ff" :height 2.0 :underline nil))))
- '(org-done ((t (:foreground "PaleGreen" :weight normal :strike-through t))))
- '(org-headline-done ((((class color) (min-colors 16) (background dark)) (:foreground "LightSalmon" :strike-through t))))
- '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
- '(org-level-1 ((t (:inherit default :weight bold :foreground "#5af78e" :height 1.75))))
- '(org-level-2 ((t (:inherit default :weight bold :foreground "#ff6ac1" :height 1.5))))
- '(org-level-3 ((t (:inherit default :weight bold :foreground "#f3f99d" :height 1.25))))
- '(org-level-4 ((t (:inherit default :weight bold :foreground "#9aeedf" :height 1.1))))
- '(org-level-5 ((t (:inherit default :weight bold :foreground "#ff5c57"))))
- '(org-level-6 ((t (:inherit default :weight bold :foreground "#57c7ff"))))
- '(org-level-7 ((t (:inherit default :weight bold :foreground "#5af78e"))))
- '(org-level-8 ((t (:inherit default :weight bold :foreground "#ff6ac1"))))
- '(org-link ((t (:foreground "royal blue" :underline t))))
- '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
- '(org-property-value ((t (:inherit fixed-pitch))) t)
- '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
- '(org-table ((t (:foreground "cyan"))))
- '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
- '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
+  '(org-block
+    ((t (:inherit fixed-pitch)))
+    )
+  '(org-code
+    ((t (:inherit (shadow fixed-pitch))))
+    )
+  '(org-document-info
+    ((t (:foreground "dark violet")))
+    )
+  '(org-document-info-keyword
+    ((t (:inherit (shadow fixed-pitch))))
+    )
+  '(org-indent
+    ((t (:inherit (org-hide fixed-pitch))))
+    )
+  '(org-link
+    ((t (:foreground "royal blue" :underline t)))
+    )
+  '(org-meta-line
+    ((t (:inherit (font-lock-comment-face fixed-pitch))))
+    )
+  '(org-property-value
+    ((t (:inherit fixed-pitch)))
+    t)
+  '(org-special-keyword
+    ((t (:inherit (font-lock-comment-face fixed-pitch))))
+    )
+  '(org-table
+    ((t ( :foreground "cyan")))
+              )
+  '(org-tag
+    ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8)))
+    )
+  '(org-verbatim
+    ((t (:inherit (shadow fixed-pitch))))
+    )
+  '(org-level-8 ((t (
+                      :inherit default
+                      :weight bold
+                      :foreground "#ff6ac1"
+                      ))))
+  '(org-level-7 ((t (
+                     :inherit default
+                     :weight bold
+                     :foreground "#5af78e"))))
+  '(org-level-6 ((t (
+                     :inherit default
+                     :weight bold
+                     :foreground "#57c7ff"
+                     ))))
+  '(org-level-5 ((t (
+                     :inherit default
+                     :weight bold
+                     :foreground "#ff5c57"
+                     ))))
+  '(org-level-4 ((t (
+                     :inherit default
+                     :weight bold
+                     :foreground "#9aeedf"
+                     :height 1.1))))
+   '(org-level-3 ((t (
+                      :inherit default
+                      :weight bold
+                      :foreground "#f3f99d"
+                      :height 1.25))))
+   '(org-level-2 ((t (
+                      :inherit default
+                      :weight bold
+                      :foreground "#ff6ac1"
+                      :height 1.5))))
+   '(org-level-1 ((t (
+                      :inherit default
+                      :weight bold
+                      :foreground "#5af78e"
+                      :height 1.75))))
+   '(org-document-title ((t (
+                             :inherit default
+                             :weight bold
+                             :foreground "#57c7ff"
+                             :height 2.0
+                             :underline nil)))))
 ;; Look and feel:6 ends here
 
 ;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:7]]
@@ -749,7 +801,13 @@ appropriate.  In tables, insert a new row or end the table."
 
 ;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Agenda][Agenda:7]]
 (setq org-fontify-done-headline t)
-
+(custom-set-faces
+ '(org-done ((t (:foreground "PaleGreen"
+                 :weight normal
+                 :strike-through t))))
+ '(org-headline-done
+   ((((class color) (min-colors 16) (background dark))
+     (:foreground "LightSalmon" :strike-through t)))))
 ;; Agenda:7 ends here
 
 ;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Agenda][Agenda:8]]
@@ -2376,7 +2434,14 @@ Return output file name."
  '(pdf-view-midnight-colors (cons "#f9f9f9" "#282a36"))
  '(rustic-ansi-faces
    ["#282a36" "#ff5c57" "#5af78e" "#f3f99d" "#57c7ff" "#ff6ac1" "#9aedfe" "#f9f9f9"])
- '(safe-local-variable-values (quote ((org-export-allow-bind-keywords . t))))
+ '(safe-local-variable-values
+   (quote
+    ((eval add-hook
+           (quote after-save-hook)
+           (lambda nil
+             (org-babel-tangle))
+           nil t)
+     (org-export-allow-bind-keywords . t))))
  '(vc-annotate-background "#282a36")
  '(vc-annotate-color-map
    (list
