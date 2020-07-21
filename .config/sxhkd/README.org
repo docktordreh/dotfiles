@@ -1,4 +1,4 @@
-#+TITLE: SXHKD Configuration
+#+TITLE: SXHKD
 #+AUTHOR: valentinlechner
 #+PROPERTY: header-args :tangle sxhkdrc :shebang "#!/usr/bin/sxhkd"
 * Basics
@@ -17,7 +17,7 @@ ctrl + alt + {Home,End,Delete}
 Use super + 1-5 to focus a workspace
 Use ctrl + 1-5 to swap workspaces
 Use super + shift + 1-5 to move node to desktop
-#+BEGIN_SRC bash
+#+BEGIN_SRC sxhkdrc
 {super,super + shift} + {1,2,3,4,5}
                     bspc {desktop --focus,node -d}  {web,term,chat,code,music}
 #+END_SRC
@@ -57,7 +57,7 @@ super + r
 * Program launcher
 
 #+BEGIN_SRC bash
-super + @space
+super + d
                dmenu_run
 #+END_SRC
 
@@ -94,8 +94,11 @@ super + e
 #+END_SRC
 * Internet
 
-Open firefox
+Open vimb
 #+BEGIN_SRC sxhkdrc
-super + f
-                firefox
+super + @space
+                vimb
 #+END_SRC
+# Local Variables:
+# eval: (add-hook 'after-save-hook (lambda () (org-babel-tangle)) nil t)
+# End:

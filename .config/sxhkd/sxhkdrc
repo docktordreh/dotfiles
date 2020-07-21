@@ -5,6 +5,9 @@ super + shift + q
 ctrl + alt + {Home,End,Delete}
                 poweroptionsmenu
 
+{super,super + shift} + {1,2,3,4,5}
+                    bspc {desktop --focus,node -d}  {web,term,chat,code,music}
+
 super + {_,shift + }{h,j,k,l}
     bspc node -{f,s} {west,south,north,east}
 
@@ -29,14 +32,11 @@ super + shift + e
 super + e
                 emacsclient -c
 
-super + f
-                firefox
+super + @space
+                vimb
 
 #!/usr/bin/sxhkd
-{super,super + shift} + {1,2,3,4,5}
-                    bspc {desktop --focus,node -d}  {web,term,chat,code,music}
-
-super + @space
+super + d
                dmenu_run
 
 super + {_,shift +}w
