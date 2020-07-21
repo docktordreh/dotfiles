@@ -15,10 +15,14 @@ Set wallpaper to sth random
 #+BEGIN_SRC bash
 feh --bg-scale --randomize ~/.wallpaper
 #+END_SRC
-# Launch hideit for systray bar
-# #+BEGIN_SRC bash
-# hideit.sh --name "polybar-systray_eDP1" --region 0x1080+10+-40
-# #+END_SRC
+* Look and Feel
+
+My Polybar needs top and bot space
+#+BEGIN_SRC bash
+bspc config top_padding 25
+bspc config bottom_padding 25
+#+END_SRC
+
 * Monitors
 Get connected monitors
 #+BEGIN_SRC bash
@@ -28,7 +32,7 @@ MONITOR=${MONITOR:-${MONITORS[0]}}
 #+END_SRC
 Only have workspaces for primary monitor
 #+BEGIN_SRC bash
-bspc monitor $MONITOR -d {1,2,3,4,5}
+bspc monitor $MONITOR -d {web,term,chat,code,music}
 bspc config remove_disabled_monitors true
 bspc config remove_unplugged_monitors true
 #+END_SRC

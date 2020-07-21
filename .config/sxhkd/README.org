@@ -3,42 +3,99 @@
 #+PROPERTY: header-args :tangle sxhkdrc :shebang "#!/usr/bin/sxhkd"
 * Basics
 Quit bspc
-#+BEGIN_SRC sxkhdrc
+#+BEGIN_SRC sxhkdrc
 super + shift + q
                bspc quit
 #+END_SRC
 Open powermenu
-#+BEGIN_SRC sxkhdrc
+#+BEGIN_SRC sxhkdrc
 ctrl + alt + {Home,End,Delete}
                 poweroptionsmenu
 #+END_SRC
+* Navigation
+
+Use super + 1-5 to focus a workspace
+Use ctrl + 1-5 to swap workspaces
+Use super + shift + 1-5 to move node to desktop
+#+BEGIN_SRC bash
+{super,super + shift} + {1,2,3,4,5}
+                    bspc {desktop --focus,node -d}  {web,term,chat,code,music}
+#+END_SRC
+Focus the node in the given direction
+
+#+BEGIN_SRC sxhkdrc
+super + {_,shift + }{h,j,k,l}
+    bspc node -{f,s} {west,south,north,east}
+#+END_SRC
+* Window State Manipulation
+
+super + t: make window tiled
+super + shift + t: make window pseudo-tiled
+super + s: make window floating
+super + f: make window fullscreen
+#+BEGIN_SRC sxhkdrc
+super + {t,shift + t,s,f}
+    bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+#+END_SRC
+
+super + ctrl + m: mark window
+super + ctrl + x: lock window
+super + ctrl + y: make window sticky
+super + ctrl + z: make window private
+#+BEGIN_SRC sxhkdrc
+super + ctrl + {m,x,y,z}
+    bspc node -g {marked,locked,sticky,private}
+#+END_SRC
+
+* Reload
+
+#+BEGIN_SRC sxhkdrc
+super + r
+    ~/.config/bspwm/bspwmrc && pkill -USR1 -x sxhkd
+#+END_SRC
+
+* Program launcher
+
+#+BEGIN_SRC bash
+super + @space
+               dmenu_run
+#+END_SRC
+
+* Close and kill windows
+
+super + w closes windows, super + shift + w kills them
+#+BEGIN_SRC bash
+super + {_,shift +}w
+                bspc node -{c,k}
+#+END_SRC
+
 * Terminal
 Open terminal and attach to existing tmux session
-#+BEGIN_SRC sxkhdrc
+#+BEGIN_SRC sxhkdrc
 super + Return
                alacritty -e bash -c "(tmux ls | grep -qEv 'attached|scratch' && tmux at) || tmux"
 #+END_SRC
 Open terminal without attaching to tmux session
-#+BEGIN_SRC sxkhdrc
+#+BEGIN_SRC sxhkdrc
 super + shift + Return
                alacritty
 #+END_SRC
 * Emacs
 
 Open Emacs
-#+BEGIN_SRC sxkhdrc
+#+BEGIN_SRC sxhkdrc
 super + shift + e
                 emacs
 #+END_SRC
 Open Emacsclient
-#+BEGIN_SRC sxkhdrc
+#+BEGIN_SRC sxhkdrc
 super + e
                 emacsclient -c
 #+END_SRC
 * Internet
 
 Open firefox
-#+BEGIN_SRC sxkhdrc
+#+BEGIN_SRC sxhkdrc
 super + f
                 firefox
 #+END_SRC

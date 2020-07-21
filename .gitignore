@@ -3,7 +3,6 @@ bookmarks
 *.swp
 *.svg
 *.png
-.doom.d/misc
 cronjobs/.croninfo/batteryinfo
 .zcompdump
 batteryinfo

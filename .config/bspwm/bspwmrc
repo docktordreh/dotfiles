@@ -5,11 +5,14 @@ sxhkd &
 
 feh --bg-scale --randomize ~/.wallpaper
 
+bspc config top_padding 25
+bspc config bottom_padding 25
+
 export MONITOR=$(xrandr -q | grep primary | cut -d' ' -f1)
 export MONITORS=($(xrandr -q | grep ' connected' | cut -d' ' -f1) )
 MONITOR=${MONITOR:-${MONITORS[0]}}
 
-bspc monitor $MONITOR -d {1,2,3,4,5}
+bspc monitor $MONITOR -d {web,term,chat,code,music}
 bspc config remove_disabled_monitors true
 bspc config remove_unplugged_monitors true
 

@@ -5,6 +5,18 @@ super + shift + q
 ctrl + alt + {Home,End,Delete}
                 poweroptionsmenu
 
+super + {_,shift + }{h,j,k,l}
+    bspc node -{f,s} {west,south,north,east}
+
+super + {t,shift + t,s,f}
+    bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+
+super + ctrl + {m,x,y,z}
+    bspc node -g {marked,locked,sticky,private}
+
+super + r
+    ~/.config/bspwm/bspwmrc && pkill -USR1 -x sxhkd
+
 super + Return
                alacritty -e bash -c "(tmux ls | grep -qEv 'attached|scratch' && tmux at) || tmux"
 
@@ -19,3 +31,13 @@ super + e
 
 super + f
                 firefox
+
+#!/usr/bin/sxhkd
+{super,super + shift} + {1,2,3,4,5}
+                    bspc {desktop --focus,node -d}  {web,term,chat,code,music}
+
+super + @space
+               dmenu_run
+
+super + {_,shift +}w
+                bspc node -{c,k}
