@@ -33,7 +33,7 @@ super + e
                 emacsclient -c
 
 super + @space
-                vimb
+                vimb searx.neocities.org
 
 #!/usr/bin/sxhkd
 super + d

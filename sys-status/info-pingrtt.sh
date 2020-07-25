@@ -1,6 +1,6 @@
 #!/bin/bash
 
-HOST=9.9.9.9
+HOST="$(ip route | head -n 1 | awk '{print $3}')"
 
 if ! resp=$(ping -n -c 1 -W 1 $HOST); then
     echo "轢 ping failed"

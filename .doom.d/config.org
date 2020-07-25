@@ -47,10 +47,34 @@ Only open one window on startup
 #+BEGIN_SRC emacs-lisp
 (add-hook 'emacs-startup-hook 'delete-other-windows t)
 #+END_SRC
-enable golden ratio mode globally
+Since Golden Ratio mode is not maintained anymore, im now using [[github:cyrus-and/zoom]]
 #+BEGIN_SRC emacs-lisp
-(golden-ratio-mode 1)
+(custom-set-variables
+ '(zoom-mode t))
 #+END_SRC
+# enable golden ratio mode globally
+# #+BEGIN_SRC emacs-lisp
+# (use-package! golden-ratio
+#   :after-call pre-command-hook
+#   :config
+#   (golden-ratio-mode +1)
+#   ;; Using this hook for resizing windows is less precise than
+#   ;; `doom-switch-window-hook'.
+#   (remove-hook 'window-configuration-change-hook #'golden-ratio)
+#   (add-hook 'doom-switch-window-hook #'golden-ratio))
+# (setq golden-ratio-exclude-modes
+#       '("calendar-mode"
+#         "org-agenda-mode"
+#         "help-mode"
+#         "helpful-mode"
+#         "rxt-help-mode"
+#         "treemacs-mode" ))
+# (setq golden-ratio-exclude-buffer-names
+#       '("*Org tags*"
+#         "*Org todo*"
+#         "*info*"
+#         "*Messages*"))
+# #+END_SRC
 
 Please, don't indent using tabs.
 Just specify tabs to be 4 whitespaces
@@ -2614,6 +2638,42 @@ Add private snippet dir to yasnippet
     (format "xkcd:%d" (+xkcd-select))))
 #+END_SRC
 
+** Zoom
+
+My configuration for [[github:cyrus-and/zoom]]
+Resize the selected window using the golden ratio
+#+BEGIN_SRC emacs-lisp
+(custom-set-variables
+ '(zoom-size '(0.618 . 0.618)))
+#+END_SRC
+Override keybinding of =balance-window=
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-x +") 'zoom)
+#+END_SRC
+There are some special windows that should be ignored. treemacs, for example
+#+BEGIN_SRC emacs-lisp
+(custom-set-variables
+ '(zoom-ignored-major-modes
+   '(
+     dired-mode
+     markdown-mode
+     treemacs-mode
+     ))
+'(zoom-ignored-buffer-names
+  '(
+    "zoom.el"
+    "init.el"
+    )
+  )
+ '(zoom-ignored-buffer-name-regexps '("^*calc"))
+ '(zoom-ignore-predicates
+   '((lambda () (
+                 > (count-lines (point-min) (point-max)) 20)
+      )
+    )
+  )
+)
+#+END_SRC
 
 ** Keycast
 Make sure keycast is loaded lazy
@@ -2800,10 +2860,10 @@ where it is. [[github:Malabarba/beacon]]
 #+BEGIN_SRC emacs-lisp
 (package! beacon)
 #+END_SRC
-Automatically resizing the windows for the size specified in the golden ratio
+Automatically resizing the windows for the size specified
 The window with the main focus is the largest
 #+BEGIN_SRC emacs-lisp
-(package! golden-ratio)
+(package! zoom)
 #+END_SRC
 *** Writing
 Improve flyspell responsiveness using idle timers

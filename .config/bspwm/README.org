@@ -15,12 +15,23 @@ Set wallpaper to sth random
 #+BEGIN_SRC bash
 feh --bg-scale --randomize ~/.wallpaper
 #+END_SRC
+Start nextcloud
+#+BEGIN_SRC bash
+nextcloud &
+#+END_SRC
+Screenshot Tool
+#+BEGIN_SRC bash
+flameshot gui -p ~/shots &
+#+END_SRC
+Start notification daemon
+#+BEGIN_SRC bash
+dunst &
+#+END_SRC
 * Look and Feel
 
-My Polybar needs top and bot space
+My Polybar needs top space
 #+BEGIN_SRC bash
 bspc config top_padding 25
-bspc config bottom_padding 25
 #+END_SRC
 
 * Monitors
@@ -43,3 +54,7 @@ bspc config remove_unplugged_monitors true
 #+BEGIN_SRC bash
 bspc rule -a Emacs state=tiled
 #+END_SRC
+
+# Local Variables:
+# eval: (add-hook 'after-save-hook (lambda () (org-babel-tangle)) nil t)
+# End:

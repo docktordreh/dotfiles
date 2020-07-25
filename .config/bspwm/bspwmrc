@@ -5,8 +5,13 @@ sxhkd &
 
 feh --bg-scale --randomize ~/.wallpaper
 
+nextcloud &
+
+flameshot gui -p ~/shots &
+
+dunst &
+
 bspc config top_padding 25
-bspc config bottom_padding 25
 
 export MONITOR=$(xrandr -q | grep primary | cut -d' ' -f1)
 export MONITORS=($(xrandr -q | grep ' connected' | cut -d' ' -f1) )

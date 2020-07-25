@@ -109,9 +109,13 @@ bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
 alias sudo='doas'
+alias ls='exa -alh --color=always'
+what(){vimb "searx.neocities.org?q=$1"}
+
+[ -z "$TMUX" ] && eval $(ssh-agent -s) && ssh-add ~/.ssh.id_ed25519
 
 case $- in *i* )
-    [ -z "$TMUX" ] && ~/tmux-setup.sh ;;
+    [ -z "$TMUX" ] && command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && exec tmux new-session -A -s main ;;
 esac
 # Load antibody plugin manager
 source <(antibody init)

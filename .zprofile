@@ -18,6 +18,9 @@ export PYENV_ROOT=$HOME/.pyenv
 [ -d "$HOME/.local/bin" ]   && PATH="$HOME/.local/bin:$PATH"
 # cabal
 [ -d "$HOME/.cabal/bin" ]   && PATH="$HOME/.cabal/bin:$PATH"
+# cargo for rusty stuff
+[ -d "$HOME/.cargo/bin" ]   && PATH="$HOME/.cargo/bin:$PATH"
+
 [ -d "$PYENV_ROOT/bin"  ]   && PATH="$PYENV_ROOT/bin:$PATH"
 export PATH
 

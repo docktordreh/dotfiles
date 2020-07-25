@@ -49,7 +49,7 @@
 ;; Look and Feel and Stuff:1 ends here
 
 ;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and Feel and Stuff][Look and Feel and Stuff:2]]
-(package! golden-ratio)
+(package! zoom)
 ;; Look and Feel and Stuff:2 ends here
 
 ;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Writing][Writing:1]]

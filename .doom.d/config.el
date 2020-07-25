@@ -25,7 +25,8 @@
 ;; My defaults:4 ends here
 
 ;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:5]]
-(golden-ratio-mode 1)
+(custom-set-variables
+ '(zoom-mode t))
 ;; My defaults:5 ends here
 
 ;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:6]]
@@ -2329,6 +2330,39 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
     "Complete xkcd using '+xkcd-stored-info'"
     (format "xkcd:%d" (+xkcd-select))))
 ;; Extra links:1 ends here
+
+;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Zoom][Zoom:1]]
+(custom-set-variables
+ '(zoom-size '(0.618 . 0.618)))
+;; Zoom:1 ends here
+
+;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Zoom][Zoom:2]]
+(global-set-key (kbd "C-x +") 'zoom)
+;; Zoom:2 ends here
+
+;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Zoom][Zoom:3]]
+(custom-set-variables
+ '(zoom-ignored-major-modes
+   '(
+     dired-mode
+     markdown-mode
+     treemacs-mode
+     ))
+'(zoom-ignored-buffer-names
+  '(
+    "zoom.el"
+    "init.el"
+    )
+  )
+ '(zoom-ignored-buffer-name-regexps '("^*calc"))
+ '(zoom-ignore-predicates
+   '((lambda () (
+                 > (count-lines (point-min) (point-max)) 20)
+      )
+    )
+  )
+)
+;; Zoom:3 ends here
 
 ;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Keycast][Keycast:1]]
 (use-package! keycast
