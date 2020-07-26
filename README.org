@@ -1,4 +1,7 @@
 #+TITLE: Readme
+#+AUTHOR: valentin
+#+SETUPFILE: ~/Daten/cloud/tlaloc/org/setupfiles/latex.setup
+
 * About this Project
 These are my dotfiles (settings for programs I customized so much that I can't
 go without them and don't want to hassle setting my environment up again).
@@ -11,25 +14,8 @@ good to go.
 
 As you might have noticed, the dotfiles are relatively well documented. Every
 folder contains a documentation for the exact program.
-It is accomplished using [[https://orgmode.org][Org Mode]] in [[www.gitlab.com/hlissner/doom-emacs][Doom]] on [[www.gnu.org/software/emacs/Emacs][Emacs]] with my [[./.doom.d/config.org][personal configuration]] (this
+It is accomplished using [[https://orgmode.org][Org Mode]] in [[https://www.gitlab.com/hlissner/doom-emacs][Doom]] on [[https://www.gnu.org/software/emacs/Emacs][Emacs]] with my [[./.doom.d/config.org][personal configuration]] (this
 renders best viewed in Emacs, I don't know if the link works in gitlab).
-
-* ToC :toc:
-- [[#about-this-project][About this Project]]
-  - [[#about-this-documentation][About this Documentation]]
-- [[#magit-forge][Magit Forge]]
-- [[#git][Git]]
-- [[#tmux][Tmux]]
-- [[#vim][Vim]]
-- [[#zsh][Zsh]]
-  - [[#zshenv][.zshenv]]
-  - [[#zprofile][.zprofile]]
-- [[#bash][Bash]]
-  - [[#bashrc][.bashrc]]
-  - [[#bash_profile][.bash_profile]]
-  - [[#bash_aliases][.bash_aliases]]
-- [[#x-stuff][X Stuff]]
-  - [[#xresources][.Xresources]]
 
 * Magit Forge
 
@@ -157,60 +143,9 @@ set -g status-left '#[fg=green](#S) #(whoami)'
 set -g status-right '#[fg=yellow]#(cut -d " " -f 1-3 /proc/loadavg)#[default] #[fg=white]%H:%M#[default]'
 #+END_SRC
 
-* Vim
-
-My configuration for the glorious editor, whose keybindings I'd like to use for
-everything.
-
-I use [[https://github.com/VundleVim/Vundle.vim.git][Vundle]] as a Plugin Manager for vim.
-It requires to be cloned into your home directory:
-#+BEGIN_SRC sh
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-#+END_SRC
-To install plugins, it requires the following settings in your .vimrc:
-#+BEGIN_SRC vim :tangle .vimrc
-set nocompatible              " be iMproved, required
-filetype off                  " required
-set rtp+=~/.vim/bundle/Vundle.vim
-#+END_SRC
-This is something I added extra. Not sure why.
-#+BEGIN_SRC vim :tangle .vimrc
-set exrc
-set secure
-#+END_SRC
-This is needed by Vundle
-#+BEGIN_SRC vim :tangle .vimrc
-call vundle#begin()
-#+END_SRC
-Inbetween the begin/end block, you can add your plugins
-#+BEGIN_SRC vim :tangle .vimrc
-Plugin 'junegunn/fzf.vim'
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'w0rp/ale'
-#+END_SRC
-End of the plugins block
-#+BEGIN_SRC vim :tangle .vimrc
-call vundle#end()
-#+END_SRC
-My other settings
-#+BEGIN_SRC vim :tangle .vimrc
-syntax enable
-set laststatus=2
-set ttimeoutlen=50
-let g:airline_powerline_fonts = 1
-let g:airline_theme = 'deus'
-#+END_SRC
-
-Plugins can now be installed using
-#+BEGIN_SRC sh
-vim +PluginInstall +qall
-#+END_SRC
 * Zsh
 
-This is only part of my zsh configuration, the main stuff is in
-[[.config/zsh/.zshrc]].
+This is only part of my zsh configuration
 
 ** .zshenv
 
@@ -302,7 +237,7 @@ export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
 
 * Bash
 
-I don't really use bash anymore, I favor [[www.zsh.org][Zsh]], that's why this part is probably
+I don't really use bash anymore, I favor [[https://www.zsh.org][Zsh]], that's why this part is probably
 not up-to-date and not as well documented.
 
 ** .bashrc
@@ -476,7 +411,7 @@ available on [[https://melpa.org/][MELPA]] and [[https://github.com/dylanaraps/p
 =doom-moonlight=.
 
 This is the base colorset
-#+BEGIN_SRC conf :tangle .Xresources
+#+BEGIN_SRC text :tangle .Xresources :exports code
 *.color0: #202236
 *color0:  #202236
 *.color1: #FE747E
@@ -511,12 +446,14 @@ This is the base colorset
 *color15:  #C7D2F4
 #+END_SRC
 This black color will not be affected by bold highlighting.
-#+BEGIN_SRC conf :tangle .Xresources
+#+BEGIN_SRC text :tangle .Xresources :exports code
 *.color66: #202236
 *color66:  #202236
 #+END_SRC
-
-
+* BSPWM
+#+INCLUDE: .config/bspwm/README.org
+* SXHKD
+#+INCLUDE: .config/sxhkd/README.org
  
 
 

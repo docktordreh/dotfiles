@@ -37,3 +37,4 @@ modules-right       = fbattery powermenu
 #modules-center      = bspwm
 #width		    = 30%
 #radius	            = 8
+

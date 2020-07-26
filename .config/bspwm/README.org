@@ -13,7 +13,7 @@ Launch Polybar
 #+END_SRC
 Set wallpaper to sth random
 #+BEGIN_SRC bash
-feh --bg-scale --randomize ~/.wallpaper
+feh --bg-scale --randomize ~/Pictures/wallpaper
 #+END_SRC
 Start nextcloud
 #+BEGIN_SRC bash
@@ -21,7 +21,7 @@ nextcloud &
 #+END_SRC
 Screenshot Tool
 #+BEGIN_SRC bash
-flameshot gui -p ~/shots &
+flameshot &
 #+END_SRC
 Start notification daemon
 #+BEGIN_SRC bash

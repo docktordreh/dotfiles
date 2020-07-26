@@ -3,11 +3,11 @@ sxhkd &
 
 ~/.config/polybar/launch.sh
 
-feh --bg-scale --randomize ~/.wallpaper
+feh --bg-scale --randomize ~/Pictures/wallpaper
 
 nextcloud &
 
-flameshot gui -p ~/shots &
+flameshot &
 
 dunst &
 

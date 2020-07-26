@@ -2,14 +2,14 @@
 super + shift + q
                bspc quit
 
-ctrl + alt + {Home,End,Delete}
-                poweroptionsmenu
-
 {super,super + shift} + {1,2,3,4,5}
                     bspc {desktop --focus,node -d}  {web,term,chat,code,music}
 
 super + {_,shift + }{h,j,k,l}
     bspc node -{f,s} {west,south,north,east}
+
+Print
+    flameshot gui -p ~/Pictures/screenshots
 
 super + {t,shift + t,s,f}
     bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
