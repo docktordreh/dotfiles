@@ -157,10 +157,6 @@
 (flyspell-mode 1)
 ;; My defaults:34 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Reload Theme][Reload Theme:1]]
-(add-hook! 'doom-load-theme-hook #'theme-magic-from-emacs)
-;; Reload Theme:1 ends here
-
 ;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Treemacs][Treemacs:1]]
 (after! treemacs
   (defvar treemacs-file-ignore-extensions '()

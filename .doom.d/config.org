@@ -227,10 +227,6 @@ Lazy Flyspell uses less emacs and cpu
 (flyspell-lazy-mode 1)
 (flyspell-mode 1)
 #+END_SRC
-** Reload Theme
-#+BEGIN_SRC emacs-lisp
-(add-hook! 'doom-load-theme-hook #'theme-magic-from-emacs)
-#+END_SRC
 ** Treemacs
 
 There are a lot of files which are unnecessary and blob treemacs. This adds a
@@ -2845,14 +2841,6 @@ Utilities for messing with prettify-symbols-mode
 (package! prettify-utils :recipe
                          (:host github
                            :repo "Ilazki/prettify-utils.el"))
-#+END_SRC
-Allows for setting the system theme to the theme used in emacs
-#+BEGIN_SRC emacs-lisp
-(package! theme-magic)
-#+END_SRC
-Requires pywal
-#+BEGIN_SRC sh :exports code
-pip install --user pywal
 #+END_SRC
 *** Look and Feel and Stuff
 Whenever the window scrolls a light will shine on top of your cursor so you know

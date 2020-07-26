@@ -40,10 +40,6 @@
                            :repo "Ilazki/prettify-utils.el"))
 ;; Style:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Style][Style:2]]
-(package! theme-magic)
-;; Style:2 ends here
-
 ;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and Feel and Stuff][Look and Feel and Stuff:1]]
 (package! beacon)
 ;; Look and Feel and Stuff:1 ends here
