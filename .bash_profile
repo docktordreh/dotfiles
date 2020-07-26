@@ -1,7 +1,4 @@
-#
-# ~/.bash_profile
-#
-
+#!/usr/bin/env bash
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 
 export PYTHONIOENCODING=UTF-8

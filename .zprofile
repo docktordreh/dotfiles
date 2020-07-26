@@ -1,27 +1,20 @@
-keychain --quiet --eval --noask --agents ssh,gpg id_rsa | source /dev/stdin
-
-export PYENV_ROOT=$HOME/.pyenv
-
 [ -d "$HOME/.config/proxychains" ] && export PROXYCHAINS_CONF_FILE="$HOME/.config/proxychains/proxychains.conf"
 
-# Android SDK etc
 [ -d "$HOME/Android/Sdk" ]  && export ANDROID_HOME="$HOME/Android/Sdk"
 
 [ -z "$ANDROID_HOME" ]      && [ -d "$ANDROID_HOME/platform-tools" ] && PATH="$ANDROID_HOME/platform-tools"
 [ -z "$ANDROID_HOME" ]      && [ -d "$ANDROID_HOME/tools" ]          && PATH="$ANDROID_HOME/tools"
 
-# go progs (f.e lf)
 [ -d "$HOME/go/bin" ]       && PATH="$HOME/go/bin:$PATH"
-# doom
+
 [ -d "$HOME/.emacs.d/bin" ] && PATH="$HOME/.emacs.d/bin:$PATH"
-# stack, pip --user
+
 [ -d "$HOME/.local/bin" ]   && PATH="$HOME/.local/bin:$PATH"
-# cabal
+
 [ -d "$HOME/.cabal/bin" ]   && PATH="$HOME/.cabal/bin:$PATH"
-# cargo for rusty stuff
+
 [ -d "$HOME/.cargo/bin" ]   && PATH="$HOME/.cargo/bin:$PATH"
 
-[ -d "$PYENV_ROOT/bin"  ]   && PATH="$PYENV_ROOT/bin:$PATH"
 export PATH
 
 export EDITOR='emacs -nw'
@@ -32,4 +25,3 @@ export HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/history"
 export HISTSIZE=100000
 export SAVEHIST=$HISTSIZE
 export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
-

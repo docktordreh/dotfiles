@@ -1,5 +1,4 @@
 - link:
     "~/.tmux.conf": .tmux.conf
-    "~/tmux-setup.sh": tmux-setup.sh
 - shell:
     - echo "tmux" >> ~/.to_install
