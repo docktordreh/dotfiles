@@ -18,8 +18,8 @@ renders best viewed in Emacs, I don't know if the link works in gitlab).
 - [[#about-this-project][About this Project]]
   - [[#about-this-documentation][About this Documentation]]
 - [[#magit-forge][Magit Forge]]
-- [[#git-g][Git G]]
-- [[#tmux-itt][Tmux iTT]]
+- [[#git][Git]]
+- [[#tmux][Tmux]]
 - [[#vim][Vim]]
 - [[#zsh][Zsh]]
   - [[#zshenv][.zshenv]]
@@ -37,8 +37,7 @@ This contains my api key for connecting to gitlab and working/editing gitlab
 issues using [[https://github.com/magit/forge/][magit-forge]]
 I do not include this here, because it would be stored unencrypted.
 
-* Git G
-
+* Git
 This is my global git configuration
 
 This is basic configuration
@@ -67,8 +66,7 @@ Some other stuff I configured, probably not too important
 	rebase = false
 #+END_SRC
 
-* Tmux iTT
-
+* Tmux
 I use the terminal multiplexer [[https://github.com/tmux/tmux][tmux]], which basically is a window manager for
 your terminal and allows you to outsource some unnecessary work that your terminal does to
 tmux. It allows to use multiple terminals in the same window in splits.
