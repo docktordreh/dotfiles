@@ -29,9 +29,11 @@ set -o nounset
 
 #***  Scriptinfo  ***************************************************************
 NAME="pbweather"
+FZF_DEFAULT_OPTS=""
 VERSION="0.5"
 AUTHOR="valentin_lechner"
 CREATED="2017-12-19"
+LS_COLORS=""
 UPDATED="2018-08-30"
 #*******************************************************************************
 
@@ -41,6 +43,7 @@ UPDATED="2018-08-30"
 PBWEATHER_GLOBAL_CONFIG="/etc/pbweather/pbweather.conf"
 PBWEATHER_USER_CONFIG="$HOME/.config/pbweather/pbweather.conf"
 
+. "$HOME/.cache/wal/colors.sh"
 # TODO: Change to def values, make it configurable in conf -> check if set else default
 
 ICON_SUNNY=""
@@ -155,27 +158,27 @@ parseOpenWeathermapResponse(){
 
   if [[ "${WEATHER_MAIN}" = *Snow* ]]; then
 
-    echo "${ICON_SNOW} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
+    echo "%{F$(echo $color7 | cut -d '#' -f 2)}${ICON_SNOW} ${WEATHER_TEMP}${SYMBOL_CELSIUS}%{F444444}"
 
   elif [[ "${WEATHER_MAIN}" = *Rain* ]] || [[ "${WEATHER_MAIN}" = *Drizzle* ]]; then
 
-    echo "${ICON_RAINY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
+    echo "%{F$(echo $color6 | cut -d '#' -f 2)}${ICON_RAINY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}%{F444444}"
 
   elif [[ "${WEATHER_MAIN}" = *Cloud* ]]; then
 
-    echo "${ICON_CLOUDY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
+    echo "%{F$(echo $color4 | cut -d '#' -f 2)}${ICON_CLOUDY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}%{F444444}"
 
   elif [[ "${WEATHER_MAIN}" = *Clear* ]]; then
 
-    echo "${ICON_SUNNY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
+    echo "%{F$(echo $color3 | cut -d '#' -f 2)}${ICON_SUNNY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}%{F444444}"
 
   elif [[ "${WEATHER_MAIN}" = *Fog* ]] || [[ "${WEATHER_MAIN}" = *Mist* ]]; then
 
-    echo "${ICON_FOG} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
+    echo "%{F$(echo $color7 | cut -d '#' -f 2)}${ICON_FOG} ${WEATHER_TEMP}${SYMBOL_CELSIUS}%{F444444}"
 
   elif [[ "${WEATHER_MAIN}" = *Storm* ]]; then
 
-   echo "${ICON_STORM} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
+   echo "%{F$(echo $color10 | cut -d '#' -f 2)}${ICON_STORM} ${WEATHER_TEMP}${SYMBOL_CELSIUS}%{F444444}"
 
   else
 
