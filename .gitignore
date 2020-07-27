@@ -1,4 +1,11 @@
 *.swo
+.auctex-auto/
+*.bbl
+*.pdf
+*.tex
+_minted-README/
+*.html
+.config/zsh/.zhistory
 bookmarks
 *.swp
 *.svg
