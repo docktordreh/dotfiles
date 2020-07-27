@@ -1,5 +1,0 @@
-- link:
-    "~/.config/rofi": .config/rofi
-- shell:
-    - curl -fsSL https://raw.githubusercontent.com/Murzchnvok/nord-rofi-theme/master/nord.rasi -o ~/.config/rofi/nord.rasi
-    - echo 'rofi' >> ~/.to_install

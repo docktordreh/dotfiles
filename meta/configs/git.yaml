@@ -1,4 +1,0 @@
-- link:
-    "~/.gitconfig": .gitconfig
-- shell:
-  - "echo 'git' >> ~/.to_install"

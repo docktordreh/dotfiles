@@ -1,5 +1,0 @@
-- link:
-    "~/.xmonad/xmonadctl.hs": .xmonad/xmonadctl.hs
-    "~/.xmonad/xmonad.hs": .xmonad/xmonad.hs
-    "~/.xmonad/xpm": .xmonad/xpm
-    "~/.xmonad/stack.yaml": .xmonad/stack.yaml

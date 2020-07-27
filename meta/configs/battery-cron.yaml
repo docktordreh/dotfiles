@@ -1,6 +1,0 @@
-- link:
-    "~/.local/bin/battery-cron": cronjobs/batterystate.sh
-    "~/tmp/batteryinfo": cronjobs/.croninfo/batteryinfo
-- shell:
-    - "echo 'add cronjob battery-cron'>> ~/.to_install"
-    - "echo 'upower' >> ~/.to_install"

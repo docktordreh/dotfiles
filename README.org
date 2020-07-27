@@ -27,7 +27,7 @@ I do not include this here, because it would be stored unencrypted.
 This is my global git configuration
 
 This is basic configuration
-#+BEGIN_SRC git :tangle .gitconfig
+#+BEGIN_SRC git :tangle .config/git/config
 [user]
 	email = valentin_lechner@dismail.de
 	name = valentin_lechner
@@ -39,19 +39,18 @@ git config --global user.email <your email>
 #+END_SRC
 
 This configures git to use my private key to sign every commit
-#+BEGIN_SRC git :tangle .gitconfig
+#+BEGIN_SRC git :tangle .config/git/config
 	signingkey = 9C489382
 [commit]
 	gpgsign = true
 #+END_SRC
 Some other stuff I configured, probably not too important
-#+BEGIN_SRC git :tangle .gitconfig
+#+BEGIN_SRC git :tangle .config/git/config
 [gitlab]
 	user = valentin_lechner
 [pull]
 	rebase = false
 #+END_SRC
-
 * Tmux
 I use the terminal multiplexer [[https://github.com/tmux/tmux][tmux]], which basically is a window manager for
 your terminal and allows you to outsource some unnecessary work that your terminal does to
