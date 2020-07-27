@@ -57,7 +57,7 @@
               company-files
               company-yasnippet))
 
-(setq ispell-dictionary "en-custom")
+(setq ispell-dictionary "deutsch")
 ;; My defaults:11 ends here
 
 ;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:12]]
@@ -154,7 +154,6 @@
 
 ;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:34]]
 (flyspell-lazy-mode 1)
-(flyspell-mode 1)
 ;; My defaults:34 ends here
 
 ;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Treemacs][Treemacs:1]]
@@ -318,6 +317,15 @@
 ;; Org Mode:4 ends here
 
 ;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:2]]
+(setq org-indent-mode nil)
+(setq org-indent-indentation-per-level 1)
+;; Look and feel:2 ends here
+
+;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:3]]
+(setq org-adapt-indentation nil)
+;; Look and feel:3 ends here
+
+;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:4]]
 (setq-hook! org-mode
   org-log-done t
   org-image-actual-width '(700)
@@ -335,16 +343,16 @@
   )
 
 (setq org-journal-enable-agenda-integration t)
-;; Look and feel:2 ends here
+;; Look and feel:4 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:3]]
+;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:5]]
 (setq
   org-ellipsis " ▼ "
   org-superstar-headline-bullets-list '("✿" "■" "◆" "▲" "#")
 )
-;; Look and feel:3 ends here
+;; Look and feel:5 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:4]]
+;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:6]]
 (evil-define-command evil-buffer-org-new (count file)
   "Creates a new ORG buffer replacing the current window, optionally
    editing a certain FILE"
@@ -359,14 +367,18 @@
 (map! :leader
   (:prefix "b"
     :desc "New empty ORG buffer" "o" #'evil-buffer-org-new))
-;; Look and feel:4 ends here
+;; Look and feel:6 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:5]]
+;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:7]]
 (remove-hook 'text-mode-hook #'visual-line-mode)
 (add-hook 'text-mode-hook #'auto-fill-mode)
-;; Look and feel:5 ends here
+;; Look and feel:7 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:6]]
+;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:8]]
+(add-hook 'text-mode-hook #'flyspell-mode)
+;; Look and feel:8 ends here
+
+;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:9]]
 (custom-set-faces
   '(org-block
     ((t (:inherit fixed-pitch)))
@@ -449,9 +461,9 @@
                              :foreground "#57c7ff"
                              :height 2.0
                              :underline nil)))))
-;; Look and feel:6 ends here
+;; Look and feel:9 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:7]]
+;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:10]]
 (font-lock-add-keywords 'org-mode
                         '(("^ *\\([-]\\) "
                            (0 (prog1 ()
@@ -476,17 +488,17 @@
                            )
                           )
                         )
-;; Look and feel:7 ends here
+;; Look and feel:10 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:8]]
+;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:11]]
 (setq org-hide-leading-stars t)
-;; Look and feel:8 ends here
+;; Look and feel:11 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:9]]
+;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:12]]
 (setq org-src-fontify-natively t)
-;; Look and feel:9 ends here
+;; Look and feel:12 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:10]]
+;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:13]]
 (add-hook! 'org-mode-hook #'+org-pretty-mode
            'org-fragtog-mode
            'writeroom-mode
@@ -496,23 +508,23 @@
  org-fontify-whole-heading-line t
  org-fontify-done-headline t
  org-fontify-quote-and-verse-blocks t)
-;; Look and feel:10 ends here
+;; Look and feel:13 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:11]]
+;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:14]]
 (add-hook 'org-mode-hook '(lambda () (setq fill-column 80)))
 (add-hook 'org-mode-hook 'auto-fill-mode)
-;; Look and feel:11 ends here
+;; Look and feel:14 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:12]]
+;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:15]]
 (setq org-enforce-todo-dependencies t)
 (setq org-insert-heading-respect-content nil)
 (setq org-reverse-note-order nil)
 (setq org-deadline-warning-days 7)
 (setq org-blank-before-new-entry (quote ((heading . t)
                                          (plain-list-item . nil))))
-;; Look and feel:12 ends here
+;; Look and feel:15 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:13]]
+;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:16]]
 (after! org
   (defun unpackaged/org-element-descendant-of (type element)
     "Return non-nil if ELEMENT is a descendant of TYPE.
@@ -615,9 +627,9 @@ appropriate.  In tables, insert a new row or end the table."
  :after evil-org
  :map evil-org-mode-map
  :i [return] #'unpackaged/org-return-dwim)
-;; Look and feel:13 ends here
+;; Look and feel:16 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:14]]
+;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:17]]
 (global-set-key (kbd "<f5>") 'bh/org-todo)
 (global-set-key (kbd "C-<f5>") 'bh/widen)
 
@@ -648,7 +660,7 @@ appropriate.  In tables, insert a new row or end the table."
   (org-narrow-to-subtree)
   (save-restriction
     (org-agenda-set-restriction-lock)))
-;; Look and feel:14 ends here
+;; Look and feel:17 ends here
 
 ;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Smart parentheses][Smart parentheses:1]]
 (sp-local-pair

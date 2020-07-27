@@ -1,8 +1,16 @@
 #+TITLE:BSPWM Configuration
+#+AUTHOR: valentin
 #+PROPERTY: header-args :tangle bspwmrc :shebang "#!/bin/bash"
-
 * Startup Programs
 
+Speed xrate up
+#+BEGIN_SRC  bash
+xset r rate 300 50 &
+#+END_SRC
+Hide mouse when idle
+#+BEGIN_SRC bash
+unclutter &
+#+END_SRC
 Launch simple x hotkey daemon
 #+BEGIN_SRC bash
 sxhkd &

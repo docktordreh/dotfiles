@@ -1,13 +1,5 @@
 eval $(thefuck --alias)
-if [ -f /etc/bash.command-not-found ]; then
-    . /etc/bash.command-not-found
-fi
 
-bindkey -v
-export KEYTIMEOUT=1
-
-
-# Enable autocompletions
 autoload -Uz compinit
 
 typeset -i updated_at=$(date +'%j' -r ~/.zcompdump 2>/dev/null || stat -f '%Sm' -t '%j' ~/.zcompdump 2>/dev/null)
@@ -18,47 +10,26 @@ else
   compinit -C -i
 fi
 
-
 zmodload -i zsh/complist
-# Options
-# cd by typing directory name if it's not a command
-setopt auto_cd 
-# automatically list choices on ambiguous completion
-setopt auto_list
-# menu completion 
-setopt auto_menu
-# move cursor to end if match
-setopt always_to_end 
-# remove old duplicates from hist
-setopt hist_ignore_all_dups 
-# remove superfluous blanks from hist
-setopt hist_reduce_blanks
-# hist gets saved when entered
-setopt inc_append_history
-# shares hist between instances
-setopt share_history
-# allow comments in interactive shells
-setopt interactive_comments 
 
-# Improve autocompletion style
-# sel completion with arrow
-zstyle ':completion:*' menu select 
-# group results by cat
+zstyle ':completion:*' menu select
+
 zstyle ':completion:*' group-name ''
-# enable approximate matches
+
 zstyle ':completion:::::' completer _expand _complete _ignored _approximate
-# Highlight the current autocomplete option
+
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
-# Better SSH/Rsync/SCP Autocomplete
 zstyle ':completion:*:(scp|rsync):*' tag-order ' hosts:-ipaddr:ip\ address hosts:-host:host files'
 zstyle ':completion:*:(ssh|scp|rsync):*:hosts-host' ignored-patterns '*(.|:)*' loopback ip6-loopback localhost ip6-localhost broadcasthost
 zstyle ':completion:*:(ssh|scp|rsync):*:hosts-ipaddr' ignored-patterns '^(<->.<->.<->.<->|(|::)([[:xdigit:].]##:(#c,2))##(|%*))' '127.0.0.<->' '255.255.255.255' '::1' 'fe80::*'
 
-# Allow for autocomplete to be case insensitive
 zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' \
   '+l:|?=** r:|?=**'
 
+bindkey -v
+# makes the switch between modes quicker
+export KEYTIMEOUT=1
 # Use vim keys in tab complete menu:
 bindkey -M menuselect 'h' vi-backward-char
 bindkey -M menuselect 'k' vi-up-line-or-history
@@ -66,7 +37,13 @@ bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -v '^?' backward-delete-char
 
-# Change cursor shape for different vi modes.
+zle -N zle-keymap-select
+zle-line-init() {
+    # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
+    # zle -K viins
+    echo -ne "\e[5 q"
+}
+
 function zle-keymap-select {
   if [[ ${KEYMAP} == vicmd ]] ||
      [[ $1 = 'block' ]]; then
@@ -78,19 +55,36 @@ function zle-keymap-select {
     echo -ne '\e[5 q'
   fi
 }
-zle -N zle-keymap-select
-zle-line-init() {
-    # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
-    # zle -K viins 
-    echo -ne "\e[5 q"
-}
 zle -N zle-line-init
 # beam cursor on startup
 echo -ne '\e[5 q'
 # beam cursor for new prompt
-preexec() { echo -ne '\e[5 q' ;} 
+preexec() { echo -ne '\e[5 q' ;}
 
-# Use lf to switch directories and bind it to ctrl-o
+setopt auto_cd
+
+setopt auto_list
+
+setopt auto_menu
+
+setopt always_to_end
+
+setopt hist_ignore_all_dups
+
+setopt hist_reduce_blanks
+
+setopt inc_append_history
+
+setopt share_history
+
+setopt interactive_comments
+
+setopt AUTO_PUSHD
+
+setopt PUSHD_IGNORE_DUPS
+
+setopt PUSHD_SILENT
+
 lfcd () {
     tmp="$(mktemp)"
     lf -last-dir-path="$tmp" "$@"
@@ -105,11 +99,16 @@ bindkey -s '^o' 'lfcd\n'
 bindkey -s '^b' 'bc -l\n'
 
 bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'
-# Edit line in vim with ctrl-e:
+
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
-alias sudo='doas'
-alias ls='exa -alh --color=always'
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+bindkey '^[[3~' delete-char
+bindkey '^[3;5~' delete-char
+
+source "$ZDOTDIR/.zsh_aliases"
+
 what(){vimb "searx.neocities.org?q=$1"}
 
 [ -z "$TMUX" ] && eval $(ssh-agent -s) && ssh-add ~/.ssh.id_ed25519
@@ -117,9 +116,9 @@ what(){vimb "searx.neocities.org?q=$1"}
 case $- in *i* )
     [ -z "$TMUX" ] && command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && exec tmux new-session -A -s main ;;
 esac
-# Load antibody plugin manager
+
 source <(antibody init)
-# Plugins
+
 antibody bundle mafredri/zsh-async
 antibody bundle sindresorhus/pure
 antibody bundle zsh-users/zsh-autosuggestions
@@ -128,17 +127,12 @@ antibody bundle zsh-users/zsh-completions
 antibody bundle marzocchi/zsh-notify
 antibody bundle mafredri/zsh-async
 antibody bundle sindresorhus/pure
+
 PURE_PROMPT_SYMBOL="λ"
 zstyle ':prompt:pure:prompt:error' color red
 zstyle ':prompt:pure:prompt:success' color green
 autoload -U promptinit
 promptinit
 prompt pure
-# # Keybindings
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
-bindkey '^[[3~' delete-char
-bindkey '^[3;5~' delete-char
-
 
 antibody bundle zdharma/fast-syntax-highlighting

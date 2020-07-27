@@ -1,5 +1,5 @@
 #+TITLE: SXHKD
-#+AUTHOR: valentinlechner
+#+AUTHOR: valentin
 #+PROPERTY: header-args :tangle sxhkdrc :shebang "#!/usr/bin/sxhkd"
 * Basics
 
@@ -61,9 +61,20 @@ super + r
 
 * Program launcher
 
+Open Program Menu
 #+BEGIN_SRC bash
 super + d
-               dmenu_run
+               rofi -show run
+#+END_SRC
+Open SSH Menu
+#+BEGIN_SRC bash
+super + a
+               rofi -show ssh
+#+END_SRC
+Open Keepassxc
+#+BEGIN_SRC bash
+super + x
+               rofi-keepassxc -d ~/Daten/cloud/tlaloc/sec/db.kdbx
 #+END_SRC
 
 * Close and kill windows

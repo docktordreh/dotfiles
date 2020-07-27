@@ -106,7 +106,7 @@ Add spellcorrection to ~text~, ~markdown~, ~GFM~.
               company-files
               company-yasnippet))
 
-(setq ispell-dictionary "en-custom")
+(setq ispell-dictionary "deutsch")
 #+END_SRC
 I like zsh
 #+BEGIN_SRC emacs-lisp
@@ -225,7 +225,6 @@ set mouse to yank where i click: http://sachachua.com/blog/2017/04/emacs-pasting
 Lazy Flyspell uses less emacs and cpu
 #+BEGIN_SRC emacs-lisp
 (flyspell-lazy-mode 1)
-(flyspell-mode 1)
 #+END_SRC
 ** Treemacs
 
@@ -465,6 +464,20 @@ A `font-lock-keywords' function that searches up to LIMIT."
              finally return applied-p)))
 #+END_SRC
 
+Disable =org-indent-mode=
+=org-indent-mode= is an excellent default, but has the downside of increasing the
+visual width of tthe file as headings are increasingly nested
+To make it simpler, this forces consecutive indentation levels to increment one
+character at a time with org-indent-indentation-per-level.
+#+BEGIN_SRC emacs-lisp
+(setq org-indent-mode nil)
+(setq org-indent-indentation-per-level 1)
+#+END_SRC
+By default, orgf indents text to match the indentation. Setting it to nil
+disables thsi behaviour
+#+BEGIN_SRC emacs-lisp
+(setq org-adapt-indentation nil)
+#+END_SRC
 Taken for testing from [[github:psamim/dotfiles]]
 #+BEGIN_SRC emacs-lisp
 (setq-hook! org-mode
@@ -521,6 +534,11 @@ specific modes as desired.
 (remove-hook 'text-mode-hook #'visual-line-mode)
 (add-hook 'text-mode-hook #'auto-fill-mode)
 #+END_SRC
+Add flyspell mode in text mode
+#+BEGIN_SRC emacs-lisp
+(add-hook 'text-mode-hook #'flyspell-mode)
+#+END_SRC
+
 
 #+BEGIN_SRC emacs-lisp
 (custom-set-faces

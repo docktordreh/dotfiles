@@ -43,7 +43,7 @@ UPDATED="2018-08-30"
 PBWEATHER_GLOBAL_CONFIG="/etc/pbweather/pbweather.conf"
 PBWEATHER_USER_CONFIG="$HOME/.config/pbweather/pbweather.conf"
 
-. "$HOME/.cache/wal/colors.sh"
+. "$XDG_CONFIG_HOME/cache/wal/colors.sh"
 # TODO: Change to def values, make it configurable in conf -> check if set else default
 
 ICON_SUNNY=""

@@ -60,45 +60,45 @@ tmux. It allows to use multiple terminals in the same window in splits.
 Since I found the default keybinding =C-b= hard to reach, I settled for =C-a=. When
 I connected to a screen-session on a server, I ran into keybinding issues. For
 now, I solved it using =C-s= as my keybinding. Seems good so far.
-#+BEGIN_SRC sh :tangle .tmux.conf
+#+BEGIN_SRC sh :tangle .config/tmux/tmux.conf
 unbind C-b
 set-option -g prefix C-s
 bind-key C-s send-prefix
 #+END_SRC
 
 Everyone knows that we count from zero
-#+BEGIN_SRC sh :tangle .tmux.conf
+#+BEGIN_SRC sh :tangle .config/tmux/tmux.conf
 set -g base-index 0
 #+END_SRC
 
 Automatically set window title
-#+BEGIN_SRC sh :tangle .tmux.conf
+#+BEGIN_SRC sh :tangle .config/tmux/tmux.conf
 set-window-option -g automatic-rename on
 set-option -g set-titles on
 #+END_SRC
 Some basic stuff
-#+BEGIN_SRC sh :tangle .tmux.conf
+#+BEGIN_SRC sh :tangle .config/tmux/tmux.conf
 set -g default-terminal "screen-256color"
 set -g history-limit 10000
 #+END_SRC
 Evil mode everywhere
-#+BEGIN_SRC sh :tangle .tmux.conf
+#+BEGIN_SRC sh :tangle .config/tmux/tmux.conf
 set -g status-keys vi
 setw -g mode-keys vi
 #+END_SRC
 This notifies you when something changes in another window
-#+BEGIN_SRC sh :tangle .tmux.conf
+#+BEGIN_SRC sh :tangle .config/tmux/tmux.conf
 setw -g monitor-activity on
 #+END_SRC
 Add some sensible keybindings for splitting windows.
 =C-s + v=: split vertically
 =C-s + h=: split horizontally
-#+BEGIN_SRC sh :tangle .tmux.conf
+#+BEGIN_SRC sh :tangle .config/tmux/tmux.conf
 bind-key v split-window -h
 bind-key s split-window -v
 #+END_SRC
 Evil resizing using Uppercase hjkl
-#+BEGIN_SRC sh :tangle .tmux.conf
+#+BEGIN_SRC sh :tangle .config/tmux/tmux.conf
 bind-key J resize-pane -D 5
 bind-key K resize-pane -U 5
 bind-key H resize-pane -L 5
@@ -109,7 +109,7 @@ bind-key M-h resize-pane -L
 bind-key M-l resize-pane -R
 #+END_SRC
 Evil style pane selection
-#+BEGIN_SRC sh :tangle .tmux.conf
+#+BEGIN_SRC sh :tangle .config/tmux/tmux.conf
 bind h select-pane -L
 bind j select-pane -D
 bind k select-pane -U
@@ -117,7 +117,7 @@ bind l select-pane -R
 
 #+END_SRC
 Use Alt-vim keys without prefix key to switch panes
-#+BEGIN_SRC sh :tangle .tmux.conf
+#+BEGIN_SRC sh :tangle .config/tmux/tmux.conf
 bind -n M-h select-pane -L
 bind -n M-j select-pane -D
 bind -n M-k select-pane -U
@@ -126,15 +126,17 @@ bind -n M-l select-pane -R
 
 
 No delay for escape key press
-#+BEGIN_SRC sh :tangle .tmux.conf
+#+BEGIN_SRC sh :tangle .config/tmux/tmux.conf
 set -sg escape-time 0
 #+END_SRC
 Reload tmux config
-#+BEGIN_SRC sh :tangle .tmux.conf
-bind r source-file ~/.tmux.conf
+#+BEGIN_SRC sh :tangle .config/tmux/tmux.conf
+bind r source-file ~/.config/tmux/tmux.conf
 #+END_SRC
+
+
 THEME
-#+BEGIN_SRC sh :tangle .tmux.conf
+#+BEGIN_SRC sh :tangle .config/tmux/tmux.conf
 set -g status-bg default
 set -g status-fg green
 set -g status-interval 60
@@ -145,23 +147,433 @@ set -g status-right '#[fg=yellow]#(cut -d " " -f 1-3 /proc/loadavg)#[default] #[
 
 * Zsh
 
-This is only part of my zsh configuration
-
 ** .zshenv
 
-My settings for the zsh environment
-#+BEGIN_SRC zsh :tangle .zshenv
-export XDG_DATA_HOME="$HOME/.local/share"
-
-export HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/history"
-
-export HISTSIZE=100000
-
-export SAVEHIST=$HISTSIZE
-
+Relocate some config files to be located in =~/.config= instead of =~=
+#+BEGIN_SRC sh :tangle .zshenv
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$XDG_CONFIG_HOME/local/share"
+export XDG_CACHE_HOME="$XDG_CONFIG_HOME/cache"
+#+END_SRC
+Relocate zsh config dir. Only this file =.zshenv= has to be in =~=
+#+BEGIN_SRC sh :tangle .zshenv
 export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
 #+END_SRC
 
+Relocate zsh history file
+#+BEGIN_SRC sh :tangle .zshenv
+export HISTFILE="$ZDOTDIR/.zhistory"
+export HISTSIZE=100000
+export SAVEHIST=$HISTSIZE
+#+END_SRC
+
+Set default editor to emacs
+#+BEGIN_SRC sh :tangle .config/zsh/.zprofile
+export EDITOR='emacs -nw'
+export VISUAL='emacs -nw'
+#+END_SRC
+
+*** Additional Relocations
+
+GTK2
+#+BEGIN_SRC sh :tangle .zshenv
+export GTK2_RC_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-2.0/gtkrc-2.0"
+#+END_SRC
+WGET
+#+BEGIN_SRC sh :tangle .zshenv
+export WGETRC="${XDG_CONFIG_HOME:-$HOME/.config}/wget/wgetrc"
+#+END_SRC
+TMUX
+#+BEGIN_SRC sh :tangle .zshenv
+export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
+#+END_SRC
+Android SDK
+#+BEGIN_SRC sh :tangle .zshenv
+export ANDROID_SDK_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/android"
+#+END_SRC
+Rust
+#+BEGIN_SRC sh :tangle .zshenv
+export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.config/local/share}/cargo"
+#+END_SRC
+Go
+#+BEGIN_SRC sh :tangle .zshenv
+export GOPATH="${XDG_DATA_HOME:-$HOME/.config/local/share}/go"
+#+END_SRC
+Ansible
+#+BEGIN_SRC sh :tangle .zshenv
+export ANSIBLE_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/ansible/ansible.cfg"
+#+END_SRC
+
+*** lf icons
+
+#+BEGIN_SRC sh :tangle .zshenv
+# This is the list for lf icons:
+export LF_ICONS="di=📁:\
+fi=📃:\
+tw=🤝:\
+ow=📂:\
+ln=⛓:\
+or=❌:\
+ex=🎯:\
+*.txt=✍:\
+*.mom=✍:\
+*.me=✍:\
+*.ms=✍:\
+*.png=🖼:\
+*.webp=🖼:\
+*.ico=🖼:\
+*.jpg=📸:\
+*.jpe=📸:\
+*.jpeg=📸:\
+*.gif=🖼:\
+*.svg=🗺:\
+*.tif=🖼:\
+*.tiff=🖼:\
+*.xcf=🖌:\
+*.html=🌎:\
+*.xml=📰:\
+*.gpg=🔒:\
+*.css=🎨:\
+*.pdf=📚:\
+*.djvu=📚:\
+*.epub=📚:\
+*.csv=📓:\
+*.xlsx=📓:\
+*.tex=📜:\
+*.md=📘:\
+*.r=📊:\
+*.R=📊:\
+*.rmd=📊:\
+*.Rmd=📊:\
+*.m=📊:\
+*.mp3=🎵:\
+*.opus=🎵:\
+*.ogg=🎵:\
+*.m4a=🎵:\
+*.flac=🎼:\
+*.mkv=🎥:\
+*.mp4=🎥:\
+*.webm=🎥:\
+*.mpeg=🎥:\
+*.avi=🎥:\
+*.zip=📦:\
+*.rar=📦:\
+*.7z=📦:\
+*.tar.gz=📦:\
+*.z64=🎮:\
+*.v64=🎮:\
+*.n64=🎮:\
+*.gba=🎮:\
+*.nes=🎮:\
+*.gdi=🎮:\
+*.1=ℹ:\
+*.nfo=ℹ:\
+*.info=ℹ:\
+*.log=📙:\
+*.iso=📀:\
+*.img=📀:\
+*.bib=🎓:\
+*.ged=👪:\
+*.part=💔:\
+*.torrent=🔽:\
+*.jar=♨:\
+*.java=♨:\
+"
+#+END_SRC
+
+** .zshrc
+
+*** Autocompletion/Typos
+I use [[github:nvbn/thefuck][thefuck]] for correcting typos
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+eval $(thefuck --alias)
+#+END_SRC
+requires =thefuck=
+#+BEGIN_SRC sh
+pip install thefuck
+#+END_SRC
+Enable autocompletions
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+autoload -Uz compinit
+#+END_SRC
+Use cache for autocompletion
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+typeset -i updated_at=$(date +'%j' -r ~/.zcompdump 2>/dev/null || stat -f '%Sm' -t '%j' ~/.zcompdump 2>/dev/null)
+
+if [ $(date +'%j') != $updated_at ]; then
+  compinit -i
+else
+  compinit -C -i
+fi
+#+END_SRC
+Menuselect
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+zmodload -i zsh/complist
+#+END_SRC
+Improve autocompletion style
+sel completion with arrow
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+zstyle ':completion:*' menu select
+#+END_SRC
+group results by cat
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+zstyle ':completion:*' group-name ''
+#+END_SRC
+enable approximate matches
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+zstyle ':completion:::::' completer _expand _complete _ignored _approximate
+#+END_SRC
+Highlight the current autocomplete option
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+#+END_SRC
+
+Better SSH/Rsync/SCP Autocomplete
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+zstyle ':completion:*:(scp|rsync):*' tag-order ' hosts:-ipaddr:ip\ address hosts:-host:host files'
+zstyle ':completion:*:(ssh|scp|rsync):*:hosts-host' ignored-patterns '*(.|:)*' loopback ip6-loopback localhost ip6-localhost broadcasthost
+zstyle ':completion:*:(ssh|scp|rsync):*:hosts-ipaddr' ignored-patterns '^(<->.<->.<->.<->|(|::)([[:xdigit:].]##:(#c,2))##(|%*))' '127.0.0.<->' '255.255.255.255' '::1' 'fe80::*'
+#+END_SRC
+Allow for autocomplete to be case insensitive
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' \
+  '+l:|?=** r:|?=**'
+#+END_SRC
+*** Evil
+Evil everywhere
+- use vim keybindings in term
+- use h,j,k,l to navigate in complete menus
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+bindkey -v
+# makes the switch between modes quicker
+export KEYTIMEOUT=1
+# Use vim keys in tab complete menu:
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -v '^?' backward-delete-char
+#+END_SRC
+
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+zle -N zle-keymap-select
+zle-line-init() {
+    # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
+    # zle -K viins
+    echo -ne "\e[5 q"
+}
+#+END_SRC
+
+Change cursor shape for different vi modes.
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+function zle-keymap-select {
+  if [[ ${KEYMAP} == vicmd ]] ||
+     [[ $1 = 'block' ]]; then
+    echo -ne '\e[1 q'
+  elif [[ ${KEYMAP} == main ]] ||
+       [[ ${KEYMAP} == viins ]] ||
+       [[ ${KEYMAP} = '' ]] ||
+       [[ $1 = 'beam' ]]; then
+    echo -ne '\e[5 q'
+  fi
+}
+zle -N zle-line-init
+# beam cursor on startup
+echo -ne '\e[5 q'
+# beam cursor for new prompt
+preexec() { echo -ne '\e[5 q' ;}
+#+END_SRC
+
+*** Options
+ cd by typing directory name if it's not a command
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+setopt auto_cd
+#+END_SRC
+automatically list choices on ambiguous completion
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+setopt auto_list
+#+END_SRC
+menu completion
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+setopt auto_menu
+#+END_SRC
+move cursor to end if match
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+setopt always_to_end
+#+END_SRC
+remove old duplicates from hist
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+setopt hist_ignore_all_dups
+#+END_SRC
+remove superfluous blanks from hist
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+setopt hist_reduce_blanks
+#+END_SRC
+hist gets saved when entered
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+setopt inc_append_history
+#+END_SRC
+shares hist between instances
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+setopt share_history
+#+END_SRC
+allow comments in interactive shells
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+setopt interactive_comments
+#+END_SRC
+Push the current dir visited to the stack
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+setopt AUTO_PUSHD
+#+END_SRC
+Do not store duplicates in the stack
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+setopt PUSHD_IGNORE_DUPS
+#+END_SRC
+
+Do not print dir after pushd or popd
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+setopt PUSHD_SILENT
+#+END_SRC
+*** Keybindings
+
+Use lf to switch directories and bind it to ctrl-o
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+lfcd () {
+    tmp="$(mktemp)"
+    lf -last-dir-path="$tmp" "$@"
+    if [ -f "$tmp" ]; then
+        dir="$(cat "$tmp")"
+        rm -f "$tmp" >/dev/null
+        [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
+    fi
+}
+bindkey -s '^o' 'lfcd\n'
+#+END_SRC
+open calculator with ctrl+b
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+bindkey -s '^b' 'bc -l\n'
+#+END_SRC
+fzf using C-f
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'
+#+END_SRC
+Edit line in vim with C-e:
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+autoload edit-command-line; zle -N edit-command-line
+bindkey '^e' edit-command-line
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+bindkey '^[[3~' delete-char
+bindkey '^[3;5~' delete-char
+#+END_SRC
+*** Aliases
+
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+source "$ZDOTDIR/.zsh_aliases"
+#+END_SRC
+
+*** Functions
+
+- =what= is my function to look sth up in the web browser
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+what(){vimb "searx.neocities.org?q=$1"}
+#+END_SRC
+
+*** Tmux
+
+Open tmux and start the ssh agent
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+[ -z "$TMUX" ] && eval $(ssh-agent -s) && ssh-add ~/.ssh.id_ed25519
+
+case $- in *i* )
+    [ -z "$TMUX" ] && command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && exec tmux new-session -A -s main ;;
+esac
+#+END_SRC
+*** Antibody
+
+Load antibody plugin manager
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+source <(antibody init)
+#+END_SRC
+Plugins
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+antibody bundle mafredri/zsh-async
+antibody bundle sindresorhus/pure
+antibody bundle zsh-users/zsh-autosuggestions
+antibody bundle zsh-users/zsh-history-substring-search
+antibody bundle zsh-users/zsh-completions
+antibody bundle marzocchi/zsh-notify
+antibody bundle mafredri/zsh-async
+antibody bundle sindresorhus/pure
+#+END_SRC
+*** Prompt
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+PURE_PROMPT_SYMBOL="λ"
+zstyle ':prompt:pure:prompt:error' color red
+zstyle ':prompt:pure:prompt:success' color green
+autoload -U promptinit
+promptinit
+prompt pure
+
+#+END_SRC
+
+*** Last one
+
+This is for syntax highlighting while typing. Loaded last so everything gets highlighted
+#+BEGIN_SRC sh :tangle .config/zsh/.zshrc
+antibody bundle zdharma/fast-syntax-highlighting
+#+END_SRC
+
+
+
+** .zsh_aliases
+
+*** Basic aliases
+
+- =doas=: For desktop usage I tend to use doas as privilege escalation tool. It's easier set up
+- =exa= is a sexier ls
+#+BEGIN_SRC sh :tangle .config/zsh/.zsh_aliases
+alias sudo='doas'
+alias ls='exa -alh --color=always'
+#+END_SRC
+
+*** Directory
+
+- Every dir visited will populate the stack
+- using d shows the stack
+- then typing the number allows you to go back to the dir
+#+BEGIN_SRC sh :tangle .config/zsh/.zsh_aliases
+alias d='dirs -v'
+for index ({1..9}) alias "$index"="cd +${index}"; unset index
+#+END_SRC
+
+*** Powercontrol
+
+#+BEGIN_SRC sh :tangle .config/zsh/.zsh_aliases
+alias poweroff='sudo poweroff'
+alias reboot='sudo reboot'
+#+END_SRC
+
+*** Git Aliases
+#+BEGIN_SRC sh :tangle .config/zsh/.zsh_aliases
+alias gs='git status'
+alias ga='git add'
+alias gp='git push'
+alias gpo='git push origin'
+alias gtd='git tag --delete'
+alias gtdr='git tag --delete origin'
+alias gr='git branch -r'
+alias gplo='git pull origin'
+alias gb='git branch '
+alias gc='git commit'
+alias gd='git diff'
+alias gco='git checkout '
+alias gl='git log'
+alias gr='git remote'
+alias grs='git remote show'
+alias glo='git log --pretty="oneline"'
+alias glol='git log --graph --oneline --decorate'
+#+END_SRC
 
 ** .zprofile
 
@@ -171,7 +583,7 @@ I configured =proxychains= to connect to a running tor service. =proxychains= al
 to set the =conf= file via the variable =PROXYCHAINS_CONF_FILE=. Usually, it is
 located in the home directory - this bloats home, so I decided to put it into
 .config
-#+BEGIN_SRC zsh :tangle .zprofile
+#+BEGIN_SRC sh :tangle .config/zsh/.zprofile
 [ -d "$HOME/.config/proxychains" ] && export PROXYCHAINS_CONF_FILE="$HOME/.config/proxychains/proxychains.conf"
 #+END_SRC
 
@@ -184,53 +596,33 @@ Meaning, cargo stuff will only be in path if the folder is there and so on.
 
 
 Set Android Development specific vars
-#+BEGIN_SRC zsh :tangle .zprofile
-[ -d "$HOME/Android/Sdk" ]  && export ANDROID_HOME="$HOME/Android/Sdk"
-
-[ -z "$ANDROID_HOME" ]      && [ -d "$ANDROID_HOME/platform-tools" ] && PATH="$ANDROID_HOME/platform-tools"
-[ -z "$ANDROID_HOME" ]      && [ -d "$ANDROID_HOME/tools" ]          && PATH="$ANDROID_HOME/tools"
+# #+BEGIN_SRC sh :tangle .config/zsh/.zprofile
+# [ -d "$HOME/Android/Sdk" ]  && export ANDROID_HOME="$HOME/Android/Sdk"
+#
+# [ -z "$ANDROID_HOME" ]      && [ -d "$ANDROID_HOME/platform-tools" ] && PATH="$ANDROID_HOME/platform-tools"
+# [ -z "$ANDROID_HOME" ]      && [ -d "$ANDROID_HOME/tools" ]          && PATH="$ANDROID_HOME/tools"
 #+END_SRC
 go progs (f.e lf)
-#+BEGIN_SRC zsh :tangle .zprofile
-[ -d "$HOME/go/bin" ]       && PATH="$HOME/go/bin:$PATH"
+#+BEGIN_SRC sh :tangle .config/zsh/.zprofile
+[ -n "$GOPATH" ] && [ -d "$GOPATH/bin" ]       && PATH="$GOPATH/bin:$PATH"
 #+END_SRC
 doom Emacs
-#+BEGIN_SRC zsh :tangle .zprofile
+#+BEGIN_SRC sh :tangle .config/zsh/.zprofile
 [ -d "$HOME/.emacs.d/bin" ] && PATH="$HOME/.emacs.d/bin:$PATH"
 #+END_SRC
 Python
-#+BEGIN_SRC zsh :tangle .zprofile
-[ -d "$HOME/.local/bin" ]   && PATH="$HOME/.local/bin:$PATH"
-#+END_SRC
-cabal (haskell)
-#+BEGIN_SRC zsh :tangle .zprofile
-[ -d "$HOME/.cabal/bin" ]   && PATH="$HOME/.cabal/bin:$PATH"
+#+BEGIN_SRC sh :tangle .zprofile
+[ -d "$XDG_CONFIG_HOME/local/bin" ]   && PATH="$XDG_CONFIG_HOME/local/bin:$PATH"
 #+END_SRC
 cargo for rusty stuff
-#+BEGIN_SRC zsh :tangle .zprofile
-[ -d "$HOME/.cargo/bin" ]   && PATH="$HOME/.cargo/bin:$PATH"
+#+BEGIN_SRC sh :tangle .config/zsh/.zprofile
+[ -n "$CARGO_HOME" ] && [ -d "$CARGO_HOME/bin" ]   && PATH="$CARGO_HOME/bin:$PATH"
 #+END_SRC
 And export path
-#+BEGIN_SRC zsh :tangle .zprofile
+#+BEGIN_SRC sh :tangle .config/zsh/.zprofile
 export PATH
 #+END_SRC
-*** Editor
 
-#+BEGIN_SRC zsh :tangle .zprofile
-export EDITOR='emacs -nw'
-export VISUAL='emacs -nw'
-#+END_SRC
-
-*** XDG
-
-Relocate some config files to be located in =~/.config= instead of =~=
-#+BEGIN_SRC zsh :tangle .zprofile
-export XDG_DATA_HOME="$HOME/.local/share"
-export HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/history"
-export HISTSIZE=100000
-export SAVEHIST=$HISTSIZE
-export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
-#+END_SRC
 
 
 
@@ -383,14 +775,6 @@ alias ll='ls -l'
 alias la='ll -A'
 #+END_SRC
 
-
-
-
-
-
-
-
-
 * X Stuff
 
 The [[https://x.org/wiki][X Window System]] is a system used on many linux desktops. It might soon
@@ -400,7 +784,6 @@ though.
 
 Since I use [[https://github.com/CanonicalLtd/lightdm][LightDM]] as Login Manager with [[github:prikhi/lightdm-mini-greeter]], I
 do not use =.xinitrc= or =.xprofile=.
-
 ** .Xresources
 
 =.Xresources= can be used to set Parameters of X Computer Programs.
@@ -451,9 +834,9 @@ This black color will not be affected by bold highlighting.
 *color66:  #202236
 #+END_SRC
 * BSPWM
-#+INCLUDE: .config/bspwm/README.org
+#+INCLUDE: .config/bspwm/README.org :lines "4-"
 * SXHKD
-#+INCLUDE: .config/sxhkd/README.org
+#+INCLUDE: .config/sxhkd/README.org :lines "4-"
  
 
 

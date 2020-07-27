@@ -1,7 +1,7 @@
 #!/bin/sh
 FZF_DEFAULT_OPTS=""
 LS_COLORS=""
-. "$HOME/.cache/wal/colors.sh"
+. "$XDG_CONFIG_HOME/cache/wal/colors.sh"
 
 HOST="$(ip route | grep default | head -n 1 | awk '{print $3}')"
 

@@ -37,7 +37,13 @@ super + @space
 
 #!/usr/bin/sxhkd
 super + d
-               dmenu_run
+               rofi -show run
+
+super + a
+               rofi -show ssh
+
+super + x
+               rofi-keepassxc -d ~/Daten/cloud/tlaloc/sec/db.kdbx
 
 super + {_,shift +}w
                 bspc node -{c,k}
