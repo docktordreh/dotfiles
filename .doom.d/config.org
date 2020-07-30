@@ -311,10 +311,10 @@ add transparency to emacs. only works with a composition manager
 
 #+BEGIN_SRC emacs-lisp
 (setq
- doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 18)
- doom-big-font (font-spec :family "FiraCode Nerd Font Mono" :size 18)
- doom-variable-pitch-font (font-spec :family "EB Garamond 08" :size 28)
- doom-serif-font (font-spec :family "Fira Sans" :size 18))
+ doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 22)
+ doom-big-font (font-spec :family "FiraCode Nerd Font Mono" :size 22)
+ doom-variable-pitch-font (font-spec :family "EB Garamond 08" :size 24)
+ doom-serif-font (font-spec :family "Fira Sans" :size 22))
 #+END_SRC
 Theme settings
 #+BEGIN_SRC emacs-lisp
