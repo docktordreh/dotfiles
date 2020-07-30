@@ -197,9 +197,10 @@ I don't need the menu dashboard
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
 #+END_SRC
 I like displaying whitespaces, returns and so on
-A positive value activates it, negative turns it off
+A positive value activates it, negative turns it off. However, I have found that
+it usually bloats in your face when just writing
 #+BEGIN_SRC emacs-lisp
-(global-whitespace-mode +1)
+(add-hook 'prog-mode-hook #'whitespace-mode)
 #+END_SRC
 I like the visual line mode
 #+BEGIN_SRC emacs-lisp
