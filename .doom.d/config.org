@@ -52,30 +52,6 @@ Since Golden Ratio mode is not maintained anymore, im now using [[github:cyrus-a
 (custom-set-variables
  '(zoom-mode t))
 #+END_SRC
-# enable golden ratio mode globally
-# #+BEGIN_SRC emacs-lisp
-# (use-package! golden-ratio
-#   :after-call pre-command-hook
-#   :config
-#   (golden-ratio-mode +1)
-#   ;; Using this hook for resizing windows is less precise than
-#   ;; `doom-switch-window-hook'.
-#   (remove-hook 'window-configuration-change-hook #'golden-ratio)
-#   (add-hook 'doom-switch-window-hook #'golden-ratio))
-# (setq golden-ratio-exclude-modes
-#       '("calendar-mode"
-#         "org-agenda-mode"
-#         "help-mode"
-#         "helpful-mode"
-#         "rxt-help-mode"
-#         "treemacs-mode" ))
-# (setq golden-ratio-exclude-buffer-names
-#       '("*Org tags*"
-#         "*Org todo*"
-#         "*info*"
-#         "*Messages*"))
-# #+END_SRC
-
 Please, don't indent using tabs.
 Just specify tabs to be 4 whitespaces
 #+BEGIN_SRC emacs-lisp
@@ -260,6 +236,7 @@ mechanism to ignore them
                                         "aux"
                                         "ptc"
                                         "fdb_latexmk"
+                                        "bbl"
                                         "fls"
                                         "synctex.gz"
                                         "toc"
@@ -377,36 +354,43 @@ And ignore tmp, emacs.d
   (or (mapcar (lambda (p) (s-starts-with-p p filepath)) projectile-ignored-projects)))
 #+END_SRC
 ** Org Mode
+
+Enable support for common used languages
 #+BEGIN_SRC emacs-lisp
 (org-babel-do-load-languages
  'org-babel-load-languages
  '(
    (c . t)
+   (ditaa . t)
    (sh . t)
    (plantuml . t)
    (python . t)
  )
 )
 #+END_SRC
-my default directory for org files
+Prevent confirmation
+Location of my org-files
 #+BEGIN_SRC emacs-lisp
 (setq
  org-directory "~/Daten/cloud/tlaloc/org/"
  org-archive-location (concat org-directory ".archive/$s::")
 )
 #+END_SRC
-Inherit properties
+Inherit properties makes child-headings inherit parents properties
 #+BEGIN_SRC emacs-lisp
 (setq org-use-property-inheritance t)
 #+END_SRC
 This right here tells org to ignore ':ignore' tags, but to include the content
-of them which i use for writing my thesis
+of them which I use for writing my thesis
 #+BEGIN_SRC emacs-lisp
 (after! org
   (require 'ox-extra)
   (ox-extras-activate '(ignore-headlines))
   (ox-extras-activate '(latex-header-blocks ignore-headlines)))
 #+END_SRC
+
+
+
 *** Look and feel
 [[github:alphapapa/unpackeged.el]]
 Adds the mode unpackaged/org-table-face-mode which can be activated to make sure
@@ -471,11 +455,11 @@ visual width of tthe file as headings are increasingly nested
 To make it simpler, this forces consecutive indentation levels to increment one
 character at a time with org-indent-indentation-per-level.
 #+BEGIN_SRC emacs-lisp
-(setq org-indent-mode nil)
+(setq org-startup-indented nil)
 (setq org-indent-indentation-per-level 1)
 #+END_SRC
 By default, orgf indents text to match the indentation. Setting it to nil
-disables thsi behaviour
+disables this behaviour
 #+BEGIN_SRC emacs-lisp
 (setq org-adapt-indentation nil)
 #+END_SRC
@@ -534,10 +518,6 @@ specific modes as desired.
 #+BEGIN_SRC emacs-lisp
 (remove-hook 'text-mode-hook #'visual-line-mode)
 (add-hook 'text-mode-hook #'auto-fill-mode)
-#+END_SRC
-Add flyspell mode in text mode
-#+BEGIN_SRC emacs-lisp
-(add-hook 'text-mode-hook #'flyspell-mode)
 #+END_SRC
 
 
