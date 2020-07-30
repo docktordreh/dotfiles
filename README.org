@@ -609,6 +609,11 @@ doom Emacs
 #+BEGIN_SRC sh :tangle .config/zsh/.zprofile
 [ -d "$HOME/.emacs.d/bin" ] && PATH="$HOME/.emacs.d/bin:$PATH"
 #+END_SRC
+More recent emacs versions (>= 27) save their configuration in the
+$XDG_CONFIG_DIR
+#+BEGIN_SRC sh :tangle .config/zsh/.zprofile
+[ -d "$XDG_CONFIG_HOME/emacs" ] && PATH="$XDG_CONFIG_HOME/emacs/bin:$PATH"
+#+END_SRC
 Python
 #+BEGIN_SRC sh :tangle .zprofile
 [ -d "$XDG_CONFIG_HOME/local/bin" ]   && PATH="$XDG_CONFIG_HOME/local/bin:$PATH"

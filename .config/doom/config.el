@@ -1,55 +1,55 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Personal Information][Personal Information:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Personal Information][Personal Information:1]]
 (setq user-full-name "Valentin Lechner"
       user-mail-address "valentin_lechner@dismail.de")
 ;; Personal Information:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:1]]
 (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
 ;; My defaults:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:2]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:2]]
 (add-to-list 'auto-mode-alist '("'" . org-mode) t)
 ;; My defaults:2 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:3]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:3]]
 (setq locale-coding-system 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
 ;; My defaults:3 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:4]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:4]]
 (add-hook 'emacs-startup-hook 'delete-other-windows t)
 ;; My defaults:4 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:5]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:5]]
 (custom-set-variables
  '(zoom-mode t))
 ;; My defaults:5 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:6]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:6]]
 (setq  indent-tabs-mode nil)
 ;; My defaults:6 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:7]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:7]]
 (setq message-kill-buffer-on-exit t)
 ;; My defaults:7 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:8]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:8]]
 (setq calendar-week-start-day 1)
 ;; My defaults:8 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:9]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:9]]
 (setq company-tooltip-align-annotations t)
 ;; My defaults:9 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:10]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:10]]
 (add-hook 'evil-normal-state-entry-hook #'company-abort)
 ;; My defaults:10 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:11]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:11]]
 (set-company-backend! '(text-mode
                         markdown-mode
                         gfm-mode)
@@ -60,103 +60,103 @@
 (setq ispell-dictionary "deutsch")
 ;; My defaults:11 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:12]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:12]]
 (setq explicit-shell-file-name "/bin/zsh")
 ;; My defaults:12 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:13]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:13]]
 (setq  uniquify-buffer-name-style 'forward)
 ;; My defaults:13 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:14]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:14]]
 (setq window-combination-resize t)
 ;; My defaults:14 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:15]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:15]]
 (setq undo-limit 80000000)
 ;; My defaults:15 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:16]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:16]]
 (setq evil-want-fine-undo t)
 ;; My defaults:16 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:17]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:17]]
 (setq auto-save-default t)
 ;; My defaults:17 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:18]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:18]]
 (beacon-mode)
 ;; My defaults:18 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:19]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:19]]
 (setq inhibit-compacting-font-caches t)
 ;; My defaults:19 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:20]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:20]]
 (define-globalized-minor-mode my-global-rainbow-mode rainbow-mode
   (lambda () (rainbow-mode 1)))
 
 (my-global-rainbow-mode 1)
 ;; My defaults:20 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:21]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:21]]
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 ;; My defaults:21 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:22]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:22]]
 (setq truncate-string-ellipsis "…")
 ;; My defaults:22 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:23]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:23]]
 (setq +ivy-buffer-preview t)
 ;; My defaults:23 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:24]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:24]]
 (after! evil (evil-escape-mode nil))
 ;; My defaults:24 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:25]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:25]]
 (setq company-idle-delay nil)
 ;; My defaults:25 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:26]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:26]]
 (setq require-final-newline nil)
 ;; My defaults:26 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:27]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:27]]
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
 ;; My defaults:27 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:28]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:28]]
 (global-whitespace-mode +1)
 ;; My defaults:28 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:29]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:29]]
 (global-visual-line-mode +1)
 ;; My defaults:29 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:30]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:30]]
 (display-time-mode +1)
 (display-battery-mode +1)
 ;; My defaults:30 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:31]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:31]]
 (setq fancy-splash-image (concat doom-private-dir "splash.png"))
 ;; My defaults:31 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:32]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:32]]
 (setq-default large-file-warning-threshold 100000000)
 ;; My defaults:32 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:33]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:33]]
 (setq mouse-yank-at-point t)
 ;; My defaults:33 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:34]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:34]]
 (flyspell-lazy-mode 1)
 ;; My defaults:34 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Treemacs][Treemacs:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Treemacs][Treemacs:1]]
 (after! treemacs
   (defvar treemacs-file-ignore-extensions '()
     "File extension which 'treemacs-ignore-filter' will ensure are ignored")
@@ -177,7 +177,7 @@
   (add-to-list 'treemacs-ignored-file-predicates #'treemacs-ignore-filter))
 ;; Treemacs:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Treemacs Blocklist][Treemacs Blocklist:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Treemacs Blocklist][Treemacs Blocklist:1]]
 (setq treemacs-file-ignore-extensions '(;; LaTeX
                                         "aux"
                                         "ptc"
@@ -207,7 +207,7 @@
                                    "*/_region_.tex"))
 ;; Treemacs Blocklist:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*PATH][PATH:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*PATH][PATH:1]]
 (setenv "PATH" (concat (getenv "PATH") ":/opt/texlive/2020/bin/x86_64-linux"))
 (setq exec-path (append exec-path '("/opt/texlive/2020/bin/x86_64-linux")))
 
@@ -215,22 +215,22 @@
 (setq exec-path (append exec-path '("/home/valentin/.cargo/bin")))
 ;; PATH:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*PATH][PATH:2]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*PATH][PATH:2]]
 (setenv "PATH" (concat (getenv "PATH") ":/home/valentin/.pyenv/bin"))
 (setq exec-path (append exec-path '("/home/valentin/.pyenv/bin")))
 ;; PATH:2 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*UI Improvements][UI Improvements:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*UI Improvements][UI Improvements:1]]
 (setq doom-fallback-buffer-name "► Doom"
       +doom-dashboard-name "► Doom")
 ;; UI Improvements:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*UI Improvements][UI Improvements:2]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*UI Improvements][UI Improvements:2]]
 (custom-set-faces!
   '(doom-modeline-buffer-modified :foreground "#57c7ff"))
 ;; UI Improvements:2 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*UI Improvements][UI Improvements:3]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*UI Improvements][UI Improvements:3]]
 (defun doom-modeline-conditional-buffer-encoding ()
   "We expect the encoding to be LF UTF-8, so only show the modeline when this is not the case"
   (setq-local doom-modeline-buffer-encoding
@@ -240,53 +240,53 @@
 (add-hook 'after-change-major-mode-hook #'doom-modeline-conditional-buffer-encoding)
 ;; UI Improvements:3 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*UI Improvements][UI Improvements:4]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*UI Improvements][UI Improvements:4]]
 (add-to-list 'default-frame-alist '(alpha 90 90))
 ;; UI Improvements:4 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*UI Improvements][UI Improvements:5]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*UI Improvements][UI Improvements:5]]
 (setq
  doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 18)
- doom-big-font (font-spec :family "FiraCode Nerd Font Mono" :size 18)
- doom-variable-pitch-font (font-spec :family "EB Garamond 08" :size 28)
- doom-serif-font (font-spec :family "Fira Sans" :size 18))
+ doom-big-font (font-spec :family "FiraCode Nerd Font Mono" :size 24)
+ doom-variable-pitch-font (font-spec :family "EB Garamond 08" :size 22)
+ doom-serif-font (font-spec :family "IBM  Plex Mono" :weight 'light))
 ;; UI Improvements:5 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*UI Improvements][UI Improvements:6]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*UI Improvements][UI Improvements:6]]
 (setq doom-theme 'doom-moonlight)
 ;; UI Improvements:6 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*UI Improvements][UI Improvements:7]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*UI Improvements][UI Improvements:7]]
 (setq display-line-numbers-type 'relative)
 ;; UI Improvements:7 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*UI Improvements][UI Improvements:8]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*UI Improvements][UI Improvements:8]]
 (custom-set-faces! '(doom-modeline-evil-insert-state
                      :weight bold
                      :foreground "#339CDB"))
 ;; UI Improvements:8 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*General keymaps][General keymaps:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*General keymaps][General keymaps:1]]
 (global-set-key (kbd "C-c e") 'org-latex-export-to-pdf)
 ;; General keymaps:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*General keymaps][General keymaps:2]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*General keymaps][General keymaps:2]]
 (map! :map evil-window-map "SPC" #'rotate-layout)
 ;; General keymaps:2 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Projects][Projects:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Projects][Projects:1]]
 (setq
  projectile-project-search-path '("~/Projekte"))
 ;; Projects:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Projects][Projects:2]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Projects][Projects:2]]
 (setq projectile-ignored-projects '("~/" "/tmp" "~/.emacs.d/.local/straight/repos/"))
 (defun projectile-ignored-project-function (filepath)
   "Return t if FILEPATH is within any of 'projectile-ignored-projects'"
   (or (mapcar (lambda (p) (s-starts-with-p p filepath)) projectile-ignored-projects)))
 ;; Projects:2 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Org Mode][Org Mode:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Org Mode][Org Mode:1]]
 (org-babel-do-load-languages
  'org-babel-load-languages
  '(
@@ -298,34 +298,38 @@
 )
 ;; Org Mode:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Org Mode][Org Mode:2]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Org Mode][Org Mode:2]]
 (setq
  org-directory "~/Daten/cloud/tlaloc/org/"
  org-archive-location (concat org-directory ".archive/$s::")
 )
 ;; Org Mode:2 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Org Mode][Org Mode:3]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Org Mode][Org Mode:3]]
 (setq org-use-property-inheritance t)
 ;; Org Mode:3 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Org Mode][Org Mode:4]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Org Mode][Org Mode:4]]
 (after! org
   (require 'ox-extra)
   (ox-extras-activate '(ignore-headlines))
   (ox-extras-activate '(latex-header-blocks ignore-headlines)))
 ;; Org Mode:4 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:2]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Look and feel][Look and feel:1]]
+(setq global-org-pretty-table-mode t)
+;; Look and feel:1 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Look and feel][Look and feel:3]]
 (setq org-indent-mode nil)
 (setq org-indent-indentation-per-level 1)
-;; Look and feel:2 ends here
-
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:3]]
-(setq org-adapt-indentation nil)
 ;; Look and feel:3 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:4]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Look and feel][Look and feel:4]]
+(setq org-adapt-indentation nil)
+;; Look and feel:4 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Look and feel][Look and feel:5]]
 (setq-hook! org-mode
   org-log-done t
   org-image-actual-width '(700)
@@ -343,16 +347,16 @@
   )
 
 (setq org-journal-enable-agenda-integration t)
-;; Look and feel:4 ends here
+;; Look and feel:5 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:5]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Look and feel][Look and feel:6]]
 (setq
   org-ellipsis " ▼ "
   org-superstar-headline-bullets-list '("✿" "■" "◆" "▲" "#")
 )
-;; Look and feel:5 ends here
+;; Look and feel:6 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:6]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Look and feel][Look and feel:7]]
 (evil-define-command evil-buffer-org-new (count file)
   "Creates a new ORG buffer replacing the current window, optionally
    editing a certain FILE"
@@ -367,18 +371,14 @@
 (map! :leader
   (:prefix "b"
     :desc "New empty ORG buffer" "o" #'evil-buffer-org-new))
-;; Look and feel:6 ends here
-
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:7]]
-(remove-hook 'text-mode-hook #'visual-line-mode)
-(add-hook 'text-mode-hook #'auto-fill-mode)
 ;; Look and feel:7 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:8]]
-(add-hook 'text-mode-hook #'flyspell-mode)
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Look and feel][Look and feel:8]]
+(remove-hook 'text-mode-hook #'visual-line-mode)
+(add-hook 'text-mode-hook #'auto-fill-mode)
 ;; Look and feel:8 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:9]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Look and feel][Look and feel:9]]
 (custom-set-faces
   '(org-block
     ((t (:inherit fixed-pitch)))
@@ -463,7 +463,7 @@
                              :underline nil)))))
 ;; Look and feel:9 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:10]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Look and feel][Look and feel:10]]
 (font-lock-add-keywords 'org-mode
                         '(("^ *\\([-]\\) "
                            (0 (prog1 ()
@@ -490,15 +490,15 @@
                         )
 ;; Look and feel:10 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:11]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Look and feel][Look and feel:11]]
 (setq org-hide-leading-stars t)
 ;; Look and feel:11 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:12]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Look and feel][Look and feel:12]]
 (setq org-src-fontify-natively t)
 ;; Look and feel:12 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:13]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Look and feel][Look and feel:13]]
 (add-hook! 'org-mode-hook #'+org-pretty-mode
            'org-fragtog-mode
            'writeroom-mode
@@ -510,12 +510,12 @@
  org-fontify-quote-and-verse-blocks t)
 ;; Look and feel:13 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:14]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Look and feel][Look and feel:14]]
 (add-hook 'org-mode-hook '(lambda () (setq fill-column 80)))
 (add-hook 'org-mode-hook 'auto-fill-mode)
 ;; Look and feel:14 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:15]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Look and feel][Look and feel:15]]
 (setq org-enforce-todo-dependencies t)
 (setq org-insert-heading-respect-content nil)
 (setq org-reverse-note-order nil)
@@ -524,7 +524,7 @@
                                          (plain-list-item . nil))))
 ;; Look and feel:15 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:16]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Look and feel][Look and feel:16]]
 (after! org
   (defun unpackaged/org-element-descendant-of (type element)
     "Return non-nil if ELEMENT is a descendant of TYPE.
@@ -629,7 +629,7 @@ appropriate.  In tables, insert a new row or end the table."
  :i [return] #'unpackaged/org-return-dwim)
 ;; Look and feel:16 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:17]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Look and feel][Look and feel:17]]
 (global-set-key (kbd "<f5>") 'bh/org-todo)
 (global-set-key (kbd "C-<f5>") 'bh/widen)
 
@@ -662,14 +662,14 @@ appropriate.  In tables, insert a new row or end the table."
     (org-agenda-set-restriction-lock)))
 ;; Look and feel:17 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Smart parentheses][Smart parentheses:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Smart parentheses][Smart parentheses:1]]
 (sp-local-pair
      '(org-mode)
      "<<" ">>"
      :actions '(insert))
 ;; Smart parentheses:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Org-Tags as icons][Org-Tags as icons:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Org-Tags as icons][Org-Tags as icons:1]]
 (customize-set-value
     'org-agenda-category-icon-alist
     '(
@@ -683,25 +683,25 @@ appropriate.  In tables, insert a new row or end the table."
       ))
 ;; Org-Tags as icons:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Org-Tags as icons][Org-Tags as icons:2]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Org-Tags as icons][Org-Tags as icons:2]]
 (setq org-agenda-breadcrumbs-seperator " ❱ ")
 ;; Org-Tags as icons:2 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Org-Tags as icons][Org-Tags as icons:3]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Org-Tags as icons][Org-Tags as icons:3]]
 (setq org-hide-emphasis-markers t)
 ;; Org-Tags as icons:3 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Org Chef][Org Chef:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Org Chef][Org Chef:1]]
 (use-package! org-chef
   :commands (org-chef-insert-recipe org-chef-get-recipe-from-url))
 ;; Org Chef:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Deft][Deft:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Deft][Deft:1]]
 (setq deft-extensions '("org"))
 (setq deft-directory "~/Daten/cloud/tlaloc/org")
 ;; Deft:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Roam][Roam:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Roam][Roam:1]]
 (use-package org-roam-server
   :after org-roam
   :config
@@ -719,11 +719,11 @@ appropriate.  In tables, insert a new row or end the table."
     (browse-url-xdg-open (format "http://localhost:%d" org-roam-server-port))))
 ;; Roam:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Capture][Capture:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Capture][Capture:1]]
 (require 'org-roam-protocol)
 ;; Capture:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Capture][Capture:2]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Capture][Capture:2]]
 (setq org-capture-templates `(
     ("p" "Protocol" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
         "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
@@ -732,12 +732,12 @@ appropriate.  In tables, insert a new row or end the table."
 ))
 ;; Capture:2 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Refile][Refile:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Refile][Refile:1]]
 (global-set-key (kbd "C-c o")
   (lambda () (interactive) (find-file (concat org-directory "refile.org"))))
 ;; Refile:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Agenda][Agenda:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:1]]
 (use-package! org-super-agenda
   :commands (org-super-agenda-mode))
 (after! org-agenda
@@ -751,17 +751,17 @@ appropriate.  In tables, insert a new row or end the table."
       org-agenda-compact-blocks t)
 ;; Agenda:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Agenda][Agenda:2]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:2]]
 (setq org-agenda-files (list
                         org-directory
                         "~/Daten/cloud/highq/thesis-bachelor/org"))
 ;; Agenda:2 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Agenda][Agenda:3]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:3]]
 (setq org-deadline-warning-days 7)
 ;; Agenda:3 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Agenda][Agenda:4]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:4]]
 (setq org-agenda-block-separator (string-to-char " "))
 (setq org-agenda-custom-commands
       '(("o" "My Agenda"
@@ -788,7 +788,7 @@ appropriate.  In tables, insert a new row or end the table."
           ))))
 ;; Agenda:4 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Agenda][Agenda:5]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:5]]
 (defun org-summary-todo (n-done n-not-done)
   "Switch entry to DONE when all subentries are done, to TODO otherwise."
   (let (org-log-done org-log-states)   ; turn off logging
@@ -798,7 +798,7 @@ appropriate.  In tables, insert a new row or end the table."
 (setq org-hierarchical-todo-statistics t)
 ;; Agenda:5 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Agenda][Agenda:6]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:6]]
 (add-hook 'org-mode-hook
           (lambda ()
             (push '("TODO"  . ?▲) prettify-symbols-alist)
@@ -808,7 +808,7 @@ appropriate.  In tables, insert a new row or end the table."
             (push '("SOMEDAY"  . ??) prettify-symbols-alist)))
 ;; Agenda:6 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Agenda][Agenda:7]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:7]]
 (setq org-fontify-done-headline t)
 (custom-set-faces
  '(org-done ((t (:foreground "PaleGreen"
@@ -819,19 +819,19 @@ appropriate.  In tables, insert a new row or end the table."
      (:foreground "LightSalmon" :strike-through t)))))
 ;; Agenda:7 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Agenda][Agenda:8]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:8]]
 (global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key (kbd "<f12>") 'org-agenda-list)
 ;; Agenda:8 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Agenda][Agenda:9]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:9]]
 (setq org-agenda-sorting-strategy
   (quote ((agenda time-up priority-down category-up)
           (todo todo-state-up priority-up)
           (tags priority-down))))
 ;; Agenda:9 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Agenda][Agenda:10]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:10]]
   ;; ! = insert timestamp
   ;; @ = insert note
   ;; / = enter state
@@ -854,7 +854,7 @@ appropriate.  In tables, insert a new row or end the table."
  )
 ;; Agenda:10 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Agenda][Agenda:11]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:11]]
 (setq  org-todo-keyword-faces
   '(("IDEA" . (
                :foreground "light green"
@@ -884,7 +884,7 @@ appropriate.  In tables, insert a new row or end the table."
 )
 ;; Agenda:11 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Agenda][Agenda:12]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:12]]
 (setq
   org-tag-persistent-alist
   '((:startgroup . nil)
@@ -913,7 +913,7 @@ appropriate.  In tables, insert a new row or end the table."
 )
 ;; Agenda:12 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Agenda][Agenda:13]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:13]]
 (setq
   org-tag-faces
   '(
@@ -970,18 +970,18 @@ appropriate.  In tables, insert a new row or end the table."
   )
 ;; Agenda:13 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Agenda][Agenda:14]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:14]]
 (setq org-todo-repeat-to-state "NEXT")
 ;; Agenda:14 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Agenda][Agenda:15]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:15]]
 (setq
   org-fast-tag-selection-single-key t
   org-use-fast-todo-selection t
 )
 ;; Agenda:15 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Agenda][Agenda:16]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:16]]
 (after! org
   (setq org-ellipsis " ▾ "
         org-priority-highest ?A
@@ -994,7 +994,7 @@ appropriate.  In tables, insert a new row or end the table."
           (?E . 'all-the-icons-blue))))
 ;; Agenda:16 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Agenda][Agenda:17]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:17]]
 (after! org
   (appendq! +pretty-code-symbols
             '(:checkbox      "☐"
@@ -1054,7 +1054,14 @@ appropriate.  In tables, insert a new row or end the table."
 (plist-put +pretty-code-symbols :name "›")
 ;; Agenda:17 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Org Ref][Org Ref:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Org Ref][Org Ref:1]]
+(use-package! org-ref
+  :after org
+  :config
+  (setq org-ref-completion-library 'org-ref-ivy-cite))
+;; Org Ref:1 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Org Ref][Org Ref:2]]
 (setq
  org-ref-default-bibliography "~/Daten/cloud/tlaloc/org/Papers/references.bib"
 
@@ -1065,13 +1072,13 @@ appropriate.  In tables, insert a new row or end the table."
  (lambda (fpath)
    (start-process "zathura" "*ivy-bibtex-zathura*" "/usr/bin/zathura" fpath))
 )
-;; Org Ref:1 ends here
-
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Org Ref][Org Ref:2]]
-(setq org-ref-default-citation-link "footcite")
 ;; Org Ref:2 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*LSP Support in src blocks][LSP Support in src blocks:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Org Ref][Org Ref:3]]
+(setq org-ref-default-citation-link "footcite")
+;; Org Ref:3 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*LSP Support in src blocks][LSP Support in src blocks:1]]
 (cl-defmacro lsp-org-babel-enable (lang)
     "Support LANG in org source code block."
     (setq centaur-lsp 'lsp-mode)
@@ -1097,35 +1104,35 @@ appropriate.  In tables, insert a new row or end the table."
                   (format "Prepare local buffer environment for org source block (%s)."
                           (upcase ,lang))))))))
   (defvar org-babel-lang-list
-    '("go" "python" "ipython" "bash" "sh"))
+    '("go" "python" "ipython" "bash" "sh" "c"))
   (dolist (lang org-babel-lang-list)
     (eval `(lsp-org-babel-enable ,lang)))
 ;; LSP Support in src blocks:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*LaTeX Fragments][LaTeX Fragments:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*LaTeX Fragments][LaTeX Fragments:1]]
 (after! org
   (setq org-highlight-latex-and-related '(native script entities)))
 ;; LaTeX Fragments:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Export][Export:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Export][Export:1]]
 (setq org-latex-prefer-user-labels t)
 ;; Export:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Export][Export:2]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Export][Export:2]]
 (setq org-export-with-smart-quotes t)
 ;; Export:2 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Org Async Export][Org Async Export:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Org Async Export][Org Async Export:1]]
 (setq
  org-export-in-background t
  org-export-async-init-file (concat doom-private-dir "init-org-async.el"))
 ;; Org Async Export:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Languages][Languages:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Languages][Languages:1]]
 (setq org-export-default-language "de")
 ;; Languages:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*View exported file][View exported file:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*View exported file][View exported file:1]]
 (after! org
   (map! :map org-mode-map
         :localleader
@@ -1152,7 +1159,7 @@ appropriate.  In tables, insert a new row or end the table."
   "Search for output files with these extensions, in order, viewing the first that matches")
 ;; View exported file:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*LaTeX][LaTeX:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*LaTeX][LaTeX:1]]
 (setq
  org-latex-pdf-process
  '("lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
@@ -1161,7 +1168,7 @@ appropriate.  In tables, insert a new row or end the table."
    "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 ;; LaTeX:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*LaTeX][LaTeX:2]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*LaTeX][LaTeX:2]]
 '(org-preview-latex-process-alist
   (quote
    ((dvipng :programs
@@ -1204,7 +1211,7 @@ appropriate.  In tables, insert a new row or end the table."
                  ("convert -density %D -trim -antialias %f -quality 100 %O")))))
 ;; LaTeX:2 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*LaTeX][LaTeX:3]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*LaTeX][LaTeX:3]]
 (after! ox-latex
   (add-to-list 'org-latex-classes
                '("koma-article"
@@ -1216,7 +1223,7 @@ appropriate.  In tables, insert a new row or end the table."
                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 ;; LaTeX:3 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*LaTeX][LaTeX:4]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*LaTeX][LaTeX:4]]
 (add-to-list 'org-latex-classes
              '("mimosis"
                "\\documentclass{mimosis}
@@ -1231,7 +1238,7 @@ appropriate.  In tables, insert a new row or end the table."
                ("\\mboxsubparagraph{%s}" . "\\mboxsubparagraph*{%s}")))
 ;; LaTeX:4 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*LaTeX][LaTeX:5]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*LaTeX][LaTeX:5]]
 ;; Elsarticle is Elsevier class for publications.
 (add-to-list 'org-latex-classes
              '("elsarticle"
@@ -1246,7 +1253,7 @@ appropriate.  In tables, insert a new row or end the table."
                ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 ;; LaTeX:5 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*LaTeX][LaTeX:6]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*LaTeX][LaTeX:6]]
 (add-to-list 'org-latex-classes
              '("koma-book"
                "\\documentclass{scrbook}
@@ -1305,11 +1312,11 @@ appropriate.  In tables, insert a new row or end the table."
 ;;        ("" "attachfile" nil)
 ;;    ))
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*LaTeX][LaTeX:8]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*LaTeX][LaTeX:8]]
 (setq org-latex-listings 'minted)
 ;; LaTeX:8 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*LaTeX][LaTeX:9]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*LaTeX][LaTeX:9]]
  (after! org
    (defun scimax-org-latex-fragment-justify (justification)
      "Justify the latex fragment at point with JUSTIFICATION.
@@ -1362,7 +1369,7 @@ appropriate.  In tables, insert a new row or end the table."
        (message "Latex fragment justification disabled"))))
 ;; LaTeX:9 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Extra header content][Extra header content:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Extra header content][Extra header content:1]]
 (defadvice! org-html-template-fancier (contents info)
   "Return complete document string after HTML conversion.
 CONTENTS is the transcoded contents string.  INFO is a plist
@@ -1446,7 +1453,7 @@ compared to the default implementation."
    "</div>\n</body>\n</html>"))
 ;; Extra header content:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Extra header content][Extra header content:2]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Extra header content][Extra header content:2]]
 (defun org-html--build-meta-entry (label identity &optional content-format &rest content-formatters)
   "Construct <meta> tag with LABEL=\"IDENTITY\" and content from CONTENT-FORMAT and CONTENT-FORMATTER."
   (concat "<meta "
@@ -1530,7 +1537,7 @@ INFO is a plist used as a communication channel."
        (org-html--build-meta-entry "property" "og:description" subtitle)))))
 ;; Extra header content:2 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Custom CSS/JS][Custom CSS/JS:2]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Custom CSS/JS][Custom CSS/JS:2]]
 (after! org
   (setq org-html-style-default
         (concat (f-read-text (expand-file-name "misc/org-export-header.html" doom-private-dir))
@@ -1544,7 +1551,7 @@ INFO is a plist used as a communication channel."
         org-html-html5-fancy t))
 ;; Custom CSS/JS:2 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::Src blocks][Src blocks]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::Src blocks][Src blocks]]
 (defadvice! org-html-src-block-collapsable (orig-fn src-block contents info)
   "Wrap the usual <pre> block in a <details>"
   :around #'org-html-src-block
@@ -1660,7 +1667,7 @@ INFO is a plist used as a communication channel."
       mode))
 ;; Src blocks ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::Example, fixed width, and property blocks][Example, fixed width, and property blocks]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::Example, fixed width, and property blocks][Example, fixed width, and property blocks]]
 (after! org
   (defun org-html-block-collapsable (orig-fn block contents info)
     "Wrap the usual block in a <details>"
@@ -1694,7 +1701,7 @@ INFO is a plist used as a communication channel."
   (advice-add 'org-html-property-drawer :around #'org-html-block-collapsable))
 ;; Example, fixed width, and property blocks ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Handle table overflow][Handle table overflow:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Handle table overflow][Handle table overflow:1]]
 (defadvice! org-html-table-wrapped (orig-fn table contents info)
   "Wrap the usual <table> in a <div>"
   :around #'org-html-table
@@ -1713,7 +1720,7 @@ INFO is a plist used as a communication channel."
               (funcall orig-fn table contents info)))))
 ;; Handle table overflow:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*TOC as a collapsable tree][TOC as a collapsable tree:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*TOC as a collapsable tree][TOC as a collapsable tree:1]]
 (defadvice! org-html--format-toc-headline-colapseable (orig-fn headline info)
   "Add a label and checkbox to `org-html--format-toc-headline's usual output,
 to allow the TOC to be a collapseable tree."
@@ -1724,7 +1731,7 @@ to allow the TOC to be a collapseable tree."
             id id (funcall orig-fn headline info))))
 ;; TOC as a collapsable tree:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*TOC as a collapsable tree][TOC as a collapsable tree:2]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*TOC as a collapsable tree][TOC as a collapsable tree:2]]
 (defadvice! org-html--toc-text-stripped-leaves (orig-fn toc-entries)
   "Remove label"
   :around #'org-html--toc-text
@@ -1732,7 +1739,7 @@ to allow the TOC to be a collapseable tree."
                             (funcall orig-fn toc-entries)))
 ;; TOC as a collapsable tree:2 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Make verbatim different to code][Make verbatim different to code:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Make verbatim different to code][Make verbatim different to code:1]]
 (setq org-html-text-markup-alist
       '((bold . "<b>%s</b>")
         (code . "<code>%s</code>")
@@ -1742,7 +1749,7 @@ to allow the TOC to be a collapseable tree."
         (verbatim . "<kbd>%s</kbd>")))
 ;; Make verbatim different to code:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Change checkbox type][Change checkbox type:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Change checkbox type][Change checkbox type:1]]
 (after! org
 (appendq! org-html-checkbox-types '((html-span .
 	  ((on . "<span class='checkbox'></span>")
@@ -1751,7 +1758,7 @@ to allow the TOC to be a collapseable tree."
 (setq org-html-checkbox-type 'html-span))
 ;; Change checkbox type:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Header anchors][Header anchors:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Header anchors][Header anchors:1]]
 (after! org
   (defun tec/org-export-html-headline-anchor (text backend info)
     (when (org-export-derived-backend-p backend 'html)
@@ -1764,7 +1771,7 @@ to allow the TOC to be a collapseable tree."
                'tec/org-export-html-headline-anchor))
 ;; Header anchors:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*LaTeX Rendering][LaTeX Rendering:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*LaTeX Rendering][LaTeX Rendering:1]]
 (after! org
   (defadvice! org-html-latex-fragment-scaled (latex-fragment _contents info)
     "Transcode a LATEX-FRAGMENT object from Org to HTML.
@@ -1832,16 +1839,16 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
        (t (org-html--wrap-latex-environment latex-frag info caption label))))))
 ;; LaTeX Rendering:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*LaTeX Rendering][LaTeX Rendering:2]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*LaTeX Rendering][LaTeX Rendering:2]]
 ;; (setq-default org-html-with-latex `dvisvgm)
 ;; LaTeX Rendering:2 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Org Habit][Org Habit:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Org Habit][Org Habit:1]]
 (after! org
   (add-to-list 'org-modules 'org-habit t))
 ;; Org Habit:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*LaTeX][LaTeX:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*LaTeX][LaTeX:1]]
 (eval-after-load "tex"
   '(add-to-list 'TeX-command-list
                 '("LuaLatex + Biber"
@@ -1854,7 +1861,7 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
 (setq TeX-command-default "LuaLatex + Biber")
 ;; LaTeX:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Enhance Tex-fold][Enhance Tex-fold:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Enhance Tex-fold][Enhance Tex-fold:1]]
 (after! latex
   (setcar (assoc "⋆" LaTeX-fold-math-spec-list) "★")) ;; make \star bigger
 
@@ -1946,7 +1953,7 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
  (if (string-match-p "^\\\\?\\w+$" teststring) t nil))
 ;; Enhance Tex-fold:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Authinfo][Authinfo:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Authinfo][Authinfo:1]]
 (setq authinfo-keywords
       '(("^#.*" . font-lock-comment-face)
         ("^\\(machine\\) \\([^ \t\n]+\\)"
@@ -1973,23 +1980,23 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
   :mode ("authinfo\\.gpg\\'" . authinfo-mode))
 ;; Authinfo:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Magit][Magit:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Magit][Magit:1]]
 (setq magit-repository-directories '(("~/Projekte" . 2)))
 ;; Magit:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Magit][Magit:2]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Magit][Magit:2]]
 (setq magit-save-repository-buffers nil)
 ;; Magit:2 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Python][Python:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Python][Python:1]]
 (setq python-shell-interpreter "python")
 ;; Python:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Python][Python:2]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Python][Python:2]]
 (setq python-shell-completion-native-enable nil)
 ;; Python:2 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Typescript][Typescript:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Typescript][Typescript:1]]
 (defun setup-tide-mode ()
   (interactive)
   (tide-setup)
@@ -2001,7 +2008,7 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
   (company-mode +1))
 ;; Typescript:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*React Native][React Native:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*React Native][React Native:1]]
 (require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
 (add-hook 'web-mode-hook
@@ -2010,18 +2017,18 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
               (setup-tide-mode))))
 ;; React Native:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*React Native][React Native:2]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*React Native][React Native:2]]
 (add-hook 'web-mode-hook 'company-mode)
 (add-hook 'web-mode-hook 'prettier-js-mode)
 ;; React Native:2 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Snippets][Snippets:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Snippets][Snippets:1]]
 (after! yasnippet
   (push (expand-file-name "snippets/" doom-private-dir) yas-snippet-dirs))
 (yas-global-mode 1)
 ;; Snippets:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*XKCD][XKCD:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*XKCD][XKCD:1]]
  (use-package! xkcd
    :commands (xkcd-get-json xkcd-download xkcd-get
               ;; now for funcs from my extension of this pkg
@@ -2047,7 +2054,7 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
              "y"       #'+xkcd-copy))
 ;; XKCD:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*XKCD][XKCD:2]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*XKCD][XKCD:2]]
  (after! xkcd
    (require 'emacsql-sqlite)
 
@@ -2297,7 +2304,7 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
                             )))))
 ;; XKCD:2 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Extra links][Extra links:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Extra links][Extra links:1]]
 (after! org
   (org-link-set-parameters "xkcd"
                            :image-data-fun #'+org-xkcd-image-fn
@@ -2339,16 +2346,16 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
     (format "xkcd:%d" (+xkcd-select))))
 ;; Extra links:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Zoom][Zoom:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Zoom][Zoom:1]]
 (custom-set-variables
  '(zoom-size '(0.618 . 0.618)))
 ;; Zoom:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Zoom][Zoom:2]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Zoom][Zoom:2]]
 (global-set-key (kbd "C-x +") 'zoom)
 ;; Zoom:2 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Zoom][Zoom:3]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Zoom][Zoom:3]]
 (custom-set-variables
  '(zoom-ignored-major-modes
    '(
@@ -2372,7 +2379,7 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
 )
 ;; Zoom:3 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Keycast][Keycast:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Keycast][Keycast:1]]
 (use-package! keycast
   :commands keycast-mode
   :config
@@ -2393,36 +2400,36 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
                   :weight bold)))
 ;; Keycast:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Tramp][Tramp:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Tramp][Tramp:1]]
 (eval-after-load 'tramp '(setenv "$SHELL" "/bin/bash"))
 ;; Tramp:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Tramp][Tramp:2]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Tramp][Tramp:2]]
 (setq tramp-default-method "ssh")
 ;; Tramp:2 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Tramp][Tramp:3]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Tramp][Tramp:3]]
 (define-key global-map (kbd "C-c s") 'counsel-tramp)
 ;; Tramp:3 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Speeding up tramp][Speeding up tramp:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Speeding up tramp][Speeding up tramp:1]]
 (add-hook 'counsel-tramp-pre-command-hook '(lambda () (global-aggressive-indent-mode 0)
                      (projectile-mode 0)
                      (editorconfig-mode 0)))
 ;; Speeding up tramp:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Speeding up tramp][Speeding up tramp:2]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Speeding up tramp][Speeding up tramp:2]]
 (add-hook 'counsel-tramp-quit-hook '(lambda () (global-aggressive-indent-mode 1)
                   (projectile-mode 1)
                   (editorconfig-mode 1)))
 ;; Speeding up tramp:2 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Speeding up tramp][Speeding up tramp:3]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Speeding up tramp][Speeding up tramp:3]]
 (setq make-backup-files nil)
 (setq create-lockfiles nil)
 ;; Speeding up tramp:3 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Bachelors thesis][Bachelors thesis:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Bachelors thesis][Bachelors thesis:1]]
 (defun org-latex-publish-to-pdf (plist filename pub-dir)
   "Publish an Org file to PDF (via LaTeX).
 
@@ -2454,7 +2461,7 @@ Return output file name."
                :publishing-function org-latex-publish-to-pdf))
 ;; Bachelors thesis:1 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Variables I accept][Variables I accept:1]]
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Variables I accept][Variables I accept:1]]
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

@@ -334,9 +334,9 @@ add transparency to emacs. only works with a composition manager
 #+BEGIN_SRC emacs-lisp
 (setq
  doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 18)
- doom-big-font (font-spec :family "FiraCode Nerd Font Mono" :size 18)
- doom-variable-pitch-font (font-spec :family "EB Garamond 08" :size 28)
- doom-serif-font (font-spec :family "Fira Sans" :size 18))
+ doom-big-font (font-spec :family "FiraCode Nerd Font Mono" :size 24)
+ doom-variable-pitch-font (font-spec :family "EB Garamond 08" :size 22)
+ doom-serif-font (font-spec :family "IBM  Plex Mono" :weight 'light))
 #+END_SRC
 Theme settings
 #+BEGIN_SRC emacs-lisp
@@ -407,6 +407,12 @@ of them which i use for writing my thesis
   (ox-extras-activate '(latex-header-blocks ignore-headlines)))
 #+END_SRC
 *** Look and feel
+
+Enable org-pretty-table
+#+BEGIN_SRC emacs-lisp
+(setq global-org-pretty-table-mode t)
+#+END_SRC
+
 [[github:alphapapa/unpackeged.el]]
 Adds the mode unpackaged/org-table-face-mode which can be activated to make sure
 tables are displayed in a monospace font
@@ -533,10 +539,6 @@ specific modes as desired.
 #+BEGIN_SRC emacs-lisp
 (remove-hook 'text-mode-hook #'visual-line-mode)
 (add-hook 'text-mode-hook #'auto-fill-mode)
-#+END_SRC
-Add flyspell mode in text mode
-#+BEGIN_SRC emacs-lisp
-(add-hook 'text-mode-hook #'flyspell-mode)
 #+END_SRC
 
 
@@ -1259,6 +1261,13 @@ Also add unicode characters for checkboxes and stuff
 (plist-put +pretty-code-symbols :name "›")
 #+END_SRC
 *** Org Ref
+
+#+BEGIN_SRC emacs-lisp
+(use-package! org-ref
+  :after org
+  :config
+  (setq org-ref-completion-library 'org-ref-ivy-cite))
+#+END_SRC
 Setting default files for org ref.
 Mine are synced via nextcloud
 #+BEGIN_SRC emacs-lisp
@@ -1279,6 +1288,8 @@ use footcite as default cite
 #+END_SRC
 
 *** LSP Support in src blocks
+
+By default, LSP doesn't really work at all in =src= blocks
 #+BEGIN_SRC emacs-lisp
 (cl-defmacro lsp-org-babel-enable (lang)
     "Support LANG in org source code block."
@@ -1305,7 +1316,7 @@ use footcite as default cite
                   (format "Prepare local buffer environment for org source block (%s)."
                           (upcase ,lang))))))))
   (defvar org-babel-lang-list
-    '("go" "python" "ipython" "bash" "sh"))
+    '("go" "python" "ipython" "bash" "sh" "c"))
   (dolist (lang org-babel-lang-list)
     (eval `(lsp-org-babel-enable ,lang)))
 #+END_SRC
@@ -2816,6 +2827,13 @@ our package manager can't deal with; see [[https://github.com/raxod502/straight.
 #+END_SRC
 ** My Packages
 *** Additional Org Packages
+
+Improve displaying org tables
+#+BEGIN_SRC emacs-lisp
+package! org-pretty-table-mode
+  :recipe (:host github :repo "Fuco1/org-pretty-table") :pin "88380f865a...")
+#+END_SRC
+
 Improve Agenda
 #+BEGIN_SRC emacs-lisp
 (package! org-super-agenda)

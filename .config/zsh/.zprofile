@@ -7,6 +7,8 @@ export VISUAL='emacs -nw'
 
 [ -d "$HOME/.emacs.d/bin" ] && PATH="$HOME/.emacs.d/bin:$PATH"
 
+[ -d "$XDG_CONFIG_HOME/emacs" ] && PATH="$XDG_CONFIG_HOME/emacs/bin:$PATH"
+
 [ -n "$CARGO_HOME" ] && [ -d "$CARGO_HOME/bin" ]   && PATH="$CARGO_HOME/bin:$PATH"
 
 export PATH
