@@ -1,80 +1,154 @@
-#+TITLE: Doom Emacs Configuration
-#+AUTHOR: valentinlechner
-#+PROPERTY: header-args:emacs-lisp :tangle yes :cache yes :results silent :comments link
-#+PROPERTY: header-args:shell :tangle "setup.sh"
-#+PROPERTY: header-args :tangle no :results silent
-#+HTML_HEAD: <link rel='shortcut icon' type='image/png' href='https://www.gnu.org/software/emacs/favicon.png'>
-#+latex_class: koma-book
-#+SETUPFILE: ~/Daten/cloud/tlaloc/org/setupfiles/latex.setup
-
-* Introduction
-#+BEGIN_QUOTE
-Let us change our traditional attitude to the construction of programs:
-Instead of imagining that our main task is to instruct a computer what to do,
-let us concentrate rather on explaining to human beings what we want a
-computer to do. --- Donald Knuth
-#+END_QUOTE
-
-
-* Configuration
-#+BEGIN_SRC emacs-lisp :comments no
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
-#+END_SRC
-** Personal Information
-#+BEGIN_SRC emacs-lisp
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Personal Information][Personal Information:1]]
 (setq user-full-name "Valentin Lechner"
       user-mail-address "valentin_lechner@dismail.de")
-#+END_SRC
-These informations get used to identify you, e.g. ~GPG~ configuration,
-email clients, file templates and snippets
-** My defaults
-Open README files in gfm mode for git stuff
-#+BEGIN_SRC emacs-lisp
+;; Personal Information:1 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:1]]
 (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
-#+END_SRC
-Files without an alist entry get opened in org-mode
-#+BEGIN_SRC emacs-lisp
+;; My defaults:1 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:2]]
 (add-to-list 'auto-mode-alist '("'" . org-mode) t)
-#+END_SRC
-full utf-8
-#+BEGIN_SRC emacs-lisp
+;; My defaults:2 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:3]]
 (setq locale-coding-system 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
-#+END_SRC
-Only open one window on startup
-#+BEGIN_SRC emacs-lisp
+;; My defaults:3 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:4]]
 (add-hook 'emacs-startup-hook 'delete-other-windows t)
-#+END_SRC
-Since Golden Ratio mode is not maintained anymore, im now using [[github:cyrus-and/zoom]]
-#+BEGIN_SRC emacs-lisp
+;; My defaults:4 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:5]]
 (custom-set-variables
- '(zoom-mode t))
-#+END_SRC
-Please, don't indent using tabs.
-Just specify tabs to be 4 whitespaces
-#+BEGIN_SRC emacs-lisp
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default bold shadow italic underline success warning error])
+ '(ansi-color-names-vector
+   ["#222323" "#ff5c57" "#5af78e" "#f3f99d" "#57c7ff" "#ff6ac1" "#9aedfe" "#f9f9f9"])
+ '(custom-safe-themes
+   (quote
+    ("54cf3f8314ce89c4d7e20ae52f7ff0739efb458f4326a2ca075bf34bc0b4f499" "5d145f3b18070a7c263945f743811693d89e9fe86f50d1a638cd89467e0551fe" "272938f764232c32ab4c5139b4091b3fd1ea72765d3872dd7beb3c72703d9e8c" "be9645aaa8c11f76a10bcf36aaf83f54f4587ced1b9b679b55639c87404e2499" "bf387180109d222aee6bb089db48ed38403a1e330c9ec69fe1f52460a8936b66" "dde8c620311ea241c0b490af8e6f570fdd3b941d7bc209e55cd87884eb733b0e" default)))
+ '(fci-rule-color "#e2e4e5")
+ '(flymake-error-bitmap
+   (quote
+    (flymake-double-exclamation-mark modus-theme-fringe-red)))
+ '(flymake-note-bitmap (quote (exclamation-mark modus-theme-fringe-cyan)))
+ '(flymake-warning-bitmap (quote (exclamation-mark modus-theme-fringe-yellow)))
+ '(highlight-tail-colors (quote (("#2f4a00" . 0) ("#00415e" . 20))))
+ '(hl-todo-keyword-faces
+   (quote
+    (("HOLD" . "#cfdf30")
+     ("TODO" . "#feacd0")
+     ("NEXT" . "#b6a0ff")
+     ("THEM" . "#f78fe7")
+     ("PROG" . "#00d3d0")
+     ("OKAY" . "#4ae8fc")
+     ("DONT" . "#80d200")
+     ("FAIL" . "#ff8059")
+     ("BUG" . "#ff8059")
+     ("DONE" . "#44bc44")
+     ("NOTE" . "#f0ce43")
+     ("KLUDGE" . "#eecc00")
+     ("HACK" . "#eecc00")
+     ("TEMP" . "#ffcccc")
+     ("FIXME" . "#ff9977")
+     ("XXX+" . "#f4923b")
+     ("REVIEW" . "#6ae4b9")
+     ("DEPRECATED" . "#bfd9ff"))))
+ '(ibuffer-deletion-face (quote modus-theme-mark-del))
+ '(ibuffer-filter-group-name-face (quote modus-theme-mark-symbol))
+ '(ibuffer-marked-face (quote modus-theme-mark-sel))
+ '(ibuffer-title-face (quote modus-theme-header))
+ '(jdee-db-active-breakpoint-face-colors (cons "#282a36" "#57c7ff"))
+ '(jdee-db-requested-breakpoint-face-colors (cons "#282a36" "#5af78e"))
+ '(jdee-db-spec-breakpoint-face-colors (cons "#282a36" "#848688"))
+ '(objed-cursor-color "#ff5c57")
+ '(package-selected-packages
+   (quote
+    (modus-vivendi-theme org-ref auto-dim-other-buffers counsel-tramp sos org-super-agenda org-chef org-bullets beacon avy)))
+ '(pdf-view-midnight-colors (cons "#f9f9f9" "#282a36"))
+ '(rustic-ansi-faces
+   ["#282a36" "#ff5c57" "#5af78e" "#f3f99d" "#57c7ff" "#ff6ac1" "#9aedfe" "#f9f9f9"])
+ '(safe-local-variable-values
+   (quote
+    ((eval add-hook
+           (quote after-save-hook)
+           (lambda nil
+             (org-babel-tangle))
+           nil t)
+     (org-export-allow-bind-keywords . t))))
+ '(vc-annotate-background "#282a36")
+ '(vc-annotate-background-mode nil)
+ '(vc-annotate-color-map
+   (list
+    (cons 20 "#5af78e")
+    (cons 40 "#8df793")
+    (cons 60 "#c0f898")
+    (cons 80 "#f3f99d")
+    (cons 100 "#f7e38c")
+    (cons 120 "#fbcd7c")
+    (cons 140 "#ffb86c")
+    (cons 160 "#ff9e88")
+    (cons 180 "#ff84a4")
+    (cons 200 "#ff6ac1")
+    (cons 220 "#ff659d")
+    (cons 240 "#ff607a")
+    (cons 260 "#ff5c57")
+    (cons 280 "#e06663")
+    (cons 300 "#c1716f")
+    (cons 320 "#a27b7b")
+    (cons 340 "#e2e4e5")
+    (cons 360 "#e2e4e5")))
+ '(vc-annotate-very-old-color nil)
+ '(xterm-color-names
+   ["#000000" "#ff8059" "#44bc44" "#eecc00" "#29aeff" "#feacd0" "#00d3d0" "#a8a8a8"])
+ '(xterm-color-names-bright
+   ["#181a20" "#f4923b" "#80d200" "#cfdf30" "#72a4ff" "#f78fe7" "#4ae8fc" "#ffffff"])
+ '(zoom-ignore-predicates
+   (quote
+    ((lambda nil
+       (>
+        (count-lines
+         (point-min)
+         (point-max))
+        20)))))
+ '(zoom-ignored-buffer-name-regexps (quote ("^*calc")))
+ '(zoom-ignored-buffer-names (quote ("zoom.el" "init.el")))
+ '(zoom-ignored-major-modes (quote (dired-mode markdown-mode treemacs-mode)))
+ '(zoom-mode t t)
+ '(zoom-size (quote (0.618 . 0.618))))
+;; My defaults:5 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:6]]
 (setq  indent-tabs-mode nil)
-#+END_SRC
-Delete message buffers on exiting
-#+BEGIN_SRC emacs-lisp
+;; My defaults:6 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:7]]
 (setq message-kill-buffer-on-exit t)
-#+END_SRC
-Since I live in Germany, my week starts on monday.
-#+BEGIN_SRC emacs-lisp
+;; My defaults:7 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:8]]
 (setq calendar-week-start-day 1)
-#+END_SRC
-Move company tooltips to the right side
-#+BEGIN_SRC emacs-lisp
+;; My defaults:8 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:9]]
 (setq company-tooltip-align-annotations t)
-#+END_SRC
-Make aborting less annoying
-#+BEGIN_SRC emacs-lisp
+;; My defaults:9 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:10]]
 (add-hook 'evil-normal-state-entry-hook #'company-abort)
-#+END_SRC
-Add spellcorrection to ~text~, ~markdown~, ~GFM~.
-#+BEGIN_SRC emacs-lisp
+;; My defaults:10 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:11]]
 (set-company-backend! '(text-mode
                         markdown-mode
                         gfm-mode)
@@ -83,132 +157,110 @@ Add spellcorrection to ~text~, ~markdown~, ~GFM~.
               company-yasnippet))
 
 (setq ispell-dictionary "deutsch")
-#+END_SRC
-I like zsh
-#+BEGIN_SRC emacs-lisp
+;; My defaults:11 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:12]]
 (setq explicit-shell-file-name "/bin/zsh")
-#+END_SRC
-Uniquify buffer names
-#+BEGIN_SRC emacs-lisp
+;; My defaults:12 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:13]]
 (setq  uniquify-buffer-name-style 'forward)
-#+END_SRC
-Take new window space from all windows, not just the active one
-#+BEGIN_SRC emacs-lisp
+;; My defaults:13 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:14]]
 (setq window-combination-resize t)
-#+END_SRC
-Increasing undo limit, I have enough space
-This takes up max 80mb
-#+BEGIN_SRC emacs-lisp
+;; My defaults:14 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:15]]
 (setq undo-limit 80000000)
-#+END_SRC
-Making changes more granular for undo
-#+BEGIN_SRC emacs-lisp
+;; My defaults:15 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:16]]
 (setq evil-want-fine-undo t)
-#+END_SRC
-Autosaving
-#+BEGIN_SRC emacs-lisp
+;; My defaults:16 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:17]]
 (setq auto-save-default t)
-#+END_SRC
-show me the cursor when scrolling
-#+BEGIN_SRC emacs-lisp
+;; My defaults:17 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:18]]
 (beacon-mode)
-#+END_SRC
-Keep glyphs in cache when there are a lot
-#+BEGIN_SRC emacs-lisp
+;; My defaults:18 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:19]]
 (setq inhibit-compacting-font-caches t)
-#+END_SRC
-Rainbow mode is for previewing #RRGGBB, {rgb}, {HTML}
-It doesnt have a global mode
-According to
-https://stackoverflow.com/questions/16048231/how-to-enable-a-non-global-minor-mode-by-default-on-emacs-startup
-you can enable it globally like this
-#+BEGIN_SRC emacs-lisp
+;; My defaults:19 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:20]]
 (define-globalized-minor-mode my-global-rainbow-mode rainbow-mode
   (lambda () (rainbow-mode 1)))
 
 (my-global-rainbow-mode 1)
-#+END_SRC
-The other mode i like a lot is the rainbow delimiters mode
-It displays parentheses in colors, depending on their 'deepness'
-It's mainly useful in programming
-#+BEGIN_SRC emacs-lisp
+;; My defaults:20 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:21]]
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
-#+END_SRC
-Use unicode ellipsis instead of ... - it saves a lot of space
-#+BEGIN_SRC emacs-lisp
+;; My defaults:21 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:22]]
 (setq truncate-string-ellipsis "…")
-#+END_SRC
-Set ivy buffer preview to on, since its nice
-#+BEGIN_SRC emacs-lisp
+;; My defaults:22 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:23]]
 (setq +ivy-buffer-preview t)
-#+END_SRC
-I don’t use evil-escape-mode, so I may as well turn it off, I’ve heard it
-contributes a typing delay. I’m not sure it’s much, but it is an extra
-pre-command-hook that I don’t benefit from, so...
-#+BEGIN_SRC emacs-lisp
+;; My defaults:23 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:24]]
 (after! evil (evil-escape-mode nil))
-#+END_SRC
-Ensure, company only helps when needed.
-The author of doom, hlissner says to this on his personal config:
-#+BEGIN_QUOTE
-IMO, modern editors have trained a bad habit into us all: a burning
-need for completion all the time -- as we type, as we breathe, as we
-pray to the ancient ones -- but how often do you *really* need that
-information? I say rarely. So opt for manual completion:
-can be invoked using C-SPC
-   --- hlissner
-#+END_QUOTE
-After working on a few large projects where you would SMASH the ESC-key to
-cancel loading suggestions, I appreciate that opinion.
-#+BEGIN_SRC emacs-lisp
+;; My defaults:24 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:25]]
 (setq company-idle-delay nil)
-#+END_SRC
-Since the final newline did mess with my ~~/.authinfo.gpg~ for forge quite a lot
-(it doesn't allow a final newline) I decided why not deactivate it.
-#+BEGIN_SRC emacs-lisp
+;; My defaults:25 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:26]]
 (setq require-final-newline nil)
-#+END_SRC
-I don't need the menu dashboard
-#+BEGIN_SRC emacs-lisp
+;; My defaults:26 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:27]]
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
-#+END_SRC
-I like displaying whitespaces, returns and so on
-A positive value activates it, negative turns it off. However, I have found that
-it usually bloats in your face when just writing
-#+BEGIN_SRC emacs-lisp
+;; My defaults:27 ends here
+
+<<<<<<< HEAD:.doom.d/config.el
+;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:28]]
 (add-hook 'prog-mode-hook #'whitespace-mode)
-#+END_SRC
-I like the visual line mode
-#+BEGIN_SRC emacs-lisp
+=======
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:28]]
+(global-whitespace-mode +1)
+>>>>>>> 58d64dc5690a901bd79cefd5eac37e036dc56651:.config/doom/config.el
+;; My defaults:28 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:29]]
 (global-visual-line-mode +1)
-#+END_SRC
-Show battery and time in modeline
-#+BEGIN_SRC emacs-lisp
+;; My defaults:29 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:30]]
 (display-time-mode +1)
 (display-battery-mode +1)
-#+END_SRC
-Add a splash image
-#+BEGIN_SRC emacs-lisp
+;; My defaults:30 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:31]]
 (setq fancy-splash-image (concat doom-private-dir "splash.png"))
-#+END_SRC
-warn me when opening a file larger than 100mb
-#+BEGIN_SRC emacs-lisp
+;; My defaults:31 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:32]]
 (setq-default large-file-warning-threshold 100000000)
-#+END_SRC
-set mouse to yank where i click: http://sachachua.com/blog/2017/04/emacs-pasting-with-the-mouse-without-moving-the-point-mouse-yank-at-point/
-#+BEGIN_SRC emacs-lisp
+;; My defaults:32 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:33]]
 (setq mouse-yank-at-point t)
-#+END_SRC
-Lazy Flyspell uses less emacs and cpu
-#+BEGIN_SRC emacs-lisp
+;; My defaults:33 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*My defaults][My defaults:34]]
 (flyspell-lazy-mode 1)
-#+END_SRC
-** Treemacs
+;; My defaults:34 ends here
 
-There are a lot of files which are unnecessary and blob treemacs. This adds a
-mechanism to ignore them
-
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Treemacs][Treemacs:1]]
 (after! treemacs
   (defvar treemacs-file-ignore-extensions '()
     "File extension which 'treemacs-ignore-filter' will ensure are ignored")
@@ -227,11 +279,9 @@ mechanism to ignore them
           (dolist (regexp treemacs-file-ignore-regexps ignore-file)
             (setq ignore-file (or ignore-file (if (string-match-p regexp full-path) t nil)))))))
   (add-to-list 'treemacs-ignored-file-predicates #'treemacs-ignore-filter))
-#+END_SRC
+;; Treemacs:1 ends here
 
-*** Treemacs Blocklist
-
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Treemacs Blocklist][Treemacs Blocklist:1]]
 (setq treemacs-file-ignore-extensions '(;; LaTeX
                                         "aux"
                                         "ptc"
@@ -260,40 +310,32 @@ mechanism to ignore them
                                    "*/.auctex-auto"
                                    "*/_region_.log"
                                    "*/_region_.tex"))
+;; Treemacs Blocklist:1 ends here
 
-#+END_SRC
-
-** PATH
-Setup path for cargo and texlive
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*PATH][PATH:1]]
 (setenv "PATH" (concat (getenv "PATH") ":/opt/texlive/2020/bin/x86_64-linux"))
 (setq exec-path (append exec-path '("/opt/texlive/2020/bin/x86_64-linux")))
 
 (setenv "PATH" (concat (getenv "PATH") ":/home/valentin/.cargo/bin"))
 (setq exec-path (append exec-path '("/home/valentin/.cargo/bin")))
-#+END_SRC
-Also add pyenv path
+;; PATH:1 ends here
 
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*PATH][PATH:2]]
 (setenv "PATH" (concat (getenv "PATH") ":/home/valentin/.pyenv/bin"))
 (setq exec-path (append exec-path '("/home/valentin/.pyenv/bin")))
+;; PATH:2 ends here
 
-#+END_SRC
-** UI Improvements
-Changes the name of the dashboard to something recognisable
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*UI Improvements][UI Improvements:1]]
 (setq doom-fallback-buffer-name "► Doom"
       +doom-dashboard-name "► Doom")
-#+END_SRC
-this right here changes the foreground of not saved programs to something
-not-red - no error happened, you can keep calm, its yellow and not red.
-#+BEGIN_SRC emacs-lisp
+;; UI Improvements:1 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*UI Improvements][UI Improvements:2]]
 (custom-set-faces!
   '(doom-modeline-buffer-modified :foreground "#57c7ff"))
-#+END_SRC
+;; UI Improvements:2 ends here
 
-We expect the encoding to be LF UTF-8, so only show the modeline when this is not the case
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*UI Improvements][UI Improvements:3]]
 (defun doom-modeline-conditional-buffer-encoding ()
   "We expect the encoding to be LF UTF-8, so only show the modeline when this is not the case"
   (setq-local doom-modeline-buffer-encoding
@@ -301,62 +343,62 @@ We expect the encoding to be LF UTF-8, so only show the modeline when this is no
                           (eq buffer-file-coding-system 'utf-8)))))
 
 (add-hook 'after-change-major-mode-hook #'doom-modeline-conditional-buffer-encoding)
-#+END_SRC
+;; UI Improvements:3 ends here
 
-add transparency to emacs. only works with a composition manager
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*UI Improvements][UI Improvements:4]]
 (add-to-list 'default-frame-alist '(alpha 90 90))
-#+END_SRC
-#+l:
+;; UI Improvements:4 ends here
 
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*UI Improvements][UI Improvements:5]]
 (setq
+<<<<<<< HEAD:.doom.d/config.el
  doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 22)
  doom-big-font (font-spec :family "FiraCode Nerd Font Mono" :size 22)
  doom-variable-pitch-font (font-spec :family "EB Garamond 08" :size 24)
  doom-serif-font (font-spec :family "Fira Sans" :size 22))
-#+END_SRC
-Theme settings
-#+BEGIN_SRC emacs-lisp
+=======
+ doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 18)
+ doom-big-font (font-spec :family "FiraCode Nerd Font Mono" :size 24)
+ doom-variable-pitch-font (font-spec :family "EB Garamond 08" :size 22)
+ doom-serif-font (font-spec :family "IBM  Plex Mono" :weight 'light))
+>>>>>>> 58d64dc5690a901bd79cefd5eac37e036dc56651:.config/doom/config.el
+;; UI Improvements:5 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*UI Improvements][UI Improvements:6]]
 (setq doom-theme 'doom-moonlight)
-#+END_SRC
-Have I stated yet that i like the relative numbering of lines?
-it allows you to easily see how many lines up you have to go, then press that
-number and the up key
-#+BEGIN_SRC emacs-lisp
+;; UI Improvements:6 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*UI Improvements][UI Improvements:7]]
 (setq display-line-numbers-type 'relative)
-#+END_SRC
-Change color of insert state to blue
-#+BEGIN_SRC emacs-lisp
+;; UI Improvements:7 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*UI Improvements][UI Improvements:8]]
 (custom-set-faces! '(doom-modeline-evil-insert-state
                      :weight bold
                      :foreground "#339CDB"))
-#+END_SRC
-** General keymaps
-#+BEGIN_SRC emacs-lisp
+;; UI Improvements:8 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*General keymaps][General keymaps:1]]
 (global-set-key (kbd "C-c e") 'org-latex-export-to-pdf)
-#+END_SRC
-#+BEGIN_SRC emacs-lisp
+;; General keymaps:1 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*General keymaps][General keymaps:2]]
 (map! :map evil-window-map "SPC" #'rotate-layout)
-#+END_SRC
-** Projects
-My Projects are under ~/Projekte. This tells projectile to index them:
-#+BEGIN_SRC emacs-lisp
+;; General keymaps:2 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Projects][Projects:1]]
 (setq
  projectile-project-search-path '("~/Projekte"))
-#+END_SRC
-And ignore tmp, emacs.d
+;; Projects:1 ends here
 
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Projects][Projects:2]]
 (setq projectile-ignored-projects '("~/" "/tmp" "~/.emacs.d/.local/straight/repos/"))
 (defun projectile-ignored-project-function (filepath)
   "Return t if FILEPATH is within any of 'projectile-ignored-projects'"
   (or (mapcar (lambda (p) (s-starts-with-p p filepath)) projectile-ignored-projects)))
-#+END_SRC
-** Org Mode
+;; Projects:2 ends here
 
-Enable support for common used languages
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Org Mode][Org Mode:1]]
 (org-babel-do-load-languages
  'org-babel-load-languages
  '(
@@ -367,104 +409,45 @@ Enable support for common used languages
    (python . t)
  )
 )
-#+END_SRC
-Prevent confirmation
-Location of my org-files
-#+BEGIN_SRC emacs-lisp
+;; Org Mode:1 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Org Mode][Org Mode:2]]
 (setq
  org-directory "~/Daten/cloud/tlaloc/org/"
  org-archive-location (concat org-directory ".archive/$s::")
 )
-#+END_SRC
-Inherit properties makes child-headings inherit parents properties
-#+BEGIN_SRC emacs-lisp
+;; Org Mode:2 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Org Mode][Org Mode:3]]
 (setq org-use-property-inheritance t)
-#+END_SRC
-This right here tells org to ignore ':ignore' tags, but to include the content
-of them which I use for writing my thesis
-#+BEGIN_SRC emacs-lisp
+;; Org Mode:3 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Org Mode][Org Mode:4]]
 (after! org
   (require 'ox-extra)
   (ox-extras-activate '(ignore-headlines))
   (ox-extras-activate '(latex-header-blocks ignore-headlines)))
-#+END_SRC
+;; Org Mode:4 ends here
 
-
-
-*** Look and feel
-[[github:alphapapa/unpackeged.el]]
-Adds the mode unpackaged/org-table-face-mode which can be activated to make sure
-tables are displayed in a monospace font
-#+begin_src elisp
-;;;###autoload
-(define-minor-mode unpackaged/org-table-face-mode
-  "Apply `org-table' face family to all text in Org tables.
-Useful for forcibly applying the face to portions of table data
-that might have a different face, which could affect alignment."
-  :global nil
-  (let ((keywords '((unpackaged/org-table-face-matcher 0 'org-table))))
-    (if unpackaged/org-table-face-mode
-        (font-lock-add-keywords nil keywords 'append)
-      (font-lock-remove-keywords nil keywords))
-    (font-lock-flush)))
-
-(cl-defun unpackaged/org-table-face-matcher
-    (limit &optional (face `(:family ,(face-attribute 'org-table :family))))
-  "Apply FACE to entire Org tables.
-A `font-lock-keywords' function that searches up to LIMIT."
-  (cl-flet* ((find-face (face &optional limit not)
-                        ;; Return next position up to LIMIT that has FACE, or doesn't if NOT.
-                        (cl-loop with prev-pos
-                                 with pos = (point)
-                                 while (not (eobp))
-                                 do (setf pos (next-single-property-change pos 'face nil limit))
-                                 while (and pos (not (equal pos prev-pos)))
-                                 for face-at = (get-text-property pos 'face)
-                                 for face-matches-p = (or (eq face-at face)
-                                                          (when (listp face-at)
-                                                            (member face face-at)))
-                                 when (or (and not (not face-matches-p))
-                                          face-matches-p)
-                                 return pos
-                                 do (setf prev-pos pos)))
-             (apply-face-from (pos face)
-                              (unless (eobp)
-                                (let* ((property-at-start (get-text-property pos 'face))
-                                       (table-face-start (if (or (eq property-at-start 'org-table)
-                                                                 (when (listp property-at-start)
-                                                                   (member 'org-table property-at-start)))
-                                                             (point)
-                                                           (find-face 'org-table limit)))
-                                       table-face-end)
-                                  (when table-face-start
-                                    (goto-char table-face-start)
-                                    (setf table-face-end (line-end-position))
-                                    (add-face-text-property table-face-start table-face-end face)
-                                    (goto-char table-face-end))))))
-    (cl-loop with applied-p
-             for applied = (apply-face-from (point) face)
-             when applied
-             do (setf applied-p t)
-             while applied
-             finally return applied-p)))
-#+END_SRC
-
-Disable =org-indent-mode=
-=org-indent-mode= is an excellent default, but has the downside of increasing the
-visual width of tthe file as headings are increasingly nested
-To make it simpler, this forces consecutive indentation levels to increment one
-character at a time with org-indent-indentation-per-level.
-#+BEGIN_SRC emacs-lisp
+<<<<<<< HEAD:.doom.d/config.el
+;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:2]]
 (setq org-startup-indented nil)
+=======
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Look and feel][Look and feel:1]]
+(setq global-org-pretty-table-mode t)
+;; Look and feel:1 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Look and feel][Look and feel:3]]
+(setq org-indent-mode nil)
+>>>>>>> 58d64dc5690a901bd79cefd5eac37e036dc56651:.config/doom/config.el
 (setq org-indent-indentation-per-level 1)
-#+END_SRC
-By default, orgf indents text to match the indentation. Setting it to nil
-disables this behaviour
-#+BEGIN_SRC emacs-lisp
+;; Look and feel:3 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Look and feel][Look and feel:4]]
 (setq org-adapt-indentation nil)
-#+END_SRC
-Taken for testing from [[github:psamim/dotfiles]]
-#+BEGIN_SRC emacs-lisp
+;; Look and feel:4 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Look and feel][Look and feel:5]]
 (setq-hook! org-mode
   org-log-done t
   org-image-actual-width '(700)
@@ -482,18 +465,16 @@ Taken for testing from [[github:psamim/dotfiles]]
   )
 
 (setq org-journal-enable-agenda-integration t)
-#+END_SRC
-I like those as characters
-#+BEGIN_SRC emacs-lisp
+;; Look and feel:5 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Look and feel][Look and feel:6]]
 (setq
   org-ellipsis " ▼ "
   org-superstar-headline-bullets-list '("✿" "■" "◆" "▲" "#")
 )
-#+END_SRC
+;; Look and feel:6 ends here
 
-This creates an org mode buffer
-
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Look and feel][Look and feel:7]]
 (evil-define-command evil-buffer-org-new (count file)
   "Creates a new ORG buffer replacing the current window, optionally
    editing a certain FILE"
@@ -508,20 +489,52 @@ This creates an org mode buffer
 (map! :leader
   (:prefix "b"
     :desc "New empty ORG buffer" "o" #'evil-buffer-org-new))
-#+END_SRC
+;; Look and feel:7 ends here
 
-By default, visual-line-mode is turned on, and auto-fill-mode off by a hook.
-However this messes with tables in Org-mode, and other plaintext files (e.g.
-markdown, \LaTeX) so I’ll turn it off for this, and manually enable it for more
-specific modes as desired.
-
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Look and feel][Look and feel:8]]
 (remove-hook 'text-mode-hook #'visual-line-mode)
 (add-hook 'text-mode-hook #'auto-fill-mode)
-#+END_SRC
+<<<<<<< HEAD:.doom.d/config.el
+;; Look and feel:7 ends here
 
+;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:8]]
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(doom-modeline-buffer-modified ((t (:foreground "#57c7ff"))))
+ '(doom-modeline-evil-insert-state ((t (:weight bold :foreground "#339CDB"))))
+ '(org-block ((t (:inherit fixed-pitch))))
+ '(org-code ((t (:inherit (shadow fixed-pitch)))))
+ '(org-document-info ((t (:foreground "dark violet"))))
+ '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
+ '(org-document-title ((t (:inherit default :weight bold :foreground "#57c7ff" :height 2.0 :underline nil))))
+ '(org-done ((t (:foreground "PaleGreen" :weight normal :strike-through t))))
+ '(org-headline-done ((((class color) (min-colors 16) (background dark)) (:foreground "LightSalmon" :strike-through t))))
+ '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
+ '(org-level-1 ((t (:inherit default :weight bold :foreground "#5af78e" :height 1.75))))
+ '(org-level-2 ((t (:inherit default :weight bold :foreground "#ff6ac1" :height 1.5))))
+ '(org-level-3 ((t (:inherit default :weight bold :foreground "#f3f99d" :height 1.25))))
+ '(org-level-4 ((t (:inherit default :weight bold :foreground "#9aeedf" :height 1.1))))
+ '(org-level-5 ((t (:inherit default :weight bold :foreground "#ff5c57"))))
+ '(org-level-6 ((t (:inherit default :weight bold :foreground "#57c7ff"))))
+ '(org-level-7 ((t (:inherit default :weight bold :foreground "#5af78e"))))
+ '(org-level-8 ((t (:inherit default :weight bold :foreground "#ff6ac1"))))
+ '(org-link ((t (:foreground "royal blue" :underline t))))
+ '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+ '(org-property-value ((t (:inherit fixed-pitch))) t)
+ '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+ '(org-table ((t (:foreground "cyan"))))
+ '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
+ '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
+;; Look and feel:8 ends here
 
-#+BEGIN_SRC emacs-lisp
+;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:9]]
+=======
+;; Look and feel:8 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Look and feel][Look and feel:9]]
 (custom-set-faces
   '(org-block
     ((t (:inherit fixed-pitch)))
@@ -604,11 +617,10 @@ specific modes as desired.
                              :foreground "#57c7ff"
                              :height 2.0
                              :underline nil)))))
-#+END_SRC
-Prettify my lists
-Views a • instead of a - (only in lists)
-Views a ◦ instead of a + (in lists, that is)
-#+BEGIN_SRC emacs-lisp
+;; Look and feel:9 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Look and feel][Look and feel:10]]
+>>>>>>> 58d64dc5690a901bd79cefd5eac37e036dc56651:.config/doom/config.el
 (font-lock-add-keywords 'org-mode
                         '(("^ *\\([-]\\) "
                            (0 (prog1 ()
@@ -633,17 +645,29 @@ Views a ◦ instead of a + (in lists, that is)
                            )
                           )
                         )
-#+END_SRC
-Also, I only ever need the last chapters asterisk
-#+BEGIN_SRC emacs-lisp
+;; Look and feel:9 ends here
+
+;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:10]]
 (setq org-hide-leading-stars t)
-#+END_SRC
-Syntax highlighting in code
-#+BEGIN_SRC emacs-lisp
+;; Look and feel:10 ends here
+
+<<<<<<< HEAD:.doom.d/config.el
+;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:11]]
 (setq org-src-fontify-natively t)
-#+END_SRC
-Show pretty stuff in org mode
-#+BEGIN_SRC emacs-lisp
+;; Look and feel:11 ends here
+
+;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:12]]
+=======
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Look and feel][Look and feel:11]]
+(setq org-hide-leading-stars t)
+;; Look and feel:11 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Look and feel][Look and feel:12]]
+(setq org-src-fontify-natively t)
+;; Look and feel:12 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Look and feel][Look and feel:13]]
+>>>>>>> 58d64dc5690a901bd79cefd5eac37e036dc56651:.config/doom/config.el
 (add-hook! 'org-mode-hook #'+org-pretty-mode
            'org-fragtog-mode
            'writeroom-mode
@@ -653,31 +677,35 @@ Show pretty stuff in org mode
  org-fontify-whole-heading-line t
  org-fontify-done-headline t
  org-fontify-quote-and-verse-blocks t)
-#+END_SRC
+;; Look and feel:12 ends here
 
-I don't like long columns. They are hard to parse - and even harder to navigate
-using vim. I tend to do stuff like linebreaks after every
-sentence and don't export linebreaks (org), but this is more solid as
-it automatically adds a smart linebreak after 80 characters (smart meaning,
-don't break my words or my code)
-#+BEGIN_SRC emacs-lisp
+<<<<<<< HEAD:.doom.d/config.el
+;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:13]]
+=======
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Look and feel][Look and feel:14]]
+>>>>>>> 58d64dc5690a901bd79cefd5eac37e036dc56651:.config/doom/config.el
 (add-hook 'org-mode-hook '(lambda () (setq fill-column 80)))
 (add-hook 'org-mode-hook 'auto-fill-mode)
-#+END_SRC
-#+BEGIN_SRC emacs-lisp
+;; Look and feel:13 ends here
+
+<<<<<<< HEAD:.doom.d/config.el
+;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:14]]
+=======
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Look and feel][Look and feel:15]]
+>>>>>>> 58d64dc5690a901bd79cefd5eac37e036dc56651:.config/doom/config.el
 (setq org-enforce-todo-dependencies t)
 (setq org-insert-heading-respect-content nil)
 (setq org-reverse-note-order nil)
 (setq org-deadline-warning-days 7)
 (setq org-blank-before-new-entry (quote ((heading . t)
                                          (plain-list-item . nil))))
-#+END_SRC
-Smart return does add new list item, … if appropriate
-note: if you're on a link, it opens the link
-- http://irreal.org/blog/?p=6131
-- http://kitchingroup.cheme.cmu.edu/blog/2017/04/09/A-better-return-in-org-mode/
+;; Look and feel:14 ends here
 
-#+BEGIN_SRC emacs-lisp
+<<<<<<< HEAD:.doom.d/config.el
+;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:15]]
+=======
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Look and feel][Look and feel:16]]
+>>>>>>> 58d64dc5690a901bd79cefd5eac37e036dc56651:.config/doom/config.el
 (after! org
   (defun unpackaged/org-element-descendant-of (type element)
     "Return non-nil if ELEMENT is a descendant of TYPE.
@@ -780,22 +808,13 @@ appropriate.  In tables, insert a new row or end the table."
  :after evil-org
  :map evil-org-mode-map
  :i [return] #'unpackaged/org-return-dwim)
-#+END_SRC
-There's some functions I got from http://doc.norang.ca/org-mode.html, I just
- modified it to use C-f5 instead of S-f5:
- f5 and C-f5 are bound the functions for narrowing and widening the emacs buffer as defined below.
+;; Look and feel:15 ends here
 
-We now use:
-
-    T (tasks) for C-c / t on the current buffer
-    N (narrow) narrows to this task subtree
-    U (up) narrows to the immediate parent task subtree without moving
-    P (project) narrows to the parent project subtree without moving
-    F (file) narrows to the current file or file of the existing restriction
-
-The agenda keeps widening the org buffer so this gives a convenient way to focus on what we are doing.
-#+BEGIN_SRC emacs-lisp
-
+<<<<<<< HEAD:.doom.d/config.el
+;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:16]]
+=======
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Look and feel][Look and feel:17]]
+>>>>>>> 58d64dc5690a901bd79cefd5eac37e036dc56651:.config/doom/config.el
 (global-set-key (kbd "<f5>") 'bh/org-todo)
 (global-set-key (kbd "C-<f5>") 'bh/widen)
 
@@ -826,18 +845,16 @@ The agenda keeps widening the org buffer so this gives a convenient way to focus
   (org-narrow-to-subtree)
   (save-restriction
     (org-agenda-set-restriction-lock)))
-#+END_SRC
+;; Look and feel:16 ends here
 
-**** Smart parentheses
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Smart parentheses][Smart parentheses:1]]
 (sp-local-pair
      '(org-mode)
      "<<" ">>"
      :actions '(insert))
-#+END_SRC
-**** Org-Tags as icons
-iconify tags
-#+BEGIN_SRC emacs-lisp
+;; Smart parentheses:1 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Org-Tags as icons][Org-Tags as icons:1]]
 (customize-set-value
     'org-agenda-category-icon-alist
     '(
@@ -849,36 +866,27 @@ iconify tags
       ("solution" "~/.config/icons/solution.svg" nil nil :ascent center)
       ("highQ" "~/.config/icons/highQ.svg" nil nil :ascent center)
       ))
+;; Org-Tags as icons:1 ends here
 
-#+END_SRC
-Change breadcrumbs
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Org-Tags as icons][Org-Tags as icons:2]]
 (setq org-agenda-breadcrumbs-seperator " ❱ ")
-#+END_SRC
-Hide emphasis markers
-#+BEGIN_SRC emacs-lisp
+;; Org-Tags as icons:2 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Org-Tags as icons][Org-Tags as icons:3]]
 (setq org-hide-emphasis-markers t)
-#+END_SRC
+;; Org-Tags as icons:3 ends here
 
-
-
-*** Org Chef
-
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Org Chef][Org Chef:1]]
 (use-package! org-chef
   :commands (org-chef-insert-recipe org-chef-get-recipe-from-url))
-#+END_SRC
+;; Org Chef:1 ends here
 
-*** Deft
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Deft][Deft:1]]
 (setq deft-extensions '("org"))
 (setq deft-directory "~/Daten/cloud/tlaloc/org")
-#+END_SRC
-*** Roam
+;; Deft:1 ends here
 
-Org roam server extends org roam by using a server which can be launched to view
- the file in a browser
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Roam][Roam:1]]
 (use-package org-roam-server
   :after org-roam
   :config
@@ -894,31 +902,27 @@ Org roam server extends org roam by using a server which can be launched to view
     (interactive)
     (org-roam-server-mode 1)
     (browse-url-xdg-open (format "http://localhost:%d" org-roam-server-port))))
-#+END_SRC
+;; Roam:1 ends here
 
-*** Capture
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Capture][Capture:1]]
 (require 'org-roam-protocol)
-#+END_SRC
-#+BEGIN_SRC emacs-lisp
+;; Capture:1 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Capture][Capture:2]]
 (setq org-capture-templates `(
     ("p" "Protocol" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
         "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
     ("L" "Protocol Link" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
         "* %? [[%:link][%:description]] \nCaptured On: %U")
 ))
-#+END_SRC
+;; Capture:2 ends here
 
-
-*** Refile
-Global keybinding to open my refile-file
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Refile][Refile:1]]
 (global-set-key (kbd "C-c o")
   (lambda () (interactive) (find-file (concat org-directory "refile.org"))))
-#+END_SRC
-*** Agenda
-Use Super Agenda
-#+BEGIN_SRC emacs-lisp
+;; Refile:1 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:1]]
 (use-package! org-super-agenda
   :commands (org-super-agenda-mode))
 (after! org-agenda
@@ -930,20 +934,19 @@ Use Super Agenda
       org-agenda-block-separator ""
       org-agenda-tags-column 100 ;; from testing this seems to be a good value
       org-agenda-compact-blocks t)
-#+END_SRC
-Add all files in org dir to agenda
-Also added my bachelor thesis todos
-#+BEGIN_SRC emacs-lisp
+;; Agenda:1 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:2]]
 (setq org-agenda-files (list
                         org-directory
                         "~/Daten/cloud/highq/thesis-bachelor/org"))
-#+END_SRC
-Set Deadline Warning days
-#+BEGIN_SRC emacs-lisp
+;; Agenda:2 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:3]]
 (setq org-deadline-warning-days 7)
-#+END_SRC
-My own Agenda commands
-#+BEGIN_SRC emacs-lisp
+;; Agenda:3 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:4]]
 (setq org-agenda-block-separator (string-to-char " "))
 (setq org-agenda-custom-commands
       '(("o" "My Agenda"
@@ -968,11 +971,9 @@ My own Agenda commands
                                                     "      " "┈┈┈┈┈┈┈┈┈┈┈┈┈")))
                        ))
           ))))
-#+END_SRC
+;; Agenda:4 ends here
 
-when all children are done change parent todo entry to done
- see here: https://orgmode.org/org.html#Breaking-Down-Tasks
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:5]]
 (defun org-summary-todo (n-done n-not-done)
   "Switch entry to DONE when all subentries are done, to TODO otherwise."
   (let (org-log-done org-log-states)   ; turn off logging
@@ -980,9 +981,9 @@ when all children are done change parent todo entry to done
 
 (add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
 (setq org-hierarchical-todo-statistics t)
-#+END_SRC
-pretty-print states
-#+BEGIN_SRC emacs-lisp
+;; Agenda:5 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:6]]
 (add-hook 'org-mode-hook
           (lambda ()
             (push '("TODO"  . ?▲) prettify-symbols-alist)
@@ -990,34 +991,26 @@ pretty-print states
             (push '("CANCELLED"  . ?✘) prettify-symbols-alist)
             (push '("WAITING"  . ?…) prettify-symbols-alist)
             (push '("SOMEDAY"  . ??) prettify-symbols-alist)))
-#+END_SRC
-Change font for done tasks
-#+BEGIN_SRC emacs-lisp
+;; Agenda:6 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:7]]
 (setq org-fontify-done-headline t)
-(custom-set-faces
- '(org-done ((t (:foreground "PaleGreen"
-                 :weight normal
-                 :strike-through t))))
- '(org-headline-done
-   ((((class color) (min-colors 16) (background dark))
-     (:foreground "LightSalmon" :strike-through t)))))
-#+END_SRC
-Use C-c a to open the agenda, f12 to open the agenda as list
-#+BEGIN_SRC emacs-lisp
+
+;; Agenda:7 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:8]]
 (global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key (kbd "<f12>") 'org-agenda-list)
-#+END_SRC
-Sorting by time up, prio down and category up in agenda
-Sorting by todo up, state up in todo
-Sorting tags by priority downwards
-#+BEGIN_SRC emacs-lisp
+;; Agenda:8 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:9]]
 (setq org-agenda-sorting-strategy
   (quote ((agenda time-up priority-down category-up)
           (todo todo-state-up priority-up)
           (tags priority-down))))
-#+END_SRC
-Keywords for todos
-#+BEGIN_SRC emacs-lisp
+;; Agenda:9 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:10]]
   ;; ! = insert timestamp
   ;; @ = insert note
   ;; / = enter state
@@ -1038,9 +1031,9 @@ Keywords for todos
                       "CANCELED(c@/!)")
                      )
  )
-#+END_SRC
-Colorizing the todo keywords
-#+BEGIN_SRC emacs-lisp
+;; Agenda:10 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:11]]
 (setq  org-todo-keyword-faces
   '(("IDEA" . (
                :foreground "light green"
@@ -1068,9 +1061,9 @@ Colorizing the todo keywords
                   :weight bold))
     )
 )
-#+END_SRC
-org tags
-#+BEGIN_SRC emacs-lisp
+;; Agenda:11 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:12]]
 (setq
   org-tag-persistent-alist
   '((:startgroup . nil)
@@ -1097,9 +1090,9 @@ org tags
     ("noexport" . ?x)
     )
 )
-#+END_SRC
-coloring tags
-#+BEGIN_SRC emacs-lisp
+;; Agenda:12 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:13]]
 (setq
   org-tag-faces
   '(
@@ -1154,20 +1147,20 @@ coloring tags
                   :weight bold))
     )
   )
-#+END_SRC
-Set recurring tasks to state next
-#+BEGIN_SRC emacs-lisp
+;; Agenda:13 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:14]]
 (setq org-todo-repeat-to-state "NEXT")
-#+END_SRC
-Use fast tag and todo selection
-#+BEGIN_SRC emacs-lisp
+;; Agenda:14 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:15]]
 (setq
   org-fast-tag-selection-single-key t
   org-use-fast-todo-selection t
 )
-#+END_SRC
+;; Agenda:15 ends here
 
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:16]]
 (after! org
   (setq org-ellipsis " ▾ "
         org-priority-highest ?A
@@ -1178,9 +1171,9 @@ Use fast tag and todo selection
           (?C . 'all-the-icons-yellow)
           (?D . 'all-the-icons-green)
           (?E . 'all-the-icons-blue))))
-#+END_SRC
-Also add unicode characters for checkboxes and stuff
-#+BEGIN_SRC emacs-lisp
+;; Agenda:16 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:17]]
 (after! org
   (appendq! +pretty-code-symbols
             '(:checkbox      "☐"
@@ -1238,11 +1231,16 @@ Also add unicode characters for checkboxes and stuff
     :priority_e    "[#E]"
     :em_dash       "---"))
 (plist-put +pretty-code-symbols :name "›")
-#+END_SRC
-*** Org Ref
-Setting default files for org ref.
-Mine are synced via nextcloud
-#+BEGIN_SRC emacs-lisp
+;; Agenda:17 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Org Ref][Org Ref:1]]
+(use-package! org-ref
+  :after org
+  :config
+  (setq org-ref-completion-library 'org-ref-ivy-cite))
+;; Org Ref:1 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Org Ref][Org Ref:2]]
 (setq
  org-ref-default-bibliography "~/Daten/cloud/tlaloc/org/Papers/references.bib"
 
@@ -1253,14 +1251,13 @@ Mine are synced via nextcloud
  (lambda (fpath)
    (start-process "zathura" "*ivy-bibtex-zathura*" "/usr/bin/zathura" fpath))
 )
-#+END_SRC
-use footcite as default cite
-#+BEGIN_SRC emacs-lisp
-(setq org-ref-default-citation-link "footcite")
-#+END_SRC
+;; Org Ref:2 ends here
 
-*** LSP Support in src blocks
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Org Ref][Org Ref:3]]
+(setq org-ref-default-citation-link "footcite")
+;; Org Ref:3 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*LSP Support in src blocks][LSP Support in src blocks:1]]
 (cl-defmacro lsp-org-babel-enable (lang)
     "Support LANG in org source code block."
     (setq centaur-lsp 'lsp-mode)
@@ -1286,45 +1283,35 @@ use footcite as default cite
                   (format "Prepare local buffer environment for org source block (%s)."
                           (upcase ,lang))))))))
   (defvar org-babel-lang-list
-    '("go" "python" "ipython" "bash" "sh"))
+    '("go" "python" "ipython" "bash" "sh" "c"))
   (dolist (lang org-babel-lang-list)
     (eval `(lsp-org-babel-enable ,lang)))
-#+END_SRC
-*** LaTeX Fragments
+;; LSP Support in src blocks:1 ends here
 
-View nice TeX Fragments
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*LaTeX Fragments][LaTeX Fragments:1]]
 (after! org
   (setq org-highlight-latex-and-related '(native script entities)))
-#+END_SrC
+;; LaTeX Fragments:1 ends here
 
-*** Export
-Prefer user labels instead of internal labels
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Export][Export:1]]
 (setq org-latex-prefer-user-labels t)
-#+END_SRC
-Use smart quotes
-smart quotes means converting hyphens to m-dashes and
-straight quotes to curly quotes
-#+BEGIN_SRC emacs-lisp
+;; Export:1 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Export][Export:2]]
 (setq org-export-with-smart-quotes t)
-#+END_SRC
-**** Org Async Export
-For having exports as an async process, which doesnt hang up emacs, you also
-need a file like file:./init-org-async.el
-#+BEGIN_SRC emacs-lisp
+;; Export:2 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Org Async Export][Org Async Export:1]]
 (setq
  org-export-in-background t
  org-export-async-init-file (concat doom-private-dir "init-org-async.el"))
-#+END_SRC
-**** Languages
-#+BEGIN_SRC emacs-lisp
-(setq org-export-default-language "de")
-#+END_SRC
-**** View exported file
+;; Org Async Export:1 ends here
 
-use localleader v to view possible output files
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Languages][Languages:1]]
+(setq org-export-default-language "de")
+;; Languages:1 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*View exported file][View exported file:1]]
 (after! org
   (map! :map org-mode-map
         :localleader
@@ -1349,20 +1336,18 @@ use localleader v to view possible output files
 
 (defvar org-view-output-file-extensions '("pdf" "md" "rst" "txt" "tex")
   "Search for output files with these extensions, in order, viewing the first that matches")
-#+END_SRC
+;; View exported file:1 ends here
 
-**** LaTeX
-Using this latex command ensures your bibliography to be set up as well as your glossaries
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*LaTeX][LaTeX:1]]
 (setq
  org-latex-pdf-process
  '("lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
    "biber %b"
    "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
    "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
-#+END_SRC
-Setup preview commands
-#+BEGIN_SRC emacs-lisp
+;; LaTeX:1 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*LaTeX][LaTeX:2]]
 '(org-preview-latex-process-alist
   (quote
    ((dvipng :programs
@@ -1403,10 +1388,9 @@ Setup preview commands
                  ("xelatex -no-pdf -interaction nonstopmode -output-directory %o %f")
                  :image-converter
                  ("convert -density %D -trim -antialias %f -quality 100 %O")))))
-#+END_SRC
-My latex classes
-First off, the classic koma-article
-#+BEGIN_SRC emacs-lisp
+;; LaTeX:2 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*LaTeX][LaTeX:3]]
 (after! ox-latex
   (add-to-list 'org-latex-classes
                '("koma-article"
@@ -1416,10 +1400,9 @@ First off, the classic koma-article
                  ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
-#+END_SRC
-Secondary, mimosis.
-Mimosis is a class for writing books.
-#+BEGIN_SRC emacs-lisp
+;; LaTeX:3 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*LaTeX][LaTeX:4]]
 (add-to-list 'org-latex-classes
              '("mimosis"
                "\\documentclass{mimosis}
@@ -1432,10 +1415,9 @@ Mimosis is a class for writing books.
                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                ("\\mboxparagraph{%s}" . "\\mboxparagraph*{%s}")
                ("\\mboxsubparagraph{%s}" . "\\mboxsubparagraph*{%s}")))
-#+END_SRC
-I dont use this one (yet).
-The third one's a class for publications
-#+BEGIN_SRC emacs-lisp
+;; LaTeX:4 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*LaTeX][LaTeX:5]]
 ;; Elsarticle is Elsevier class for publications.
 (add-to-list 'org-latex-classes
              '("elsarticle"
@@ -1448,9 +1430,9 @@ The third one's a class for publications
                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                ("\\paragraph{%s}" . "\\paragraph*{%s}")
                ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-#+END_SRC
-This is koma-book (scrbook)
-#+BEGIN_SRC emacs-lisp
+;; LaTeX:5 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*LaTeX][LaTeX:6]]
 (add-to-list 'org-latex-classes
              '("koma-book"
                "\\documentclass{scrbook}
@@ -1463,10 +1445,8 @@ This is koma-book (scrbook)
                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                ("\\mboxparagraph{%s}" . "\\mboxparagraph*{%s}")
                ("\\mboxsubparagraph{%s}" . "\\mboxsubparagraph*{%s}")))
-#+END_SRC
+;; LaTeX:6 ends here
 
-My default packages for latex
-#+BEGIN_SRC emacs-lisp :comments no
 ;;(setq org-latex-default-packages-alist
 ;;      '(
 ;;        ("" "float" nil)
@@ -1510,12 +1490,12 @@ My default packages for latex
 ;;        ;; enables you to embed files in pdfs
 ;;        ("" "attachfile" nil)
 ;;    ))
-#+END_SRC
-#+BEGIN_SRC emacs-lisp
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*LaTeX][LaTeX:8]]
 (setq org-latex-listings 'minted)
-#+END_SRC
-Add Fragment justification
- #+BEGIN_SRC emacs-lisp
+;; LaTeX:8 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*LaTeX][LaTeX:9]]
  (after! org
    (defun scimax-org-latex-fragment-justify (justification)
      "Justify the latex fragment at point with JUSTIFICATION.
@@ -1566,17 +1546,9 @@ Add Fragment justification
        (advice-remove 'org--format-latex-make-overlay 'scimax-org-latex-fragment-justify-advice)
        (put 'scimax-org-latex-fragment-justify-advice 'enabled nil)
        (message "Latex fragment justification disabled"))))
- #+END_SRC
-**** HTML
-***** Extra header content
-We want to tack on a few more bits to the start of the body. Unfortunately, there
-doesn't seem to be any nice variable or hook, so we'll just override the
-relevant function.
+;; LaTeX:9 ends here
 
-This is done to allow me to add the date and author to the page header,
-implement a CSS-only light/dark theme toggle, and a sprinkle of [[https://ogp.me/][Open Graph]]
-metadata.
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Extra header content][Extra header content:1]]
 (defadvice! org-html-template-fancier (contents info)
   "Return complete document string after HTML conversion.
 CONTENTS is the transcoded contents string.  INFO is a plist
@@ -1658,9 +1630,9 @@ compared to the default implementation."
        org-html-klipse-css "\"/>"))
    ;; Closing document.
    "</div>\n</body>\n</html>"))
-#+END_SRC
+;; Extra header content:1 ends here
 
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Extra header content][Extra header content:2]]
 (defun org-html--build-meta-entry (label identity &optional content-format &rest content-formatters)
   "Construct <meta> tag with LABEL=\"IDENTITY\" and content from CONTENT-FORMAT and CONTENT-FORMATTER."
   (concat "<meta "
@@ -1742,20 +1714,9 @@ INFO is a plist used as a communication channel."
      (org-html--build-meta-entry "property" "og:article:published_time" (format-time-string "%FT%T%z"))
      (when (org-string-nw-p subtitle)
        (org-html--build-meta-entry "property" "og:description" subtitle)))))
-#+END_SRC
-***** Custom CSS/JS
-The default org HTML export is ... alright, but we can really jazz it up.
-[[https://lepisma.xyz][lepisma.xyz]] has a really nice style, and from and org export too!
-Suffice to say I've snatched it, with a few of my own tweaks applied.
+;; Extra header content:2 ends here
 
-#+BEGIN_SRC html :tangle misc/org-export-header.html :comments no
-<link rel="icon" href="https://tecosaur.com/resources/org/nib.ico" type="image/ico" />
-
-<link rel="preload" as="font" crossorigin="crossorigin" type="font/woff2" href="https://tecosaur.com/resources/org/etbookot-roman-webfont.woff2">
-<link rel="preload" as="font" crossorigin="crossorigin" type="font/woff2" href="https://tecosaur.com/resources/org/etbookot-italic-webfont.woff2">
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Custom CSS/JS][Custom CSS/JS:2]]
 (after! org
   (setq org-html-style-default
         (concat (f-read-text (expand-file-name "misc/org-export-header.html" doom-private-dir))
@@ -1767,18 +1728,9 @@ Suffice to say I've snatched it, with a few of my own tweaks applied.
         org-html-htmlize-output-type 'css
         org-html-doctype "html5"
         org-html-html5-fancy t))
-#+END_SRC
-***** Collapsable src and example blocks
-By wrapping the ~<pre>~ element in a ~<details>~ block, we can obtain collapsable
-blocks with no CSS, though we will toss a little in anyway to have this looking
-somewhat spiffy.
+;; Custom CSS/JS:2 ends here
 
-We can take our modification a step further, and add a gutter on the side of the
-Src block containing both an anchor referencing the current block, and a button
-to copy the content of the block.
-
-#+NAME: Src blocks
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::Src blocks][Src blocks]]
 (defadvice! org-html-src-block-collapsable (orig-fn src-block contents info)
   "Wrap the usual <pre> block in a <details>"
   :around #'org-html-src-block
@@ -1892,10 +1844,9 @@ to copy the content of the block.
                      ("nxml" "XML")
                      ("conf" "Configuration File"))))
       mode))
-#+END_SRC
+;; Src blocks ends here
 
-#+NAME: Example, fixed width, and property blocks
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::Example, fixed width, and property blocks][Example, fixed width, and property blocks]]
 (after! org
   (defun org-html-block-collapsable (orig-fn block contents info)
     "Wrap the usual block in a <details>"
@@ -1927,16 +1878,9 @@ to copy the content of the block.
   (advice-add 'org-html-example-block   :around #'org-html-block-collapsable)
   (advice-add 'org-html-fixed-width     :around #'org-html-block-collapsable)
   (advice-add 'org-html-property-drawer :around #'org-html-block-collapsable))
-#+END_SRC
-***** Handle table overflow
-In order to accommodate wide tables ---particularly on mobile devices--- we want
-to set a maximum width and scroll overflow. Unfortunately, this cannot be applied
-directly to the ~table~ element, so we have to wrap it in a ~div~.
+;; Example, fixed width, and property blocks ends here
 
-While we're at it, we can a link gutter, as we did with src blocks, and show the
-~#+name~, if one is given.
-
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Handle table overflow][Handle table overflow:1]]
 (defadvice! org-html-table-wrapped (orig-fn table contents info)
   "Wrap the usual <table> in a <div>"
   :around #'org-html-table
@@ -1953,18 +1897,9 @@ While we're at it, we can a link gutter, as we did with src blocks, and show the
                 (replace-regexp-in-string (format "<table id=\"%s\"" ref) "<table"
                                           (funcall orig-fn table contents info))
               (funcall orig-fn table contents info)))))
-#+END_SRC
-***** TOC as a collapsable tree
-The TOC is much nicer to navigate as a collapsable tree. Unfortunately we cannot
-achieve this with CSS alone. Thankfully we can avoid JS though, by adapting the
-TOC generation code to use a ~label~ for each item, and a hidden ~checkbox~ to keep
-track of state.
+;; Handle table overflow:1 ends here
 
-
-Since we can actually accomplish the desired effect by adding advice /around/ the
-function, without overriding it --- let's do that to reduce the bug surface of
-this config a tad.
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*TOC as a collapsable tree][TOC as a collapsable tree:1]]
 (defadvice! org-html--format-toc-headline-colapseable (orig-fn headline info)
   "Add a label and checkbox to `org-html--format-toc-headline's usual output,
 to allow the TOC to be a collapseable tree."
@@ -1973,23 +1908,17 @@ to allow the TOC to be a collapseable tree."
                 (org-export-get-reference headline info))))
     (format "<input type='checkbox' id='toc--%s'/><label for='toc--%s'>%s</label>"
             id id (funcall orig-fn headline info))))
-#+END_SRC
+;; TOC as a collapsable tree:1 ends here
 
-Now, leaves (headings with no children) shouldn't have the ~label~ item. The
-obvious way to achieve this is by including some /if no children.../ logic in
-~org-html--format-toc-headline-colapseable~. Unfortunately, I can't my elisp isn't
-up to par to extract the number of child headings from the mountain of info that
-org provides.
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*TOC as a collapsable tree][TOC as a collapsable tree:2]]
 (defadvice! org-html--toc-text-stripped-leaves (orig-fn toc-entries)
   "Remove label"
   :around #'org-html--toc-text
   (replace-regexp-in-string "<input [^>]+><label [^>]+>\\(.+?\\)</label></li>" "\\1</li>"
                             (funcall orig-fn toc-entries)))
-#+END_SRC
-***** Make verbatim different to code
-Since we have =verbatim= and ~code~, let's use =verbatim= for key strokes.
-#+BEGIN_SRC emacs-lisp
+;; TOC as a collapsable tree:2 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Make verbatim different to code][Make verbatim different to code:1]]
 (setq org-html-text-markup-alist
       '((bold . "<b>%s</b>")
         (code . "<code>%s</code>")
@@ -1997,23 +1926,18 @@ Since we have =verbatim= and ~code~, let's use =verbatim= for key strokes.
         (strike-through . "<del>%s</del>")
         (underline . "<span class=\"underline\">%s</span>")
         (verbatim . "<kbd>%s</kbd>")))
-#+END_SRC
-***** Change checkbox type
-We also want to use HTML checkboxes, however we want to get a bit fancier than default
-#+BEGIN_SRC emacs-lisp
+;; Make verbatim different to code:1 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Change checkbox type][Change checkbox type:1]]
 (after! org
 (appendq! org-html-checkbox-types '((html-span .
 	  ((on . "<span class='checkbox'></span>")
 	  (off . "<span class='checkbox'></span>")
 	  (trans . "<span class='checkbox'></span>")))))
 (setq org-html-checkbox-type 'html-span))
-#+END_SRC
-- [ ] I'm yet to do this
-- [-] Work in progress
-- [X] This is done
-***** Header anchors
-I want to add github-style links on hover for headings.
-#+BEGIN_SRC emacs-lisp
+;; Change checkbox type:1 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Header anchors][Header anchors:1]]
 (after! org
   (defun tec/org-export-html-headline-anchor (text backend info)
     (when (org-export-derived-backend-p backend 'html)
@@ -2024,12 +1948,9 @@ I want to add github-style links on hover for headings.
 
   (add-to-list 'org-export-filter-headline-functions
                'tec/org-export-html-headline-anchor))
-#+END_SRC
-***** LaTeX Rendering
-When displaying images, we want to resize by the reciprocal of ~preview-scale~.
-Unfortunately that doesn't happen by default, but not to worry! Advice exists.
+;; Header anchors:1 ends here
 
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*LaTeX Rendering][LaTeX Rendering:1]]
 (after! org
   (defadvice! org-html-latex-fragment-scaled (latex-fragment _contents info)
     "Transcode a LATEX-FRAGMENT object from Org to HTML.
@@ -2095,22 +2016,18 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
                (org-html--format-image source attributes info)
                info caption label)))))
        (t (org-html--wrap-latex-environment latex-frag info caption label))))))
-#+END_SRC
+;; LaTeX Rendering:1 ends here
 
-On the maths side of things, I consider ~dvisvgm~ to be a rather compelling
-option. However this isn't sized very well at the moment.
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*LaTeX Rendering][LaTeX Rendering:2]]
 ;; (setq-default org-html-with-latex `dvisvgm)
-#+END_SRC
-*** Org Habit
-Still need to get used of how to use this.
-For now, I'll just leave that commented out
-#+BEGIN_SRC emacs-lisp
+;; LaTeX Rendering:2 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Org Habit][Org Habit:1]]
 (after! org
   (add-to-list 'org-modules 'org-habit t))
-#+END_SRC
-** LaTeX
-#+BEGIN_SRC emacs-lisp
+;; Org Habit:1 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*LaTeX][LaTeX:1]]
 (eval-after-load "tex"
   '(add-to-list 'TeX-command-list
                 '("LuaLatex + Biber"
@@ -2121,10 +2038,9 @@ For now, I'll just leave that commented out
                 t)
   )
 (setq TeX-command-default "LuaLatex + Biber")
-#+END_SRC
-*** Enhance Tex-fold
+;; LaTeX:1 ends here
 
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Enhance Tex-fold][Enhance Tex-fold:1]]
 (after! latex
   (setcar (assoc "⋆" LaTeX-fold-math-spec-list) "★")) ;; make \star bigger
 
@@ -2214,11 +2130,9 @@ For now, I'll just leave that commented out
 (defun TeX-string-single-token-p (teststring)
   "Return t if TESTSTRING appears to be a single token, nil otherwise"
  (if (string-match-p "^\\\\?\\w+$" teststring) t nil))
+;; Enhance Tex-fold:1 ends here
 
-#+END_SRC
-** Authinfo
-
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Authinfo][Authinfo:1]]
 (setq authinfo-keywords
       '(("^#.*" . font-lock-comment-face)
         ("^\\(machine\\) \\([^ \t\n]+\\)"
@@ -2243,41 +2157,25 @@ For now, I'll just leave that commented out
 (provide 'authinfo-mode)
 (use-package! authinfo-mode
   :mode ("authinfo\\.gpg\\'" . authinfo-mode))
+;; Authinfo:1 ends here
 
-#+END_SRC
-
-** Magit
-cli git is great and all. But have you tried Magit?
-With the forges?
-
-This sets the path for git repos to be searched by magit and get listed in
-~magit-list-repositories~ It also affects ~magit-status~.
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Magit][Magit:1]]
 (setq magit-repository-directories '(("~/Projekte" . 2)))
-#+END_SRC
+;; Magit:1 ends here
 
-This trashes the magit buffers after leaving, i dont need them anymore
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Magit][Magit:2]]
 (setq magit-save-repository-buffers nil)
-#+END_SRC
+;; Magit:2 ends here
 
-** Programming
-*** Python
-
-Setting the default interpreter to the system default
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Python][Python:1]]
 (setq python-shell-interpreter "python")
-#+END_SRC
-For some reason emacs tells me that my python-shell-interpreter doesnt support
-readline
-#+BEGIN_SRC emacs-lisp
-(setq python-shell-completion-native-enable nil)
-#+END_SRC
+;; Python:1 ends here
 
-*** Typescript
-This function sets up tide-mode, as described on the
-[[github:ananthakumaran/tide]]
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Python][Python:2]]
+(setq python-shell-completion-native-enable nil)
+;; Python:2 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Typescript][Typescript:1]]
 (defun setup-tide-mode ()
   (interactive)
   (tide-setup)
@@ -2287,34 +2185,29 @@ This function sets up tide-mode, as described on the
   (eldoc-mode +1)
   (tide-hl-identifier-mode +1)
   (company-mode +1))
-#+END_SRC
-**** React Native
-For developing in tsx, the tide git suggests the following:
-I just changed the last line since we decided to use eslint due to the fact that
-tslint is deprecated. Eslint offers enough typescript stuff to use.
-#+BEGIN_SRC emacs-lisp
+;; Typescript:1 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*React Native][React Native:1]]
 (require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
 (add-hook 'web-mode-hook
           (lambda ()
             (when (string-equal "tsx" (file-name-extension buffer-file-name))
               (setup-tide-mode))))
-#+END_SRC
-Some additional react tsx settings:
-#+BEGIN_SRC emacs-lisp
+;; React Native:1 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*React Native][React Native:2]]
 (add-hook 'web-mode-hook 'company-mode)
 (add-hook 'web-mode-hook 'prettier-js-mode)
-#+END_SRC
-** Snippets
-Add private snippet dir to yasnippet
-#+BEGIN_SRC emacs-lisp
+;; React Native:2 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Snippets][Snippets:1]]
 (after! yasnippet
   (push (expand-file-name "snippets/" doom-private-dir) yas-snippet-dirs))
 (yas-global-mode 1)
-#+END_SRC
-** XKCD
- This makes the extra links look nicer
- #+BEGIN_SRC emacs-lisp
+;; Snippets:1 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*XKCD][XKCD:1]]
  (use-package! xkcd
    :commands (xkcd-get-json xkcd-download xkcd-get
               ;; now for funcs from my extension of this pkg
@@ -2338,10 +2231,9 @@ Add private snippet dir to yasnippet
              "s"       #'+xkcd-find-and-view
              "/"       #'+xkcd-find-and-view
              "y"       #'+xkcd-copy))
- #+END_SRC
- ... and extend default functionality
+;; XKCD:1 ends here
 
- #+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*XKCD][XKCD:2]]
  (after! xkcd
    (require 'emacsql-sqlite)
 
@@ -2589,9 +2481,9 @@ Add private snippet dir to yasnippet
                             (cdr (assoc 'alt        data))
                             (cdr (assoc 'img        data))
                             )))))
- #+END_SRC
-*** Extra links
-#+BEGIN_SRC emacs-lisp
+;; XKCD:2 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Extra links][Extra links:1]]
 (after! org
   (org-link-set-parameters "xkcd"
                            :image-data-fun #'+org-xkcd-image-fn
@@ -2631,22 +2523,27 @@ Add private snippet dir to yasnippet
   (defun +org-xkcd-complete (&optional arg)
     "Complete xkcd using '+xkcd-stored-info'"
     (format "xkcd:%d" (+xkcd-select))))
-#+END_SRC
+;; Extra links:1 ends here
 
-** Zoom
+<<<<<<< HEAD:.doom.d/config.el
+;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Zoom][Zoom:1]]
 
-My configuration for [[github:cyrus-and/zoom]]
-Resize the selected window using the golden ratio
-#+BEGIN_SRC emacs-lisp
+=======
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Zoom][Zoom:1]]
 (custom-set-variables
  '(zoom-size '(0.618 . 0.618)))
-#+END_SRC
-Override keybinding of =balance-window=
-#+BEGIN_SRC emacs-lisp
+>>>>>>> 58d64dc5690a901bd79cefd5eac37e036dc56651:.config/doom/config.el
+;; Zoom:1 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Zoom][Zoom:2]]
 (global-set-key (kbd "C-x +") 'zoom)
-#+END_SRC
-There are some special windows that should be ignored. treemacs, for example
-#+BEGIN_SRC emacs-lisp
+;; Zoom:2 ends here
+
+<<<<<<< HEAD:.doom.d/config.el
+;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Zoom][Zoom:3]]
+
+=======
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Zoom][Zoom:3]]
 (custom-set-variables
  '(zoom-ignored-major-modes
    '(
@@ -2668,11 +2565,10 @@ There are some special windows that should be ignored. treemacs, for example
     )
   )
 )
-#+END_SRC
+>>>>>>> 58d64dc5690a901bd79cefd5eac37e036dc56651:.config/doom/config.el
+;; Zoom:3 ends here
 
-** Keycast
-Make sure keycast is loaded lazy
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Keycast][Keycast:1]]
 (use-package! keycast
   :commands keycast-mode
   :config
@@ -2691,198 +2587,38 @@ Make sure keycast is loaded lazy
     '(keycast-key :inherit custom-modified
                   :height 1.1
                   :weight bold)))
-#+END_SRC
+;; Keycast:1 ends here
 
-** Tramp
-It's recommended to connect to a bash shell via ssh using tramp
-else, connecting might fail because tramp doesnt recognize the prompt
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Tramp][Tramp:1]]
 (eval-after-load 'tramp '(setenv "$SHELL" "/bin/bash"))
-#+END_SRC
+;; Tramp:1 ends here
 
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Tramp][Tramp:2]]
 (setq tramp-default-method "ssh")
-#+END_SRC
+;; Tramp:2 ends here
 
-Add Keybinding to open counsel-tramp
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Tramp][Tramp:3]]
 (define-key global-map (kbd "C-c s") 'counsel-tramp)
-#+END_SRC
-*** Speeding up tramp
-Setting hook that turn off slow extensions when you execute counsel-tramp.
-#+BEGIN_SRC emacs-lisp
+;; Tramp:3 ends here
+
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Speeding up tramp][Speeding up tramp:1]]
 (add-hook 'counsel-tramp-pre-command-hook '(lambda () (global-aggressive-indent-mode 0)
                      (projectile-mode 0)
                      (editorconfig-mode 0)))
-#+END_SRC
+;; Speeding up tramp:1 ends here
 
-Setting hook that turn on extensions when you execute counsel-tramp-quit
-command.
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Speeding up tramp][Speeding up tramp:2]]
 (add-hook 'counsel-tramp-quit-hook '(lambda () (global-aggressive-indent-mode 1)
                   (projectile-mode 1)
                   (editorconfig-mode 1)))
-#+END_SRC
+;; Speeding up tramp:2 ends here
 
-If you don't make a backup files and lockfiles at remote server, it will be
-saved faster.
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Speeding up tramp][Speeding up tramp:3]]
 (setq make-backup-files nil)
 (setq create-lockfiles nil)
-#+END_SRC
+;; Speeding up tramp:3 ends here
 
-* Package Loading
-:PROPERTIES:
-:header-args:emacs-lisp: :tangle "packages.el" :comments link
-:END:
-This file shouldn't be byte compiled.
-#+BEGIN_SRC emacs-lisp :tangle "packages.el" :comments no
-;; -*- no-byte-compile: t; -*-
-#+END_SRC
-** Loading instructions
-:PROPERTIES:
-:header-args:emacs-lisp: :tangle no
-:END:
-
-
-This is where you install packages, by declaring them with the ~package!~
-macro, then running ~doom refresh~ on the command line. You'll need to
-restart Emacs for your changes to take effect! Or at least, run =M-x doom/reload=.
-
-WARNING: Don't disable core packages listed in ~~/.emacs.d/core/packages.el~.
-Doom requires these, and disabling them may have terrible side effects.
-
-*** Packages in MELPA/ELPA/emacsmirror
-To install ~some-package~ from MELPA, ELPA or emacsmirror:
-#+BEGIN_SRC emacs-lisp
-(package! some-package)
-#+END_SRC
-
-*** Packages from git repositories
-To install a package directly from a particular repo, you'll need to specify
-a ~:recipe~. You'll find documentation on what ~:recipe~ accepts [[https://github.com/raxod502/straight.el#the-recipe-format][here]]:
-#+BEGIN_SRC emacs-lisp
-(package! another-package
-  :recipe (:host github :repo "username/repo"))
-#+END_SRC
-
-If the package you are trying to install does not contain a ~PACKAGENAME.el~
-file, or is located in a subdirectory of the repo, you'll need to specify
-~:files~ in the ~:recipe~:
-#+BEGIN_SRC emacs-lisp
-(package! this-package
-  :recipe (:host github :repo "username/repo"
-           :files ("some-file.el" "src/lisp/*.el")))
-#+END_SRC
-
-*** Disabling built-in packages
-If you'd like to disable a package included with Doom, for whatever reason,
-you can do so here with the ~:disable~ property:
-#+BEGIN_SRC emacs-lisp
-(package! builtin-package :disable t)
-#+END_SRC
-You can override the recipe of a built in package without having to specify
-all the properties for ~:recipe~. These will inherit the rest of its recipe
-from Doom or MELPA/ELPA/Emacsmirror:
-#+BEGIN_SRC emacs-lisp
-(package! builtin-package :recipe (:nonrecursive t))
-(package! builtin-package-2 :recipe (:repo "myfork/package"))
-#+END_SRC
-
-Specify a ~:branch~ to install a package from a particular branch or tag.
-This is required for some packages whose default branch isn't 'master' (which
-our package manager can't deal with; see [[https://github.com/raxod502/straight.el/issues/279][raxod502/straight.el#279]])
-#+BEGIN_SRC emacs-lisp
-(package! builtin-package :recipe (:branch "develop"))
-#+END_SRC
-** My Packages
-*** Additional Org Packages
-Improve Agenda
-#+BEGIN_SRC emacs-lisp
-(package! org-super-agenda)
-#+END_SRC
-Declarative org capture templates
-[[github:progfolio/doct]]
-#+BEGIN_SRC emacs-lisp
-(package! doct
-  :recipe (:host github :repo "progfolio/doct"))
-
-#+END_SRC
-Automatically toggle org-mode latex fragment previews as the cursor enters and exits them
-#+BEGIN_SRC emacs-lisp
-(package! org-fragtog)
-#+END_SRC
-Display text or image surrogates for org-mode tags
-#+BEGIN_SRC emacs-lisp
-(package! org-pretty-tags)
-#+END_SRC
-Allows for retrieving recipes from websites into org mode
-#+BEGIN_SRC emacs-lisp
-(package! org-chef)
-#+END_SRC
-View org buffers as a clickable mindmap
-#+BEGIN_SRC emacs-lisp
-(package! org-graph-view :recipe (:host github :repo "alphapapa/org-graph-view"))
-(package! org-roam-server)
-#+END_SRC
-*** Evil
-evil smartparens is a minor mode which makes evil play nice with smarparens
-#+BEGIN_SRC emacs-lisp
-(package! evil-smartparens)
-#+END_SRC
-Add vi keyshortcuts to org mode
-#+BEGIN_SRC emacs-lisp
-(package! evil-org)
-#+END_SRC
-*** Style
-Utilities for messing with prettify-symbols-mode
-#+BEGIN_SRC emacs-lisp
-(package! prettify-utils :recipe
-                         (:host github
-                           :repo "Ilazki/prettify-utils.el"))
-#+END_SRC
-*** Look and Feel and Stuff
-Whenever the window scrolls a light will shine on top of your cursor so you know
-where it is. [[github:Malabarba/beacon]]
-#+BEGIN_SRC emacs-lisp
-(package! beacon)
-#+END_SRC
-Automatically resizing the windows for the size specified
-The window with the main focus is the largest
-#+BEGIN_SRC emacs-lisp
-(package! zoom)
-#+END_SRC
-*** Writing
-Improve flyspell responsiveness using idle timers
-#+BEGIN_SRC emacs-lisp
-(package! flyspell-lazy)
-#+END_SRC
-*** Programming
-**** Ansible
-Jinja2 Mode highlights some templates in Ansible
-#+BEGIN_SRC emacs-lisp
-(package! jinja2-mode)
-#+END_SRC
-**** JS/TS
-Prettier is the maintained tool for formatting your code in JS/TS/JSX/TSX.
-#+BEGIN_sRC emacs-lisp
-(package! prettier-js)
-#+END_SRC
-*** Administration
-
-Counsel-tramp makes it possible to select ssh connections from your ssh config
-#+BEGIN_SRC emacs-lisp
-(package! counsel-tramp)
-#+END_SRC
-
-
-*** Fun
-Everyone loves xkcd
-#+BEGIN_SRC emacs-lisp
-(package! xkcd)
-#+END_SRC
-* Bachelors thesis
-#+BEGIN_SRC emacs-lisp
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Bachelors thesis][Bachelors thesis:1]]
 (defun org-latex-publish-to-pdf (plist filename pub-dir)
   "Publish an Org file to PDF (via LaTeX).
 
@@ -2912,12 +2648,13 @@ Return output file name."
                :exclude "\\.org$"
                :publishing-directory "~/Daten/cloud/highq/AktuellerStand"
                :publishing-function org-latex-publish-to-pdf))
-#+END_SRC
-* Variables I accept
-When using literate config, the config.el gets replaced with every save.
-This means, temporary stuff such as accepted variables and themes get  removed.
-The following is just taken from my config.el after working for a bit
-#+BEGIN_SRC emacs-lisp
+;; Bachelors thesis:1 ends here
+
+<<<<<<< HEAD:.doom.d/config.el
+;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Variables I accept][Variables I accept:1]]
+
+=======
+;; [[file:../../Projekte/dotfiles/.config/doom/config.org::*Variables I accept][Variables I accept:1]]
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -2969,4 +2706,5 @@ The following is just taken from my config.el after working for a bit
     (cons 340 "#e2e4e5")
     (cons 360 "#e2e4e5")))
  '(vc-annotate-very-old-color nil))
-#+END_SRC
+>>>>>>> 58d64dc5690a901bd79cefd5eac37e036dc56651:.config/doom/config.el
+;; Variables I accept:1 ends here
