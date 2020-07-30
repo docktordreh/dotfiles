@@ -227,7 +227,7 @@
 ;; My defaults:27 ends here
 
 ;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:28]]
-(global-whitespace-mode +1)
+(add-hook 'prog-mode-hook #'whitespace-mode)
 ;; My defaults:28 ends here
 
 ;; [[file:../Projekte/dotfiles/.doom.d/config.org::*My defaults][My defaults:29]]
@@ -281,6 +281,7 @@
                                         "aux"
                                         "ptc"
                                         "fdb_latexmk"
+                                        "bbl"
                                         "fls"
                                         "synctex.gz"
                                         "toc"
@@ -345,10 +346,10 @@
 
 ;; [[file:../Projekte/dotfiles/.doom.d/config.org::*UI Improvements][UI Improvements:5]]
 (setq
- doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 18)
- doom-big-font (font-spec :family "FiraCode Nerd Font Mono" :size 18)
- doom-variable-pitch-font (font-spec :family "EB Garamond 08" :size 28)
- doom-serif-font (font-spec :family "Fira Sans" :size 18))
+ doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 22)
+ doom-big-font (font-spec :family "FiraCode Nerd Font Mono" :size 22)
+ doom-variable-pitch-font (font-spec :family "EB Garamond 08" :size 24)
+ doom-serif-font (font-spec :family "Fira Sans" :size 22))
 ;; UI Improvements:5 ends here
 
 ;; [[file:../Projekte/dotfiles/.doom.d/config.org::*UI Improvements][UI Improvements:6]]
@@ -390,6 +391,7 @@
  'org-babel-load-languages
  '(
    (c . t)
+   (ditaa . t)
    (sh . t)
    (plantuml . t)
    (python . t)
@@ -416,7 +418,7 @@
 ;; Org Mode:4 ends here
 
 ;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:2]]
-(setq org-indent-mode nil)
+(setq org-startup-indented nil)
 (setq org-indent-indentation-per-level 1)
 ;; Look and feel:2 ends here
 
@@ -531,17 +533,17 @@
                            )
                           )
                         )
+;; Look and feel:9 ends here
+
+;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:10]]
+(setq org-hide-leading-stars t)
 ;; Look and feel:10 ends here
 
 ;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:11]]
-(setq org-hide-leading-stars t)
+(setq org-src-fontify-natively t)
 ;; Look and feel:11 ends here
 
 ;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:12]]
-(setq org-src-fontify-natively t)
-;; Look and feel:12 ends here
-
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:13]]
 (add-hook! 'org-mode-hook #'+org-pretty-mode
            'org-fragtog-mode
            'writeroom-mode
@@ -670,9 +672,9 @@ appropriate.  In tables, insert a new row or end the table."
  :after evil-org
  :map evil-org-mode-map
  :i [return] #'unpackaged/org-return-dwim)
-;; Look and feel:16 ends here
+;; Look and feel:15 ends here
 
-;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:17]]
+;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Look and feel][Look and feel:16]]
 (global-set-key (kbd "<f5>") 'bh/org-todo)
 (global-set-key (kbd "C-<f5>") 'bh/widen)
 
@@ -703,7 +705,7 @@ appropriate.  In tables, insert a new row or end the table."
   (org-narrow-to-subtree)
   (save-restriction
     (org-agenda-set-restriction-lock)))
-;; Look and feel:17 ends here
+;; Look and feel:16 ends here
 
 ;; [[file:../Projekte/dotfiles/.doom.d/config.org::*Smart parentheses][Smart parentheses:1]]
 (sp-local-pair
