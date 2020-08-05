@@ -2,7 +2,7 @@
 
 FZF_DEFAULT_OPTS=""
 LS_COLORS=""
-. "$XDG_CONFIG_HOME/cache/wal/colors.sh"
+. "${XDG_CONFIG_HOME:-$HOME/.config}/cache/wal/colors.sh"
 TOKEN="0e0e18127e62d2f28481071712d7eb45b99c4dda"
 CITY="freiburg"
 
