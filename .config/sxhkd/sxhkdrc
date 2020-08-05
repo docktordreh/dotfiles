@@ -17,6 +17,9 @@ super + {t,shift + t,s,f}
 super + ctrl + {m,x,y,z}
     bspc node -g {marked,locked,sticky,private}
 
+super + g
+        alacritty -e bash -c vifm
+
 super + r
     ~/.config/bspwm/bspwmrc && pkill -USR1 -x sxhkd
 

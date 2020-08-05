@@ -52,6 +52,14 @@ super + ctrl + {m,x,y,z}
     bspc node -g {marked,locked,sticky,private}
 #+END_SRC
 
+* File manager
+
+Open vifm in alacritty
+#+BEGIN_SRC text
+super + g
+        alacritty -e bash -c vifm
+#+END_SRC
+
 * Reload
 
 #+BEGIN_SRC text
