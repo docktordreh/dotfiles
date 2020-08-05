@@ -17,16 +17,26 @@ computer to do. --- Donald Knuth
 
 
 * Configuration
+
 #+BEGIN_SRC emacs-lisp :comments no
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 #+END_SRC
 ** Personal Information
+
 #+BEGIN_SRC emacs-lisp
 (setq user-full-name "Valentin Lechner"
       user-mail-address "valentin_lechner@dismail.de")
 #+END_SRC
+My current location (Freiburg). This information gets used to
+dynamically set my theme.
+#+BEGIN_SRC emacs-lisp
+(setq
+ calendar-latitude 47.99
+ calendar-longitude 7.84)
+#+END_SRC
 These informations get used to identify you, e.g. ~GPG~ configuration,
 email clients, file templates and snippets
+
 ** My defaults
 Open README files in gfm mode for git stuff
 #+BEGIN_SRC emacs-lisp
@@ -203,6 +213,7 @@ Lazy Flyspell uses less emacs and cpu
 #+BEGIN_SRC emacs-lisp
 (flyspell-lazy-mode 1)
 #+END_SRC
+
 ** Treemacs
 
 There are a lot of files which are unnecessary and blob treemacs. This adds a
@@ -263,6 +274,7 @@ mechanism to ignore them
 
 #+END_SRC
 
+
 ** PATH
 Setup path for cargo and texlive
 #+BEGIN_SRC emacs-lisp
@@ -279,7 +291,14 @@ Also add pyenv path
 (setq exec-path (append exec-path '("/home/valentin/.pyenv/bin")))
 
 #+END_SRC
+
 ** UI Improvements
+
+
+Use my theme for everything!
+#+BEGIN_SRC emacs-lisp
+;;(add-hook 'doom-load-theme-hook 'theme-magic-from-emacs)
+#+END_SRC
 Changes the name of the dashboard to something recognisable
 #+BEGIN_SRC emacs-lisp
 (setq doom-fallback-buffer-name "► Doom"
@@ -316,8 +335,13 @@ add transparency to emacs. only works with a composition manager
  doom-serif-font (font-spec :family "IBM  Plex Mono" :weight 'light))
 #+END_SRC
 Theme settings
+I use [[github:hadronzoo/theme-changer]] for changing my theme.
+- sunset theme: doom-one-light
+- evening theme: doom-moonlight
 #+BEGIN_SRC emacs-lisp
-(setq doom-theme 'doom-moonlight)
+(use-package! theme-changer)
+(change-theme 'doom-solarized-light 'doom-moonlight)
+;;(setq doom-theme 'doom-moonlight)
 #+END_SRC
 Have I stated yet that i like the relative numbering of lines?
 it allows you to easily see how many lines up you have to go, then press that
@@ -331,6 +355,7 @@ Change color of insert state to blue
                      :weight bold
                      :foreground "#339CDB"))
 #+END_SRC
+
 ** General keymaps
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "C-c e") 'org-latex-export-to-pdf)
@@ -338,6 +363,7 @@ Change color of insert state to blue
 #+BEGIN_SRC emacs-lisp
 (map! :map evil-window-map "SPC" #'rotate-layout)
 #+END_SRC
+
 ** Projects
 My Projects are under ~/Projekte. This tells projectile to index them:
 #+BEGIN_SRC emacs-lisp
@@ -352,6 +378,7 @@ And ignore tmp, emacs.d
   "Return t if FILEPATH is within any of 'projectile-ignored-projects'"
   (or (mapcar (lambda (p) (s-starts-with-p p filepath)) projectile-ignored-projects)))
 #+END_SRC
+
 ** Org Mode
 
 Enable support for common used languages
@@ -555,9 +582,6 @@ specific modes as desired.
   '(org-special-keyword
     ((t (:inherit (font-lock-comment-face fixed-pitch))))
     )
-  '(org-table
-    ((t ( :foreground "cyan")))
-              )
   '(org-tag
     ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8)))
     )
@@ -567,46 +591,46 @@ specific modes as desired.
   '(org-level-8 ((t (
                       :inherit default
                       :weight bold
-                      :foreground "#ff6ac1"
+                      :foreground "#c7d2f4"
                       ))))
   '(org-level-7 ((t (
                      :inherit default
                      :weight bold
-                     :foreground "#5af78e"))))
+                     :foreground "#81a9fe"))))
   '(org-level-6 ((t (
                      :inherit default
                      :weight bold
-                     :foreground "#57c7ff"
+                     :foreground "#c2e78c"
                      ))))
   '(org-level-5 ((t (
                      :inherit default
                      :weight bold
-                     :foreground "#ff5c57"
+                     :foreground "#bf98fe"
                      ))))
   '(org-level-4 ((t (
                      :inherit default
                      :weight bold
-                     :foreground "#9aeedf"
+                     :foreground "#fec676"
                      :height 1.1))))
    '(org-level-3 ((t (
                       :inherit default
                       :weight bold
-                      :foreground "#f3f99d"
+                      :foreground "#7987ce"
                       :height 1.25))))
    '(org-level-2 ((t (
                       :inherit default
                       :weight bold
-                      :foreground "#ff6ac1"
+                      :foreground "#fe747e"
                       :height 1.5))))
    '(org-level-1 ((t (
                       :inherit default
                       :weight bold
-                      :foreground "#5af78e"
+                      :foreground "#c2e78c"
                       :height 1.75))))
    '(org-document-title ((t (
                              :inherit default
                              :weight bold
-                             :foreground "#57c7ff"
+                             :foreground "#fe747e"
                              :height 2.0
                              :underline nil)))))
 #+END_SRC
@@ -663,10 +687,10 @@ Show pretty stuff in org mode
 I don't like long columns. They are hard to parse - and even harder to navigate
 using vim. I tend to do stuff like linebreaks after every
 sentence and don't export linebreaks (org), but this is more solid as
-it automatically adds a smart linebreak after 80 characters (smart meaning,
+it automatically adds a smart linebreak after 70 characters (smart meaning,
 don't break my words or my code)
 #+BEGIN_SRC emacs-lisp
-(add-hook 'org-mode-hook '(lambda () (setq fill-column 80)))
+(add-hook 'org-mode-hook '(lambda () (setq fill-column 70)))
 (add-hook 'org-mode-hook 'auto-fill-mode)
 #+END_SRC
 #+BEGIN_SRC emacs-lisp
@@ -2123,6 +2147,7 @@ For now, I'll just leave that commented out
 (after! org
   (add-to-list 'org-modules 'org-habit t))
 #+END_SRC
+
 ** LaTeX
 #+BEGIN_SRC emacs-lisp
 (eval-after-load "tex"
@@ -2230,6 +2255,7 @@ For now, I'll just leave that commented out
  (if (string-match-p "^\\\\?\\w+$" teststring) t nil))
 
 #+END_SRC
+
 ** Authinfo
 
 #+BEGIN_SRC emacs-lisp
@@ -2260,6 +2286,7 @@ For now, I'll just leave that commented out
 
 #+END_SRC
 
+
 ** Magit
 cli git is great and all. But have you tried Magit?
 With the forges?
@@ -2274,6 +2301,7 @@ This trashes the magit buffers after leaving, i dont need them anymore
 #+BEGIN_SRC emacs-lisp
 (setq magit-save-repository-buffers nil)
 #+END_SRC
+
 
 ** Programming
 *** Python
@@ -2319,6 +2347,7 @@ Some additional react tsx settings:
 (add-hook 'web-mode-hook 'company-mode)
 (add-hook 'web-mode-hook 'prettier-js-mode)
 #+END_SRC
+
 ** Snippets
 Add private snippet dir to yasnippet
 #+BEGIN_SRC emacs-lisp
@@ -2326,6 +2355,7 @@ Add private snippet dir to yasnippet
   (push (expand-file-name "snippets/" doom-private-dir) yas-snippet-dirs))
 (yas-global-mode 1)
 #+END_SRC
+
 ** XKCD
  This makes the extra links look nicer
  #+BEGIN_SRC emacs-lisp
@@ -2647,6 +2677,7 @@ Add private snippet dir to yasnippet
     (format "xkcd:%d" (+xkcd-select))))
 #+END_SRC
 
+
 ** Zoom
 
 My configuration for [[github:cyrus-and/zoom]]
@@ -2684,28 +2715,6 @@ There are some special windows that should be ignored. treemacs, for example
 )
 #+END_SRC
 
-** Keycast
-Make sure keycast is loaded lazy
-#+BEGIN_SRC emacs-lisp
-(use-package! keycast
-  :commands keycast-mode
-  :config
-  (define-minor-mode keycast-mode
-    "Show current command and its key binding in the mode line."
-    :global t
-    (if keycast-mode
-        (progn
-          (add-hook 'pre-command-hook 'keycast-mode-line-update t)
-          (add-to-list 'global-mode-string '("" mode-line-keycast " ")))
-      (remove-hook 'pre-command-hook 'keycast-mode-line-update)
-      (setq global-mode-string (remove '("" mode-line-keycast " ") global-mode-string))))
-  (custom-set-faces!
-    '(keycast-command :inherit doom-modeline-debug
-                      :height 0.9)
-    '(keycast-key :inherit custom-modified
-                  :height 1.1
-                  :weight bold)))
-#+END_SRC
 
 ** Tramp
 It's recommended to connect to a bash shell via ssh using tramp
@@ -2745,10 +2754,12 @@ saved faster.
 (setq create-lockfiles nil)
 #+END_SRC
 
+
 * Package Loading
 :PROPERTIES:
 :header-args:emacs-lisp: :tangle "packages.el" :comments link
 :END:
+
 This file shouldn't be byte compiled.
 #+BEGIN_SRC emacs-lisp :tangle "packages.el" :comments no
 ;; -*- no-byte-compile: t; -*-
@@ -2809,12 +2820,13 @@ our package manager can't deal with; see [[https://github.com/raxod502/straight.
 #+BEGIN_SRC emacs-lisp
 (package! builtin-package :recipe (:branch "develop"))
 #+END_SRC
+
 ** My Packages
 *** Additional Org Packages
 
 Improve displaying org tables
 #+BEGIN_SRC emacs-lisp
-package! org-pretty-table-mode
+(package! org-pretty-table-mode
   :recipe (:host github :repo "Fuco1/org-pretty-table") :pin "88380f865a...")
 #+END_SRC
 
@@ -2856,6 +2868,15 @@ Add vi keyshortcuts to org mode
 (package! evil-org)
 #+END_SRC
 *** Style
+
+Theme changer for setting theme dependent on daytime
+#+BEGIN_SRC emacs-lisp
+(package! theme-changer)
+#+END_SRC
+Using emacs theme for everything!
+#+BEGIN_SRC emacs-lisp
+;;(package! theme-magic)
+#+END_SRC
 Utilities for messing with prettify-symbols-mode
 #+BEGIN_SRC emacs-lisp
 (package! prettify-utils :recipe
@@ -2863,6 +2884,7 @@ Utilities for messing with prettify-symbols-mode
                            :repo "Ilazki/prettify-utils.el"))
 #+END_SRC
 *** Look and Feel and Stuff
+
 Whenever the window scrolls a light will shine on top of your cursor so you know
 where it is. [[github:Malabarba/beacon]]
 #+BEGIN_SRC emacs-lisp
@@ -2902,38 +2924,7 @@ Everyone loves xkcd
 #+BEGIN_SRC emacs-lisp
 (package! xkcd)
 #+END_SRC
-* Bachelors thesis
-#+BEGIN_SRC emacs-lisp
-(defun org-latex-publish-to-pdf (plist filename pub-dir)
-  "Publish an Org file to PDF (via LaTeX).
 
-FILENAME is the filename of the Org file to be published.  PLIST
-is the property list for the given project.  PUB-DIR is the
-publishing directory.
-
-Return output file name."
-  ;; Unlike to 'org-latex-publish-to-latex', PDF file is generated
-  ;; in working directory and then moved to publishing directory.
-  (org-publish-attachment
-   plist
-   ;; Default directory could be anywhere when this function is
-   ;; called.  We ensure it is set to source file directory during
-   ;; compilation so as to not break links to external documents.
-   (let ((default-directory (file-name-directory filename)))
-     (org-latex-compile
-      (org-publish-org-to
-       'latex filename ".tex" plist (file-name-directory filename))))
-   pub-dir))
-(setq org-publish-timestamp-directory "/tmp/org-timestamps")
-(add-to-list 'org-publish-project-alist
-             '("publish-bachelorarbeit"
-               :base-directory "~/Daten/cloud/highq/thesis-bachelor/"
-               :base-extension "org"
-               :include ("thesis/thesis.org")
-               :exclude "\\.org$"
-               :publishing-directory "~/Daten/cloud/highq/AktuellerStand"
-               :publishing-function org-latex-publish-to-pdf))
-#+END_SRC
 * Variables I accept
 When using literate config, the config.el gets replaced with every save.
 This means, temporary stuff such as accepted variables and themes get  removed.
