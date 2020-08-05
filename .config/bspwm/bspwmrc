@@ -7,7 +7,7 @@ sxhkd &
 
 ~/.config/polybar/launch.sh
 
-feh --bg-scale --randomize ~/Pictures/wallpaper
+feh --bg-fill --randomize ~/Pictures/wallpaper
 
 nextcloud &
 
