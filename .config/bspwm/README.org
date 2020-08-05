@@ -21,7 +21,7 @@ Launch Polybar
 #+END_SRC
 Set wallpaper to sth random
 #+BEGIN_SRC bash
-feh --bg-scale --randomize ~/Pictures/wallpaper
+feh --bg-fill --randomize ~/Pictures/wallpaper
 #+END_SRC
 Start nextcloud
 #+BEGIN_SRC bash
