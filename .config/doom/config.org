@@ -2852,6 +2852,10 @@ Allows for retrieving recipes from websites into org mode
 #+BEGIN_SRC emacs-lisp
 (package! org-chef)
 #+END_SRC
+For Citing
+#+BEGIN_SRC emacs-lisp
+(package! org-ref)
+#+END_SRC
 View org buffers as a clickable mindmap
 #+BEGIN_SRC emacs-lisp
 (package! org-graph-view :recipe (:host github :repo "alphapapa/org-graph-view"))
@@ -2882,6 +2886,12 @@ Utilities for messing with prettify-symbols-mode
                          (:host github
                            :repo "Ilazki/prettify-utils.el"))
 #+END_SRC
+org superstar
+#+BEGIN_SRC emacs-lisp
+(package! org-superstar)
+#+END_SRC
+
+
 *** Look and Feel and Stuff
 
 Whenever the window scrolls a light will shine on top of your cursor so you know
