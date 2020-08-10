@@ -603,10 +603,8 @@ antibody bundle zdharma/fast-syntax-highlighting
 *** Basic aliases
 
 - =doas=: For desktop usage I tend to use doas as privilege escalation tool. It's easier set up
-- =exa= is a sexier ls
 #+BEGIN_SRC sh :tangle .config/zsh/.zsh_aliases
 alias sudo='doas'
-alias ls='exa -alh --color=always'
 #+END_SRC
 
 *** Directory
