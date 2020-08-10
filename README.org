@@ -27,7 +27,7 @@ I do not include this here, because it would be stored unencrypted.
 This is my global git configuration
 
 This is basic configuration
-#+BEGIN_SRC git :tangle .config/git/config
+#+BEGIN_SRC conf :tangle .config/git/config
 [user]
 	email = valentin_lechner@dismail.de
 	name = valentin_lechner
@@ -39,19 +39,23 @@ git config --global user.email <your email>
 #+END_SRC
 
 This configures git to use my private key to sign every commit
-#+BEGIN_SRC git :tangle .config/git/config
+#+BEGIN_SRC conf :tangle .config/git/config
 	signingkey = 9C489382
 [commit]
 	gpgsign = true
 #+END_SRC
 Some other stuff I configured, probably not too important
-#+BEGIN_SRC git :tangle .config/git/config
+#+BEGIN_SRC conf :tangle .config/git/config
 [gitlab]
 	user = valentin_lechner
 [pull]
 	rebase = false
 #+END_SRC
 * Tmux
+:PROPERTIES:
+:header-args: :shebang "#!/bin/sh"
+:END:
+
 I use the terminal multiplexer [[https://github.com/tmux/tmux][tmux]], which basically is a window manager for
 your terminal and allows you to outsource some unnecessary work that your terminal does to
 tmux. It allows to use multiple terminals in the same window in splits.
@@ -145,7 +149,9 @@ set -g status-right '#[fg=yellow]#(cut -d " " -f 1-3 /proc/loadavg)#[default] #[
 #+END_SRC
 
 * Zsh
-
+:PROPERTIES:
+:header-args: :shebang "#!/bin/zsh"
+:END:
 ** .zshenv
 
 Relocate some config files to be located in =~/.config= instead of =~=
@@ -174,33 +180,61 @@ export VISUAL='emacs -nw'
 
 *** Additional Relocations
 
-GTK2
+- GTK2
 #+BEGIN_SRC sh :tangle .zshenv
 export GTK2_RC_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-2.0/gtkrc-2.0"
 #+END_SRC
-WGET
+- wget
 #+BEGIN_SRC sh :tangle .zshenv
 export WGETRC="${XDG_CONFIG_HOME:-$HOME/.config}/wget/wgetrc"
 #+END_SRC
-TMUX
+This also requires that the 'hsts-file' has a set location
+#+BEGIN_SRC sh :tangle .config/wget/wgetrc
+hsts-file = "${XDG_CACHE_HOME:-$HOME/.config/cache}/wget-hsts"
+#+END_SRC
+- tmux
 #+BEGIN_SRC sh :tangle .zshenv
 export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
 #+END_SRC
-Android SDK
+- Android SDK
 #+BEGIN_SRC sh :tangle .zshenv
 export ANDROID_SDK_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/android"
 #+END_SRC
-Rust
+- Rust
 #+BEGIN_SRC sh :tangle .zshenv
 export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.config/local/share}/cargo"
 #+END_SRC
-Go
+- Go
 #+BEGIN_SRC sh :tangle .zshenv
 export GOPATH="${XDG_DATA_HOME:-$HOME/.config/local/share}/go"
 #+END_SRC
-Ansible
+- Ansible
 #+BEGIN_SRC sh :tangle .zshenv
 export ANSIBLE_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/ansible/ansible.cfg"
+#+END_SRC
+- GnuPG
+this requires to set the alias set in ref:zsh_aliases:gnupg
+#+BEGIN_SRC sh :tangle .zshenv
+export GNUPGHOME="${XDG_DATA_HOME:-$HOME/.config/local/share}/gnupg"
+#+END_SRC
+- pass
+#+BEGIN_SRC sh :tangle .zshenv
+export PASSWORD_STORE_DIR="${XDG_DATA_HOME:-$HOME/.config/local/share}/pass"
+#+END_SRC
+
+- readline
+#+BEGIN_SRC sh :tangle .zshenv
+export INPUTRC="${XDG_CONFIG_HOME:-$HOME/.config}/readline/inputrc"
+#+END_SRC
+
+- pylint
+#+BEGIN_SRC sh :tangle .zshenv
+export PYLINTHOME="${XDG_CACHE_HOME:-$HOME/.config/cache}/pylint"
+#+END_SRC
+
+- less: this disables less history
+#+BEGIN_SRC sh :tangle .zshenv
+export LESSHISTFILE=-
 #+END_SRC
 
 *** lf icons
@@ -550,7 +584,7 @@ git_info() {
 
 Open tmux and start the ssh agent
 #+BEGIN_SRC sh :tangle .config/zsh/.zshrc
-[ -z "$TMUX" ] && eval $(ssh-agent -s) && ssh-add ~/.ssh.id_ed25519
+[ -z "$TMUX" ] && eval $(ssh-agent -s) && ssh-add ~/.ssh/id_ed25519
 
 case $- in *i* )
     [ -z "$TMUX" ] && command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && exec tmux new-session -A -s main ;;
@@ -599,7 +633,6 @@ antibody bundle zdharma/fast-syntax-highlighting
 
 
 ** .zsh_aliases
-
 *** Basic aliases
 
 - =doas=: For desktop usage I tend to use doas as privilege escalation tool. It's easier set up
@@ -643,6 +676,18 @@ alias gr='git remote'
 alias grs='git remote show'
 alias glo='git log --pretty="oneline"'
 alias glol='git log --graph --oneline --decorate'
+#+END_SRC
+
+*** Program aliases
+
+- gnupg: Alias for gnupg to use the custom homedir
+#+NAME: zsh_aliases:gnupg
+#+BEGIN_SRC sh :tangle .config/zsh/.zsh_aliases
+alias gpg='gpg --homedir "${XDG_DATA_HOME:-$HOME/.config/local/share}/gnupg"'
+#+END_SRC
+- mbsync
+#+BEGIN_SRC sh :tangle .config/zsh/.zsh_aliases
+alias mbsync='mbsync -c "${XDG_CONFIG_HOME:-$HOME/.config}/isync/mbsyncrc"'
 #+END_SRC
 
 ** .zprofile
@@ -698,158 +743,6 @@ And export path
 export PATH
 #+END_SRC
 
-
-
-
-
-* Bash
-
-I don't really use bash anymore, I favor [[https://www.zsh.org][Zsh]], that's why this part is probably
-not up-to-date and not as well documented.
-
-** .bashrc
-
-#+BEGIN_SRC bash :tangle .bashrc :shebang "#!/usr/bin/env bash"
-shopt -s extglob
-# turns off cowbell
-xset -b
-
-cd "$HOME" || return
-eval "$(thefuck --alias)"
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$HOME/.nvm/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$HOME/.nvm/bash_completion"
-
-export EDITOR='vim'
-
-# schneide float ab -> int
-fk_cutfloat()
-{
-    float=$1
-    int=${float%.*}
-    echo "$int"
-}
-
-
-# openssl password generator
-fk_passwdgen() {
-    openssl rand -base64 "$1"
-}
-
-# cd .. n times
-.. ()
-{
-        local arg=${1:-1};
-        local dir=""
-        while [ "$arg" -gt 0 ]; do
-            dir="../$dir"
-            arg=$(("$arg" - 1));
-        done
-        cd $dir >&/dev/null || echo "Directory does not exist" && exit 2
-}
-
-#start command in bg, redir output to /dev/null
-fk_s()
-{
-    ("$@" & disown ) >/dev/null 2>&1 </dev/null
-      which "$1" >/dev/null 2>&1
-}
-
-fk_zathura()
-{
-    fk_s zathura "$1"
-}
-
-fk_extract()
-{
-      if [ -f "$1" ] ; then
-              case "$1" in
-                  *.tar.bz2)   tar xvjf "$1"    ;;
-                  *.tar.gz)    tar xvzf "$1"    ;;
-                  *.bz2)       bunzip2 "$1"     ;;
-                  *.rar)       rar x "$1"       ;;
-                  *.gz)        gunzip "$1"      ;;
-                  *.tar)       tar xvf "$1"     ;;
-                  *.tbz2)      tar xvjf "$1"    ;;
-                  *.tgz)       tar xvzf "$1"    ;;
-                  *.zip)       unzip "$1"       ;;
-                  *.Z)         uncompress "$1"  ;;
-                  *.7z)        7z x "$1"        ;;
-                  *)           echo "don't know how to extract $1..." ;;
-              esac
-      else
-              echo "$1"" is not a valid file!"
-      fi
-}
-
-# wetter
-weather()
-{
-    curl "https://wttr.in/$1"
-}
-
-fk_bandit()
-{
-    cat ~/bandit/bandit"$1"
-    ssh bandit"$1"@bandit.labs.overthewire.org -p 2220
-}
-
-fk_addbanditkey()
-{
-    echo "$1" > ~/bandit/bandit"$2"
-}
-
-fk_alarm(){
-    (speaker-test --frequency "$1" --test sine)& pid=$!;sleep 0.2;kill -9 $pid
-}
-
-#************************************************
-#             Projektordner öffnen
-#************************************************
-
-# aktuelles projekt
-alias cda='cd ~/.dev && echo $(tput setaf 1) No project specified'
-
-# aktuelles zweitprojekt
-alias cdzp='cd ~/.dev && echo $(tput setaf 1) No project specified'
-
-# Projekteordner
-alias cdp='cd ~/.dev/'
-#+END_SRC
-** .bash_profile
-
-#+BEGIN_SRC bash :tangle .bash_profile :shebang "#!/usr/bin/env bash"
-[[ -f ~/.bashrc ]] && . ~/.bashrc
-
-export PYTHONIOENCODING=UTF-8
-
-#eval `keychain --eval $(cat $HOME/.ssh/sshkeys)` 
-if [ -n "$DESKTOP_SESSION" ];then
-    eval "$(gnome-keyring-daemon --start)"
-    export SSH_AUTH_SOCK
-fi
-#+END_SRC
-
-** .bash_aliases
-
-#+BEGIN_SRC bash :tangle .bash_aliases :shebang "#!/usr/bin/env bash"
-# v = vim
-alias v='vim'
-# konfigurationsdateien
-alias brc='vim ~/.bashrc'
-alias ba='vim ~/.bash_aliases'
-
-# wget autoresume
-alias wget='wget -c'
-
-
-# verbesserte ls's
-alias ls='ls -h --color'
-alias ll='ls -l'
-alias la='ll -A'
-#+END_SRC
-
 * X Stuff
 
 The [[https://x.org/wiki][X Window System]] is a system used on many linux desktops. It might soon
@@ -869,7 +762,7 @@ available on [[https://melpa.org/][MELPA]] and [[https://github.com/dylanaraps/p
 =doom-moonlight=.
 
 This is the base colorset
-#+BEGIN_SRC text :tangle .Xresources :exports code
+#+BEGIN_SRC conf :tangle .Xresources :exports code
 *.color0: #202236
 *color0:  #202236
 *.color1: #FE747E
@@ -904,7 +797,7 @@ This is the base colorset
 *color15:  #C7D2F4
 #+END_SRC
 This black color will not be affected by bold highlighting.
-#+BEGIN_SRC text :tangle .Xresources :exports code
+#+BEGIN_SRC conf :tangle .Xresources :exports code
 *.color66: #202236
 *color66:  #202236
 #+END_SRC

@@ -14,3 +14,4 @@ cronjobs/.croninfo/batteryinfo
 .zcompdump
 batteryinfo
 .config/zsh/.zcompdump
+.config/cache/*

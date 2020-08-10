@@ -1,3 +1,4 @@
+#!/bin/zsh
 eval $(thefuck --alias)
 
 autoload -Uz compinit
@@ -169,7 +170,7 @@ git_info() {
 
 }
 
-[ -z "$TMUX" ] && eval $(ssh-agent -s) && ssh-add ~/.ssh.id_ed25519
+[ -z "$TMUX" ] && eval $(ssh-agent -s) && ssh-add ~/.ssh/id_ed25519
 
 case $- in *i* )
     [ -z "$TMUX" ] && command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && exec tmux new-session -A -s main ;;
