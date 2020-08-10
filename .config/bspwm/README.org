@@ -35,6 +35,12 @@ Start notification daemon
 #+BEGIN_SRC bash
 dunst &
 #+END_SRC
+Start Network Manager
+#+BEGIN_SRC bash
+nm-applet &
+#+END_SRC
+
+
 * Look and Feel
 
 My Polybar needs top space
