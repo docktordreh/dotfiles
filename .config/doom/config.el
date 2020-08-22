@@ -1,5 +1,4 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
-
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Personal%20Information][Personal Information:1]]
 (setq user-full-name "Valentin Lechner"
       user-mail-address "valentin_lechner@dismail.de")
@@ -146,10 +145,6 @@
 (display-battery-mode +1)
 ;; My defaults:30 ends here
 
-;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*My%20defaults][My defaults:31]]
-(setq fancy-splash-image (concat doom-private-dir "splash.png"))
-;; My defaults:31 ends here
-
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*My%20defaults][My defaults:32]]
 (setq-default large-file-warning-threshold 100000000)
 ;; My defaults:32 ends here
@@ -259,14 +254,12 @@
 (setq
  doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 18)
  doom-big-font (font-spec :family "FiraCode Nerd Font Mono" :size 24)
- doom-variable-pitch-font (font-spec :family "EB Garamond 08" :size 22)
+ doom-variable-pitch-font (font-spec :family "IBM Plex Mono" :size 22)
  doom-serif-font (font-spec :family "IBM  Plex Mono" :weight 'light))
 ;; UI Improvements:6 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*UI%20Improvements][UI Improvements:7]]
-(use-package! theme-changer)
-(change-theme 'doom-solarized-light 'doom-moonlight)
-;;(setq doom-theme 'doom-moonlight)
+(setq doom-theme 'doom-moonlight)
 ;; UI Improvements:7 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*UI%20Improvements][UI Improvements:8]]
@@ -320,7 +313,7 @@
 ;; Org Mode:2 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Org%20Mode][Org Mode:3]]
-(setq org-use-property-inheritance t)
+(after! org (setq org-use-property-inheritance t))
 ;; Org Mode:3 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Org%20Mode][Org Mode:4]]
@@ -347,20 +340,18 @@
 (setq-hook! org-mode
   org-log-done t
   org-image-actual-width '(700)
-  org-clock-into-drawer t
-  org-clock-persist t
-  org-columns-default-format "%60ITEM(Task) %20TODO %10Effort(Effort){:} %10CLOCKSUM"
-  org-global-properties (quote (("Effort_ALL" . "0:15 0:30 0:45 1:00 2:00 3:00 4:00 5:00 6:00 0:00")
+  org-columns-default-format
+  "%60ITEM(Task) %20TODO %10Effort(Effort){:} %10CLOCKSUM"
+  org-global-properties
+  (quote (("Effort_ALL" . "0:15 0:30 0:45 1:00 2:00 3:00 4:00 5:00 6:00 0:00")
                                 ("STYLE_ALL" . "habit")))
   org-confirm-babel-evaluate nil
-  org-duration-format '((special . h:mm))
   org-hide-emphasis-markers t
   org-fontify-done-headline t
   org-fontify-whole-heading-line t
   org-fontify-quote-and-verse-blocks t
   )
 
-(setq org-journal-enable-agenda-integration t)
 ;; Look and feel:5 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Look%20and%20feel][Look and feel:6]]
@@ -393,6 +384,7 @@
 ;; Look and feel:8 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Look%20and%20feel][Look and feel:9]]
+(after! org
 (custom-set-faces
   '(org-block
     ((t (:inherit fixed-pitch)))
@@ -471,10 +463,11 @@
                              :weight bold
                              :foreground "#fe747e"
                              :height 2.0
-                             :underline nil)))))
+                             :underline nil))))))
 ;; Look and feel:9 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Look%20and%20feel][Look and feel:10]]
+(after! org
 (font-lock-add-keywords 'org-mode
                         '(("^ *\\([-]\\) "
                            (0 (prog1 ()
@@ -498,15 +491,16 @@
                               )
                            )
                           )
-                        )
+                        ))
 ;; Look and feel:10 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Look%20and%20feel][Look and feel:11]]
-(setq org-hide-leading-stars t)
+(after! org
+(setq org-hide-leading-stars t))
 ;; Look and feel:11 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Look%20and%20feel][Look and feel:12]]
-(setq org-src-fontify-natively t)
+(after! org (setq org-src-fontify-natively t))
 ;; Look and feel:12 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Look%20and%20feel][Look and feel:13]]
@@ -514,11 +508,11 @@
            'org-fragtog-mode
            'writeroom-mode
            'mixed-pitch-mode)
-(setq global-org-pretty-table-mode t)
-(setq
+(after! org
+(setq global-org-pretty-table-mode t
  org-fontify-whole-heading-line t
  org-fontify-done-headline t
- org-fontify-quote-and-verse-blocks t)
+ org-fontify-quote-and-verse-blocks t))
 ;; Look and feel:13 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Look%20and%20feel][Look and feel:14]]
@@ -527,12 +521,13 @@
 ;; Look and feel:14 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Look%20and%20feel][Look and feel:15]]
-(setq org-enforce-todo-dependencies t)
-(setq org-insert-heading-respect-content nil)
-(setq org-reverse-note-order nil)
-(setq org-deadline-warning-days 7)
-(setq org-blank-before-new-entry (quote ((heading . t)
-                                         (plain-list-item . nil))))
+(after! org
+(setq org-enforce-todo-dependencies t
+ org-insert-heading-respect-content nil
+ org-reverse-note-order nil
+ org-deadline-warning-days 7
+ org-blank-before-new-entry (quote ((heading . t)
+                                         (plain-list-item . nil)))))
 ;; Look and feel:15 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Look%20and%20feel][Look and feel:16]]
@@ -560,12 +555,10 @@ appropriate.  In tables, insert a new row or end the table."
       (cond
        ;; Act depending on context around point.
 
-       ;; NOTE: I prefer RET to not follow links, but by uncommenting this block, links will be
-       ;; followed.
 
-       ;; ((eq 'link (car (org-element-context)))
-       ;;  ;; Link: Open it.
-       ;;  (org-open-at-point-global))
+       ((eq 'link (car (org-element-context)))
+        ;; Link: Open it.
+        (org-open-at-point-global))
 
        ((org-at-heading-p)
         ;; Heading: Move to position after entry content.
@@ -681,30 +674,56 @@ appropriate.  In tables, insert a new row or end the table."
 ;; Smart parentheses:1 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Org-Tags%20as%20icons][Org-Tags as icons:1]]
-(customize-set-value
-    'org-agenda-category-icon-alist
-    '(
-      ("work" "~/.config/icons/money-bag.svg" nil nil :ascent center)
-      ("chore" "~/.config/icons/loop.svg" nil nil :ascent center)
-      ("events" "~/.config/icons/calendar.svg" nil nil :ascent center)
-      ("todo" "~/.config/icons/checklist.svg" nil nil :ascent center)
-      ("walk" "~/.config/icons/walk.svg" nil nil :ascent center)
-      ("solution" "~/.config/icons/solution.svg" nil nil :ascent center)
-      ("highQ" "~/.config/icons/highQ.svg" nil nil :ascent center)
-      ))
+(after! org-agenda
+  (setq org-agenda-category-icon-alist
+    `(
+      ("highQ"
+       ,(list (all-the-icons-faicon "train"))
+       nil
+       nil
+       :ascent center)
+      ("events"
+       ,(list (all-the-icons-faicon "calendar"))
+       nil
+       nil
+       :ascent center)
+      ("todo"
+       ,(list (all-the-icons-faicon "check-circle"))
+       nil
+       nil
+       :ascent center)
+      ("football"
+       ,(list (all-the-icons-faicon "futbol-o"))
+       nil
+       nil
+       :ascent center)
+      ("home"
+       ,(list (all-the-icons-faicon "home"))
+       nil
+       nil
+       :ascent center)
+      ("garten"
+       ,(list (all-the-icons-faicon "tree"))
+       nil
+       nil
+       :ascent center)
+      )))
 ;; Org-Tags as icons:1 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Org-Tags%20as%20icons][Org-Tags as icons:2]]
-(setq org-agenda-breadcrumbs-seperator " ❱ ")
+(after! org-agenda
+(setq org-agenda-breadcrumbs-seperator " ❱ "))
 ;; Org-Tags as icons:2 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Org-Tags%20as%20icons][Org-Tags as icons:3]]
-(setq org-hide-emphasis-markers t)
+(after! org
+(setq org-hide-emphasis-markers t))
 ;; Org-Tags as icons:3 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Org%20Chef][Org Chef:1]]
 (use-package! org-chef
-  :commands (org-chef-insert-recipe org-chef-get-recipe-from-url))
+  :commands (org-chef-insert-recipe org-chef-get-recipe-from-url)
+  :after org)
 ;; Org Chef:1 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Deft][Deft:1]]
@@ -713,6 +732,7 @@ appropriate.  In tables, insert a new row or end the table."
 ;; Deft:1 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Roam][Roam:1]]
+(after! org
 (use-package org-roam-server
   :after org-roam
   :config
@@ -727,20 +747,22 @@ appropriate.  In tables, insert a new row or end the table."
     "Ensure the server is active, then open the roam graph."
     (interactive)
     (org-roam-server-mode 1)
-    (browse-url-xdg-open (format "http://localhost:%d" org-roam-server-port))))
+    (browse-url-xdg-open (format "http://localhost:%d" org-roam-server-port)))))
 ;; Roam:1 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Capture][Capture:1]]
-(require 'org-roam-protocol)
+(after! org
+  (require 'org-roam-protocol))
 ;; Capture:1 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Capture][Capture:2]]
-(setq org-capture-templates `(
+(after! org
+  (setq org-capture-templates `(
     ("p" "Protocol" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
         "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
     ("L" "Protocol Link" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
         "* %? [[%:link][%:description]] \nCaptured On: %U")
-))
+)))
 ;; Capture:2 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Refile][Refile:1]]
@@ -752,27 +774,29 @@ appropriate.  In tables, insert a new row or end the table."
 (use-package! org-super-agenda
   :commands (org-super-agenda-mode))
 (after! org-agenda
-  (org-super-agenda-mode))
+  (org-super-agenda-mode)
 
-(setq org-agenda-skip-scheduled-if-done t
-      org-agenda-skip-deadline-if-done t
-      org-agenda-include-deadlines t
-      org-agenda-block-separator ""
-      org-agenda-tags-column 100 ;; from testing this seems to be a good value
-      org-agenda-compact-blocks t)
+  (setq org-agenda-skip-scheduled-if-done t
+        org-agenda-skip-deadline-if-done t
+        org-agenda-include-deadlines t
+        org-agenda-block-separator ""
+        org-agenda-tags-column 100 ;; from testing this seems to be a good value
+        org-agenda-compact-blocks t)
 ;; Agenda:1 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:2]]
+(after! org
 (setq org-agenda-files (list
                         org-directory
-                        "~/Daten/cloud/highq/thesis-bachelor/org"))
+                        "~/Daten/cloud/highq/thesis-bachelor/org")))
 ;; Agenda:2 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:3]]
-(setq org-deadline-warning-days 7)
+(after! org (setq org-deadline-warning-days 7))
 ;; Agenda:3 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:4]]
+(after! org
 (setq org-agenda-block-separator (string-to-char " "))
 (setq org-agenda-custom-commands
       '(("o" "My Agenda"
@@ -796,17 +820,18 @@ appropriate.  In tables, insert a new row or end the table."
                                                     (0900 1200 1500 1800 2100)
                                                     "      " "┈┈┈┈┈┈┈┈┈┈┈┈┈")))
                        ))
-          ))))
+          )))))
 ;; Agenda:4 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:5]]
-(defun org-summary-todo (n-done n-not-done)
+(after! org
+  (defun org-summary-todo (n-done n-not-done)
   "Switch entry to DONE when all subentries are done, to TODO otherwise."
   (let (org-log-done org-log-states)   ; turn off logging
     (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
 
 (add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
-(setq org-hierarchical-todo-statistics t)
+(setq org-hierarchical-todo-statistics t))
 ;; Agenda:5 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:6]]
@@ -820,14 +845,15 @@ appropriate.  In tables, insert a new row or end the table."
 ;; Agenda:6 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:7]]
-(setq org-fontify-done-headline t)
+(after! org
+  (setq org-fontify-done-headline t)
 (custom-set-faces
  '(org-done ((t (:foreground "PaleGreen"
                  :weight normal
                  :strike-through t))))
  '(org-headline-done
    ((((class color) (min-colors 16) (background dark))
-     (:foreground "LightSalmon" :strike-through t)))))
+     (:foreground "LightSalmon" :strike-through t))))))
 ;; Agenda:7 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:8]]
@@ -836,10 +862,11 @@ appropriate.  In tables, insert a new row or end the table."
 ;; Agenda:8 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:9]]
-(setq org-agenda-sorting-strategy
+(after! org-agenda
+  (setq org-agenda-sorting-strategy
   (quote ((agenda time-up priority-down category-up)
           (todo todo-state-up priority-up)
-          (tags priority-down))))
+          (tags priority-down)))))
 ;; Agenda:9 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:10]]
@@ -848,6 +875,7 @@ appropriate.  In tables, insert a new row or end the table."
   ;; / = enter state
   ;; (x) = shortcut (after C-c C-t)
   ;; after the |: close todo
+(after! org-agenda
 (setq
  org-todo-keywords '(
                      (sequence
@@ -862,10 +890,11 @@ appropriate.  In tables, insert a new row or end the table."
                       "DONE(d@/!)"
                       "CANCELED(c@/!)")
                      )
- )
+ ))
 ;; Agenda:10 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:11]]
+(after! org-agenda
 (setq  org-todo-keyword-faces
   '(("IDEA" . (
                :foreground "light green"
@@ -892,10 +921,11 @@ appropriate.  In tables, insert a new row or end the table."
                   :foreground "seashell"
                   :weight bold))
     )
-)
+))
 ;; Agenda:11 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:12]]
+(after! org
 (setq
   org-tag-persistent-alist
   '((:startgroup . nil)
@@ -916,15 +946,23 @@ appropriate.  In tables, insert a new row or end the table."
     ("MEDIUM" . ?m)
     ("HARD" . ?a)
     (:endgroup . nil)
+    (:startgroup . nil)
     ("URGENT" . ?u)
     ("KEY" . ?k)
     ("BONUS" . ?b)
     ("noexport" . ?x)
+    (:endgroup . nil)
+    (:startgroup . nil)
+    ("SPORT" . ?s)
+    ("FOOTBALL" . ?f)
+    ("WALKING" . ?w)
+    (:endgroup . nil)
     )
-)
+))
 ;; Agenda:12 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:13]]
+(after! org
 (setq
   org-tag-faces
   '(
@@ -978,11 +1016,12 @@ appropriate.  In tables, insert a new row or end the table."
                   :foreground "DarkBlue"
                   :weight bold))
     )
-  )
+  ))
 ;; Agenda:13 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:14]]
-(setq org-todo-repeat-to-state "NEXT")
+(after! org
+(setq org-todo-repeat-to-state "NEXT"))
 ;; Agenda:14 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Agenda][Agenda:15]]
@@ -1073,6 +1112,7 @@ appropriate.  In tables, insert a new row or end the table."
 ;; Org Ref:1 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Org%20Ref][Org Ref:2]]
+(after! org-ref
 (setq
  org-ref-default-bibliography "~/Daten/cloud/tlaloc/org/Papers/references.bib"
 
@@ -1082,14 +1122,16 @@ appropriate.  In tables, insert a new row or end the table."
  org-ref-open-pdf-function
  (lambda (fpath)
    (start-process "zathura" "*ivy-bibtex-zathura*" "/usr/bin/zathura" fpath))
-)
+))
 ;; Org Ref:2 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Org%20Ref][Org Ref:3]]
-(setq org-ref-default-citation-link "footcite")
+(after! org-ref
+(setq org-ref-default-citation-link "footcite"))
 ;; Org Ref:3 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*LSP%20Support%20in%20src%20blocks][LSP Support in src blocks:1]]
+(after! org
 (cl-defmacro lsp-org-babel-enable (lang)
     "Support LANG in org source code block."
     (setq centaur-lsp 'lsp-mode)
@@ -1117,7 +1159,7 @@ appropriate.  In tables, insert a new row or end the table."
   (defvar org-babel-lang-list
     '("go" "python" "ipython" "bash" "sh" "c"))
   (dolist (lang org-babel-lang-list)
-    (eval `(lsp-org-babel-enable ,lang)))
+    (eval `(lsp-org-babel-enable ,lang))))
 ;; LSP Support in src blocks:1 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*LaTeX%20Fragments][LaTeX Fragments:1]]
@@ -1126,21 +1168,25 @@ appropriate.  In tables, insert a new row or end the table."
 ;; LaTeX Fragments:1 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Export][Export:1]]
-(setq org-latex-prefer-user-labels t)
+(after! org
+(setq org-latex-prefer-user-labels t))
 ;; Export:1 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Export][Export:2]]
-(setq org-export-with-smart-quotes t)
+(after! org
+(setq org-export-with-smart-quotes t))
 ;; Export:2 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Org%20Async%20Export][Org Async Export:1]]
+(after! org
 (setq
  org-export-in-background t
- org-export-async-init-file (concat doom-private-dir "init-org-async.el"))
+ org-export-async-init-file (concat doom-private-dir "init-org-async.el")))
 ;; Org Async Export:1 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Languages][Languages:1]]
-(setq org-export-default-language "de")
+(after! org
+(setq org-export-default-language "de"))
 ;; Languages:1 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*View%20exported%20file][View exported file:1]]
@@ -1171,15 +1217,17 @@ appropriate.  In tables, insert a new row or end the table."
 ;; View exported file:1 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*LaTeX][LaTeX:1]]
+(after! org
 (setq
  org-latex-pdf-process
  '("lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
    "biber %b"
    "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-   "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+   "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f")))
 ;; LaTeX:1 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*LaTeX][LaTeX:2]]
+(after! org
 '(org-preview-latex-process-alist
   (quote
    ((dvipng :programs
@@ -1219,10 +1267,11 @@ appropriate.  In tables, insert a new row or end the table."
                  :latex-compiler
                  ("xelatex -no-pdf -interaction nonstopmode -output-directory %o %f")
                  :image-converter
-                 ("convert -density %D -trim -antialias %f -quality 100 %O")))))
+                 ("convert -density %D -trim -antialias %f -quality 100 %O"))))))
 ;; LaTeX:2 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*LaTeX][LaTeX:3]]
+(after! org
 (after! ox-latex
   (add-to-list 'org-latex-classes
                '("koma-article"
@@ -1231,10 +1280,12 @@ appropriate.  In tables, insert a new row or end the table."
                  ("\\subsection{%s}" . "\\subsection*{%s}")
                  ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))))
 ;; LaTeX:3 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*LaTeX][LaTeX:4]]
+(after! org
+  (after! ox-latex
 (add-to-list 'org-latex-classes
              '("mimosis"
                "\\documentclass{mimosis}
@@ -1246,11 +1297,13 @@ appropriate.  In tables, insert a new row or end the table."
                ("\\subsection{%s}" . "\\subsection*{%s}")
                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                ("\\mboxparagraph{%s}" . "\\mboxparagraph*{%s}")
-               ("\\mboxsubparagraph{%s}" . "\\mboxsubparagraph*{%s}")))
+               ("\\mboxsubparagraph{%s}" . "\\mboxsubparagraph*{%s}")))))
 ;; LaTeX:4 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*LaTeX][LaTeX:5]]
 ;; Elsarticle is Elsevier class for publications.
+(after! org
+  (after! ox-latex
 (add-to-list 'org-latex-classes
              '("elsarticle"
                "\\documentclass{elsarticle}
@@ -1261,10 +1314,12 @@ appropriate.  In tables, insert a new row or end the table."
                ("\\subsection{%s}" . "\\subsection*{%s}")
                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                ("\\paragraph{%s}" . "\\paragraph*{%s}")
-               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))))
 ;; LaTeX:5 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*LaTeX][LaTeX:6]]
+(after! org
+  (after! ox-latex
 (add-to-list 'org-latex-classes
              '("koma-book"
                "\\documentclass{scrbook}
@@ -1276,7 +1331,7 @@ appropriate.  In tables, insert a new row or end the table."
                ("\\subsection{%s}" . "\\subsection*{%s}")
                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                ("\\mboxparagraph{%s}" . "\\mboxparagraph*{%s}")
-               ("\\mboxsubparagraph{%s}" . "\\mboxsubparagraph*{%s}")))
+               ("\\mboxsubparagraph{%s}" . "\\mboxsubparagraph*{%s}")))))
 ;; LaTeX:6 ends here
 
 ;;(setq org-latex-default-packages-alist
@@ -1324,7 +1379,9 @@ appropriate.  In tables, insert a new row or end the table."
 ;;    ))
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*LaTeX][LaTeX:8]]
-(setq org-latex-listings 'minted)
+(after! org
+  (after! ox-latex
+(setq org-latex-listings 'minted)))
 ;; LaTeX:8 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*LaTeX][LaTeX:9]]
@@ -1381,6 +1438,7 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
 ;; LaTeX:9 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Extra%20header%20content][Extra header content:1]]
+(after! org
 (defadvice! org-html-template-fancier (contents info)
   "Return complete document string after HTML conversion.
 CONTENTS is the transcoded contents string.  INFO is a plist
@@ -1545,7 +1603,7 @@ INFO is a plist used as a communication channel."
        (org-html--build-meta-entry "property" "og:article:author:first_name" (cdr (s-split-up-to " " author 2))))
      (org-html--build-meta-entry "property" "og:article:published_time" (format-time-string "%FT%T%z"))
      (when (org-string-nw-p subtitle)
-       (org-html--build-meta-entry "property" "og:description" subtitle)))))
+       (org-html--build-meta-entry "property" "og:description" subtitle))))))
 ;; Extra header content:2 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Custom%20CSS/JS][Custom CSS/JS:2]]
@@ -1563,6 +1621,7 @@ INFO is a plist used as a communication channel."
 ;; Custom CSS/JS:2 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::Src%20blocks][Src blocks]]
+(after! org
 (defadvice! org-html-src-block-collapsable (orig-fn src-block contents info)
   "Wrap the usual <pre> block in a <details>"
   :around #'org-html-src-block
@@ -1675,7 +1734,7 @@ INFO is a plist used as a communication channel."
                      ("xml" "XML")
                      ("nxml" "XML")
                      ("conf" "Configuration File"))))
-      mode))
+      mode)))
 ;; Src blocks ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::Example,%20fixed%20width,%20and%20property%20blocks][Example, fixed width, and property blocks]]
@@ -1709,10 +1768,11 @@ INFO is a plist used as a communication channel."
 
   (advice-add 'org-html-example-block   :around #'org-html-block-collapsable)
   (advice-add 'org-html-fixed-width     :around #'org-html-block-collapsable)
-  (advice-add 'org-html-property-drawer :around #'org-html-block-collapsable))
+  (advice-add 'org-html-property-drawer :around #'org-html-block-collapsable)))
 ;; Example, fixed width, and property blocks ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Handle%20table%20overflow][Handle table overflow:1]]
+(after! org
 (defadvice! org-html-table-wrapped (orig-fn table contents info)
   "Wrap the usual <table> in a <div>"
   :around #'org-html-table
@@ -1728,10 +1788,11 @@ INFO is a plist used as a communication channel."
             (if name
                 (replace-regexp-in-string (format "<table id=\"%s\"" ref) "<table"
                                           (funcall orig-fn table contents info))
-              (funcall orig-fn table contents info)))))
+              (funcall orig-fn table contents info))))))
 ;; Handle table overflow:1 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*TOC%20as%20a%20collapsable%20tree][TOC as a collapsable tree:1]]
+(after! org
 (defadvice! org-html--format-toc-headline-colapseable (orig-fn headline info)
   "Add a label and checkbox to `org-html--format-toc-headline's usual output,
 to allow the TOC to be a collapseable tree."
@@ -1739,33 +1800,35 @@ to allow the TOC to be a collapseable tree."
   (let ((id (or (org-element-property :CUSTOM_ID headline)
                 (org-export-get-reference headline info))))
     (format "<input type='checkbox' id='toc--%s'/><label for='toc--%s'>%s</label>"
-            id id (funcall orig-fn headline info))))
+            id id (funcall orig-fn headline info)))))
 ;; TOC as a collapsable tree:1 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*TOC%20as%20a%20collapsable%20tree][TOC as a collapsable tree:2]]
+(after! org
 (defadvice! org-html--toc-text-stripped-leaves (orig-fn toc-entries)
   "Remove label"
   :around #'org-html--toc-text
   (replace-regexp-in-string "<input [^>]+><label [^>]+>\\(.+?\\)</label></li>" "\\1</li>"
-                            (funcall orig-fn toc-entries)))
+                            (funcall orig-fn toc-entries))))
 ;; TOC as a collapsable tree:2 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Make%20verbatim%20different%20to%20code][Make verbatim different to code:1]]
+(after! org
 (setq org-html-text-markup-alist
       '((bold . "<b>%s</b>")
         (code . "<code>%s</code>")
         (italic . "<i>%s</i>")
         (strike-through . "<del>%s</del>")
         (underline . "<span class=\"underline\">%s</span>")
-        (verbatim . "<kbd>%s</kbd>")))
+        (verbatim . "<kbd>%s</kbd>"))))
 ;; Make verbatim different to code:1 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Change%20checkbox%20type][Change checkbox type:1]]
 (after! org
 (appendq! org-html-checkbox-types '((html-span .
-	  ((on . "<span class='checkbox'></span>")
-	  (off . "<span class='checkbox'></span>")
-	  (trans . "<span class='checkbox'></span>")))))
+      ((on . "<span class='checkbox'></span>")
+      (off . "<span class='checkbox'></span>")
+      (trans . "<span class='checkbox'></span>")))))
 (setq org-html-checkbox-type 'html-span))
 ;; Change checkbox type:1 ends here
 
@@ -1859,18 +1922,6 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
   (add-to-list 'org-modules 'org-habit t))
 ;; Org Habit:1 ends here
 
-;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*LaTeX][LaTeX:1]]
-(eval-after-load "tex"
-  '(add-to-list 'TeX-command-list
-                '("LuaLatex + Biber"
-                  "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-                  "biber %b"
-                  "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-                  "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f")
-                t)
-  )
-(setq TeX-command-default "LuaLatex + Biber")
-;; LaTeX:1 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Enhance%20Tex-fold][Enhance Tex-fold:1]]
 
@@ -1949,323 +2000,6 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
 (yas-global-mode 1)
 ;; Snippets:1 ends here
 
-;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*XKCD][XKCD:1]]
-(use-package! xkcd
-  :commands (xkcd-get-json xkcd-download xkcd-get
-             ;; now for funcs from my extension of this pkg
-             +xkcd-find-and-copy +xkcd-find-and-view
-             +xkcd-fetch-info +xkcd-select)
-  :config
-  (add-to-list 'evil-snipe-disabled-modes 'xkcd-mode)
-  :general (:states 'normal
-            :keymaps 'xkcd-mode-map
-            "<right>" #'xkcd-next
-            "n"       #'xkcd-next ; evil-ish
-            "<left>"  #'xkcd-prev
-            "N"       #'xkcd-prev ; evil-ish
-            "r"       #'xkcd-rand
-            "a"       #'xkcd-rand ; because image-rotate can interfere
-            "t"       #'xkcd-alt-text
-            "q"       #'xkcd-kill-buffer
-            "o"       #'xkcd-open-browser
-            "e"       #'xkcd-open-explanation-browser
-            ;; extras
-            "s"       #'+xkcd-find-and-view
-            "/"       #'+xkcd-find-and-view
-            "y"       #'+xkcd-copy))
-;; XKCD:1 ends here
-
-;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*XKCD][XKCD:2]]
-(after! xkcd
-  (require 'emacsql-sqlite)
-
-  (defun +xkcd-select ()
-    "Prompt the user for an xkcd using 'ivy-read' and '+xkcd-select-format'. Return the xkcd number or nil"
-    (let* (prompt-lines
-           (-dummy (maphash (lambda (key xkcd-info)
-                              (push (+xkcd-select-format xkcd-info) prompt-lines))
-                            +xkcd-stored-info))
-           (num (ivy-read (format "xkcd (%s): " xkcd-latest) prompt-lines)))
-      (if (equal "" num) xkcd-latest
-        (string-to-number (replace-regexp-in-string "\\([0-9]+\\).*" "\\1" num)))))
-
-  (defun +xkcd-select-format (xkcd-info)
-    "Creates each ivy-read line from an xkcd info plist. Must start with the xkcd number"
-    (format "%-4s  %-30s %s"
-            (propertize (number-to-string (plist-get xkcd-info :num))
-                        'face 'counsel-key-binding)
-            (plist-get xkcd-info :title)
-            (propertize (plist-get xkcd-info :alt)
-                        'face '(variable-pitch font-lock-comment-face))))
-
-  (defun +xkcd-fetch-info (&optional num)
-    "Fetch the parsed json info for comic NUM. Fetches latest when omitted or 0"
-    (require 'xkcd)
-    (when (or (not num) (= num 0))
-      (+xkcd-check-latest)
-      (setq num xkcd-latest))
-    (let ((res (or (gethash num +xkcd-stored-info)
-                   (puthash num (+xkcd-db-read num) +xkcd-stored-info))))
-      (unless res
-        (+xkcd-db-write
-         (let* ((url (format "https://xkcd.com/%d/info.0.json" num))
-                (json-assoc
-                 (if (gethash num +xkcd-stored-info)
-                     (gethash num +xkcd-stored-info)
-                   (json-read-from-string (xkcd-get-json url num)))))
-           json-assoc))
-        (setq res (+xkcd-db-read num)))
-      res))
-
-  ;; since we've done this, we may as well go one little step further
-  (defun +xkcd-find-and-copy ()
-    "Prompt for an xkcd using '+xkcd-select' and copy url to clipboard"
-    (interactive)
-    (+xkcd-copy (+xkcd-select)))
-
-  (defun +xkcd-copy (&optional num)
-    "Copy a url to xkcd NUM to the clipboard"
-    (interactive "i")
-    (let ((num (or num xkcd-cur)))
-      (gui-select-text (format "https://xkcd.com/%d" num))
-      (message "xkcd.com/%d copied to clipboard" num)))
-
-  (defun +xkcd-find-and-view ()
-    "Prompt for an xkcd using '+xkcd-select' and view it"
-    (interactive)
-    (xkcd-get (+xkcd-select))
-    (switch-to-buffer "*xkcd*"))
-
-  (defvar +xkcd-latest-max-age (* 60 60) ; 1 hour
-    "Time after which xkcd-latest should be refreshed, in seconds")
-
-  ;; initialise 'xkcd-latest' and '+xkcd-stored-info' with latest xkcd
-  (add-transient-hook! '+xkcd-select
-    (require 'xkcd)
-    (+xkcd-fetch-info xkcd-latest)
-    (setq +xkcd-stored-info (+xkcd-db-read-all)))
-
-  (add-transient-hook! '+xkcd-fetch-info
-    (xkcd-update-latest))
-
-  (defun +xkcd-check-latest ()
-    "Use value in 'xkcd-cache-latest' as long as it isn't older thabn '+xkcd-latest-max-age'"
-    (unless (and (file-exists-p xkcd-cache-latest)
-                 (< (- (time-to-seconds (current-time))
-                       (time-to-seconds (file-attribute-modification-time (file-attributes xkcd-cache-latest))))
-                    +xkcd-latest-max-age))
-      (let* ((out (xkcd-get-json "http://xkcd.com/info.0.json" 0))
-             (json-assoc (json-read-from-string out))
-             (latest (cdr (assoc 'num json-assoc))))
-        (when (/= xkcd-latest latest)
-          (+xkcd-db-write json-assoc)
-          (with-current-buffer (find-file xkcd-cache-latest)
-            (setq xkcd-latest latest)
-            (erase-buffer)
-            (insert (number-to-string latest))
-            (save-buffer)
-            (kill-buffer (current-buffer)))))
-      (shell-command (format "touch %s" xkcd-cache-latest))))
-
-  (defvar +xkcd-stored-info (make-hash-table :test 'eql)
-    "Basic info on downloaded xkcds, in the form of a hashtable")
-
-  (defadvice! xkcd-get-json--and-cache (url &optional num)
-    "Fetch the Json coming from URL.
-If the file NUM.json exists, use it instead.
-If NUM is 0, always download from URL.
-The return value is a string."
-    :override #'xkcd-get-json
-    (let* ((file (format "%s%d.json" xkcd-cache-dir num))
-           (cached (and (file-exists-p file) (not (eq num 0))))
-           (out (with-current-buffer (if cached
-                                         (find-file file)
-                                       (url-retrieve-synchronously url))
-                  (goto-char (point-min))
-                  (unless cached (re-search-forward "^$"))
-                  (prog1
-                      (buffer-substring-no-properties (point) (point-max))
-                    (kill-buffer (current-buffer))))))
-      (unless (or cached (eq num 0))
-        (xkcd-cache-json num out))
-      out))
-
-  (defadvice! +xkcd-get (num)
-    "Get the xkcd number NUM."
-    :override 'xkcd-get
-    (interactive "nEnter comic number: ")
-    (xkcd-update-latest)
-    (get-buffer-create "*xkcd*")
-    (switch-to-buffer "*xkcd*")
-    (xkcd-mode)
-    (let (buffer-read-only)
-      (erase-buffer)
-      (setq xkcd-cur num)
-      (let* ((xkcd-data (+xkcd-fetch-info num))
-             (num (plist-get xkcd-data :num))
-             (img (plist-get xkcd-data :img))
-             (safe-title (plist-get xkcd-data :safe-title))
-             (alt (plist-get xkcd-data :alt))
-             title file)
-        (message "Getting comic...")
-        (setq file (xkcd-download img num))
-        (setq title (format "%d: %s" num safe-title))
-        (insert (propertize title
-                            'face 'outline-1))
-        (center-line)
-        (insert "\n")
-        (xkcd-insert-image file num)
-        (if (eq xkcd-cur 0)
-            (setq xkcd-cur num))
-        (setq xkcd-alt alt)
-        (message "%s" title))))
-
-  (defconst +xkcd-db--sqlite-available-p
-    (with-demoted-errors "+org-xkcd initialization: %S"
-      (emacsql-sqlite-ensure-binary)
-      t))
-
-  (defvar +xkcd-db--connection (make-hash-table :test #'equal)
-    "Database connection to +org-xkcd database.")
-
-  (defun +xkcd-db--get ()
-    "Return the sqlite db file."
-    (expand-file-name "xkcd.db" xkcd-cache-dir))
-
-  (defun +xkcd-db--get-connection ()
-    "Return the database connection, if any."
-    (gethash (file-truename xkcd-cache-dir)
-             +xkcd-db--connection))
-
-  (defconst +xkcd-db--table-schema
-    '((xkcds
-       [(num integer :unique :primary-key)
-        (year        :not-null)
-        (month       :not-null)
-        (link        :not-null)
-        (news        :not-null)
-        (safe_title  :not-null)
-        (title       :not-null)
-        (transcript  :not-null)
-        (alt         :not-null)
-        (img         :not-null)])))
-
-  (defun +xkcd-db--init (db)
-    "Initialize database DB with the correct schema and user version."
-    (emacsql-with-transaction db
-      (pcase-dolist ('(,table . ,schema) +xkcd-db--table-schema)
-        (emacsql db [:create-table $i1 $S2] table schema))))
-
-  (defun +xkcd-db ()
-    "Entrypoint to the +org-xkcd sqlite database.
-Initializes and stores the database, and the database connection.
-Performs a database upgrade when required."
-    (unless (and (+xkcd-db--get-connection)
-                 (emacsql-live-p (+xkcd-db--get-connection)))
-      (let* ((db-file (+xkcd-db--get))
-             (init-db (not (file-exists-p db-file))))
-        (make-directory (file-name-directory db-file) t)
-        (let ((conn (emacsql-sqlite db-file)))
-          (set-process-query-on-exit-flag (emacsql-process conn) nil)
-          (puthash (file-truename xkcd-cache-dir)
-                   conn
-                   +xkcd-db--connection)
-          (when init-db
-            (+xkcd-db--init conn)))))
-    (+xkcd-db--get-connection))
-
-  (defun +xkcd-db-query (sql &rest args)
-    "Run SQL query on +org-xkcd database with ARGS.
-SQL can be either the emacsql vector representation, or a string."
-    (if  (stringp sql)
-        (emacsql (+xkcd-db) (apply #'format sql args))
-      (apply #'emacsql (+xkcd-db) sql args)))
-
-  (defun +xkcd-db-read (num)
-    (when-let ((res
-                (car (+xkcd-db-query [:select * :from xkcds
-                                      :where (= num $s1)]
-                                     num
-                                     :limit 1))))
-      (+xkcd-db-list-to-plist res)))
-
-  (defun +xkcd-db-read-all ()
-    (let ((xkcd-table (make-hash-table :test 'eql :size 4000)))
-      (mapcar (lambda (xkcd-info-list)
-                (puthash (car xkcd-info-list) (+xkcd-db-list-to-plist xkcd-info-list) xkcd-table))
-              (+xkcd-db-query [:select * :from xkcds]))
-      xkcd-table))
-
-  (defun +xkcd-db-list-to-plist (xkcd-datalist)
-    '(:num ,(nth 0 xkcd-datalist)
-      :year ,(nth 1 xkcd-datalist)
-      :month ,(nth 2 xkcd-datalist)
-      :link ,(nth 3 xkcd-datalist)
-      :news ,(nth 4 xkcd-datalist)
-      :safe-title ,(nth 5 xkcd-datalist)
-      :title ,(nth 6 xkcd-datalist)
-      :transcript ,(nth 7 xkcd-datalist)
-      :alt ,(nth 8 xkcd-datalist)
-      :img ,(nth 9 xkcd-datalist)))
-
-  (defun +xkcd-db-write (data)
-    (+xkcd-db-query [:insert-into xkcds
-                     :values $v1]
-                    (list (vector
-                           (cdr (assoc 'num        data))
-                           (cdr (assoc 'year       data))
-                           (cdr (assoc 'month      data))
-                           (cdr (assoc 'link       data))
-                           (cdr (assoc 'news       data))
-                           (cdr (assoc 'safe_title data))
-                           (cdr (assoc 'title      data))
-                           (cdr (assoc 'transcript data))
-                           (cdr (assoc 'alt        data))
-                           (cdr (assoc 'img        data))
-                           )))))
-;; XKCD:2 ends here
-
-;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Extra%20links][Extra links:1]]
-(after! org
-  (org-link-set-parameters "xkcd"
-                           :image-data-fun #'+org-xkcd-image-fn
-                           :follow #'+org-xkcd-open-fn
-                           :export #'+org-xkcd-export
-                           :complete #'+org-xkcd-complete)
-
-  (defun +org-xkcd-open-fn (link)
-    (+org-xkcd-image-fn nil link nil))
-
-  (defun +org-xkcd-image-fn (protocol link description)
-    "Get image data for xkcd num LINK"
-    (let* ((xkcd-info (+xkcd-fetch-info (string-to-number link)))
-           (img (plist-get xkcd-info :img))
-           (alt (plist-get xkcd-info :alt)))
-      (message alt)
-      (+org-image-file-data-fn protocol (xkcd-download img (string-to-number link)) description)))
-
-  (defun +org-xkcd-export (path desc backend _com)
-    "Convert xkcd to html/LaTeX form"
-    (let* ((xkcd-info (+xkcd-fetch-info (string-to-number path)))
-           (img (plist-get xkcd-info :img))
-           (alt (plist-get xkcd-info :alt))
-           (title (plist-get xkcd-info :title))
-           (file (xkcd-download img (string-to-number path))))
-      (cond ((org-export-derived-backend-p backend 'html)
-             (format "<img src='%s' title=\"%s\" alt='%s'>" img (subst-char-in-string ?\" ?“ alt) title))
-            ((org-export-derived-backend-p backend 'latex)
-             (format "\\begin{figure}[!htb]
-  \\centering
-  \\includegraphics[scale=0.4]{%s}
-  \\caption*{\\label{xkcd:%s} %s}
-\\end{figure}" file path (or desc
-                             (format "\\textbf{%s} %s" title alt))))
-            (t (format "https://xkcd.com/%s" path)))))
-
-  (defun +org-xkcd-complete (&optional arg)
-    "Complete xkcd using '+xkcd-stored-info'"
-    (format "xkcd:%d" (+xkcd-select))))
-;; Extra links:1 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Zoom][Zoom:1]]
 (custom-set-variables
@@ -2313,7 +2047,7 @@ SQL can be either the emacsql vector representation, or a string."
 ;; Tramp:3 ends here
 
 ;; [[file:~/Projekte/dotfiles/.config/doom/config.org::*Speeding%20up%20tramp][Speeding up tramp:1]]
-(add-hook 'counsel-tramp-pre-command-hook '(lambda () (global-aggressive-indent-mode 0)
+(add-hook 'counsel-tramp-pre-command-hook '(lambda ()
                      (projectile-mode 0)
                      (editorconfig-mode 0)))
 ;; Speeding up tramp:1 ends here

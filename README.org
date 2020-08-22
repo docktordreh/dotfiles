@@ -2,58 +2,49 @@
 #+AUTHOR: valentin
 #+SETUPFILE: ~/Daten/cloud/tlaloc/org/setupfiles/latex.setup
 
-* About this Project
-These are my dotfiles (settings for programs I customized so much that I can't
-go without them and don't want to hassle setting my environment up again).
-
-The idea is - store settings in your git Account and just clone them and you're
-good to go.
-
-
-** About this Documentation
-
-As you might have noticed, the dotfiles are relatively well documented. Every
-folder contains a documentation for the exact program.
-It is accomplished using [[https://orgmode.org][Org Mode]] in [[https://www.gitlab.com/hlissner/doom-emacs][Doom]] on [[https://www.gnu.org/software/emacs/Emacs][Emacs]] with my [[./.doom.d/config.org][personal configuration]] (this
-renders best viewed in Emacs, I don't know if the link works in gitlab).
-
 * Magit Forge
 
 This contains my api key for connecting to gitlab and working/editing gitlab
 issues using [[https://github.com/magit/forge/][magit-forge]]
 I do not include this here, because it would be stored unencrypted.
 
+
 * Git
+:PROPERTIES:
+:header-args: :tangle .config/git/config
+:END:
+
 This is my global git configuration
 
 This is basic configuration
-#+BEGIN_SRC conf :tangle .config/git/config
+#+BEGIN_SRC conf
 [user]
 	email = valentin_lechner@dismail.de
 	name = valentin_lechner
 #+END_SRC
 It can be set using
-#+BEGIN_SRC sh
+#+BEGIN_SRC sh :tangle no
 git config --global user.name <your user>
 git config --global user.email <your email>
 #+END_SRC
 
 This configures git to use my private key to sign every commit
-#+BEGIN_SRC conf :tangle .config/git/config
+#+BEGIN_SRC conf
 	signingkey = 9C489382
 [commit]
 	gpgsign = true
 #+END_SRC
 Some other stuff I configured, probably not too important
-#+BEGIN_SRC conf :tangle .config/git/config
+#+BEGIN_SRC conf
 [gitlab]
 	user = valentin_lechner
 [pull]
 	rebase = false
 #+END_SRC
+
 * Tmux
 :PROPERTIES:
-:header-args: :shebang "#!/bin/sh"
+:header-args: :shebang "#!/bin/sh" :tangle .config/tmux/tmux.conf
 :END:
 
 I use the terminal multiplexer [[https://github.com/tmux/tmux][tmux]], which basically is a window manager for
@@ -63,25 +54,30 @@ tmux. It allows to use multiple terminals in the same window in splits.
 Since I found the default keybinding =C-b= hard to reach, I settled for =C-a=. When
 I connected to a screen-session on a server, I ran into keybinding issues. For
 now, I solved it using =C-s= as my keybinding. Seems good so far.
-#+BEGIN_SRC sh :tangle .config/tmux/tmux.conf
+#+BEGIN_SRC sh :tangle
 unbind C-b
 set-option -g prefix C-s
 bind-key C-s send-prefix
 #+END_SRC
 
 Everyone knows that we count from zero
-#+BEGIN_SRC sh :tangle .config/tmux/tmux.conf
+#+BEGIN_SRC sh
 set -g base-index 0
 #+END_SRC
 
 Automatically set window title
-#+BEGIN_SRC sh :tangle .config/tmux/tmux.conf
+#+BEGIN_SRC sh
 set-window-option -g automatic-rename on
 set-option -g set-titles on
 #+END_SRC
+- truecolor Support
+#+BEGIN_SRC sh
+set -g default-terminal "alacritty"
+set -ga terminal-overrides ",alacritty*:Tc"
+#+END_SRC
+
 Some basic stuff
-#+BEGIN_SRC sh :tangle .config/tmux/tmux.conf
-set -g default-terminal "screen-256color"
+,#+BEGIN_SRC sh
 set -g history-limit 10000
 #+END_SRC
 Evil mode everywhere
@@ -148,11 +144,15 @@ set -g status-left '#[fg=green](#S) #(whoami)'
 set -g status-right '#[fg=yellow]#(cut -d " " -f 1-3 /proc/loadavg)#[default] #[fg=white]%H:%M#[default]'
 #+END_SRC
 
+
 * Zsh
 :PROPERTIES:
 :header-args: :shebang "#!/bin/zsh"
 :END:
 ** .zshenv
+:PROPERTIES:
+:header-args: :tangle .zshenv
+:END:
 
 Relocate some config files to be located in =~/.config= instead of =~=
 #+BEGIN_SRC sh :tangle .zshenv
@@ -174,8 +174,8 @@ export SAVEHIST=$HISTSIZE
 
 Set default editor to emacs
 #+BEGIN_SRC sh :tangle .config/zsh/.zprofile
-export EDITOR='emacs -nw'
-export VISUAL='emacs -nw'
+export EDITOR='TERM=xterm-24bits emacs -nw'
+export VISUAL='emacs'
 #+END_SRC
 
 *** Additional Relocations
@@ -314,7 +314,11 @@ ex=🎯:\
 "
 #+END_SRC
 
+
 ** .zshrc
+:PROPERTIES:
+:header-args: :tangle .config/zsh/.zshrc
+:END:
 
 *** Autocompletion/Typos
 I use [[github:nvbn/thefuck][thefuck]] for correcting typos
@@ -633,6 +637,9 @@ antibody bundle zdharma/fast-syntax-highlighting
 
 
 ** .zsh_aliases
+:PROPERTIES:
+:header-args: :tangle .config/zsh/.zsh_aliases
+:END:
 *** Basic aliases
 
 - =doas=: For desktop usage I tend to use doas as privilege escalation tool. It's easier set up
@@ -691,7 +698,9 @@ alias mbsync='mbsync -c "${XDG_CONFIG_HOME:-$HOME/.config}/isync/mbsyncrc"'
 #+END_SRC
 
 ** .zprofile
-
+:PROPERTIES:
+:header-args: :tangle .config/zsh/.zprofile
+:END:
 *** Proxychains
 
 I configured =proxychains= to connect to a running tor service. =proxychains= allows
@@ -743,6 +752,7 @@ And export path
 export PATH
 #+END_SRC
 
+
 * X Stuff
 
 The [[https://x.org/wiki][X Window System]] is a system used on many linux desktops. It might soon
@@ -752,6 +762,7 @@ though.
 
 Since I use [[https://github.com/CanonicalLtd/lightdm][LightDM]] as Login Manager with [[github:prikhi/lightdm-mini-greeter]], I
 do not use =.xinitrc= or =.xprofile=.
+
 ** .Xresources
 
 =.Xresources= can be used to set Parameters of X Computer Programs.
@@ -801,8 +812,10 @@ This black color will not be affected by bold highlighting.
 *.color66: #202236
 *color66:  #202236
 #+END_SRC
+
 * BSPWM
 #+INCLUDE: .config/bspwm/README.org :lines "4-"
+
 * SXHKD
 #+INCLUDE: .config/sxhkd/README.org :lines "4-"
  

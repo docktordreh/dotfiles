@@ -275,19 +275,10 @@ mechanism to ignore them
 
 
 ** PATH
-Setup path for cargo and texlive
+Setup path for texlive
 #+BEGIN_SRC emacs-lisp
-(setenv "PATH" (concat (getenv "PATH") ":/opt/texlive/2020/bin/x86_64-linux"))
-(setq exec-path (append exec-path '("/opt/texlive/2020/bin/x86_64-linux")))
-
-(setenv "PATH" (concat (getenv "PATH") ":/home/valentin/.cargo/bin"))
-(setq exec-path (append exec-path '("/home/valentin/.cargo/bin")))
-#+END_SRC
-Also add pyenv path
-
-#+BEGIN_SRC emacs-lisp
-(setenv "PATH" (concat (getenv "PATH") ":/home/valentin/.pyenv/bin"))
-(setq exec-path (append exec-path '("/home/valentin/.pyenv/bin")))
+(setenv "PATH" (concat (getenv "PATH") ":/opt/texlive/2020/bin/x86_64-linuxmusl"))
+(setq exec-path (append exec-path '("/opt/texlive/2020/bin/x86_64-linuxmusl")))
 
 #+END_SRC
 
@@ -330,7 +321,7 @@ add transparency to emacs. only works with a composition manager
 (setq
  doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 18)
  doom-big-font (font-spec :family "FiraCode Nerd Font Mono" :size 24)
- doom-variable-pitch-font (font-spec :family "EB Garamond 08" :size 22)
+ doom-variable-pitch-font (font-spec :family "IBM Plex Mono" :size 22 :weight 'regular)
  doom-serif-font (font-spec :family "IBM  Plex Mono" :weight 'light))
 #+END_SRC
 Theme settings
@@ -356,9 +347,6 @@ Change color of insert state to blue
 #+END_SRC
 
 ** General keymaps
-#+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "C-c e") 'org-latex-export-to-pdf)
-#+END_SRC
 #+BEGIN_SRC emacs-lisp
 (map! :map evil-window-map "SPC" #'rotate-layout)
 #+END_SRC
@@ -393,7 +381,6 @@ Enable support for common used languages
  )
 )
 #+END_SRC
-Prevent confirmation
 Location of my org-files
 #+BEGIN_SRC emacs-lisp
 (setq
@@ -730,12 +717,9 @@ appropriate.  In tables, insert a new row or end the table."
       (cond
        ;; Act depending on context around point.
 
-       ;; NOTE: I prefer RET to not follow links, but by uncommenting this block, links will be
-       ;; followed.
-
-       ;; ((eq 'link (car (org-element-context)))
-       ;;  ;; Link: Open it.
-       ;;  (org-open-at-point-global))
+       ((eq 'link (car (org-element-context)))
+        ;; Link: Open it.
+        (org-open-at-point-global))
 
        ((org-at-heading-p)
         ;; Heading: Move to position after entry content.
@@ -894,14 +878,17 @@ Hide emphasis markers
 
 #+BEGIN_SRC emacs-lisp
 (use-package! org-chef
-  :commands (org-chef-insert-recipe org-chef-get-recipe-from-url))
+  :commands (org-chef-insert-recipe org-chef-get-recipe-from-url)
+  :after org)
 #+END_SRC
+
 
 *** Deft
 #+BEGIN_SRC emacs-lisp
 (setq deft-extensions '("org"))
 (setq deft-directory "~/Daten/cloud/tlaloc/org")
 #+END_SRC
+
 *** Roam
 
 Org roam server extends org roam by using a server which can be launched to view
@@ -924,9 +911,10 @@ Org roam server extends org roam by using a server which can be launched to view
     (browse-url-xdg-open (format "http://localhost:%d" org-roam-server-port))))
 #+END_SRC
 
+
 *** Capture
 #+BEGIN_SRC emacs-lisp
-(require 'org-roam-protocol)
+(after! org (require 'org-roam-protocol))
 #+END_SRC
 #+BEGIN_SRC emacs-lisp
 (setq org-capture-templates `(
@@ -944,20 +932,22 @@ Global keybinding to open my refile-file
 (global-set-key (kbd "C-c o")
   (lambda () (interactive) (find-file (concat org-directory "refile.org"))))
 #+END_SRC
+
 *** Agenda
 Use Super Agenda
 #+BEGIN_SRC emacs-lisp
 (use-package! org-super-agenda
-  :commands (org-super-agenda-mode))
+  :commands (org-super-agenda-mode)
+  :after org)
 (after! org-agenda
-  (org-super-agenda-mode))
+  (org-super-agenda-mode)
 
-(setq org-agenda-skip-scheduled-if-done t
-      org-agenda-skip-deadline-if-done t
-      org-agenda-include-deadlines t
-      org-agenda-block-separator ""
-      org-agenda-tags-column 100 ;; from testing this seems to be a good value
-      org-agenda-compact-blocks t)
+  (setq org-agenda-skip-scheduled-if-done t
+        org-agenda-skip-deadline-if-done t
+        org-agenda-include-deadlines t
+        org-agenda-block-separator ""
+        org-agenda-tags-column 100 ;; from testing this seems to be a good value
+        org-agenda-compact-blocks t))
 #+END_SRC
 Add all files in org dir to agenda
 Also added my bachelor thesis todos
@@ -1267,6 +1257,7 @@ Also add unicode characters for checkboxes and stuff
     :em_dash       "---"))
 (plist-put +pretty-code-symbols :name "›")
 #+END_SRC
+
 *** Org Ref
 
 #+BEGIN_SRC emacs-lisp
@@ -1293,6 +1284,7 @@ use footcite as default cite
 #+BEGIN_SRC emacs-lisp
 (setq org-ref-default-citation-link "footcite")
 #+END_SRC
+
 
 *** LSP Support in src blocks
 
@@ -1327,6 +1319,7 @@ By default, LSP doesn't really work at all in =src= blocks
   (dolist (lang org-babel-lang-list)
     (eval `(lsp-org-babel-enable ,lang)))
 #+END_SRC
+
 *** LaTeX Fragments
 
 View nice TeX Fragments
@@ -1334,6 +1327,7 @@ View nice TeX Fragments
 (after! org
   (setq org-highlight-latex-and-related '(native script entities)))
 #+END_SrC
+
 
 *** Export
 Prefer user labels instead of internal labels
@@ -1780,7 +1774,9 @@ INFO is a plist used as a communication channel."
      (when (org-string-nw-p subtitle)
        (org-html--build-meta-entry "property" "og:description" subtitle)))))
 #+END_SRC
+
 ***** Custom CSS/JS
+
 The default org HTML export is ... alright, but we can really jazz it up.
 [[https://lepisma.xyz][lepisma.xyz]] has a really nice style, and from and org export too!
 Suffice to say I've snatched it, with a few of my own tweaks applied.
@@ -1806,6 +1802,7 @@ Suffice to say I've snatched it, with a few of my own tweaks applied.
         org-html-html5-fancy t))
 #+END_SRC
 ***** Collapsable src and example blocks
+
 By wrapping the ~<pre>~ element in a ~<details>~ block, we can obtain collapsable
 blocks with no CSS, though we will toss a little in anyway to have this looking
 somewhat spiffy.
@@ -1991,7 +1988,9 @@ While we're at it, we can a link gutter, as we did with src blocks, and show the
                                           (funcall orig-fn table contents info))
               (funcall orig-fn table contents info)))))
 #+END_SRC
+
 ***** TOC as a collapsable tree
+
 The TOC is much nicer to navigate as a collapsable tree. Unfortunately we cannot
 achieve this with CSS alone. Thankfully we can avoid JS though, by adapting the
 TOC generation code to use a ~label~ for each item, and a hidden ~checkbox~ to keep
@@ -2024,7 +2023,9 @@ org provides.
   (replace-regexp-in-string "<input [^>]+><label [^>]+>\\(.+?\\)</label></li>" "\\1</li>"
                             (funcall orig-fn toc-entries)))
 #+END_SRC
+
 ***** Make verbatim different to code
+
 Since we have =verbatim= and ~code~, let's use =verbatim= for key strokes.
 #+BEGIN_SRC emacs-lisp
 (setq org-html-text-markup-alist
@@ -2035,7 +2036,9 @@ Since we have =verbatim= and ~code~, let's use =verbatim= for key strokes.
         (underline . "<span class=\"underline\">%s</span>")
         (verbatim . "<kbd>%s</kbd>")))
 #+END_SRC
+
 ***** Change checkbox type
+
 We also want to use HTML checkboxes, however we want to get a bit fancier than default
 #+BEGIN_SRC emacs-lisp
 (after! org
@@ -2134,12 +2137,9 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
        (t (org-html--wrap-latex-environment latex-frag info caption label))))))
 #+END_SRC
 
-On the maths side of things, I consider ~dvisvgm~ to be a rather compelling
-option. However this isn't sized very well at the moment.
-#+BEGIN_SRC emacs-lisp
-;; (setq-default org-html-with-latex `dvisvgm)
-#+END_SRC
+
 *** Org Habit
+
 Still need to get used of how to use this.
 For now, I'll just leave that commented out
 #+BEGIN_SRC emacs-lisp
@@ -2147,21 +2147,10 @@ For now, I'll just leave that commented out
   (add-to-list 'org-modules 'org-habit t))
 #+END_SRC
 
-;; ** LaTeX
-;; #+BEGIN_SRC emacs-lisp
-;; (eval-after-load "tex"
-;;   '(add-to-list 'TeX-command-list
-;;                 '("LuaLatex + Biber"
-;;                   "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-;;                   "biber %b"
-;;                   "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-;;                   "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f")
-;;                 t)
-;;   )
-;; (setq TeX-command-default "LuaLatex + Biber")
-;; #+END_SRC
+
 ** Authinfo
 
+This provides a mode for an authinfo file \rightarrow syntax highlighting
 #+BEGIN_SRC emacs-lisp
 (setq authinfo-keywords
       '(("^#.*" . font-lock-comment-face)
@@ -2192,6 +2181,7 @@ For now, I'll just leave that commented out
 
 
 ** Magit
+
 cli git is great and all. But have you tried Magit?
 With the forges?
 
@@ -2221,6 +2211,7 @@ readline
 #+END_SRC
 
 *** Typescript
+
 This function sets up tide-mode, as described on the
 [[github:ananthakumaran/tide]]
 #+BEGIN_SRC emacs-lisp
@@ -2234,6 +2225,7 @@ This function sets up tide-mode, as described on the
   (tide-hl-identifier-mode +1)
   (company-mode +1))
 #+END_SRC
+
 **** React Native
 For developing in tsx, the tide git suggests the following:
 I just changed the last line since we decided to use eslint due to the fact that
@@ -2259,328 +2251,6 @@ Add private snippet dir to yasnippet
   (push (expand-file-name "snippets/" doom-private-dir) yas-snippet-dirs))
 (yas-global-mode 1)
 #+END_SRC
-
-** XKCD
- This makes the extra links look nicer
- #+BEGIN_SRC emacs-lisp
- (use-package! xkcd
-   :commands (xkcd-get-json xkcd-download xkcd-get
-              ;; now for funcs from my extension of this pkg
-              +xkcd-find-and-copy +xkcd-find-and-view
-              +xkcd-fetch-info +xkcd-select)
-   :config
-   (add-to-list 'evil-snipe-disabled-modes 'xkcd-mode)
-   :general (:states 'normal
-             :keymaps 'xkcd-mode-map
-             "<right>" #'xkcd-next
-             "n"       #'xkcd-next ; evil-ish
-             "<left>"  #'xkcd-prev
-             "N"       #'xkcd-prev ; evil-ish
-             "r"       #'xkcd-rand
-             "a"       #'xkcd-rand ; because image-rotate can interfere
-             "t"       #'xkcd-alt-text
-             "q"       #'xkcd-kill-buffer
-             "o"       #'xkcd-open-browser
-             "e"       #'xkcd-open-explanation-browser
-             ;; extras
-             "s"       #'+xkcd-find-and-view
-             "/"       #'+xkcd-find-and-view
-             "y"       #'+xkcd-copy))
- #+END_SRC
- ... and extend default functionality
-
- #+BEGIN_SRC emacs-lisp
- (after! xkcd
-   (require 'emacsql-sqlite)
-
-   (defun +xkcd-select ()
-     "Prompt the user for an xkcd using 'ivy-read' and '+xkcd-select-format'. Return the xkcd number or nil"
-     (let* (prompt-lines
-            (-dummy (maphash (lambda (key xkcd-info)
-                               (push (+xkcd-select-format xkcd-info) prompt-lines))
-                             +xkcd-stored-info))
-            (num (ivy-read (format "xkcd (%s): " xkcd-latest) prompt-lines)))
-       (if (equal "" num) xkcd-latest
-         (string-to-number (replace-regexp-in-string "\\([0-9]+\\).*" "\\1" num)))))
-
-   (defun +xkcd-select-format (xkcd-info)
-     "Creates each ivy-read line from an xkcd info plist. Must start with the xkcd number"
-     (format "%-4s  %-30s %s"
-             (propertize (number-to-string (plist-get xkcd-info :num))
-                         'face 'counsel-key-binding)
-             (plist-get xkcd-info :title)
-             (propertize (plist-get xkcd-info :alt)
-                         'face '(variable-pitch font-lock-comment-face))))
-
-   (defun +xkcd-fetch-info (&optional num)
-     "Fetch the parsed json info for comic NUM. Fetches latest when omitted or 0"
-     (require 'xkcd)
-     (when (or (not num) (= num 0))
-       (+xkcd-check-latest)
-       (setq num xkcd-latest))
-     (let ((res (or (gethash num +xkcd-stored-info)
-                    (puthash num (+xkcd-db-read num) +xkcd-stored-info))))
-       (unless res
-         (+xkcd-db-write
-          (let* ((url (format "https://xkcd.com/%d/info.0.json" num))
-                 (json-assoc
-                  (if (gethash num +xkcd-stored-info)
-                      (gethash num +xkcd-stored-info)
-                    (json-read-from-string (xkcd-get-json url num)))))
-            json-assoc))
-         (setq res (+xkcd-db-read num)))
-       res))
-
-   ;; since we've done this, we may as well go one little step further
-   (defun +xkcd-find-and-copy ()
-     "Prompt for an xkcd using '+xkcd-select' and copy url to clipboard"
-     (interactive)
-     (+xkcd-copy (+xkcd-select)))
-
-   (defun +xkcd-copy (&optional num)
-     "Copy a url to xkcd NUM to the clipboard"
-     (interactive "i")
-     (let ((num (or num xkcd-cur)))
-       (gui-select-text (format "https://xkcd.com/%d" num))
-       (message "xkcd.com/%d copied to clipboard" num)))
-
-   (defun +xkcd-find-and-view ()
-     "Prompt for an xkcd using '+xkcd-select' and view it"
-     (interactive)
-     (xkcd-get (+xkcd-select))
-     (switch-to-buffer "*xkcd*"))
-
-   (defvar +xkcd-latest-max-age (* 60 60) ; 1 hour
-     "Time after which xkcd-latest should be refreshed, in seconds")
-
-   ;; initialise 'xkcd-latest' and '+xkcd-stored-info' with latest xkcd
-   (add-transient-hook! '+xkcd-select
-     (require 'xkcd)
-     (+xkcd-fetch-info xkcd-latest)
-     (setq +xkcd-stored-info (+xkcd-db-read-all)))
-
-   (add-transient-hook! '+xkcd-fetch-info
-     (xkcd-update-latest))
-
-   (defun +xkcd-check-latest ()
-     "Use value in 'xkcd-cache-latest' as long as it isn't older thabn '+xkcd-latest-max-age'"
-     (unless (and (file-exists-p xkcd-cache-latest)
-                  (< (- (time-to-seconds (current-time))
-                        (time-to-seconds (file-attribute-modification-time (file-attributes xkcd-cache-latest))))
-                     +xkcd-latest-max-age))
-       (let* ((out (xkcd-get-json "http://xkcd.com/info.0.json" 0))
-              (json-assoc (json-read-from-string out))
-              (latest (cdr (assoc 'num json-assoc))))
-         (when (/= xkcd-latest latest)
-           (+xkcd-db-write json-assoc)
-           (with-current-buffer (find-file xkcd-cache-latest)
-             (setq xkcd-latest latest)
-             (erase-buffer)
-             (insert (number-to-string latest))
-             (save-buffer)
-             (kill-buffer (current-buffer)))))
-       (shell-command (format "touch %s" xkcd-cache-latest))))
-
-   (defvar +xkcd-stored-info (make-hash-table :test 'eql)
-     "Basic info on downloaded xkcds, in the form of a hashtable")
-
-   (defadvice! xkcd-get-json--and-cache (url &optional num)
-     "Fetch the Json coming from URL.
- If the file NUM.json exists, use it instead.
- If NUM is 0, always download from URL.
- The return value is a string."
-     :override #'xkcd-get-json
-     (let* ((file (format "%s%d.json" xkcd-cache-dir num))
-            (cached (and (file-exists-p file) (not (eq num 0))))
-            (out (with-current-buffer (if cached
-                                          (find-file file)
-                                        (url-retrieve-synchronously url))
-                   (goto-char (point-min))
-                   (unless cached (re-search-forward "^$"))
-                   (prog1
-                       (buffer-substring-no-properties (point) (point-max))
-                     (kill-buffer (current-buffer))))))
-       (unless (or cached (eq num 0))
-         (xkcd-cache-json num out))
-       out))
-
-   (defadvice! +xkcd-get (num)
-     "Get the xkcd number NUM."
-     :override 'xkcd-get
-     (interactive "nEnter comic number: ")
-     (xkcd-update-latest)
-     (get-buffer-create "*xkcd*")
-     (switch-to-buffer "*xkcd*")
-     (xkcd-mode)
-     (let (buffer-read-only)
-       (erase-buffer)
-       (setq xkcd-cur num)
-       (let* ((xkcd-data (+xkcd-fetch-info num))
-              (num (plist-get xkcd-data :num))
-              (img (plist-get xkcd-data :img))
-              (safe-title (plist-get xkcd-data :safe-title))
-              (alt (plist-get xkcd-data :alt))
-              title file)
-         (message "Getting comic...")
-         (setq file (xkcd-download img num))
-         (setq title (format "%d: %s" num safe-title))
-         (insert (propertize title
-                             'face 'outline-1))
-         (center-line)
-         (insert "\n")
-         (xkcd-insert-image file num)
-         (if (eq xkcd-cur 0)
-             (setq xkcd-cur num))
-         (setq xkcd-alt alt)
-         (message "%s" title))))
-
-   (defconst +xkcd-db--sqlite-available-p
-     (with-demoted-errors "+org-xkcd initialization: %S"
-       (emacsql-sqlite-ensure-binary)
-       t))
-
-   (defvar +xkcd-db--connection (make-hash-table :test #'equal)
-     "Database connection to +org-xkcd database.")
-
-   (defun +xkcd-db--get ()
-     "Return the sqlite db file."
-     (expand-file-name "xkcd.db" xkcd-cache-dir))
-
-   (defun +xkcd-db--get-connection ()
-     "Return the database connection, if any."
-     (gethash (file-truename xkcd-cache-dir)
-              +xkcd-db--connection))
-
-   (defconst +xkcd-db--table-schema
-     '((xkcds
-        [(num integer :unique :primary-key)
-         (year        :not-null)
-         (month       :not-null)
-         (link        :not-null)
-         (news        :not-null)
-         (safe_title  :not-null)
-         (title       :not-null)
-         (transcript  :not-null)
-         (alt         :not-null)
-         (img         :not-null)])))
-
-   (defun +xkcd-db--init (db)
-     "Initialize database DB with the correct schema and user version."
-     (emacsql-with-transaction db
-       (pcase-dolist ('(,table . ,schema) +xkcd-db--table-schema)
-         (emacsql db [:create-table $i1 $S2] table schema))))
-
-   (defun +xkcd-db ()
-     "Entrypoint to the +org-xkcd sqlite database.
- Initializes and stores the database, and the database connection.
- Performs a database upgrade when required."
-     (unless (and (+xkcd-db--get-connection)
-                  (emacsql-live-p (+xkcd-db--get-connection)))
-       (let* ((db-file (+xkcd-db--get))
-              (init-db (not (file-exists-p db-file))))
-         (make-directory (file-name-directory db-file) t)
-         (let ((conn (emacsql-sqlite db-file)))
-           (set-process-query-on-exit-flag (emacsql-process conn) nil)
-           (puthash (file-truename xkcd-cache-dir)
-                    conn
-                    +xkcd-db--connection)
-           (when init-db
-             (+xkcd-db--init conn)))))
-     (+xkcd-db--get-connection))
-
-   (defun +xkcd-db-query (sql &rest args)
-     "Run SQL query on +org-xkcd database with ARGS.
- SQL can be either the emacsql vector representation, or a string."
-     (if  (stringp sql)
-         (emacsql (+xkcd-db) (apply #'format sql args))
-       (apply #'emacsql (+xkcd-db) sql args)))
-
-   (defun +xkcd-db-read (num)
-     (when-let ((res
-                 (car (+xkcd-db-query [:select * :from xkcds
-                                       :where (= num $s1)]
-                                      num
-                                      :limit 1))))
-       (+xkcd-db-list-to-plist res)))
-
-   (defun +xkcd-db-read-all ()
-     (let ((xkcd-table (make-hash-table :test 'eql :size 4000)))
-       (mapcar (lambda (xkcd-info-list)
-                 (puthash (car xkcd-info-list) (+xkcd-db-list-to-plist xkcd-info-list) xkcd-table))
-               (+xkcd-db-query [:select * :from xkcds]))
-       xkcd-table))
-
-   (defun +xkcd-db-list-to-plist (xkcd-datalist)
-     '(:num ,(nth 0 xkcd-datalist)
-       :year ,(nth 1 xkcd-datalist)
-       :month ,(nth 2 xkcd-datalist)
-       :link ,(nth 3 xkcd-datalist)
-       :news ,(nth 4 xkcd-datalist)
-       :safe-title ,(nth 5 xkcd-datalist)
-       :title ,(nth 6 xkcd-datalist)
-       :transcript ,(nth 7 xkcd-datalist)
-       :alt ,(nth 8 xkcd-datalist)
-       :img ,(nth 9 xkcd-datalist)))
-
-   (defun +xkcd-db-write (data)
-     (+xkcd-db-query [:insert-into xkcds
-                      :values $v1]
-                     (list (vector
-                            (cdr (assoc 'num        data))
-                            (cdr (assoc 'year       data))
-                            (cdr (assoc 'month      data))
-                            (cdr (assoc 'link       data))
-                            (cdr (assoc 'news       data))
-                            (cdr (assoc 'safe_title data))
-                            (cdr (assoc 'title      data))
-                            (cdr (assoc 'transcript data))
-                            (cdr (assoc 'alt        data))
-                            (cdr (assoc 'img        data))
-                            )))))
- #+END_SRC
-*** Extra links
-#+BEGIN_SRC emacs-lisp
-(after! org
-  (org-link-set-parameters "xkcd"
-                           :image-data-fun #'+org-xkcd-image-fn
-                           :follow #'+org-xkcd-open-fn
-                           :export #'+org-xkcd-export
-                           :complete #'+org-xkcd-complete)
-
-  (defun +org-xkcd-open-fn (link)
-    (+org-xkcd-image-fn nil link nil))
-
-  (defun +org-xkcd-image-fn (protocol link description)
-    "Get image data for xkcd num LINK"
-    (let* ((xkcd-info (+xkcd-fetch-info (string-to-number link)))
-           (img (plist-get xkcd-info :img))
-           (alt (plist-get xkcd-info :alt)))
-      (message alt)
-      (+org-image-file-data-fn protocol (xkcd-download img (string-to-number link)) description)))
-
-  (defun +org-xkcd-export (path desc backend _com)
-    "Convert xkcd to html/LaTeX form"
-    (let* ((xkcd-info (+xkcd-fetch-info (string-to-number path)))
-           (img (plist-get xkcd-info :img))
-           (alt (plist-get xkcd-info :alt))
-           (title (plist-get xkcd-info :title))
-           (file (xkcd-download img (string-to-number path))))
-      (cond ((org-export-derived-backend-p backend 'html)
-             (format "<img src='%s' title=\"%s\" alt='%s'>" img (subst-char-in-string ?\" ?“ alt) title))
-            ((org-export-derived-backend-p backend 'latex)
-             (format "\\begin{figure}[!htb]
-  \\centering
-  \\includegraphics[scale=0.4]{%s}
-  \\caption*{\\label{xkcd:%s} %s}
-\\end{figure}" file path (or desc
-                             (format "\\textbf{%s} %s" title alt))))
-            (t (format "https://xkcd.com/%s" path)))))
-
-  (defun +org-xkcd-complete (&optional arg)
-    "Complete xkcd using '+xkcd-stored-info'"
-    (format "xkcd:%d" (+xkcd-select))))
-#+END_SRC
-
 
 ** Zoom
 
@@ -2638,7 +2308,7 @@ Add Keybinding to open counsel-tramp
 *** Speeding up tramp
 Setting hook that turn off slow extensions when you execute counsel-tramp.
 #+BEGIN_SRC emacs-lisp
-(add-hook 'counsel-tramp-pre-command-hook '(lambda () (global-aggressive-indent-mode 0)
+(add-hook 'counsel-tramp-pre-command-hook '(lambda ()
                      (projectile-mode 0)
                      (editorconfig-mode 0)))
 #+END_SRC

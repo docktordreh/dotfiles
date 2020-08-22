@@ -144,9 +144,9 @@
        (javascript +lsp)        ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia             ; a better, faster MATLAB
        ;;kotlin            ; a better, slicker Java(Script)
-       ;;(latex ; writing papers in Emacs has never been so fun
-       ;; +fold ; uses tex-fold to fold latex macros to unicode and make folding hook based
-       ;; )     ; start lsp in tex-mode-hook
+       (latex ; writing papers in Emacs has never been so fun
+        +lsp
+	 )     ; start lsp in tex-mode-hook
        ;;lean
        ;;factor
        ;;ledger            ; an accounting system in Emacs
@@ -200,5 +200,5 @@
        ;;twitter           ; twitter client https://twitter.com/vnought
 
        :config
-       literate
+       ;;literate
        (default +bindings +smartparens))

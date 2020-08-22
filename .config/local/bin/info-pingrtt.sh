@@ -1,10 +1,5 @@
 #!/bin/sh
 
-FZF_DEFAULT_OPTS=""
-LS_COLORS=""
-. "${XDG_CONFIG_HOME:-$HOME/.config}/cache/wal/colors.sh"
-
-
 HOST="$(ip route | grep default | head -n 1 | awk '{print $3}')"
 HOST="${HOST:-1.1.1.1}"
 
@@ -16,11 +11,11 @@ else
 
 	ping=${rtt%.*}
 	if [ "$ping" -lt 50 ]; then
-		rtt_cl="%{F$(echo "$color5" | cut -d '#' -f 2)}ﯱ ""$rtt ms""%{F444444}"
+		rtt_cl="%{F$(echo $HOME/.config/local/bin/xgetcolor.sh 5 | cut -d '#' -f 2)}ﯱ ""$rtt ms""%{F444444}"
 	elif [ "$ping" -lt 150 ]; then
-		rtt_cl="%{F$(echo "$color3" | cut -d '#' -f 2)}ﯳ ""$rtt ms""%{F444444}"
+		rtt_cl="%{F$(echo $HOME/.config/local/bin/xgetcolor.sh 3 | cut -d '#' -f 2)}ﯳ ""$rtt ms""%{F444444}"
 	else
-		rtt_cl="%{F$(echo "$color9" | cut -d '#' -f 2)} ""$rtt ms""%{F444444}"
+		rtt_cl="%{F$(echo $HOME/.config/local/bin/xgetcolor.sh 9 | cut -d '#' -f 2)} ""$rtt ms""%{F444444}"
 	fi
 
 	echo "$rtt_cl"
