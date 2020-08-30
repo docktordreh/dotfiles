@@ -1,4 +1,5 @@
 *.swo
+emacs/
 .auctex-auto/
 *.bbl
 *.pdf
