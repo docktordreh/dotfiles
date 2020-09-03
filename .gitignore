@@ -16,3 +16,9 @@ cronjobs/.croninfo/batteryinfo
 batteryinfo
 .config/zsh/.zcompdump
 .config/cache/*
+libreoffice/
+glib-2.0/
+share/
+qpdfview/
+plugged/
+.local/
