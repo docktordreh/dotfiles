@@ -4,7 +4,7 @@
 * Basics
 
 Quit bspc, return to login screen
-#+BEGIN_SRC text
+#+BEGIN_SRC bash
 super + shift + q
                bspc quit
 #+END_SRC
@@ -14,20 +14,20 @@ super + shift + q
 - super + 1-5 to focus a workspace
 - ctrl + 1-5 to swap workspaces
 - super + shift + 1-5 to move node to desktop
-#+BEGIN_SRC text
+#+BEGIN_SRC bash
 {super,super + shift} + {1,2,3,4,5}
                     bspc {desktop --focus,node -d}  {web,term,chat,code,music}
 #+END_SRC
 
 Focus the node in the given direction
-#+BEGIN_SRC text
+#+BEGIN_SRC bash
 super + {_,shift + }{h,j,k,l}
     bspc node -{f,s} {west,south,north,east}
 #+END_SRC
 * Screenshot
 
 Take a screenshot (interactive)
-#+BEGIN_SRC text
+#+BEGIN_SRC bash
 Print
     flameshot gui -p ~/Pictures/screenshots
 #+END_SRC
@@ -38,7 +38,7 @@ Print
 - super + shift + t: make window pseudo-tiled
 - super + s: make window floating
 - super + f: make window fullscreen
-#+BEGIN_SRC text
+#+BEGIN_SRC bash
 super + {t,shift + t,s,f}
     bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
 #+END_SRC
@@ -47,22 +47,22 @@ super + {t,shift + t,s,f}
 - super + ctrl + x: lock window
 - super + ctrl + y: make window sticky
 - super + ctrl + z: make window private
-#+BEGIN_SRC text
-super + ctrl + {m,x,y,z}
+#+BEGIN_SRC bash
+super + shift + {m,x,y,z}
     bspc node -g {marked,locked,sticky,private}
 #+END_SRC
 
 * File manager
 
 Open vifm in alacritty
-#+BEGIN_SRC text
+#+BEGIN_SRC bash
 super + g
-        alacritty -e bash -c vifm
+        alacritty -e bash -c ~/.config/vifm/scripts/vifmrun
 #+END_SRC
 
 * Reload
 
-#+BEGIN_SRC text
+#+BEGIN_SRC bash
 super + r
     ~/.config/bspwm/bspwmrc && pkill -USR1 -x sxhkd
 #+END_SRC
@@ -72,17 +72,14 @@ super + r
 Open Program Menu
 #+BEGIN_SRC bash
 super + d
-               rofi -show run
+    dmenu_run -fn 'Iosevka Nerd Font Mono-12' -nb '#212337' -nf '#c8d3f5'
 #+END_SRC
-Open SSH Menu
+
+* Unicode Selector
+
 #+BEGIN_SRC bash
-super + a
-               rofi -show ssh
-#+END_SRC
-Open Keepassxc
-#+BEGIN_SRC bash
-super + x
-               rofi-keepassxc -d ~/Daten/cloud/tlaloc/sec/db.kdbx
+super + shift + d
+    ~/.local/bin/dmenuunicode.sh
 #+END_SRC
 
 * Close and kill windows
@@ -97,35 +94,30 @@ super + {_,shift +}w
 * Terminal
 
 Open terminal and attach to existing tmux session
-#+BEGIN_SRC text
+#+BEGIN_SRC bash
 super + Return
                alacritty -e bash -c "(tmux ls | grep -qEv 'attached|scratch' && tmux at) || tmux"
 #+END_SRC
 
 Open terminal without attaching to tmux session
-#+BEGIN_SRC text
+#+BEGIN_SRC bash
 super + shift + Return
                alacritty
 #+END_SRC
 * Emacs
 
 Open Emacs
-#+BEGIN_SRC text
-super + shift + e
-                emacs
+#+BEGIN_SRC bash
+super + e
+                emacsclient -c -a emacs
 #+END_SRC
 
-Open Emacsclient
-#+BEGIN_SRC text
-super + e
-                emacsclient -c
-#+END_SRC
 * Internet
 
-Open vimb
-#+BEGIN_SRC text
+Open firefox
+#+BEGIN_SRC bash
 super + @space
-                vimb searx.neocities.org
+                firefox searx.neocities.org
 #+END_SRC
 # Local Variables:
 # eval: (add-hook 'after-save-hook (lambda () (org-babel-tangle)) nil t)

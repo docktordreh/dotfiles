@@ -17,6 +17,8 @@ dunst &
 
 nm-applet &
 
+emacs --daemon &
+
 bspc config top_padding 25
 
 export MONITOR=$(xrandr -q | grep primary | cut -d' ' -f1)

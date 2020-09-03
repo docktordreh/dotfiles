@@ -11,7 +11,7 @@ Hide mouse when idle
 #+BEGIN_SRC bash
 unclutter &
 #+END_SRC
-Launch simple x hotkey daemon
+Launch simple x-hotkey daemon
 #+BEGIN_SRC bash
 sxhkd &
 #+END_SRC
@@ -38,6 +38,10 @@ dunst &
 Start Network Manager
 #+BEGIN_SRC bash
 nm-applet &
+#+END_SRC
+Launch emacs daemon
+#+BEGIN_SRC bash
+emacs --daemon &
 #+END_SRC
 
 

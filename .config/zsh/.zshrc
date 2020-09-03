@@ -1,4 +1,3 @@
-#!/bin/zsh
 eval $(thefuck --alias)
 
 autoload -Uz compinit

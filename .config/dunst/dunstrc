@@ -1,5 +1,5 @@
 [global]
-    font = Fura Mono 10
+    font = Iosevka Nerd Font Mono 10
 
     # Allow a small subset of html markup:
     #   <b>bold</b>

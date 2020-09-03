@@ -1,42 +1,26 @@
-set vicmd=vim
-
+set vicmd=$EDITOR
+set syscalls
+set nofollowlinks
+set sortnumbers
+set undolevels=100
+set wildmenu
+set wildstyle=popup
+set scrolloff=4
+set ignorecase
+set smartcase
+set nohlsearch
+set incsearch
+set suggestoptions=normal,visual,view,otherpane,keys,marks,registers
 
 colorscheme dracula
 windo normal zo
 
-set timefmt=%m/%d\ %H:%M
+" otf/ttf
 
-set wildmenu
-
-set wildstyle=popup
-set statusline="  Hint: %z%= %A %10u:%-7g %15s %20d  "
-" ------------------------------------------------------------------------------
-
-" The file type is for the default programs to be used with
-" a file extension.
-" :filetype pattern1,pattern2 defaultprogram,program2
-" :fileviewer pattern1,pattern2 consoleviewer
-" The other programs for the file type can be accessed with the :file command
-" The command macros %f, %F, %d, %F may be used in the commands.
-" The %a macro is ignored.  To use a % you must put %%.
-
-" For automated FUSE mounts, you must register an extension with :file[x]type
-" in one of following formats:
-"
-" :filetype extensions FUSE_MOUNT|some_mount_command using %SOURCE_FILE and %DESTINATION_DIR variables
-" %SOURCE_FILE and %DESTINATION_DIR are filled in by vifm at runtime.
-" A sample line might look like this:
-" :filetype *.zip,*.jar,*.war,*.ear FUSE_MOUNT|fuse-zip %SOURCE_FILE %DESTINATION_DIR
-"
-" :filetype extensions FUSE_MOUNT2|some_mount_command using %PARAM and %DESTINATION_DIR variables
-" %PARAM and %DESTINATION_DIR are filled in by vifm at runtime.
-" A sample line might look like this:
-" :filetype *.ssh FUSE_MOUNT2|sshfs %PARAM %DESTINATION_DIR
-" %PARAM value is filled from the first line of file (whole line).
-" Example first line for SshMount filetype: root@127.0.0.1:/
-"
-" You can also add %CLEAR if you want to clear screen before running FUSE
-" program.
+fileviewer *.otf,*.ttf,*.woff
+        \ vifmimg fontpreview %px %py %pw %ph %c
+        \ %pc
+        \ vifmimg clear
 
 " Pdf
 filextype *.pdf zathura %c %i &, apvlv %c, xpdf %c
@@ -111,7 +95,7 @@ filetype *.[1-8] man ./%c
 fileviewer *.[1-8] man ./%c | col -b
 
 " Images
-filetype *.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm
+filextype *.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm
         \ {View in sxiv}
         \ sxiv -ia %f &,
         \ {View in imv}
@@ -218,6 +202,9 @@ fileviewer *.7z 7z l %c
 filextype *.odt,*.doc,*.docx,*.xls,*.xlsx,*.odp,*.pptx libreoffice %f &
 fileviewer *.doc catdoc %c
 fileviewer *.docx docx2txt.pl %f -
+
+map > :!vifmimg inc<CR>
+map < :!vifmimg dec<CR>
 
 " file types
 set classify=' :dir:/, :exe:, :reg:, :link:'

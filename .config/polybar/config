@@ -12,8 +12,7 @@ include-file = ~/.config/polybar/modules.d/date.conf
 include-file = ~/.config/polybar/modules.d/memory.conf
 include-file = ~/.config/polybar/modules.d/mpd.conf
 include-file = ~/.config/polybar/modules.d/eth.conf
-include-file = ~/.config/polybar/modules.d/i3.conf
-include-file = ~/.config/polybar/modules.d/pbweather.conf
+include-file = ~/.config/polybar/modules.d/weather.conf
 include-file = ~/.config/polybar/modules.d/tor.conf
 include-file = ~/.config/polybar/modules.d/wlan.conf
 include-file = ~/.config/polybar/modules.d/pingrtt.conf
@@ -26,13 +25,5 @@ inherit             = bar/base
 top                 = true
 tray-position	    = right
 modules-left        = temperature cpu memory
-#modules-center      = pbweather airquality-index
+modules-center      = weather
 modules-right       = fbattery powermenu
-
-#[bar/bottom]
-#inherit             = bar/base
-#bottom              = true
-#offset-x	    = 35%
-#modules-center      = bspwm
-#width		    = 30%
-#radius	            = 8

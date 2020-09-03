@@ -14,14 +14,23 @@ Print
 super + {t,shift + t,s,f}
     bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
 
-super + ctrl + {m,x,y,z}
+super + shift + {m,x,y,z}
     bspc node -g {marked,locked,sticky,private}
 
 super + g
-        alacritty -e bash -c vifm
+        alacritty -e bash -c ~/.config/vifm/scripts/vifmrun
 
 super + r
     ~/.config/bspwm/bspwmrc && pkill -USR1 -x sxhkd
+
+super + d
+    dmenu_run -fn 'Iosevka Nerd Font Mono-12' -nb '#212337' -nf '#c8d3f5'
+
+super + shift + d
+    ~/.local/bin/dmenuunicode.sh
+
+super + {_,shift +}w
+                bspc node -{c,k}
 
 super + Return
                alacritty -e bash -c "(tmux ls | grep -qEv 'attached|scratch' && tmux at) || tmux"
@@ -29,24 +38,8 @@ super + Return
 super + shift + Return
                alacritty
 
-super + shift + e
-                emacs
-
 super + e
-                emacsclient -c
+                emacsclient -c -a emacs
 
 super + @space
-                vimb searx.neocities.org
-
-#!/usr/bin/sxhkd
-super + d
-               rofi -show run
-
-super + a
-               rofi -show ssh
-
-super + x
-               rofi-keepassxc -d ~/Daten/cloud/tlaloc/sec/db.kdbx
-
-super + {_,shift +}w
-                bspc node -{c,k}
+                firefox searx.neocities.org
