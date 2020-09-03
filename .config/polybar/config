@@ -19,11 +19,12 @@ include-file = ~/.config/polybar/modules.d/pingrtt.conf
 include-file = ~/.config/polybar/modules.d/powermenu.conf
 include-file = ~/.config/polybar/modules.d/xmonad.conf
 include-file = ~/.config/polybar/modules.d/volume.conf
+include-file = ~/.config/polybar/modules.d/news.conf
 
 [bar/top]
 inherit             = bar/base
 top                 = true
 tray-position	    = right
-modules-left        = temperature cpu memory
-modules-center      = weather
-modules-right       = fbattery powermenu
+modules-left        = bspwm-mod temperature cpu memory weather aqi
+modules-center      = bspwm-ws
+modules-right       = date fbattery powermenu
