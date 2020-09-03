@@ -23,17 +23,17 @@ if [ -n "$aqi" ]; then
 		aqi=$(echo "$aqi" | jq '.data.aqi')
 
 		if [ "$aqi" -lt 50 ]; then
-			aqi_cl="%{F$(./xgetcolor.sh 5 | cut -d '#' -f 2)}滑 ""$aqi""%{Ff1f1f1}"
+			aqi_cl="%{F#C2E78C}滑 ""$aqi""%{Ff1f1f1}"
 		elif [ "$aqi" -lt 100 ]; then
-			aqi_cl="%{F$(./xgetcolor.sh 3 | cut -d '#' -f 2)}滑 ""$aqi""%{Ff1f1f1}"
+			aqi_cl="%{F#FEC676}滑 ""$aqi""%{Ff1f1f1}"
 		elif [ "$aqi" -lt 150 ]; then
-			aqi_cl="%{F$(./xgetcolor.sh 4 | cut -d '#' -f 2)}滑 ""$aqi""%{Ff1f1f1}"
+			aqi_cl="%{F#FFC66A}滑 ""$aqi""%{Ff1f1f1}"
 		elif [ "$aqi" -lt 200 ]; then
-			aqi_cl="%{F$(./xgetcolor.sh 4 | cut -d '#' -f 2)}滑 ""$aqi""%{Ff1f1f1}"
+			aqi_cl="%{F#FE747E}滑 ""$aqi""%{Ff1f1f1}"
 		elif [ "$aqi" -lt 300 ]; then
-			aqi_cl="%{F$(./xgetcolor.sh 4 | cut -d '#' -f 2)}滑 ""$aqi""%{Ff1f1f1}"
+			aqi_cl="%{F#FB687C}滑 ""$aqi""%{Ff1f1f1}"
 		else
-			aqi_cl="%{F$(./xgetcolor.sh 9 | cut -d '#' -f 2)}滑 ""$aqi""%{Ff1f1f1}"
+			aqi_cl="%{F#BF98FE}滑 ""$aqi""%{Ff1f1f1}"
 		fi
 		echo "$aqi_cl"
 	else
