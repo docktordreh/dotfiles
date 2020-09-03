@@ -67,10 +67,43 @@ bspc config remove_unplugged_monitors true
 #+END_SRC
 * Rules
 
+#+BEGIN_SRC bash
+bspc rule -r '*'
+#+END_SRC
+
 ** Emacs
 
 #+BEGIN_SRC bash
-bspc rule -a Emacs state=tiled
+bspc rule -a Emacs split_ratio=0.28 state=tiled
+bspc rule -a 'Emacs:org*' state=floating
+bspc rule -a 'Emacs:scratch' state=floating
+bspc rule -a '*:scratch' state=floating sticky=on center=on border=off rectangle=1000x800+0+0
+#+END_SRC
+
+** Pinentry
+
+#+BEGIN_SRC bash
+bspc rule -a Pinentry state=floating center=on
+#+END_SRC
+
+** Firefox
+
+#+BEGIN_SRC bash
+bspc rule -a Firefox split_ratio=0.32
+#+END_SRC
+
+** Feh
+
+#+BEGIN_SRC bash
+bspc rule -a feh state=fullscreen
+#+END_SRC
+
+* For outsourcing
+
+#+BEGIN_SRC bash
+for file in $XDG_CONFIG_HOME/bspwm/rc.d/*; do
+  source "$file"
+done
 #+END_SRC
 
 # Local Variables:
