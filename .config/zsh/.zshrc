@@ -36,6 +36,8 @@ bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -v '^?' backward-delete-char
+bindkey jk vi-cmd-mode
+bindkey -s jk "\e"
 
 zle -N zle-keymap-select
 zle-line-init() {
