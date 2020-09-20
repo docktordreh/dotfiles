@@ -195,9 +195,9 @@
       org-archive-location (concat org-directory ".archive/$s::"))
 ;; Org:1 ends here
 
-;; [[file:config.org::*Org][Org:2]]
+;; [[file:config.org::*Symbol mapping][Symbol mapping:1]]
 (use-package! org
-;; Org:2 ends here
+;; Symbol mapping:1 ends here
 
 ;; [[file:config.org::*Configuring org][Configuring org:1]]
   :config
@@ -207,7 +207,14 @@
 (setq
   org-ellipsis " ▼ "
   org-superstar-headline-bullets-list '("✿" "■" "◆" "▲" "#")
-)
+  org-priority-highest ?A
+  org-priority-lowest ?E
+  org-priority-faces
+  '((?A . 'all-the-icons-red)
+    (?B . 'all-the-icons-orange)
+    (?C . 'all-the-icons-yellow)
+    (?D . 'all-the-icons-green)
+    (?E . 'all-the-icons-blue)))
 ;; Org Style:1 ends here
 
 ;; [[file:config.org::*Org Style][Org Style:2]]
@@ -268,19 +275,18 @@
               :pending       "◼"
               :checkedbox    "☑"
               :list_property "∷"
-              :results       "R"
-              :property      "P"
-              :properties    "P"
+              :results       "🠶"
+              :property      "☸"
+              :properties    "⚙"
               :end           "∎"
-              :options       "O"
-              :title         "T"
-              :subtitle      "ST"
-              :author        "A"
-              :date          "D"
-              :latex_header  "LH"
-              :latex_class   "LC"
-              :beamer_header "BH"
-              :html_head     "HH"
+              :options       "⌥"
+              :title         "𝙏"
+              :subtitle      "𝙩"
+              :author        "𝘼"
+              :date          "𝘿"
+              :latex_header  "⇥"
+              :latex_class   "🄲"
+              :beamer_header "↠"
               :begin_quote   "❮"
               :end_quote     "❯"
               :begin_export  "⬇"
@@ -291,6 +297,8 @@
               :priority_d   ,(propertize "⬇" 'face 'all-the-icons-green)
               :priority_e   ,(propertize "❓" 'face 'all-the-icons-blue)
               :em_dash       "—"))
+    (plist-put +ligatures-extra-symbols
+               :name "›")
   (set-ligatures! 'org-mode
     :merge t
     :checkbox      "[ ]"
@@ -308,7 +316,6 @@
     :date          "#+DATE:"
     :latex_class   "#+LATEX_CLASS:"
     :latex_header  "#+LATEX_HEADER:"
-    :html_head     "#+HTML_HEAD:"
     :beamer_header "#+BEAMER_HEADER:"
     :begin_quote   "#+BEGIN_QUOTE"
     :end_quote     "#+END_QUOTE"
@@ -320,8 +327,6 @@
     :priority_d    "[#D]"
     :priority_e    "[#E]"
     :em_dash       "---")
-    (plist-put +ligatures-extra-symbols
-               :name "›")
 ;; Org Style:11 ends here
 
 ;; [[file:config.org::*Indentation][Indentation:1]]
@@ -359,20 +364,84 @@
      :actions '(insert))
 ;; Smart parentheses:1 ends here
 
-;; [[file:config.org::*Capture][Capture:1]]
-(require 'org-roam-protocol)
-(setq org-capture-templates `(
-    ("p" "Protocol" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
-        "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
-    ("L" "Protocol Link" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
-        "* %? [[%:link][%:description]] \nCaptured On: %U")
-))
-;; Capture:1 ends here
-
 ;; [[file:config.org::*Refile][Refile:1]]
 (global-set-key (kbd "C-c o")
   (lambda () (interactive) (find-file (concat org-directory "refile.org"))))
 ;; Refile:1 ends here
+
+;; [[file:config.org::*Org Super Agenda][Org Super Agenda:1]]
+(use-package! org-super-agenda
+  :commands (org-super-agenda-mode))
+(after! org-agenda
+  (org-super-agenda-mode))
+
+(setq org-agenda-skip-scheduled-if-done t
+      org-agenda-skip-deadline-if-done t
+      org-agenda-include-deadlines t
+      org-agenda-block-separator nil
+      org-agenda-tags-column 100 ;; from testing this seems to be a good value
+      org-agenda-compact-blocks t)
+
+(setq org-agenda-custom-commands
+      '(("o" "Overview"
+         ((agenda "" ((org-agenda-span 'day)
+                      (org-super-agenda-groups
+                       '((:name "Today"
+                                :time-grid t
+                                :date today
+                                :todo "TODAY"
+                                :scheduled today
+                                :order 1)))))
+          (alltodo "" ((org-agenda-overriding-header "")
+                       (org-super-agenda-groups
+                        '((:name "Next to do"
+                                 :todo "NEXT"
+                                 :order 1)
+                          (:name "Important"
+                                 :tag "Important"
+                                 :priority "A"
+                                 :order 6)
+                          (:name "Due Today"
+                                 :deadline today
+                                 :order 2)
+                          (:name "Due Soon"
+                                 :deadline future
+                                 :order 8)
+                          (:name "Overdue"
+                                 :deadline past
+                                 :face error
+                                 :order 7)
+                          (:name "Assignments"
+                                 :tag "Assignment"
+                                 :order 10)
+                          (:name "Issues"
+                                 :tag "Issue"
+                                 :order 12)
+                          (:name "Emacs"
+                                 :tag "Emacs"
+                                 :order 13)
+                          (:name "Projects"
+                                 :tag "Project"
+                                 :order 14)
+                          (:name "Research"
+                                 :tag "Research"
+                                 :order 15)
+                          (:name "To read"
+                                 :tag "Read"
+                                 :order 30)
+                          (:name "Waiting"
+                                 :todo "WAITING"
+                                 :order 20)
+                          (:name "University"
+                                 :tag "uni"
+                                 :order 32)
+                          (:name "Trivial"
+                                 :priority<= "E"
+                                 :tag ("Trivial" "Unimportant")
+                                 :todo ("SOMEDAY" )
+                                 :order 90)
+                          (:discard (:tag ("Chore" "Routine" "Daily")))))))))))
+;; Org Super Agenda:1 ends here
 
 ;; [[file:config.org::*Org Chef][Org Chef:1]]
 (use-package! org-chef
@@ -419,19 +488,15 @@
 ;; Org-Latex:3 ends here
 
 ;; [[file:config.org::*Org-Latex][Org-Latex:4]]
-(setq org-export-default-language "de")
-;; Org-Latex:4 ends here
-
-;; [[file:config.org::*Org-Latex][Org-Latex:5]]
 (setq
  org-latex-pdf-process
  '("lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
    "biber %b"
    "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
    "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
-;; Org-Latex:5 ends here
+;; Org-Latex:4 ends here
 
-;; [[file:config.org::*Org-Latex][Org-Latex:6]]
+;; [[file:config.org::*Org-Latex][Org-Latex:5]]
 '(org-preview-latex-process-alist
   (quote
    ((dvipng :programs
@@ -472,9 +537,9 @@
                  ("xelatex -no-pdf -interaction nonstopmode -output-directory %o %f")
                  :image-converter
                  ("convert -density %D -trim -antialias %f -quality 100 %O")))))
-;; Org-Latex:6 ends here
+;; Org-Latex:5 ends here
 
-;; [[file:config.org::*Org-Latex][Org-Latex:7]]
+;; [[file:config.org::*Org-Latex][Org-Latex:6]]
 (after! ox-latex
   (add-to-list 'org-latex-classes
                '("koma-article"
@@ -484,9 +549,9 @@
                  ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
-;; Org-Latex:7 ends here
+;; Org-Latex:6 ends here
 
-;; [[file:config.org::*Org-Latex][Org-Latex:8]]
+;; [[file:config.org::*Org-Latex][Org-Latex:7]]
 (add-to-list 'org-latex-classes
              '("mimosis"
                "\\documentclass{mimosis}
@@ -499,9 +564,9 @@
                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                ("\\mboxparagraph{%s}" . "\\mboxparagraph*{%s}")
                ("\\mboxsubparagraph{%s}" . "\\mboxsubparagraph*{%s}")))
-;; Org-Latex:8 ends here
+;; Org-Latex:7 ends here
 
-;; [[file:config.org::*Org-Latex][Org-Latex:9]]
+;; [[file:config.org::*Org-Latex][Org-Latex:8]]
 ;; Elsarticle is Elsevier class for publications.
 (add-to-list 'org-latex-classes
              '("elsarticle"
@@ -514,9 +579,9 @@
                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                ("\\paragraph{%s}" . "\\paragraph*{%s}")
                ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-;; Org-Latex:9 ends here
+;; Org-Latex:8 ends here
 
-;; [[file:config.org::*Org-Latex][Org-Latex:10]]
+;; [[file:config.org::*Org-Latex][Org-Latex:9]]
 (add-to-list 'org-latex-classes
              '("koma-book"
                "\\documentclass{scrbook}
@@ -529,6 +594,51 @@
                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                ("\\mboxparagraph{%s}" . "\\mboxparagraph*{%s}")
                ("\\mboxsubparagraph{%s}" . "\\mboxsubparagraph*{%s}")))
+;; Org-Latex:9 ends here
+
+;; [[file:config.org::*Org-Latex][Org-Latex:10]]
+(add-to-list 'org-latex-classes
+ '("fancy-article"
+                 "\\documentclass{scrartcl}\n\
+\\usepackage[T1]{fontenc}\n\
+\\usepackage[osf,largesc,helvratio=0.9]{newpxtext}\n\
+\\usepackage[scale=0.92]{sourcecodepro}\n\
+\\usepackage[varbb]{newpxmath}\n\
+
+\\usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=2000]{microtype}\n\
+\\usepackage{xcolor}\n\
+\\usepackage{booktabs}
+
+\\usepackage{subcaption}
+\\usepackage[hypcap=true]{caption}
+\\setkomafont{caption}{\\sffamily\\small}
+\\setkomafont{captionlabel}{\\upshape\\bfseries}
+\\captionsetup{justification=raggedright,singlelinecheck=true}
+\\setcapindent{0pt}
+
+\\setlength{\\parskip}{\\baselineskip}\n\
+\\setlength{\\parindent}{0pt}\n\
+
+\\usepackage{pifont}
+\\newcommand{\\checkboxUnchecked}{$\\square$}
+\\newcommand{\\checkboxTransitive}{\\rlap{\\raisebox{0.0ex}{\\hspace{0.35ex}\\Large\\textbf -}}$\\square$}
+\\newcommand{\\checkboxChecked}{\\rlap{\\raisebox{0.2ex}{\\hspace{0.35ex}\\scriptsize \\ding{56}}}$\\square$}
+
+\\newenvironment{warning}
+    {\\begin{center}
+    \\begin{tabular}{rp{0.9\\textwidth}}
+    \\ding{82} & \\textbf{Warning} \\\\ &
+    }
+    {
+    \\end{tabular}
+    \\end{center}
+    }
+"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 ;; Org-Latex:10 ends here
 
 ;; [[file:config.org::*Org-Latex][Org-Latex:11]]
@@ -588,8 +698,583 @@
 ;; Org-Latex:12 ends here
 
 ;; [[file:config.org::*Org-Latex][Org-Latex:13]]
-  )
+(setq org-highlight-latex-and-related '(native script entities))
+
+
+(setq org-format-latex-header "\\documentclass{scrarticle}
+\\usepackage[usenames]{color}
+
+\\usepackage[T1]{fontenc}
+\\usepackage{mathtools}
+\\usepackage{textcomp,amssymb}
+\\usepackage[makeroom]{cancel}
+
+\\usepackage{booktabs}
+
+\\pagestyle{empty}             % do not remove
+% The settings below are copied from fullpage.sty
+\\setlength{\\textwidth}{\\paperwidth}
+\\addtolength{\\textwidth}{-3cm}
+\\setlength{\\oddsidemargin}{1.5cm}
+\\addtolength{\\oddsidemargin}{-2.54cm}
+\\setlength{\\evensidemargin}{\\oddsidemargin}
+\\setlength{\\textheight}{\\paperheight}
+\\addtolength{\\textheight}{-\\headheight}
+\\addtolength{\\textheight}{-\\headsep}
+\\addtolength{\\textheight}{-\\footskip}
+\\addtolength{\\textheight}{-3cm}
+\\setlength{\\topmargin}{1.5cm}
+\\addtolength{\\topmargin}{-2.54cm}
+% my custom stuff
+\\usepackage{arev}
+\\usepackage{arevmath}")
 ;; Org-Latex:13 ends here
+
+;; [[file:config.org::*Org-Latex][Org-Latex:14]]
+(after! ox
+  (defvar ox-chameleon-base-class "fancy-article"
+    "The base class that chameleon builds on")
+
+  (defvar ox-chameleon--p nil
+    "Used to indicate whether the current export is trying to blend in. Set just before being accessed.")
+
+  ;; (setf (alist-get :filter-latex-class
+  ;;                  (org-export-backend-filters
+  ;;                   (org-export-get-backend 'latex)))
+  ;;       'ox-chameleon-latex-class-detector-filter)
+
+  ;; (defun ox-chameleon-latex-class-detector-filter (info backend)
+  ;;   ""
+  ;;   (setq ox-chameleon--p (when (equal (plist-get info :latex-class)
+  ;;                                      "chameleon")
+  ;;                           (plist-put info :latex-class ox-chameleon-base-class)
+  ;;                           t)))
+
+  ;; TODO make this less hacky. One ideas was as follows
+  ;; (map-put (org-export-backend-filters (org-export-get-backend 'latex))
+  ;;           :filter-latex-class 'ox-chameleon-latex-class-detector-filter))
+  ;; Never seemed to execute though
+  (defadvice! ox-chameleon-org-latex-detect (orig-fun info)
+    :around #'org-export-install-filters
+    (setq ox-chameleon--p (when (equal (plist-get info :latex-class)
+                                       "chameleon")
+                            (plist-put info :latex-class ox-chameleon-base-class)
+                            t))
+    (funcall orig-fun info))
+
+  (defadvice! ox-chameleon-org-latex-export (orig-fn info &optional template snippet?)
+    :around #'org-latex-make-preamble
+    (funcall orig-fn info)
+    (if (not ox-chameleon--p)
+        (funcall orig-fn info template snippet?)
+      (concat (funcall orig-fn info template snippet?)
+              (ox-chameleon-generate-colourings))))
+
+  (defun ox-chameleon-generate-colourings ()
+    (apply #'format
+           "%% make document follow Emacs theme
+\\definecolor{bg}{HTML}{%s}
+\\definecolor{fg}{HTML}{%s}
+
+\\definecolor{red}{HTML}{%s}
+\\definecolor{orange}{HTML}{%s}
+\\definecolor{green}{HTML}{%s}
+\\definecolor{teal}{HTML}{%s}
+\\definecolor{yellow}{HTML}{%s}
+\\definecolor{blue}{HTML}{%s}
+\\definecolor{dark-blue}{HTML}{%s}
+\\definecolor{magenta}{HTML}{%s}
+\\definecolor{violet}{HTML}{%s}
+\\definecolor{cyan}{HTML}{%s}
+\\definecolor{dark-cyan}{HTML}{%s}
+
+\\definecolor{level1}{HTML}{%s}
+\\definecolor{level2}{HTML}{%s}
+\\definecolor{level3}{HTML}{%s}
+\\definecolor{level4}{HTML}{%s}
+\\definecolor{level5}{HTML}{%s}
+\\definecolor{level6}{HTML}{%s}
+\\definecolor{level7}{HTML}{%s}
+\\definecolor{level8}{HTML}{%s}
+
+\\definecolor{link}{HTML}{%s}
+\\definecolor{cite}{HTML}{%s}
+\\definecolor{itemlabel}{HTML}{%s}
+\\definecolor{code}{HTML}{%s}
+\\definecolor{verbatim}{HTML}{%s}
+
+\\pagecolor{bg}
+\\color{fg}
+
+\\addtokomafont{section}{\\color{level1}}
+\\newkomafont{sectionprefix}{\\color{level1}}
+\\addtokomafont{subsection}{\\color{level2}}
+\\newkomafont{subsectionprefix}{\\color{level2}}
+\\addtokomafont{subsubsection}{\\color{level3}}
+\\newkomafont{subsubsectionprefix}{\\color{level3}}
+\\addtokomafont{paragraph}{\\color{level4}}
+\\newkomafont{paragraphprefix}{\\color{level4}}
+\\addtokomafont{subparagraph}{\\color{level5}}
+\\newkomafont{subparagraphprefix}{\\color{level5}}
+
+\\renewcommand{\\labelitemi}{\\textcolor{itemlabel}{\\textbullet}}
+\\renewcommand{\\labelitemii}{\\textcolor{itemlabel}{\\normalfont\\bfseries \\textendash}}
+\\renewcommand{\\labelitemiii}{\\textcolor{itemlabel}{\\textasteriskcentered}}
+\\renewcommand{\\labelitemiv}{\\textcolor{itemlabel}{\\textperiodcentered}}
+
+\\renewcommand{\\labelenumi}{\\textcolor{itemlabel}{\\theenumi.}}
+\\renewcommand{\\labelenumii}{\\textcolor{itemlabel}{(\\theenumii)}}
+\\renewcommand{\\labelenumiii}{\\textcolor{itemlabel}{\\theenumiii.}}
+\\renewcommand{\\labelenumiv}{\\textcolor{itemlabel}{\\theenumiv.}}
+
+\\DeclareTextFontCommand{\\texttt}{\\color{code}\\ttfamily}
+\\makeatletter
+\\def\\verbatim@font{\\color{verbatim}\\normalfont\\ttfamily}
+\\makeatother
+%% end customisations
+"
+           (mapcar (doom-rpartial #'substring 1)
+                   (list
+                    (face-attribute 'solaire-default-face :background)
+                    (face-attribute 'default :foreground)
+                    ;;
+                    (doom-color 'red)
+                    (doom-color 'orange)
+                    (doom-color 'green)
+                    (doom-color 'teal)
+                    (doom-color 'yellow)
+                    (doom-color 'blue)
+                    (doom-color 'dark-blue)
+                    (doom-color 'magenta)
+                    (doom-color 'violet)
+                    (doom-color 'cyan)
+                    (doom-color 'dark-cyan)
+                    ;;
+                    (face-attribute 'outline-1 :foreground)
+                    (face-attribute 'outline-2 :foreground)
+                    (face-attribute 'outline-3 :foreground)
+                    (face-attribute 'outline-4 :foreground)
+                    (face-attribute 'outline-5 :foreground)
+                    (face-attribute 'outline-6 :foreground)
+                    (face-attribute 'outline-7 :foreground)
+                    (face-attribute 'outline-8 :foreground)
+                    ;;
+                    (face-attribute 'link :foreground)
+                    (or (face-attribute 'org-ref-cite-face :foreground) (doom-color 'yellow))
+                    (face-attribute 'org-list-dt :foreground)
+                    (face-attribute 'org-code :foreground)
+                    (face-attribute 'org-verbatim :foreground)
+                    ))))
+  )
+;; Org-Latex:14 ends here
+
+;; [[file:config.org::*Org-Latex][Org-Latex:15]]
+  )
+;; Org-Latex:15 ends here
+
+;; [[file:config.org::*Org Capture][Org Capture:1]]
+(use-package! doct
+  :commands (doct))
+
+(require 'org-roam-protocol)
+;; Org Capture:1 ends here
+
+;; [[file:config.org::*Org Capture][Org Capture:2]]
+(after! org-capture
+  (defun org-capture-select-template-prettier (&optional keys)
+    "Select a capture template, in a prettier way than default
+  Lisp programs can force the template by setting KEYS to a string."
+    (let ((org-capture-templates
+           (or (org-contextualize-keys
+                (org-capture-upgrade-templates org-capture-templates)
+                org-capture-templates-contexts)
+               '(("t" "Task" entry (file+headline "" "Tasks")
+                  "* TODO %?\n  %u\n  %a")))))
+      (if keys
+          (or (assoc keys org-capture-templates)
+              (error "No capture template referred to by \"%s\" keys" keys))
+        (org-mks org-capture-templates
+                 "Select a capture template\n━━━━━━━━━━━━━━━━━━━━━━━━━"
+                 "Template key: "
+                 `(("q" ,(concat (all-the-icons-octicon "stop" :face 'all-the-icons-red :v-adjust 0.01) "\tAbort")))))))
+
+
+  (advice-add 'org-capture-select-template :override #'org-capture-select-template-prettier)
+
+  (defun org-mks-pretty (table title &optional prompt specials)
+    "Select a member of an alist with multiple keys. Prettified.
+
+  TABLE is the alist which should contain entries where the car is a string.
+  There should be two types of entries.
+
+  1. prefix descriptions like (\"a\" \"Description\")
+     This indicates that `a' is a prefix key for multi-letter selection, and
+     that there are entries following with keys like \"ab\", \"ax\"…
+
+  2. Select-able members must have more than two elements, with the first
+     being the string of keys that lead to selecting it, and the second a
+     short description string of the item.
+
+  The command will then make a temporary buffer listing all entries
+  that can be selected with a single key, and all the single key
+  prefixes.  When you press the key for a single-letter entry, it is selected.
+  When you press a prefix key, the commands (and maybe further prefixes)
+  under this key will be shown and offered for selection.
+
+  TITLE will be placed over the selection in the temporary buffer,
+  PROMPT will be used when prompting for a key.  SPECIALS is an
+  alist with (\"key\" \"description\") entries.  When one of these
+  is selected, only the bare key is returned."
+    (save-window-excursion
+      (let ((inhibit-quit t)
+      (buffer (org-switch-to-buffer-other-window "*Org Select*"))
+      (prompt (or prompt "Select: "))
+      case-fold-search
+      current)
+        (unwind-protect
+      (catch 'exit
+        (while t
+          (setq-local evil-normal-state-cursor (list nil))
+          (erase-buffer)
+          (insert title "\n\n")
+          (let ((des-keys nil)
+          (allowed-keys '("\C-g"))
+          (tab-alternatives '("\s" "\t" "\r"))
+          (cursor-type nil))
+      ;; Populate allowed keys and descriptions keys
+      ;; available with CURRENT selector.
+      (let ((re (format "\\`%s\\(.\\)\\'"
+            (if current (regexp-quote current) "")))
+            (prefix (if current (concat current " ") "")))
+        (dolist (entry table)
+          (pcase entry
+            ;; Description.
+            (`(,(and key (pred (string-match re))) ,desc)
+             (let ((k (match-string 1 key)))
+         (push k des-keys)
+         ;; Keys ending in tab, space or RET are equivalent.
+         (if (member k tab-alternatives)
+             (push "\t" allowed-keys)
+           (push k allowed-keys))
+         (insert (propertize prefix 'face 'font-lock-comment-face) (propertize k 'face 'bold) (propertize "›" 'face 'font-lock-comment-face) "  " desc "…" "\n")))
+            ;; Usable entry.
+            (`(,(and key (pred (string-match re))) ,desc . ,_)
+             (let ((k (match-string 1 key)))
+         (insert (propertize prefix 'face 'font-lock-comment-face) (propertize k 'face 'bold) "   " desc "\n")
+         (push k allowed-keys)))
+            (_ nil))))
+      ;; Insert special entries, if any.
+      (when specials
+        (insert "─────────────────────────\n")
+        (pcase-dolist (`(,key ,description) specials)
+          (insert (format "%s   %s\n" (propertize key 'face '(bold all-the-icons-red)) description))
+          (push key allowed-keys)))
+      ;; Display UI and let user select an entry or
+      ;; a sub-level prefix.
+      (goto-char (point-min))
+      (unless (pos-visible-in-window-p (point-max))
+        (org-fit-window-to-buffer))
+      (let ((pressed (org--mks-read-key allowed-keys prompt)))
+        (setq current (concat current pressed))
+        (cond
+         ((equal pressed "\C-g") (user-error "Abort"))
+         ;; Selection is a prefix: open a new menu.
+         ((member pressed des-keys))
+         ;; Selection matches an association: return it.
+         ((let ((entry (assoc current table)))
+            (and entry (throw 'exit entry))))
+         ;; Selection matches a special entry: return the
+         ;; selection prefix.
+         ((assoc current specials) (throw 'exit current))
+         (t (error "No entry available")))))))
+    (when buffer (kill-buffer buffer))))))
+  (advice-add 'org-mks :override #'org-mks-pretty)
+
+
+
+  (defun +doct-icon-declaration-to-icon (declaration)
+    "Convert :icon declaration to icon"
+    (let ((name (pop declaration))
+          (set  (intern (concat "all-the-icons-" (plist-get declaration :set))))
+          (face (intern (concat "all-the-icons-" (plist-get declaration :color))))
+          (v-adjust (or (plist-get declaration :v-adjust) 0.01)))
+      (apply set `(,name :face ,face :v-adjust ,v-adjust))))
+
+  (defun +doct-iconify-capture-templates (groups)
+    "Add declaration's :icon to each template group in GROUPS."
+    (let ((templates (doct-flatten-lists-in groups)))
+      (setq doct-templates (mapcar (lambda (template)
+                                     (when-let* ((props (nthcdr (if (= (length template) 4) 2 5) template))
+                                                 (spec (plist-get (plist-get props :doct) :icon)))
+                                       (setf (nth 1 template) (concat (+doct-icon-declaration-to-icon spec)
+                                                                      "\t"
+                                                                      (nth 1 template))))
+                                     template)
+                                   templates))))
+
+  (setq doct-after-conversion-functions '(+doct-iconify-capture-templates))
+
+  (add-transient-hook! 'org-capture-select-template
+    (setq org-capture-templates
+          (doct `(("Personal todo" :keys "t"
+                   :icon ("checklist" :set "octicon" :color "green")
+                   :file +org-capture-todo-file
+                   :prepend t
+                   :headline "Inbox"
+                   :type entry
+                   :template ("* TODO %?"
+                              "%i %a")
+                   )
+                  ("Personal note" :keys "n"
+                   :icon ("sticky-note-o" :set "faicon" :color "green")
+                   :file +org-capture-todo-file
+                   :prepend t
+                   :headline "Inbox"
+                   :type entry
+                   :template ("* %?"
+                              "%i %a")
+                   )
+                  ("Email" :keys "e"
+                   :icon ("envelope" :set "faicon" :color "blue")
+                   :file +org-capture-todo-file
+                   :prepend t
+                   :headline "Inbox"
+                   :type entry
+                   :template ("* TODO %^{type|reply to|contact} %\\3 %? :email:"
+                              "Send an email %^{urgancy|soon|ASAP|anon|at some point|eventually} to %^{recipiant}"
+                              "about %^{topic}"
+                              "%U %i %a"))
+                  ("Interesting" :keys "i"
+                   :icon ("eye" :set "faicon" :color "lcyan")
+                   :file +org-capture-todo-file
+                   :prepend t
+                   :headline "Interesting"
+                   :type entry
+                   :template ("* [ ] %{desc}%? :%{i-type}:"
+                              "%i %a")
+                   :children (("Webpage" :keys "w"
+                               :icon ("globe" :set "faicon" :color "green")
+                               :desc "%(org-cliplink-capture) "
+                               :i-type "read:web"
+                               )
+                              ("Article" :keys "a"
+                               :icon ("file-text" :set "octicon" :color "yellow")
+                               :desc ""
+                               :i-type "read:reaserch"
+                               )
+                              ("\tRecipie" :keys "r"
+                               :icon ("spoon" :set "faicon" :color "dorange")
+                               :file +org-capture-recipies
+                               :headline "Unsorted"
+                               :template "%(org-chef-get-recipe-from-url)"
+                               )
+                              ("Information" :keys "i"
+                               :icon ("info-circle" :set "faicon" :color "blue")
+                               :desc ""
+                               :i-type "read:info"
+                               )
+                              ("Idea" :keys "I"
+                               :icon ("bubble_chart" :set "material" :color "silver")
+                               :desc ""
+                               :i-type "idea"
+                               )))
+                  ("Tasks" :keys "k"
+                   :icon ("inbox" :set "octicon" :color "yellow")
+                   :file +org-capture-todo-file
+                   :prepend t
+                   :headline "Tasks"
+                   :type entry
+                   :template ("* TODO %? %^G%{extra}"
+                              "%i %a")
+                   :children (("General Task" :keys "k"
+                               :icon ("inbox" :set "octicon" :color "yellow")
+                               :extra ""
+                               )
+                              ("Task with deadline" :keys "d"
+                               :icon ("timer" :set "material" :color "orange" :v-adjust -0.1)
+                               :extra "\nDEADLINE: %^{Deadline:}t"
+                               )
+                              ("Scheduled Task" :keys "s"
+                               :icon ("calendar" :set "octicon" :color "orange")
+                               :extra "\nSCHEDULED: %^{Start time:}t"
+                               )
+                              ))
+                ("Project" :keys "p"
+                 :icon ("repo" :set "octicon" :color "silver")
+                   :prepend t
+                   :type entry
+                   :headline "Inbox"
+                   :template ("* %{time-or-todo} %?"
+                              "%i"
+                              "%a")
+                   :file ""
+                   :custom (:time-or-todo "")
+                   :children (("Project-local todo" :keys "t"
+                               :icon ("checklist" :set "octicon" :color "green")
+                               :time-or-todo "TODO"
+                               :file +org-capture-project-todo-file)
+                              ("Project-local note" :keys "n"
+                               :icon ("sticky-note" :set "faicon" :color "yellow")
+                               :time-or-todo "%U"
+                               :file +org-capture-project-notes-file)
+                              ("Project-local changelog" :keys "c"
+                               :icon ("list" :set "faicon" :color "blue")
+                               :time-or-todo "%U"
+                               :heading "Unreleased"
+                               :file +org-capture-project-changelog-file))
+                   )
+                  ("\tCentralised project templates"
+                   :keys "o"
+                   :type entry
+                   :prepend t
+                   :template ("* %{time-or-todo} %?"
+                              "%i"
+                              "%a")
+                   :children (("Project todo"
+                               :keys "t"
+                               :prepend nil
+                               :time-or-todo "TODO"
+                               :heading "Tasks"
+                               :file +org-capture-central-project-todo-file)
+                              ("Project note"
+                               :keys "n"
+                               :time-or-todo "%U"
+                               :heading "Notes"
+                               :file +org-capture-central-project-notes-file)
+                              ("Project changelog"
+                               :keys "c"
+                               :time-or-todo "%U"
+                               :heading "Unreleased"
+                               :file +org-capture-central-project-changelog-file))
+                   ))))))
+;; Org Capture:2 ends here
+
+;; [[file:config.org::*Org Capture][Org Capture:3]]
+(defun org-capture-select-template-prettier (&optional keys)
+  "Select a capture template, in a prettier way than default
+Lisp programs can force the template by setting KEYS to a string."
+  (let ((org-capture-templates
+         (or (org-contextualize-keys
+              (org-capture-upgrade-templates org-capture-templates)
+              org-capture-templates-contexts)
+             '(("t" "Task" entry (file+headline "" "Tasks")
+                "* TODO %?\n  %u\n  %a")))))
+    (if keys
+        (or (assoc keys org-capture-templates)
+            (error "No capture template referred to by \"%s\" keys" keys))
+      (org-mks org-capture-templates
+               "Select a capture template\n━━━━━━━━━━━━━━━━━━━━━━━━━"
+               "Template key: "
+               `(("q" ,(concat (all-the-icons-octicon "stop" :face 'all-the-icons-red :v-adjust 0.01) "\tAbort")))))))
+(advice-add 'org-capture-select-template :override #'org-capture-select-template-prettier)
+
+(defun org-mks-pretty (table title &optional prompt specials)
+  "Select a member of an alist with multiple keys. Prettified.
+
+TABLE is the alist which should contain entries where the car is a string.
+There should be two types of entries.
+
+1. prefix descriptions like (\"a\" \"Description\")
+   This indicates that `a' is a prefix key for multi-letter selection, and
+   that there are entries following with keys like \"ab\", \"ax\"…
+
+2. Select-able members must have more than two elements, with the first
+   being the string of keys that lead to selecting it, and the second a
+   short description string of the item.
+
+The command will then make a temporary buffer listing all entries
+that can be selected with a single key, and all the single key
+prefixes.  When you press the key for a single-letter entry, it is selected.
+When you press a prefix key, the commands (and maybe further prefixes)
+under this key will be shown and offered for selection.
+
+TITLE will be placed over the selection in the temporary buffer,
+PROMPT will be used when prompting for a key.  SPECIALS is an
+alist with (\"key\" \"description\") entries.  When one of these
+is selected, only the bare key is returned."
+  (save-window-excursion
+    (let ((inhibit-quit t)
+    (buffer (org-switch-to-buffer-other-window "*Org Select*"))
+    (prompt (or prompt "Select: "))
+    case-fold-search
+    current)
+      (unwind-protect
+    (catch 'exit
+      (while t
+        (setq-local evil-normal-state-cursor (list nil))
+        (erase-buffer)
+        (insert title "\n\n")
+        (let ((des-keys nil)
+        (allowed-keys '("\C-g"))
+        (tab-alternatives '("\s" "\t" "\r"))
+        (cursor-type nil))
+    ;; Populate allowed keys and descriptions keys
+    ;; available with CURRENT selector.
+    (let ((re (format "\\`%s\\(.\\)\\'"
+          (if current (regexp-quote current) "")))
+          (prefix (if current (concat current " ") "")))
+      (dolist (entry table)
+        (pcase entry
+          ;; Description.
+          (`(,(and key (pred (string-match re))) ,desc)
+           (let ((k (match-string 1 key)))
+       (push k des-keys)
+       ;; Keys ending in tab, space or RET are equivalent.
+       (if (member k tab-alternatives)
+           (push "\t" allowed-keys)
+         (push k allowed-keys))
+       (insert (propertize prefix 'face 'font-lock-comment-face) (propertize k 'face 'bold) (propertize "›" 'face 'font-lock-comment-face) "  " desc "…" "\n")))
+          ;; Usable entry.
+          (`(,(and key (pred (string-match re))) ,desc . ,_)
+           (let ((k (match-string 1 key)))
+       (insert (propertize prefix 'face 'font-lock-comment-face) (propertize k 'face 'bold) "   " desc "\n")
+       (push k allowed-keys)))
+          (_ nil))))
+    ;; Insert special entries, if any.
+    (when specials
+      (insert "─────────────────────────\n")
+      (pcase-dolist (`(,key ,description) specials)
+        (insert (format "%s   %s\n" (propertize key 'face '(bold all-the-icons-red)) description))
+        (push key allowed-keys)))
+    ;; Display UI and let user select an entry or
+    ;; a sub-level prefix.
+    (goto-char (point-min))
+    (unless (pos-visible-in-window-p (point-max))
+      (org-fit-window-to-buffer))
+    (let ((pressed (org--mks-read-key allowed-keys prompt)))
+      (setq current (concat current pressed))
+      (cond
+       ((equal pressed "\C-g") (user-error "Abort"))
+       ;; Selection is a prefix: open a new menu.
+       ((member pressed des-keys))
+       ;; Selection matches an association: return it.
+       ((let ((entry (assoc current table)))
+          (and entry (throw 'exit entry))))
+       ;; Selection matches a special entry: return the
+       ;; selection prefix.
+       ((assoc current specials) (throw 'exit current))
+       (t (error "No entry available")))))))
+  (when buffer (kill-buffer buffer))))))
+(advice-add 'org-mks :override #'org-mks-pretty)
+
+
+(setf (alist-get 'height +org-capture-frame-parameters) 15)
+      ;; (alist-get 'name +org-capture-frame-parameters) "❖ Capture") ;; ATM hardcoded in other places, so changing breaks stuff
+(setq +org-capture-fn
+      (lambda ()
+        (interactive)
+        (set-window-parameter nil 'mode-line-format 'none)
+        (org-capture)))
+;; Org Capture:3 ends here
+
+;; [[file:config.org::*Org Capture][Org Capture:4]]
+(setq org-capture-templates `(
+    ("p" "Protocol" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
+        "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
+    ("L" "Protocol Link" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
+        "* %? [[%:link][%:description]] \nCaptured On: %U")
+))
+;; Org Capture:4 ends here
 
 ;; [[file:config.org::*Org Functions][Org Functions:1]]
 (after! org
