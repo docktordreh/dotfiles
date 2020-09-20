@@ -1,8 +1,10 @@
 [Added Associations]
-application/pdf=org.pwmt.zathura-pdf-mupdf.desktop;
-x-scheme-handler/mailto=userapp-Thunderbird-LY8WP0.desktop;
-message/rfc822=userapp-Thunderbird-LY8WP0.desktop;
+application/pdf=qpdfview.desktop;org.pwmt.zathura-pdf-mupdf.desktop;
+x-scheme-handler/mailto=userapp-Thunderbird-LY8WP0.desktop;userapp-Thunderbird-KZIVQ0.desktop;
+message/rfc822=userapp-Thunderbird-LY8WP0.desktop;userapp-Thunderbird-KZIVQ0.desktop;
+application/x-bittorrent=transmission-gtk.desktop;
 
 [Default Applications]
-x-scheme-handler/mailto=userapp-Thunderbird-LY8WP0.desktop
-message/rfc822=userapp-Thunderbird-LY8WP0.desktop
+x-scheme-handler/mailto=userapp-Thunderbird-KZIVQ0.desktop
+message/rfc822=userapp-Thunderbird-KZIVQ0.desktop
+x-scheme-handler/org-protocol=org-protocol.desktop
