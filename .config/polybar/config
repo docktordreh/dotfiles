@@ -1,6 +1,9 @@
 [section/config]
 include-file = ~/.config/polybar/conf.d/colors.conf
 include-file = ~/.config/polybar/conf.d/mainbar.conf
+include-file = ~/.config/polybar/conf.d/settings.conf
+include-file = ~/.config/polybar/conf.d/layout.conf
+include-file = ~/.config/polybar/conf.d/prefix.conf
 
 [section/modules]
 include-file = ~/.config/polybar/modules.d/aqi.conf
@@ -20,11 +23,12 @@ include-file = ~/.config/polybar/modules.d/powermenu.conf
 include-file = ~/.config/polybar/modules.d/xmonad.conf
 include-file = ~/.config/polybar/modules.d/volume.conf
 include-file = ~/.config/polybar/modules.d/news.conf
+include-file = ~/.config/polybar/modules.d/theme.conf
 
 [bar/top]
 inherit             = bar/base
 top                 = true
 tray-position	    = right
-modules-left        = bspwm-mod temperature cpu memory weather aqi
+modules-left        = bspwm-mod right-end-top  temperature cpu memory left-end-bottom right-end-top weather left-end-bottom right-end-top aqi
 modules-center      = bspwm-ws
-modules-right       = date fbattery powermenu
+modules-right       = date left-end-top right-end-bottom fbattery left-end-top right-end-bottom powermenu left-end-top right-end-bottom
