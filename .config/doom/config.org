@@ -282,7 +282,7 @@ The =doom-serif-font= is from the same repository.
                     :size 22
                     :weight 'extralight)
       doom-variable-pitch-font (font-spec
-                                :family "Iosevka Sparkle"
+                                :family "Iosevka"
                                 :weight 'extralight
                                 :size 22)
       doom-big-font (font-spec
@@ -290,7 +290,7 @@ The =doom-serif-font= is from the same repository.
                      :weight 'light
                      :size 24)
       doom-serif-font (font-spec
-                       :family "Iosevka Aile"
+                       :family "Iosevka"
                        :weight 'extralight
                        :size 22))
 #+END_SRC
@@ -556,7 +556,7 @@ mechanism to ignore them
 If you use `org' and don't want your org files in the default location below,
 change `org-directory'. It must be set before org loads!
 #+BEGIN_SRC emacs-lisp
-(setq org-directory "~/Daten/cloud/tlaloc/org/"
+(setq org-directory "~/Nextcloud/org/"
       org-archive-location (concat org-directory ".archive/$s::"))
 
 #+END_SRC
@@ -651,7 +651,7 @@ It's also nice to make use of the Unicode characters for check boxes, and other 
               :pending       "◼"
               :checkedbox    "☑"
               :list_property "∷"
-              :results       "🠶"
+              :results       ""
               :property      "☸"
               :properties    "⚙"
               :end           "∎"
@@ -679,48 +679,32 @@ It's also nice to make use of the Unicode characters for check boxes, and other 
     :merge t
     :checkbox      "[ ]"
     :pending       "[-]"
-    :checkedbox    "[X]"
+    :checkedbox    "[x]"
     :list_property "::"
-    :results       "#+RESULTS:"
-    :property      "#+PROPERTY:"
-    :property      ":PROPERTIES:"
-    :end           ":END:"
-    :options       "#+OPTIONS:"
-    :title         "#+TITLE:"
-    :subtitle      "#+SUBTITLE:"
-    :author        "#+AUTHOR:"
-    :date          "#+DATE:"
-    :latex_class   "#+LATEX_CLASS:"
-    :latex_header  "#+LATEX_HEADER:"
-    :beamer_header "#+BEAMER_HEADER:"
-    :begin_quote   "#+BEGIN_QUOTE"
-    :end_quote     "#+END_QUOTE"
-    :begin_export  "#+BEGIN_EXPORT"
-    :end_export    "#+END_EXPORT"
-    :priority_a    "[#A]"
-    :priority_b    "[#B]"
-    :priority_c    "[#C]"
-    :priority_d    "[#D]"
-    :priority_e    "[#E]"
+    :results       "#+results:"
+    :property      "#+property:"
+    :property      ":properties:"
+    :end           ":end:"
+    :options       "#+options:"
+    :title         "#+title:"
+    :subtitle      "#+subtitle:"
+    :author        "#+author:"
+    :date          "#+date:"
+    :latex_class   "#+latex_class:"
+    :latex_header  "#+latex_header:"
+    :beamer_header "#+beamer_header:"
+    :begin_quote   "#+begin_quote"
+    :end_quote     "#+end_quote"
+    :begin_export  "#+begin_export"
+    :end_export    "#+end_export"
+    :priority_a    "[#a]"
+    :priority_b    "[#b]"
+    :priority_c    "[#c]"
+    :priority_d    "[#d]"
+    :priority_e    "[#e]"
     :em_dash       "---")
 #+END_SRC
 
-**** Indentation
-
-Disable =org-indent-mode=
-=org-indent-mode= is an excellent default, but has the downside of increasing the
-visual width of tthe file as headings are increasingly nested
-To make it simpler, this forces consecutive indentation levels to increment one
-character at a time with org-indent-indentation-per-level.
-#+BEGIN_SRC emacs-lisp
-  (setq org-startup-indented nil)
-  (setq org-indent-indentation-per-level 1)
-#+END_SRC
-By default, org indents text to match the indentation. Setting it to nil
-disables this behaviour
-#+BEGIN_SRC emacs-lisp
-  (setq org-adapt-indentation nil)
-#+END_SRC
 
 **** Lines
 By default, visual-line-mode is turned on, and auto-fill-mode off by a hook.
@@ -856,20 +840,37 @@ Global keybinding to open my refile-file
 (use-package! org-ref
   :after org
   :config
-  (setq org-ref-completion-library 'org-ref-ivy-cite))
+  (require 'bibtex)
+  (require 'ivy-bibtex)
+  (setq bibtex-completion-library 'org-ref-ivy-cite))
 #+END_SRC
 Setting default files for org ref.
 Mine are synced via nextcloud
 #+BEGIN_SRC emacs-lisp
 (setq
- org-ref-default-bibliography "~/Daten/cloud/tlaloc/org/Papers/references.bib"
+ bibtex-completion-pdf-field "pdf"
+ bibtex-completion-bibliography "~/Nextcloud/org/papers/references.bib"
+ bibtex-completion-library-path "~/Nextcloud/org/papers/bibtex-pdfs"
+ bibtex-completion-notes-path "~/Nextcloud/org/papers/notes"
+ bibtex-completion-notes-template-multiple-files "* ${author-or-editor}, ${title}, ${journal}, (${year}) :${=type=}: \n\nSee [[cite:&${=key=}]]\n"
 
- org-ref-pdf-directory "~/Daten/cloud/tlaloc/org/Papers/bibtex-pdfs"
-
- org-ref-bibliography-notes "~/Daten/cloud/tlaloc/org/Papers/notes.org"
- org-ref-open-pdf-function
+ bibtex-completion-additional-search-fields '(keywords)
+ bibtex-completion-display-formats
+'((article       . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${journal:40}")
+    (inbook        . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} Chapter ${chapter:32}")
+    (incollection  . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
+    (inproceedings . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
+    (t             . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*}"))
+ bibtex-completion-pdf-open-function
  (lambda (fpath)
-   (start-process "zathura" "*ivy-bibtex-zathura*" "/usr/bin/zathura" fpath))
+    (start-process "zathura" "*bibtex-zathura*" "/usr/bin/zathura" fpath))
+ bibtex-autokey-year-length 4
+ bibtex-autokey-name-year-separator "-"
+ bibtex-autokey-year-title-separator "-"
+ bibtex-autokey-titleword-separator "-"
+ bibtex-autokey-titlewords 2
+ bibtex-autokey-titlewords-stretch 1
+ bibtex-autokey-titleword-length 5
 )
 #+END_SRC
 use footcite as default cite
@@ -1706,6 +1707,125 @@ Capture for browser plugin (not yet working)
 ))
 #+END_SRC
 
+** Org Jupyter
+
+*** Why
+
+Jupyter Notebook and its successor Jupyter Lab providing an interactive development environment for many programming languages are in lots of ways great pieces of software.
+
+But while I was using the former, and then the latter, I was also an as-full-time-as-one-can-get NeoVim user. “As one can get” is because, of course, there is no sensible way to extend the NeoVim editing experience to the Jupyter ecosystem.
+
+A possibility for change appeared with my discovery of Emacs not so long ago. Emacs, a substantially more extensible piece of software, potentially can be used for the mentioned kind of programming. So I decided to try.
+
+Sometime past that decision, it’s time to wrap up the results. To start with, I’ll briefly discuss the pros & cons of using Org mode rather than Jupyter Notebook/Lab. Here is my list of advantages:
+
+-   Emacs, at least for me, is way more comfortable to use than a browser
+-   Org mode allows using multiple programming languages in one file or multiple sessions with one programming language
+-   Richer & way more flexible export & tangle capacities
+-   More reasonable version control because org mode is just plain text, contrary to Jupyter’s JSONs
+
+The first point deserves to be spelled out with more detail. To start with, Emacs is an objectively better text editor than Jupyter, as Emacs offers a considerable superset of Jupyter’s features concerning just writing and editing text. The farthest one can go with Jupyter Lab is to install a vim emulation plugin, which still isn’t as good as Evil mode.
+
+The fact that Emacs can be used for different purposes also helps. For instance, I often write LaTeX documents, which are loosely based on the nearby code, e.g. using some generated charts or tables. Switching an Emacs buffer is easier than switching between Emacs and browser, not to mention that Emacs buffers usually have the same set of keybindings.
+
+Emacs’ buffer management system, which is good enough for a window manager, is barely comparable to the tabs of Jupyter Lab. And so on.
+
+As for why one may want to use Jupyter instead, here is my take on cons:
+
+-   Potential performance issues
+-   The output is not as rich as in the browser
+-   Collaboration with non-Emacs users is somewhat complicated
+
+Separation of kernels, server, and client together with non-blocking JavaScript-based UI is a good argument for using Jupyter. And it certainly won’t be a problem for a browser to suddenly print a line a million characters long.
+
+As for the richness of the output, while there are ways to work around the limitations of Emacs there, in some cases the best thing one can do is open the output in question with a browser. I’ll discuss doing that further below.
+
+The collaboration issue can be alleviated with rich export capabilities, but if someone wants to change something in your Org file, execute it and send it back to you, they have to use Emacs.
+
+
+*** Basic Setup
+
+The core package to this whole venture is [[github:nnicandro/emacs-jupyter][emacs-jupyter]] (another
+notable alternative [[github:millejoh/emacs-ipython-notebook][ein]], using which can help with the collaboration problem).
+
+
+After Installation, here done via [[file:init.el][init.el (org +jupyter)]], the
+following code makes sure, to load python & jupyter for =org-babel=:
+
+#+begin_src emacs-lisp
+(use-package! jupyter)
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (shell . t)
+   (python . t)
+   (jupyter . t)))
+#+end_src
+
+This makes it possible, to use source blocks with names like
+=jupyter-LANG= (e.g. =jupyter-python=). To use just =LANG=, the following
+can be used (after =org-babel-do-load-languages=):
+
+
+
+*** Exporting
+
+**** HTML
+
+#+begin_src emacs-lisp
+(use-package! htmlize
+  :after ox
+  :config
+  (setq org-html-htmlize-output-type 'css))
+#+end_src
+
+
+** Notes
+*** Org Anki
+
+#+begin_src emacs-lisp
+(use-package! anki-editor
+  :after org
+  :bind (:map org-mode-map
+              ("<f12>" . anki-editor-cloze-region-auto-incr)
+              ("<f11>" . anki-editor-cloze-region-dont-incr)
+              ("<f10>" . anki-editor-reset-cloze-number)
+              ("<f9>" . anki-editor-push-tree))
+  :hook (org-capture-after-finalize . anki-editor-reset-cloze-number)
+  :config
+  (setq request-log-level 'debug)
+  (setq anki-editor-create-decks t
+        anki-editor-org-tags-as-anki-tags t)
+  (defun anki-editor-cloze-region-auto-incr (&optional arg)
+    "Cloze region without hint and incr card number."
+    (interactive)
+    (anki-editor-cloze-region  my-anki-editor-cloze-number "")
+    (setq my-anki-editor-cloze-number (1+ my-anki-editor-cloze-number))
+    (forward-sexp)
+    )
+  (defun anki-editor-cloze-region-dont-incr (&optional arg)
+    "Cloze region without hint."
+    (interactive)
+    (anki-editor-cloze-region (1- my-anki-editor-cloze-number) "")
+    (forward-sexp)
+    )
+  (defun anki-editor-reset-cloze-number (&optional arg)
+    "Reset cloze nr to ARG or 1"
+    (interactive)
+    (setq my-anki-editor-cloze-number (or arg 1))
+    )
+  (defun anki-editor-push-tree ()
+    "Push all notes under a tree."
+    (interactive)
+    (anki-editor-push-notes '(4))
+    (anki-editor-reset-cloze-number)
+    )
+  (anki-editor-reset-cloze-number)
+  )
+#+end_src
+
+
+
 ** Org Functions
 
 Smart return does add new list item, … if appropriate
@@ -2139,21 +2259,29 @@ This file shouldn't be byte compiled.
 For citing
 #+BEGIN_SRC emacs-lisp
 (package! org-ref)
+(package! ivy-bibtex)
 #+END_SRC
+
+** Notes
+
+*** Anki
+#+begin_src emacs-lisp
+(package! anki-editor)
+#+end_src
+
 
 *** Improve agenda/capture
 
 The agenda is nice, but a souped up version is nicer.
 #+BEGIN_SRC emacs-lisp
-(package! org-super-agenda :pin "dd0d104c269fab9ebe5af7009bc1dd2a3a8f3c12")
+(package! org-super-agenda)
 #+END_SRC
 
 Similarly ~doct~ (Declarative Org Capture Templates) seems to be a nicer way to
 set up org-capture.
 #+BEGIN_SRC emacs-lisp
 (package! doct
-  :recipe (:host github :repo "progfolio/doct")
-  :pin "80d291e5f1cbdabd4eb7f88c917653c59d3f14be")
+  :recipe (:host github :repo "progfolio/doct"))
 #+END_SRC
 
 ** Visuals
@@ -2163,12 +2291,12 @@ redraw them in the buffer with box-drawing characters. Sounds like an
 improvement to me! Just need to get it working...
 #+BEGIN_SRC emacs-lisp
 (package! org-pretty-table-mode
-  :recipe (:host github :repo "Fuco1/org-pretty-table") :pin "88380f865a79bba49e4f501b7fe73a7bfb03bd1a")
+  :recipe (:host github :repo "Fuco1/org-pretty-table"))
 #+END_SRC
 
 For automatically toggling LaTeX fragment previews there's this nice package
 #+BEGIN_SRC emacs-lisp
-(package! org-fragtog :pin "92119e3ae7c9a0ae2b5c9d9e4801b5fdc4804ad7")
+(package! org-fragtog)
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp

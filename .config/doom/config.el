@@ -20,7 +20,7 @@
                     :size 22
                     :weight 'extralight)
       doom-variable-pitch-font (font-spec
-                                :family "Iosevka Sparkle"
+                                :family "Iosevka"
                                 :weight 'extralight
                                 :size 22)
       doom-big-font (font-spec
@@ -28,7 +28,7 @@
                      :weight 'light
                      :size 24)
       doom-serif-font (font-spec
-                       :family "Iosevka Aile"
+                       :family "Iosevka"
                        :weight 'extralight
                        :size 22))
 ;; Fontset:1 ends here
@@ -191,7 +191,7 @@
 ;; Treemacs Blocklist:1 ends here
 
 ;; [[file:config.org::*Org][Org:1]]
-(setq org-directory "~/Daten/cloud/tlaloc/org/"
+(setq org-directory "~/Nextcloud/org/"
       org-archive-location (concat org-directory ".archive/$s::"))
 ;; Org:1 ends here
 
@@ -200,7 +200,7 @@
 ;; Symbol mapping:1 ends here
 
 ;; [[file:config.org::*Configuring org][Configuring org:1]]
-  :config
+:config
 ;; Configuring org:1 ends here
 
 ;; [[file:config.org::*Org Style][Org Style:1]]
@@ -218,11 +218,11 @@
 ;; Org Style:1 ends here
 
 ;; [[file:config.org::*Org Style][Org Style:2]]
-  (setq global-org-pretty-table-mode t)
+(setq global-org-pretty-table-mode t)
 ;; Org Style:2 ends here
 
 ;; [[file:config.org::*Org Style][Org Style:3]]
-  (setq org-use-property-inheritance t)
+(setq org-use-property-inheritance t)
 ;; Org Style:3 ends here
 
 ;; [[file:config.org::*Org Style][Org Style:4]]
@@ -275,7 +275,7 @@
               :pending       "◼"
               :checkedbox    "☑"
               :list_property "∷"
-              :results       "🠶"
+              :results       ""
               :property      "☸"
               :properties    "⚙"
               :end           "∎"
@@ -303,40 +303,31 @@
     :merge t
     :checkbox      "[ ]"
     :pending       "[-]"
-    :checkedbox    "[X]"
+    :checkedbox    "[x]"
     :list_property "::"
-    :results       "#+RESULTS:"
-    :property      "#+PROPERTY:"
-    :property      ":PROPERTIES:"
-    :end           ":END:"
-    :options       "#+OPTIONS:"
-    :title         "#+TITLE:"
-    :subtitle      "#+SUBTITLE:"
-    :author        "#+AUTHOR:"
-    :date          "#+DATE:"
-    :latex_class   "#+LATEX_CLASS:"
-    :latex_header  "#+LATEX_HEADER:"
-    :beamer_header "#+BEAMER_HEADER:"
-    :begin_quote   "#+BEGIN_QUOTE"
-    :end_quote     "#+END_QUOTE"
-    :begin_export  "#+BEGIN_EXPORT"
-    :end_export    "#+END_EXPORT"
-    :priority_a    "[#A]"
-    :priority_b    "[#B]"
-    :priority_c    "[#C]"
-    :priority_d    "[#D]"
-    :priority_e    "[#E]"
+    :results       "#+results:"
+    :property      "#+property:"
+    :property      ":properties:"
+    :end           ":end:"
+    :options       "#+options:"
+    :title         "#+title:"
+    :subtitle      "#+subtitle:"
+    :author        "#+author:"
+    :date          "#+date:"
+    :latex_class   "#+latex_class:"
+    :latex_header  "#+latex_header:"
+    :beamer_header "#+beamer_header:"
+    :begin_quote   "#+begin_quote"
+    :end_quote     "#+end_quote"
+    :begin_export  "#+begin_export"
+    :end_export    "#+end_export"
+    :priority_a    "[#a]"
+    :priority_b    "[#b]"
+    :priority_c    "[#c]"
+    :priority_d    "[#d]"
+    :priority_e    "[#e]"
     :em_dash       "---")
 ;; Org Style:11 ends here
-
-;; [[file:config.org::*Indentation][Indentation:1]]
-  (setq org-startup-indented nil)
-  (setq org-indent-indentation-per-level 1)
-;; Indentation:1 ends here
-
-;; [[file:config.org::*Indentation][Indentation:2]]
-  (setq org-adapt-indentation nil)
-;; Indentation:2 ends here
 
 ;; [[file:config.org::*Lines][Lines:1]]
 (remove-hook 'text-mode-hook #'visual-line-mode)
@@ -453,19 +444,36 @@
 (use-package! org-ref
   :after org
   :config
-  (setq org-ref-completion-library 'org-ref-ivy-cite))
+  (require 'bibtex)
+  (require 'ivy-bibtex)
+  (setq bibtex-completion-library 'org-ref-ivy-cite))
 ;; Org Ref:1 ends here
 
 ;; [[file:config.org::*Org Ref][Org Ref:2]]
 (setq
- org-ref-default-bibliography "~/Daten/cloud/tlaloc/org/Papers/references.bib"
+ bibtex-completion-pdf-field "pdf"
+ bibtex-completion-bibliography "~/Nextcloud/org/papers/references.bib"
+ bibtex-completion-library-path "~/Nextcloud/org/papers/bibtex-pdfs"
+ bibtex-completion-notes-path "~/Nextcloud/org/papers/notes"
+ bibtex-completion-notes-template-multiple-files "* ${author-or-editor}, ${title}, ${journal}, (${year}) :${=type=}: \n\nSee [[cite:&${=key=}]]\n"
 
- org-ref-pdf-directory "~/Daten/cloud/tlaloc/org/Papers/bibtex-pdfs"
-
- org-ref-bibliography-notes "~/Daten/cloud/tlaloc/org/Papers/notes.org"
- org-ref-open-pdf-function
+ bibtex-completion-additional-search-fields '(keywords)
+ bibtex-completion-display-formats
+'((article       . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${journal:40}")
+    (inbook        . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} Chapter ${chapter:32}")
+    (incollection  . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
+    (inproceedings . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
+    (t             . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*}"))
+ bibtex-completion-pdf-open-function
  (lambda (fpath)
-   (start-process "zathura" "*ivy-bibtex-zathura*" "/usr/bin/zathura" fpath))
+    (start-process "zathura" "*bibtex-zathura*" "/usr/bin/zathura" fpath))
+ bibtex-autokey-year-length 4
+ bibtex-autokey-name-year-separator "-"
+ bibtex-autokey-year-title-separator "-"
+ bibtex-autokey-titleword-separator "-"
+ bibtex-autokey-titlewords 2
+ bibtex-autokey-titlewords-stretch 1
+ bibtex-autokey-titleword-length 5
 )
 ;; Org Ref:2 ends here
 
@@ -482,9 +490,9 @@
 ;; Org-Latex:2 ends here
 
 ;; [[file:config.org::*Org-Latex][Org-Latex:3]]
-  (require 'ox-extra)
-  (ox-extras-activate '(ignore-headlines))
-  (ox-extras-activate '(latex-header-blocks ignore-headlines))
+(require 'ox-extra)
+(ox-extras-activate '(ignore-headlines))
+(ox-extras-activate '(latex-header-blocks ignore-headlines))
 ;; Org-Latex:3 ends here
 
 ;; [[file:config.org::*Org-Latex][Org-Latex:4]]
@@ -646,55 +654,55 @@
 ;; Org-Latex:11 ends here
 
 ;; [[file:config.org::*Org-Latex][Org-Latex:12]]
-   (defun scimax-org-latex-fragment-justify (justification)
-     "Justify the latex fragment at point with JUSTIFICATION.
- JUSTIFICATION is a symbol for 'left, 'center or 'right."
-     (interactive
-      (list (intern-soft
-             (completing-read "Justification (left): " '(left center right)
-                              nil t nil nil 'left))))
-     (let* ((ov (ov-at))
-            (beg (ov-beg ov))
-            (end (ov-end ov))
-            (shift (- beg (line-beginning-position)))
-            (img (overlay-get ov 'display))
-            (img (and (and img (consp img) (eq (car img) 'image)
-                           (image-type-available-p (plist-get (cdr img) :type)))
-                      img))
-            space-left offset)
-       (when (and img
-                  ;; This means the equation is at the start of the line
-                  (= beg (line-beginning-position))
-                  (or
-                   (string= "" (s-trim (buffer-substring end (line-end-position))))
-                   (eq 'latex-environment (car (org-element-context)))))
-         (setq space-left (- (window-max-chars-per-line) (car (image-size img)))
-               offset (floor (cond
-                              ((eq justification 'center)
-                               (- (/ space-left 2) shift))
-                              ((eq justification 'right)
-                               (- space-left shift))
-                              (t
-                               0))))
-         (when (>= offset 0)
-           (overlay-put ov 'before-string (make-string offset ?\ ))))))
+(defun scimax-org-latex-fragment-justify (justification)
+    "Justify the latex fragment at point with JUSTIFICATION.
+JUSTIFICATION is a symbol for 'left, 'center or 'right."
+    (interactive
+     (list (intern-soft
+            (completing-read "Justification (left): " '(left center right)
+                             nil t nil nil 'left))))
+    (let* ((ov (ov-at))
+           (beg (ov-beg ov))
+           (end (ov-end ov))
+           (shift (- beg (line-beginning-position)))
+           (img (overlay-get ov 'display))
+           (img (and (and img (consp img) (eq (car img) 'image)
+                          (image-type-available-p (plist-get (cdr img) :type)))
+                     img))
+           space-left offset)
+      (when (and img
+                 ;; This means the equation is at the start of the line
+                 (= beg (line-beginning-position))
+                 (or
+                  (string= "" (s-trim (buffer-substring end (line-end-position))))
+                  (eq 'latex-environment (car (org-element-context)))))
+        (setq space-left (- (window-max-chars-per-line) (car (image-size img)))
+              offset (floor (cond
+                             ((eq justification 'center)
+                              (- (/ space-left 2) shift))
+                             ((eq justification 'right)
+                              (- space-left shift))
+                             (t
+                              0))))
+        (when (>= offset 0)
+          (overlay-put ov 'before-string (make-string offset ?\ ))))))
 
-   (defun scimax-org-latex-fragment-justify-advice (beg end image imagetype)
-     "After advice function to justify fragments."
-     (scimax-org-latex-fragment-justify (or (plist-get org-format-latex-options :justify) 'left)))
+  (defun scimax-org-latex-fragment-justify-advice (beg end image imagetype)
+    "After advice function to justify fragments."
+    (scimax-org-latex-fragment-justify (or (plist-get org-format-latex-options :justify) 'left)))
 
 
-   (defun scimax-toggle-latex-fragment-justification ()
-     "Toggle if LaTeX fragment justification options can be used."
-     (interactive)
-     (if (not (get 'scimax-org-latex-fragment-justify-advice 'enabled))
-         (progn
-           (advice-add 'org--format-latex-make-overlay :after 'scimax-org-latex-fragment-justify-advice)
-           (put 'scimax-org-latex-fragment-justify-advice 'enabled t)
-           (message "Latex fragment justification enabled"))
-       (advice-remove 'org--format-latex-make-overlay 'scimax-org-latex-fragment-justify-advice)
-       (put 'scimax-org-latex-fragment-justify-advice 'enabled nil)
-       (message "Latex fragment justification disabled")))
+  (defun scimax-toggle-latex-fragment-justification ()
+    "Toggle if LaTeX fragment justification options can be used."
+    (interactive)
+    (if (not (get 'scimax-org-latex-fragment-justify-advice 'enabled))
+        (progn
+          (advice-add 'org--format-latex-make-overlay :after 'scimax-org-latex-fragment-justify-advice)
+          (put 'scimax-org-latex-fragment-justify-advice 'enabled t)
+          (message "Latex fragment justification enabled"))
+      (advice-remove 'org--format-latex-make-overlay 'scimax-org-latex-fragment-justify-advice)
+      (put 'scimax-org-latex-fragment-justify-advice 'enabled nil)
+      (message "Latex fragment justification disabled")))
 ;; Org-Latex:12 ends here
 
 ;; [[file:config.org::*Org-Latex][Org-Latex:13]]
@@ -869,7 +877,7 @@
 ;; Org-Latex:14 ends here
 
 ;; [[file:config.org::*Org-Latex][Org-Latex:15]]
-  )
+)
 ;; Org-Latex:15 ends here
 
 ;; [[file:config.org::*Org Capture][Org Capture:1]]
@@ -1275,6 +1283,64 @@ is selected, only the bare key is returned."
         "* %? [[%:link][%:description]] \nCaptured On: %U")
 ))
 ;; Org Capture:4 ends here
+
+;; [[file:config.org::*Basic Setup][Basic Setup:1]]
+(use-package! jupyter)
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (shell . t)
+   (python . t)
+   (jupyter . t)))
+;; Basic Setup:1 ends here
+
+;; [[file:config.org::*HTML][HTML:1]]
+(use-package! htmlize
+  :after ox
+  :config
+  (setq org-html-htmlize-output-type 'css))
+;; HTML:1 ends here
+
+;; [[file:config.org::*Org Anki][Org Anki:1]]
+(use-package! anki-editor
+  :after org
+  :bind (:map org-mode-map
+              ("<f12>" . anki-editor-cloze-region-auto-incr)
+              ("<f11>" . anki-editor-cloze-region-dont-incr)
+              ("<f10>" . anki-editor-reset-cloze-number)
+              ("<f9>" . anki-editor-push-tree))
+  :hook (org-capture-after-finalize . anki-editor-reset-cloze-number)
+  :config
+  (setq request-log-level 'debug)
+  (setq anki-editor-create-decks t
+        anki-editor-org-tags-as-anki-tags t)
+  (defun anki-editor-cloze-region-auto-incr (&optional arg)
+    "Cloze region without hint and incr card number."
+    (interactive)
+    (anki-editor-cloze-region  my-anki-editor-cloze-number "")
+    (setq my-anki-editor-cloze-number (1+ my-anki-editor-cloze-number))
+    (forward-sexp)
+    )
+  (defun anki-editor-cloze-region-dont-incr (&optional arg)
+    "Cloze region without hint."
+    (interactive)
+    (anki-editor-cloze-region (1- my-anki-editor-cloze-number) "")
+    (forward-sexp)
+    )
+  (defun anki-editor-reset-cloze-number (&optional arg)
+    "Reset cloze nr to ARG or 1"
+    (interactive)
+    (setq my-anki-editor-cloze-number (or arg 1))
+    )
+  (defun anki-editor-push-tree ()
+    "Push all notes under a tree."
+    (interactive)
+    (anki-editor-push-notes '(4))
+    (anki-editor-reset-cloze-number)
+    )
+  (anki-editor-reset-cloze-number)
+  )
+;; Org Anki:1 ends here
 
 ;; [[file:config.org::*Org Functions][Org Functions:1]]
 (after! org
