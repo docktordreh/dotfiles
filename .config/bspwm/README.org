@@ -3,6 +3,12 @@
 #+PROPERTY: header-args :tangle bspwmrc :shebang "#!/bin/bash"
 * Startup Programs
 
+Lock screen after 10 min. Use slock as lockscreen
+#+begin_src bash
+xset s 600 &
+xss-lock -- slock &
+#+end_src
+
 Speed xrate up
 #+BEGIN_SRC  bash
 xset r rate 300 50 &
@@ -21,7 +27,7 @@ Launch Polybar
 #+END_SRC
 Set wallpaper to sth random
 #+BEGIN_SRC bash
-feh --bg-fill --randomize ~/Pictures/wallpaper
+feh --bg-fill --randomize ~/Pictures/wallpaper &
 #+END_SRC
 Start nextcloud
 #+BEGIN_SRC bash
