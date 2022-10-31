@@ -1,6 +1,9 @@
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$XDG_CONFIG_HOME/local/share"
 export XDG_CACHE_HOME="$XDG_CONFIG_HOME/cache"
+if test -z "${XDG_RUNTIME_DIR}"; then
+    export XDG_RUNTIME_DIR=/run/user/1000
+fi
 
 export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
 
@@ -31,3 +34,4 @@ export INPUTRC="${XDG_CONFIG_HOME:-$HOME/.config}/readline/inputrc"
 export PYLINTHOME="${XDG_CACHE_HOME:-$HOME/.config/cache}/pylint"
 
 export LESSHISTFILE=-
+. "/home/valentin/.config/local/share/cargo/env"

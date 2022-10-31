@@ -1,4 +1,3 @@
-alias sudo='doas'
 
 alias d='dirs -v'
 for index ({1..9}) alias "$index"="cd +${index}"; unset index
@@ -23,8 +22,6 @@ alias gr='git remote'
 alias grs='git remote show'
 alias glo='git log --pretty="oneline"'
 alias glol='git log --graph --oneline --decorate'
-
-alias vim='TERM=xterm-24bits emacs -nw'
 
 alias gpg='gpg --homedir "${XDG_DATA_HOME:-$HOME/.config/local/share}/gnupg"'
 
