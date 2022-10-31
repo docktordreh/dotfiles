@@ -18,7 +18,7 @@ super + shift + {m,x,y,z}
     bspc node -g {marked,locked,sticky,private}
 
 super + g
-        alacritty -e bash -c ~/.config/vifm/scripts/vifmrun
+        urxvt -e bash -c ~/.config/vifm/scripts/vifmrun
 
 super + r
     ~/.config/bspwm/bspwmrc && pkill -USR1 -x sxhkd
@@ -33,13 +33,27 @@ super + {_,shift +}w
                 bspc node -{c,k}
 
 super + Return
-               alacritty -e bash -c "(tmux ls | grep -qEv 'attached|scratch' && tmux at) || tmux"
+               urxvt -e bash -c "(tmux ls | grep -qEv 'attached|scratch' && tmux at) || tmux"
 
 super + shift + Return
-               alacritty
+               urxvt
 
 super + e
                 emacsclient -c -a emacs
 
 super + @space
                 firefox searx.neocities.org
+
+XF86AudioRaiseVolume
+    /home/valentin/.local/bin/soundctl.sh up
+XF86AudioLowerVolume
+    /home/valentin/.local/bin/soundctl.sh down
+XF86AudioMute
+    /home/valentin/.local/bin/soundctl.sh mute
+XF86MonBrightnessUp
+    /home/valentin/.local/bin/blightctl.sh up
+XF86MonBrightnessDown
+   /home/valentin/.local/bin/blightctl.sh down
+
+super + shift + e
+    emacsclient --eval "(emacs-everywhere)"

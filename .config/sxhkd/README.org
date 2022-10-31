@@ -54,10 +54,10 @@ super + shift + {m,x,y,z}
 
 * File manager
 
-Open vifm in alacritty
+Open vifm in urxvt
 #+BEGIN_SRC bash
 super + g
-        alacritty -e bash -c ~/.config/vifm/scripts/vifmrun
+        urxvt -e bash -c ~/.config/vifm/scripts/vifmrun
 #+END_SRC
 
 * Reload
@@ -96,13 +96,13 @@ super + {_,shift +}w
 Open terminal and attach to existing tmux session
 #+BEGIN_SRC bash
 super + Return
-               alacritty -e bash -c "(tmux ls | grep -qEv 'attached|scratch' && tmux at) || tmux"
+               urxvt -e bash -c "(tmux ls | grep -qEv 'attached|scratch' && tmux at) || tmux"
 #+END_SRC
 
 Open terminal without attaching to tmux session
 #+BEGIN_SRC bash
 super + shift + Return
-               alacritty
+               urxvt
 #+END_SRC
 * Emacs
 
@@ -119,6 +119,30 @@ Open firefox
 super + @space
                 firefox searx.neocities.org
 #+END_SRC
+* XF86 Media Keys
+
+#+begin_src bash
+XF86AudioRaiseVolume
+    /home/valentin/.local/bin/soundctl.sh up
+XF86AudioLowerVolume
+    /home/valentin/.local/bin/soundctl.sh down
+XF86AudioMute
+    /home/valentin/.local/bin/soundctl.sh mute
+XF86MonBrightnessUp
+    /home/valentin/.local/bin/blightctl.sh up
+XF86MonBrightnessDown
+   /home/valentin/.local/bin/blightctl.sh down
+#+end_src
+
+
+* Why Leave Emacs
+
+As described by [[https://docs.doomemacs.org/latest/modules/app/everywhere/][this documentation]], i installed xdotools, xwininfo,..
+#+begin_src bash
+super + shift + e
+    emacsclient --eval "(emacs-everywhere)"
+#+end_src
+
 # Local Variables:
 # eval: (add-hook 'after-save-hook (lambda () (org-babel-tangle)) nil t)
 # End:
