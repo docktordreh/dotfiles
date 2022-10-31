@@ -1,7 +1,7 @@
 #!/bin/sh
 
 TOKEN="0e0e18127e62d2f28481071712d7eb45b99c4dda"
-CITY="freiburg"
+CITY="karlsruhe"
 
 API="https://api.waqi.info/feed"
 

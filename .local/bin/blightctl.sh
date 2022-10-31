@@ -8,23 +8,20 @@
 # https://gist.github.com/sebastiencs/5d7227f388d93374cebdf72e783fbd6a
 
 function get_brightness {
-  
   xbacklight -get | cut -d '.' -f 1
-
 }
 
 function send_notification {
-  
-  icon="/usr/share/icons/elementary-xfce/notifications/48/notification-display-brightness-"
+  icon="/usr/share/icons/Paper/48x48/notifications/notification-display-brightness-"
   
   brightness=$(get_brightness)
   
   if [[ "$brightness" -gt 66 ]]; then
-    icon=$icon"full.svg"
+    icon="${icon}full.svg"
   elif [[ "$brightness" -gt 33 ]]; then
-    icon=$icon"medium.svg"
+    icon="${icon}medium.svg"
   else
-    icon=$icon"low.svg"
+    icon="${icon}low.svg"
   fi
   
   # Make the bar with the special character ─ (it's not dash -)
