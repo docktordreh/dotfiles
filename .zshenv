@@ -34,4 +34,5 @@ export INPUTRC="${XDG_CONFIG_HOME:-$HOME/.config}/readline/inputrc"
 export PYLINTHOME="${XDG_CACHE_HOME:-$HOME/.config/cache}/pylint"
 
 export LESSHISTFILE=-
+export PATH=$PATH:$HOME/.local/bin
 . "/home/valentin/.config/local/share/cargo/env"
