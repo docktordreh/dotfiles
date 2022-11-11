@@ -1,4 +1,7 @@
 #!/bin/bash
+wmname LG3D
+export _JAVA_AWT_WM_NONREPARENTING=1
+
 xset s 600 &
 xss-lock -- slock &
 
@@ -21,8 +24,6 @@ dunst &
 nm-applet &
 
 emacs --daemon &
-
-picom &
 
 bspc config top_padding 25
 
