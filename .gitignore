@@ -37,3 +37,26 @@ dconf/
 htop/
 Signal/
 vifminfo
+.config/doom/custom.el
+.config/mozilla/
+.config/Code - OSS/
+.config/Nextcloud/
+.config/gtk-2.0/
+.config/gtk-3.0/
+.config/gtk-4.0/
+.config/gtkrc*
+.config/Trolltech.conf
+.config/akregatorrc
+.config/autostart/
+.config/baloofilerc
+.config/k*
+.config/plasma*
+.config/systemsettingsrc
+.config/thefuck/
+.config/xsettingsd/
+.config/libaccounts*
+.config/powermanagementprofilesrc
+.config/session
+.config/user-dirs.dirs
+.config/mimeapps.list
+.config/keepassxc/
