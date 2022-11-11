@@ -35,4 +35,6 @@ export PYLINTHOME="${XDG_CACHE_HOME:-$HOME/.config/cache}/pylint"
 
 export LESSHISTFILE=-
 export PATH=$PATH:$HOME/.local/bin
+export QT_QPA_PLATFORM="wayland;xcb"
+export QT_QPA_PLATFORMTHEME=qt5ct
 . "/home/valentin/.config/local/share/cargo/env"
