@@ -60,3 +60,5 @@ vifminfo
 .config/user-dirs.dirs
 .config/mimeapps.list
 .config/keepassxc/
+.config/pulse/
+.config/pavucontrol.ini
