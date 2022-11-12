@@ -39,6 +39,7 @@
 ;; [[file:config.org::*Programming][Programming:1]]
 (package! jinja2-mode)
 (package! prettier-js)
+(package! flycheck-clang-tidy)
 ;; Programming:1 ends here
 
 ;; [[file:config.org::*Admin][Admin:1]]

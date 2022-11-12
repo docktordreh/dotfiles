@@ -359,6 +359,8 @@ My argument against tabs is that it is something you can't see in a
 lot of editors or a lot of viewers, for example in a webpage, by
 default. Usually, I would assume that there are spaces - but who
 knows?
+
+Also, [[https://stackoverflow.blog/2017/06/15/developers-use-spaces-make-money-use-tabs/][programmers who use spaces earn more money.]]
 #+BEGIN_SRC emacs-lisp
 (setq  indent-tabs-mode nil)
 #+END_SRC
@@ -410,6 +412,11 @@ set mouse to yank where i click: http://sachachua.com/blog/2017/04/emacs-pasting
 #+END_SRC
 
 
+*** Line length
+
+#+begin_src emacs-lisp
+(setq-default fill-column 120)
+#+end_src
 
 ** Programming settings
 
@@ -715,15 +722,6 @@ specific modes as desired.
 #+BEGIN_SRC emacs-lisp
 (remove-hook 'text-mode-hook #'visual-line-mode)
 (add-hook 'text-mode-hook #'auto-fill-mode)
-#+END_SRC
-I don't like long columns. They are hard to parse - and even harder to navigate
-using vim. I tend to do stuff like linebreaks after every
-sentence and don't export linebreaks (org), but this is more solid as
-it automatically adds a smart linebreak after 70 characters (smart meaning,
-don't break my words or my code)
-#+BEGIN_SRC emacs-lisp
-(add-hook 'org-mode-hook '(lambda () (setq fill-column 70)))
-(add-hook 'org-mode-hook 'auto-fill-mode)
 #+END_SRC
 **** TODOs
 
@@ -2183,6 +2181,24 @@ Add private snippet dir to yasnippet
 #+END_SRC
 
 
+** C C++
+
+
+#+begin_src emacs-lisp
+(setq lsp-clients-clangd-args '("-j=3"
+				"--background-index"
+				"--clang-tidy"
+				"--completion-style=detailed"
+				"--header-insertion=never"
+				"--header-insertion-decorators=0"))
+(after! lsp-clangd (set-lsp-priority! 'clangd 2))
+(use-package! flycheck-clang-tidy
+	:after flycheck
+	:hook (flycheck-mode . flycheck-clang-tidy-setup)
+)
+#+end_src
+
+
 * Tramp
 It's recommended to connect to a bash shell via ssh using tramp
 else, connecting might fail because tramp doesnt recognize the prompt
@@ -2313,6 +2329,7 @@ For automatically toggling LaTeX fragment previews there's this nice package
 #+BEGIN_SRC emacs-lisp
 (package! jinja2-mode)
 (package! prettier-js)
+(package! flycheck-clang-tidy)
 #+END_SRC
 
 ** Admin

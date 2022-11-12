@@ -96,6 +96,10 @@
 (setq mouse-yank-at-point t)
 ;; Mouse-pasting:1 ends here
 
+;; [[file:config.org::*Line length][Line length:1]]
+(setq-default fill-column 120)
+;; Line length:1 ends here
+
 ;; [[file:config.org::*Autocompletion][Autocompletion:1]]
 (setq company-idle-delay nil)
 ;; Autocompletion:1 ends here
@@ -333,11 +337,6 @@
 (remove-hook 'text-mode-hook #'visual-line-mode)
 (add-hook 'text-mode-hook #'auto-fill-mode)
 ;; Lines:1 ends here
-
-;; [[file:config.org::*Lines][Lines:2]]
-(add-hook 'org-mode-hook '(lambda () (setq fill-column 70)))
-(add-hook 'org-mode-hook 'auto-fill-mode)
-;; Lines:2 ends here
 
 ;; [[file:config.org::*TODOs][TODOs:1]]
 (setq org-enforce-todo-dependencies t)
@@ -1538,6 +1537,20 @@ appropriate.  In tables, insert a new row or end the table."
   (push (expand-file-name "snippets/" doom-private-dir) yas-snippet-dirs))
 (yas-global-mode 1)
 ;; Snippets:1 ends here
+
+;; [[file:config.org::*C C++][C C++:1]]
+(setq lsp-clients-clangd-args '("-j=3"
+				"--background-index"
+				"--clang-tidy"
+				"--completion-style=detailed"
+				"--header-insertion=never"
+				"--header-insertion-decorators=0"))
+(after! lsp-clangd (set-lsp-priority! 'clangd 2))
+(use-package! flycheck-clang-tidy
+	:after flycheck
+	:hook (flycheck-mode . flycheck-clang-tidy-setup)
+)
+;; C C++:1 ends here
 
 ;; [[file:config.org::*Tramp][Tramp:1]]
 (eval-after-load 'tramp '(setenv "$SHELL" "/bin/bash"))
