@@ -18,7 +18,7 @@ riverctl map normal Mod4 Escape spawn "makoctl dismiss"
 riverctl map normal Mod4 F toggle-fullscreen
 riverctl map normal Mod4 W close
 
-
+riverctl map normal None Print spawn 'grim -g "$(slurp)" - | wl-copy'
 riverctl map normal Mod4 J focus-view next
 riverctl map normal Mod4 K focus-view previous
 riverctl map normal Mod4+Shift J swap next
@@ -48,7 +48,6 @@ riverctl spawn "emacs --daemon"
 riverctl spawn "xset r rate 300 50"
 riverctl spawn "yambar"
 riverctl spawn "nextcloud"
-riverctl spawn "flameshot"
 riverctl spawn "mako"
 riverctl spawn "nm-applet"
 
