@@ -62,3 +62,4 @@ vifminfo
 .config/keepassxc/
 .config/pulse/
 .config/pavucontrol.ini
+.config/jgit
