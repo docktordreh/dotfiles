@@ -30,16 +30,14 @@ send_notification() {
   notify-send -i $icon -u low "    $bar $sound%" -t 500
 }
 
-sink=0
+sink=@DEFAULT_SINK@
 case $1 in
   up)
-    # increase the backlight by 5%
     pactl set-sink-volume  "$sink" +5%
     echo "Sound increased by 5% to ""$(get_sound)""%"
     send_notification
     ;;
   down)
-    # decrease the backlight by 5%
     pactl set-sink-volume  "$sink" -5%
     echo "Sound decreased by 5% to ""$(get_sound)""%"
     send_notification

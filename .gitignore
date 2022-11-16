@@ -63,3 +63,4 @@ vifminfo
 .config/pulse/
 .config/pavucontrol.ini
 .config/jgit
+.config/doom/config.el
