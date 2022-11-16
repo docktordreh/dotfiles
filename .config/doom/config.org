@@ -270,29 +270,25 @@ Ligature Showcase:
   +>
 #+END_example
 
-The =variable-pitch-font=, which gets used in =variable-pitch-mode= or
-=mixed-pitch-mode=, is the Quasi-Proportional Font /Iosevka Sparkle/, in
-my case taken directly from the
-[[https://github.com/be5invis/Iosevka/releases/tag/v3.4.6][Iosevka Repository]]
 
 The =doom-serif-font= is from the same repository.
 #+BEGIN_SRC emacs-lisp
 (setq doom-font (font-spec
-                    :family "Iosevka"
-                    :size 22
-                    :weight 'extralight)
+                    :family "Iosevka Nerd Font Mono"
+                    :size 18)
       doom-variable-pitch-font (font-spec
-                                :family "Iosevka"
-                                :weight 'extralight
-                                :size 22)
+                                :family "Iosevka Nerd Font Mono"
+                                :size 18)
       doom-big-font (font-spec
-                     :family "Iosevka"
-                     :weight 'light
-                     :size 24)
+                     :family "Iosevka Nerd Font Mono"
+                     :size 20)
       doom-serif-font (font-spec
-                       :family "Iosevka"
-                       :weight 'extralight
-                       :size 22))
+                       :family "Iosevka Nerd Font Mono"
+                       :size 18)
+    doom-unicode-font (font-spec
+                       :family "Symbols Nerd Font"
+                       :size 18)
+                )
 #+END_SRC
 
 *** Theme
@@ -301,7 +297,10 @@ There are two ways to load a theme. Both assume the theme is installed
 and available. You can either set `doom-theme' or manually load a
 theme with the `load-theme' function. This is the default:
 #+BEGIN_SRC emacs-lisp
-(setq doom-theme 'doom-moonlight)
+(setq doom-theme 'doom-vibrant)
+(remove-hook 'window-setup-hook #'doom-init-theme-h)
+(add-hook 'after-init-hook #'doom-init-theme-h 'append)
+(delq! t custom-theme-load-path)
 #+END_SRC
 
 Changes the name of the dashboard to something recognisable
@@ -309,6 +308,37 @@ Changes the name of the dashboard to something recognisable
 (setq doom-fallback-buffer-name "► Doom"
       +doom-dashboard-name "► Doom")
 #+END_SRC
+
+*** Dashboard
+
+#+begin_src emacs-lisp
+(defun +doom-dashboard-setup-modified-keymap ()
+  (setq +doom-dashboard-mode-map (make-sparse-keymap))
+  (map! :map +doom-dashboard-mode-map
+        :desc "Find file" :ne "f" #'find-file
+        :desc "Recent files" :ne "r" #'consult-recent-file
+        :desc "Config dir" :ne "C" #'doom/open-private-config
+        :desc "Open config.org" :ne "c" (cmd! (find-file (expand-file-name "config.org" doom-private-dir)))
+        :desc "Open dotfile" :ne "." (cmd! (doom-project-find-file "~/.config/"))
+        :desc "Notes (roam)" :ne "n" #'org-roam-node-find
+        :desc "Switch buffer" :ne "b" #'+vertico/switch-workspace-buffer
+        :desc "Switch buffers (all)" :ne "B" #'consult-buffer
+        :desc "IBuffer" :ne "i" #'ibuffer
+        :desc "Previous buffer" :ne "p" #'previous-buffer
+        :desc "Set theme" :ne "t" #'consult-theme
+        :desc "Quit" :ne "Q" #'save-buffers-kill-terminal
+        :desc "Show keybindings" :ne "h" (cmd! (which-key-show-keymap '+doom-dashboard-mode-map))))
+
+(add-transient-hook! #'+doom-dashboard-mode (+doom-dashboard-setup-modified-keymap))
+(add-transient-hook! #'+doom-dashboard-mode :append (+doom-dashboard-setup-modified-keymap))
+(add-hook! 'doom-init-ui-hook :append (+doom-dashboard-setup-modified-keymap))
+#+end_src
+Unfortunately the show keybindings help doesn’t currently work as intended, but this is still quite nice overall.
+
+Now that the dashboard is so convenient, I’ll want to make it easier to get to.
+#+begin_src emacs-lisp
+(map! :leader :desc "Dashboard" "d" #'+doom-dashboard/open)
+#+end_src
 
 ** Editor settings
 
@@ -325,7 +355,7 @@ numbers are disabled. For relative line numbers, set this to `relative'.
 
 Use NyanCat to show buffer size and position in mode-line
 #+BEGIN_SRC emacs-lisp
-(nyan-mode 0)
+(nyan-mode 1)
 (use-package! nyan-mode
   :config
   (setq nyan-animate-nyancat t)
@@ -338,7 +368,7 @@ Testing out poke-line instead of nyan-mode
 #+BEGIN_SRC emacs-lisp
 (use-package! poke-line
   :config
-  (poke-line-global-mode 1)
+  (poke-line-global-mode 0)
   (poke-line-set-pokemon "magikarp"))
 #+END_SRC
 
@@ -1779,6 +1809,12 @@ can be used (after =org-babel-do-load-languages=):
 
 
 ** Notes
+*** deft
+
+#+begin_src emacs-lisp
+(setq deft-directory "~/Nextcloud/org")
+#+end_src
+
 *** Org Anki
 
 #+begin_src emacs-lisp
