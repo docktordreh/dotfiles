@@ -1,7 +1,0 @@
-! Rofi config file
-rofi.lines: 12
-rofi.font: Fira Mono 18
-rofi.show-icons: true
-rofi.display-window: Window
-rofi.display-drun: Search
-rofi.theme: ~/.config/rofi/nord.rasi
