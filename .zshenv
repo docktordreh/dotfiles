@@ -5,6 +5,7 @@ export XDG_CACHE_HOME="$XDG_CONFIG_HOME/cache"
 if test -z "${XDG_RUNTIME_DIR}"; then
     export XDG_RUNTIME_DIR=/tmp/1000;
     mkdir ${XDG_RUNTIME_DIR}
+    chmod 700 ${XDG_RUNTIME_DIR}
 fi
 
 export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
