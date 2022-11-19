@@ -709,7 +709,38 @@ change `org-directory'. It must be set before org loads!
 
 #+BEGIN_SRC emacs-lisp
   :config
+(setq org-use-property-inheritance t
+      org-log-done 'time
+      org-export-in-background t
+      org-catch-invisible-edits 'smart)
+
 #+END_SRC
+
+*** New Buffer
+
+#+begin_src emacs-lisp
+
+(evil-define-command evil-buffer-org-new (count file)
+  "Creates a new ORG buffer replacing the current window, optionally
+   editing a certain FILE"
+  :repeat nil
+  (interactive "P<f>")
+  (if file
+      (evil-edit file)
+    (let ((buffer (generate-new-buffer "*new org*")))
+      (set-window-buffer nil buffer)
+      (with-current-buffer buffer
+        (org-mode)))))
+(map! :leader
+      (:prefix "b"
+       :desc "New empty ORG buffer" "o" #'evil-buffer-org-new))
+#+end_src
+
+*** List Bullet sequence
+List Bullets change with depth
+#+begin_src emacs-lisp
+(setq org-list-demote-modify-bullet '(("+" . "-") ("-" . "+") ("*" . "+") ("1." . "a.")))
+#+end_src
 
 *** Org Style
 
