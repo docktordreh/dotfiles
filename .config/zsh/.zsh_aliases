@@ -26,3 +26,4 @@ alias glol='git log --graph --oneline --decorate'
 alias gpg='gpg --homedir "${XDG_DATA_HOME:-$HOME/.config/local/share}/gnupg"'
 
 alias mbsync='mbsync -c "${XDG_CONFIG_HOME:-$HOME/.config}/isync/mbsyncrc"'
+alias waylock="waylock --init-color 0x000000"
