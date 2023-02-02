@@ -115,7 +115,7 @@ source "$ZDOTDIR/.zsh_aliases"
 
 what(){vimb "searx.neocities.org?q=$1"}
 
-[ -z "$TMUX" ] && eval $(ssh-agent -s) && ssh-add ~/.ssh/id_ed25519
+[ -z "$TMUX" ] && eval $(ssh-agent -s) && [ -f ~/.ssh/id_ed25519 ] && ssh-add ~/.ssh/id_ed25519
 
 # case $- in *i* )
 #     [ -z "$TMUX" ] && command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && exec tmux new-session -A -s main ;;
@@ -132,7 +132,7 @@ autoload -U colors && colors
 
 autoload -U promptinit
 promptinit
-PROMPT="$prompt_newline%F{blue}%2~%f$prompt_newline%(?.%F{green}.%F{red})λ%f "
+PROMPT="%F{yellow}%m:%F{blue}%2~%f$prompt_newline%(?.%F{green}.%F{red})λ%f "
 RPROMPT='%(?..%F{red}[%?]%f)'
 
-antibody bundle zdharma/fast-syntax-highlighting
+antibody bundle zdharma-continuum/fast-syntax-highlighting

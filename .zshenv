@@ -31,7 +31,7 @@ export LOCAL_SCRIPTS=$HOME/.local/bin
 export PYTHONPATH=$HOME/.local/bin/python
 export PATH=$PATH:$LOCAL_SCRIPTS:$PYTHONPATH
 # cargo path
-. "${XDG_DATA_HOME}/cargo/env"
+[ -f "${XDG_DATA_HOME}/cargo/env" ] && . "${XDG_DATA_HOME}/cargo/env"
 
 # compatibility for tiling window managers in wayland and qtile
 export QT_QPA_PLATFORM="wayland;xcb"
