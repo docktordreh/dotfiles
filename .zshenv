@@ -38,3 +38,4 @@ export QT_QPA_PLATFORM="wayland;xcb"
 export QT_QPA_PLATFORMTHEME=qt5ct
 # for tor proxy
 export SOCKS_PROXY="socks5://127.0.0.1:9050"
+export OPENSCADPATH=~/Projects/dotSCAD/src
