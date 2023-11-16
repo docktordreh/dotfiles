@@ -1,0 +1,11 @@
+zdharma-continuum/fast-syntax-highlighting
+# .zsh_plugins.txt
+rupa/z              # some bash plugins work too
+sindresorhus/pure   # enhance your prompt
+
+# add fish-like features
+zsh-users/zsh-syntax-highlighting
+zsh-users/zsh-autosuggestions
+zsh-users/zsh-history-substring-search
+sunlei/zsh-ssh
+zsh-users/zaw

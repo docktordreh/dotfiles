@@ -134,5 +134,6 @@ autoload -U promptinit
 promptinit
 PROMPT="%F{yellow}%m:%F{blue}%2~%f$prompt_newline%(?.%F{green}.%F{red})λ%f "
 RPROMPT='%(?..%F{red}[%?]%f)'
-
-antibody bundle zdharma-continuum/fast-syntax-highlighting
+source ${HOME}/.config/zsh/.antidote/antidote.zsh
+export PURE_PROMPT_SYMBOL=λ
+antidote load ${ZDOTDIR:-$HOME}/.zsh_plugins
