@@ -26,7 +26,7 @@ zstyle ':completion:*:(ssh|scp|rsync):*:hosts-ipaddr' ignored-patterns '^(<->.<-
 
 zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' \
   '+l:|?=** r:|?=**'
-
+zstyle :omz:plugins:ssh-agent identities id_ecdsa id_ed25519 id_rsa id_unyvu_kit
 bindkey -v
 # makes the switch between modes quicker
 export KEYTIMEOUT=1

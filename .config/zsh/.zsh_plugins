@@ -9,3 +9,4 @@ zsh-users/zsh-autosuggestions
 zsh-users/zsh-history-substring-search
 sunlei/zsh-ssh
 zsh-users/zaw
+ohmyzsh/ohmyzsh path:plugins/ssh-agent
